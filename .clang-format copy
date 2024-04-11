@@ -1,0 +1,17 @@
+Language: Cpp
+
+Standard: c++20
+
+BasedOnStyle: Google
+
+IndentWidth: 4
+
+ColumnLimit: 80
+
+TabWidth: 4
+
+IndentCaseLabels: true
+
+IndentGotoLabels: false
+
+MaxEmptyLinesToKeep: 1
