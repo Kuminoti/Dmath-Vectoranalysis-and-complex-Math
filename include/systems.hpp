@@ -22,8 +22,7 @@
 #define SPHERE_IS_STANDARD // Sphere system: Radius, phi, phi
 //#define CYLINDER_IS_STANDARD     //Cylinder system: Radius, phi, height
 
-#if (defined(SPHERE_IS_STANDARD) || defined(CYLINDER_IS_STANDARD)) &&          \
-    defined(CARTESIAN_IS_3D_STANDARD)
+#if (defined(SPHERE_IS_STANDARD) || defined(CYLINDER_IS_STANDARD)) && defined(CARTESIAN_IS_3D_STANDARD)
 #warning "Warning: More than one system is defined!"
 #undef CARTESIAN_IS_STANDARD
 #ifdef SPHERE_IS_STANDARD
@@ -37,14 +36,12 @@
 #ifdef POLAR_IS_STANDARD
 #ifdef CARTESIAN_IS_2D_STANDARD
 #undef CARTESIAN_IS_2D_STANDARD
-#warning                                                                       \
+#warning \
     "Warning: You defined polar coordinates as standard and cartesian as 2D standard. Polar will be standard."
 #endif
 #endif
 
-#if (defined(SPHERE_IS_STANDARD) || defined(CYLINDER_IS_STANDARD) ||           \
-     defined(CARTESIAN_IS_3D_STANDARD) || defined(POLAR_IS_STANDARD) ||        \
-     defined(CARTESIAN_IS_2D_STANDARD))
+#if (defined(SPHERE_IS_STANDARD) || defined(CYLINDER_IS_STANDARD) || defined(CARTESIAN_IS_3D_STANDARD) || defined(POLAR_IS_STANDARD) || defined(CARTESIAN_IS_2D_STANDARD))
 #define SYSTEM_IS_SET
 #else
 #error "FATAL ERROR NO SYSTEM SET"
@@ -52,74 +49,74 @@
 
 #ifdef SYSTEM_IS_SET
 class CoordinateSystem2D {
-protected:
-  float X;
-  float Y;
+  protected:
+    float X;
+    float Y;
 
-  float radius;
-  float phi;
+    float radius;
+    float phi;
 
-  float originX;
-  float originY;
+    float originX;
+    float originY;
 
-  void polarToCartesian();
-  void cartesianToPolar();
+    void polarToCartesian();
+    void cartesianToPolar();
 
-public:
-  virtual float getRadius();
-  float getX();
-  float getY();
-  float getPhi();
+  public:
+    virtual float getRadius();
+    float getX();
+    float getY();
+    float getPhi();
 
 #ifdef CARTESIAN_IS_2D_STANDARD
-  CoordinateSystem2D(float x, float y);
-  CoordinateSystem2D(float x, float y, float originX, float originY);
+    CoordinateSystem2D(float x, float y);
+    CoordinateSystem2D(float x, float y, float originX, float originY);
 #endif
 
 #ifdef POLAR_IS_STANDARD
-  CoordinateSystem2D(float radius, float phi);
-  CoordinateSystem2D(float radius, float phi, float originX, float originY);
+    CoordinateSystem2D(float radius, float phi);
+    CoordinateSystem2D(float radius, float phi, float originX, float originY);
 #endif
 }; // CoordinateSystem2D
 
 class CoordinateSystem3D : public CoordinateSystem2D {
-protected: // protected data
-  float Z;
-  float theta;
-  float height;
+  protected: // protected data
+    float Z;
+    float theta;
+    float height;
 
-protected: // Protected methods;
-  void cartesianToSphere();
-  void cartesianToCylinder();
+  protected: // Protected methods;
+    void cartesianToSphere();
+    void cartesianToCylinder();
 
-  void sphereToCatesian();
-  void sphereToCylinder();
+    void sphereToCatesian();
+    void sphereToCylinder();
 
-  void cylinderToCartesian();
-  void cylinderToSphere();
+    void cylinderToCartesian();
+    void cylinderToSphere();
 
-public: // Public Methods
-  float getRadiusSphere();
-  float getRadiusCylinder();
-  float getTheta();
-  float getHeight();
-  float getZ();
+  public: // Public Methods
+    float getRadiusSphere();
+    float getRadiusCylinder();
+    float getTheta();
+    float getHeight();
+    float getZ();
 
 #ifdef CARTESIAN_IS_3D_STANDARD
-  CoordinateSystem3D(float X, float Y, float Z);
-  CoordinateSystem3D(float X, float Y, float Z, float originX, float originY);
+    CoordinateSystem3D(float X, float Y, float Z);
+    CoordinateSystem3D(float X, float Y, float Z, float originX, float originY);
 #endif
 
 #ifdef SPHERE_IS_STANDARD
-  CoordinateSystem3D(float radius, float phi, float theta);
-  CoordinateSystem3D(float radius, float phi, float theta, float originX,
-                     float originY);
+    CoordinateSystem3D(float radius, float phi, float theta);
+    CoordinateSystem3D(float radius, float phi, float theta, float originX,
+                       float originY);
 #endif
 
 #ifdef CYLINDER_IS_STANDARD
-  CoordinateSystem3D(float radius, float phi, float height);
-  CoordinateSystem3D(float radius, float phi, float hieght, float originX,
-                     float originY);
+    CoordinateSystem3D(float radius, float phi, float height);
+    CoordinateSystem3D(float radius, float phi, float hieght, float originX,
+                       float originY);
 #endif
 
 }; // CoordinateSystem3D
