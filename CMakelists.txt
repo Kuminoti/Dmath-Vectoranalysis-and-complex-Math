@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 project(Mathvector)
 
 
-set(SOURCE_FILES src/mathvector.cpp)
+set(SOURCE_FILES src/mathvector.cpp src/systems.cpp)
 
 
 include_directories(include)
