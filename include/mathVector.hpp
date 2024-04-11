@@ -8,16 +8,17 @@
     
 NAMESPACESTART
 class Vec2D : public CoordinateSystem2D{
-  protected:
+  private:
     float abs;
-    void update();
     void calcAbs();
+
 
    public: 
    //Basic operrator overloading:
-   Vec2D operator+(Vec2D &Mathvector);
-   Vec2D operator-(Vec2D &Mathvector);
-   float operator*(Vec2D &Mathvector);
+
+    Vec2D operator+(Vec2D &Mathvector);                  
+    Vec2D operator-(Vec2D &Mathvector);
+    float operator*(Vec2D &Mathvector);
 
 
 
@@ -30,23 +31,20 @@ class Vec2D : public CoordinateSystem2D{
     Vec2D(float radius, float phi);
 #endif
     //Math with scalar results
-    float getAbs();
-    float lenght();                                      // Calculates the length of a vector
-    float dotProduct(Vec2D Mathvector);                  //Scalar or dot product
+    float getAbs();                                      //Calculates the absolutvalue
+    float lenght();                                      //Calculates the length of a vector
+    float dotProduct(Vec2D Mathvector);                  //Calculates Scalar product
     float calcAngle(Vec2D Mathvector);                   //Calculates the angle between 2 vectors
 
-    float polarSystemArea();                             //calculates the circle of a polar system
-    float polarSystemCircumfrance();                     //calculates the circumfrance of a polar system
+    float polarSystemArea();                             //Calculates the circle of a polar system
+    float polarSystemCircumfrance();                     //Calculates the circumfrance of a polar system
     float rectangleArea(Vec2D MathVector);               //Calculates the area of a rectangle with length of vector 1 and vector 2
-    float rectangleCircumfrance(Vec2D MathVector);       // Calculates the circumfrance of a rectangle with length of vector 1 and vector 2
+    float rectangleCircumfrance(Vec2D MathVector);       //Calculates the circumfrance of a rectangle with length of vector 1 and vector 2
     
-    /*
-     * Setters:
-     * 
+
+    /* Setters:
      * If data is set/changed it will automaticly change the values for other
      * coordinate types as well.
-     * for example when you call .setX() the cartesian to polar method is called
-     * as well and the polar values are updated.
      */
 
     virtual void setX(float value);
@@ -54,13 +52,15 @@ class Vec2D : public CoordinateSystem2D{
     virtual void setPhi(float value);
     virtual void setRadius(float radius);
    
+
+    //You can use methods insteadof operators
     Vec2D add(Vec2D Mathvector);                         //Adding 2 vectors
     Vec2D subtract(Vec2D Mathvector);                    //Subtract 2 vectors
-    Vec2D rotateVector(float angle);                     //
+    Vec2D rotateVector(float angle);                     //Rotates a vector dependent op the angle
 
-
+    //spezial Vectors
     static Vec2D polarVector(float radius, float angle); //Creates a Vector in a polar system
-    static Vec2D zeroVector();
+    static Vec2D zeroVector();                           //Creates a vector with lenght 0
 };
 
 

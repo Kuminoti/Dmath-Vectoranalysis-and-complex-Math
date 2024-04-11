@@ -10,6 +10,36 @@ Vec2D Vec2D::operator+(Vec2D &Mathvector){
     return Vec2D(resultX,resultY);
 }
 
+Vec2D Vec2D::operator-(Vec2D &Mathvector){
+    float resultX = this->X - Mathvector.X;
+    float resultY = this->Y - Mathvector.Y;
+    
+    return Vec2D(resultX,resultY);
+}
+
+float Vec2D::operator*(Vec2D &Mathvector){
+    return this->dotProduct(Mathvector);
+}
+
+
+
+Vec3D Vec3D::operator+(Vec3D &Mathvector){
+    float resultX = this->X + Mathvector.X;
+    float resultY = this->Y + Mathvector.Y;
+    float resultZ = this->Z + Mathvector.Z;
+    return Vec3D(resultX,resultY,resultZ);
+}
+
+Vec3D Vec3D::operator-(Vec3D &Mathvector){
+    float resultX = this->X - Mathvector.X;
+    float resultY = this->Y - Mathvector.Y;
+    float resultZ = this->Z - Mathvector.Z;
+    return Vec3D(resultX,resultY,resultZ);
+}
+
+float Vec3D::operator*(Vec3D &Mathvector){
+    return this->dotProduct(Mathvector);
+}
 // Calculate cosine of the angle between two vectors
 float cosAngle(float dotProduct, float absProduct) {
     float result = 0;
