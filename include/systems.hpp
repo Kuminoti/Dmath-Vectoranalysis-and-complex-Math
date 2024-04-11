@@ -22,7 +22,8 @@
 #define SPHERE_IS_STANDARD // Sphere system: Radius, phi, phi
 //#define CYLINDER_IS_STANDARD     //Cylinder system: Radius, phi, height
 
-#if (defined(SPHERE_IS_STANDARD) || defined(CYLINDER_IS_STANDARD)) && defined(CARTESIAN_IS_3D_STANDARD)
+#if (defined(SPHERE_IS_STANDARD) || defined(CYLINDER_IS_STANDARD)) &&                              \
+    defined(CARTESIAN_IS_3D_STANDARD)
 #warning "Warning: More than one system is defined!"
 #undef CARTESIAN_IS_STANDARD
 #ifdef SPHERE_IS_STANDARD
@@ -36,12 +37,14 @@
 #ifdef POLAR_IS_STANDARD
 #ifdef CARTESIAN_IS_2D_STANDARD
 #undef CARTESIAN_IS_2D_STANDARD
-#warning \
+#warning                                                                                           \
     "Warning: You defined polar coordinates as standard and cartesian as 2D standard. Polar will be standard."
 #endif
 #endif
 
-#if (defined(SPHERE_IS_STANDARD) || defined(CYLINDER_IS_STANDARD) || defined(CARTESIAN_IS_3D_STANDARD) || defined(POLAR_IS_STANDARD) || defined(CARTESIAN_IS_2D_STANDARD))
+#if (defined(SPHERE_IS_STANDARD) || defined(CYLINDER_IS_STANDARD) ||                               \
+     defined(CARTESIAN_IS_3D_STANDARD) || defined(POLAR_IS_STANDARD) ||                            \
+     defined(CARTESIAN_IS_2D_STANDARD))
 #define SYSTEM_IS_SET
 #else
 #error "FATAL ERROR NO SYSTEM SET"
@@ -109,14 +112,12 @@ class CoordinateSystem3D : public CoordinateSystem2D {
 
 #ifdef SPHERE_IS_STANDARD
     CoordinateSystem3D(float radius, float phi, float theta);
-    CoordinateSystem3D(float radius, float phi, float theta, float originX,
-                       float originY);
+    CoordinateSystem3D(float radius, float phi, float theta, float originX, float originY);
 #endif
 
 #ifdef CYLINDER_IS_STANDARD
     CoordinateSystem3D(float radius, float phi, float height);
-    CoordinateSystem3D(float radius, float phi, float hieght, float originX,
-                       float originY);
+    CoordinateSystem3D(float radius, float phi, float hieght, float originX, float originY);
 #endif
 
 }; // CoordinateSystem3D

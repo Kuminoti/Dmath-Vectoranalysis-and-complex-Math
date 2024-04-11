@@ -16,12 +16,12 @@ AlignConsecutiveDeclarations: false
 AlignConsecutiveAssignments: false
 AlignConsecutiveBitFields: true
 AlignOperands: false
-AlignTrailingComments: true
+AlignTrailingComments: false
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
 AllowShortBlocksOnASingleLine: false
-IndentCaseLabels: false
+IndentCaseLabels: true
 IndentWrappedFunctionNames: false
-BreakBeforeBinaryOperators: All
 ColumnLimit: 0
-AlwaysBreakTemplateDeclarations: true
+
+ColumnLimit: 100

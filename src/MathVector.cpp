@@ -285,6 +285,16 @@ float Vec3D::cuboidSurface(Vec3D MathVector, Vec3D MathVectorTwo) {
   return result;
 }
 
+float Vec3D::getCylinderRadius(){
+    float  result = std::sqrt((this->X*this->X)+(this->Y*this->Y));
+    return result;
+}
+
+float Vec3D::getSphereRadius(){
+    float  result = std::sqrt((this->X*this->X)+(this->Y*this->Y)+(this->Y*this->Y));
+    return result;
+}
+
 #ifdef CARTESIAN_IS_2D_STANDARD
 
 Vec2D::Vec2D(float X, float Y) : CoordinateSystem2D(X, Y) {
@@ -343,5 +353,4 @@ Vec3D::Vec3D(float X, float Y, float Z) : CoordinateSystem3D(X, Y, Z) {
   this->cartesianToCylinder();
   this->calcAbs();
 }
-
 #endif

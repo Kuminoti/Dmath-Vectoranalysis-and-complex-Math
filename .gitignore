@@ -1,6 +1,7 @@
+#folders
 bin/
 .vscode/
-test.cpp
+
 
 #cmake stuff
 CMakeLists.txt.user
@@ -14,8 +15,11 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
+
+#testing
 a.out 
 test
+test.cpp
 
 #WORKING
 include/field.hpp
