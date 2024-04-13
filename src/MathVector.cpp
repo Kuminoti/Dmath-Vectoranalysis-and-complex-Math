@@ -3,6 +3,13 @@
 using namespace Dvec;
 // Helper functions:
 
+float Vec2D::distance(Vec2D Mathvector){
+    float dx = std::abs(Mathvector.X - this->X);
+    float dy = std::abs(Mathvector.Y - this->Y);
+    float result =  std::sqrt(dx * dx + dy * dy);
+    return result;
+}
+
 Vec2D Vec2D::operator+(Vec2D &Mathvector) {
   float resultX = this->X + Mathvector.X;
   float resultY = this->Y + Mathvector.Y;

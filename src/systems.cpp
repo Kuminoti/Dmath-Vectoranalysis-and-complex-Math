@@ -57,6 +57,11 @@ void CoordinateSystem3D::cylinderToSphere() {
 
 #ifdef CARTESIAN_IS_2D_STANDARD
 
+CoordinateSystem2D::CoordinateSystem2D(float XYZ){
+    this->X = XYZ;
+    this->Y = XYZ;
+}
+
 CoordinateSystem2D::CoordinateSystem2D(float x, float y) {
     this->X = x;
     this->Y = y;
@@ -79,28 +84,29 @@ CoordinateSystem2D::CoordinateSystem2D(float radius, float phi, float originX,
     this->phi = phi;
     this->originX = originX;
     this->originY = originY;
-    this->abs = pyth2D(this->X, this->Y);
-}
+    }
 
 CoordinateSystem2D::CoordinateSystem2D(float radius, float phi) {
     this->radius = radius;
     this->phi = phi;
-    this->abs = pyth2D(this->X, this->Y);
 }
 #endif
 
 #ifdef CARTESIAN_IS_3D_STANDARD
+
+CoordinateSystem3D::CoordinateSystem3D(float XYZ) : CoordinateSystem2D(XYZ)  {
+    
+}
+
 CoordinateSystem3D::CoordinateSystem3D(float X, float Y, float Z)
     : CoordinateSystem2D(X, Y) {
     this->Z = Z;
-    this->abs = pyth3D(this->X, this->Y, this->Z);
 }
 
 CoordinateSystem3D::CoordinateSystem3D(float X, float Y, float Z, float originX,
                                        float originY)
     : CoordinateSystem2D(X, Y, originX, originY) {
     this->Z = Z;
-    this->abs = pyth3D(this->X, this->Y, this->Z);
 }
 #endif
 

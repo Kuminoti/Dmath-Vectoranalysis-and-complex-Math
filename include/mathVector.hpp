@@ -28,15 +28,15 @@ class Vec2D : public CoordinateSystem2D {
 #endif
 
     // Math with scalar results
-    float getAbs();                                 // Calculates the absolutvalue
-    float lenght();                                 // Calculates the length of a vector
-    float dotProduct(Vec2D Mathvector);             // Calculates Scalar product
-    float calcAngle(Vec2D Mathvector);              // Calculates the angle between 2 vectors
-                                                    //
-    float polarSystemArea();                        // Calculates the circle of a polar system
-    float polarSystemCircumfrance();                // Calculates the circumfrance of a polar system
-    float rectangleArea(Vec2D MathVector);          // Calculates the area of a rectangle
-    float rectangleCircumfrance(Vec2D MathVector);  // Calculates the circumfrance of the rectangle 
+    float getAbs();                                  // Calculates the absolutvalue
+    float lenght();                                  // Calculates the length of a vector
+    float dotProduct(Vec2D Mathvector);              // Calculates Scalar product
+    float calcAngle(Vec2D Mathvector);               // Calculates the angle between 2 vectors
+    float distance(Vec2D Mathvector);                                // Calculates the distance between vectors
+    float polarSystemArea();                         // Calculates the circle of a polar system
+    float polarSystemCircumfrance();                 // Calculates the circumfrance of a polar system
+    float rectangleArea(Vec2D MathVector);           // Calculates the area of a rectangle
+    float rectangleCircumfrance(Vec2D MathVector);   // Calculates the circumfrance of the rectangle
 
     /* Setters:
      * If data is set/changed it will automaticly change the values for other
@@ -49,14 +49,14 @@ class Vec2D : public CoordinateSystem2D {
     virtual void setRadius(float radius);
 
     // You can use methods insteadof operators
-    Vec2D add(Vec2D Mathvector);                    // Adding 2 vectors
-    Vec2D subtract(Vec2D Mathvector);               // Subtract 2 vectors
-    Vec2D rotateVector(float angle);                // Rotates a vector dependent op the angle
+    Vec2D add(Vec2D Mathvector); // Adding 2 vectors
+    Vec2D subtract(Vec2D Mathvector); // Subtract 2 vectors
+    Vec2D rotateVector(float angle); // Rotates a vector dependent op the angle
 
     // spezial Vectors
     static Vec2D polarVector(float radius,
-                             float angle);          // Creates a Vector in a polar system
-    static Vec2D zeroVector();                      // Creates a vector with lenght 0
+                             float angle); // Creates a Vector in a polar system
+    static Vec2D zeroVector(); // Creates a vector with lenght 0
 };
 
 class Vec3D : public CoordinateSystem3D {
@@ -87,9 +87,9 @@ class Vec3D : public CoordinateSystem3D {
     void setY(float Y);
     void setZ(float Z);
 
-    void setPhi(float phi);                         // For spheresystems (radius, angle Phi, angle Theta)
-    void setHeight(float phi);                      // For cylinder systems (radius, angle, height);
-    void setTheta(float phi);                       // For spheresystems (radius, angle Phi, angle Theta);
+    void setPhi(float phi); // For spheresystems (radius, angle Phi, angle Theta)
+    void setHeight(float phi); // For cylinder systems (radius, angle, height);
+    void setTheta(float phi); // For spheresystems (radius, angle Phi, angle Theta);
 
     // Calculations that return a scalar value
     float dotProduct(Vec3D Mathvector);

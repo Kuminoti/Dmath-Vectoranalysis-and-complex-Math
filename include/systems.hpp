@@ -18,8 +18,8 @@
 #define CARTESIAN_IS_2D_STANDARD // Cartesian system: X,Y
 //#define POLAR_IS_STANDARD        //Polar system: Radius, phi
 
-//#define CARTESIAN_IS_3D_STANDARD   //Cartesian system: X,Y,Z
-#define SPHERE_IS_STANDARD // Sphere system: Radius, phi, phi
+#define CARTESIAN_IS_3D_STANDARD   //Cartesian system: X,Y,Z
+//#define SPHERE_IS_STANDARD // Sphere system: Radius, phi, phi
 //#define CYLINDER_IS_STANDARD     //Cylinder system: Radius, phi, height
 
 #if (defined(SPHERE_IS_STANDARD) || defined(CYLINDER_IS_STANDARD)) &&                              \
@@ -72,6 +72,7 @@ class CoordinateSystem2D {
     float getPhi();
 
 #ifdef CARTESIAN_IS_2D_STANDARD
+    CoordinateSystem2D(float XY);
     CoordinateSystem2D(float x, float y);
     CoordinateSystem2D(float x, float y, float originX, float originY);
 #endif
@@ -106,6 +107,7 @@ class CoordinateSystem3D : public CoordinateSystem2D {
     float getZ();
 
 #ifdef CARTESIAN_IS_3D_STANDARD
+    CoordinateSystem3D(float XYZ);
     CoordinateSystem3D(float X, float Y, float Z);
     CoordinateSystem3D(float X, float Y, float Z, float originX, float originY);
 #endif
