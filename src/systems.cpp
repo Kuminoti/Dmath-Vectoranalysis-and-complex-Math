@@ -57,9 +57,9 @@ void CoordinateSystem3D::cylinderToSphere() {
 
 #ifdef CARTESIAN_IS_2D_STANDARD
 
-CoordinateSystem2D::CoordinateSystem2D(float XYZ){
-    this->X = XYZ;
-    this->Y = XYZ;
+CoordinateSystem2D::CoordinateSystem2D(float XY){
+    this->X = XY;
+    this->Y = XY;
 }
 
 CoordinateSystem2D::CoordinateSystem2D(float x, float y) {

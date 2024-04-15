@@ -19,6 +19,7 @@ class Vec2D : public CoordinateSystem2D {
     float operator*(Vec2D& Mathvector);
 
 #ifdef CARTESIAN_IS_2D_STANDARD
+    Vec2D(float XY);
     Vec2D(float X, float Y);
     Vec2D(float X, float Y, float originX, float originY);
 #endif
@@ -70,6 +71,7 @@ class Vec3D : public CoordinateSystem3D {
     float operator*(Vec3D& Mathvector);
 
 #ifdef CARTESIAN_IS_3D_STANDARD
+    Vec3D(float XYZ);
     Vec3D(float X, float Y, float Z);
     Vec3D(float X, float Y, float Z, float originX, float originY);
 #endif

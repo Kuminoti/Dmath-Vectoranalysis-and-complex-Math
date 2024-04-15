@@ -304,6 +304,11 @@ float Vec3D::getSphereRadius(){
 
 #ifdef CARTESIAN_IS_2D_STANDARD
 
+Vec2D::Vec2D(float XY) : CoordinateSystem2D(XY){
+  this->calcAbs();
+  this->cartesianToPolar();
+}
+
 Vec2D::Vec2D(float X, float Y) : CoordinateSystem2D(X, Y) {
   this->calcAbs();
   this->cartesianToPolar();
@@ -347,6 +352,12 @@ Vec3D::Vec3D(float radius, float phi, float height)
 #endif
 
 #ifdef CARTESIAN_IS_3D_STANDARD
+
+Vec3D::Vec3D(float XYZ) : CoordinateSystem3D(XYZ) {
+  this->cartesianToSphere();
+  this->cartesianToCylinder();
+  this->calcAbs();  
+}
 
 Vec3D::Vec3D(float X, float Y, float Z, float originX, float originY)
     : CoordinateSystem3D(X, Y, Z, originX, originY) {
