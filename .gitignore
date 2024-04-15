@@ -1,7 +1,7 @@
 #folders
 bin/
 .vscode/
-
+bin/
 
 #cmake stuff
 CMakeLists.txt.user

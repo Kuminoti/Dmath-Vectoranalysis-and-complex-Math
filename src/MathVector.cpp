@@ -359,8 +359,8 @@ Vec3D::Vec3D(float XYZ) : CoordinateSystem3D(XYZ) {
   this->calcAbs();  
 }
 
-Vec3D::Vec3D(float X, float Y, float Z, float originX, float originY)
-    : CoordinateSystem3D(X, Y, Z, originX, originY) {
+Vec3D::Vec3D(float X, float Y, float Z, float originX, float originY, float originZ)
+    : CoordinateSystem3D(X, Y, Z, originX, originY, originZ) {
   this->cartesianToSphere();
   this->cartesianToCylinder();
   this->calcAbs();

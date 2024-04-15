@@ -72,7 +72,7 @@ class Vec3D : public CoordinateSystem3D {
 #ifdef CARTESIAN_IS_3D_STANDARD
     Vec3D(float XYZ);
     Vec3D(float X, float Y, float Z);
-    Vec3D(float X, float Y, float Z, float originX, float originY);
+    Vec3D(float X, float Y, float Z, float originX, float originY, float originZ );
 #endif
 
 #ifdef SPHERE_IS_STANDARD
