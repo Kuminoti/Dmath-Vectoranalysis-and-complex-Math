@@ -55,8 +55,7 @@ class Vec2D : public CoordinateSystem2D {
     Vec2D rotateVector(float angle); // Rotates a vector dependent op the angle
 
     // spezial Vectors
-    static Vec2D polarVector(float radius,
-                             float angle); // Creates a Vector in a polar system
+    static Vec2D polarVector(float radius, float angle); // Creates a Vector in a polar system
     static Vec2D zeroVector(); // Creates a vector with lenght 0
 };
 

@@ -103,10 +103,10 @@ CoordinateSystem3D::CoordinateSystem3D(float X, float Y, float Z)
     this->Z = Z;
 }
 
-CoordinateSystem3D::CoordinateSystem3D(float X, float Y, float Z, float originX,
-                                       float originY)
+CoordinateSystem3D::CoordinateSystem3D(float X, float Y, float Z, float originX, float originY, float originZ)
     : CoordinateSystem2D(X, Y, originX, originY) {
     this->Z = Z;
+    this->originZ = originZ;
 }
 #endif
 
@@ -116,9 +116,10 @@ CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float theta)
     this->theta = theta;
 }
 CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float theta,
-                                       float originX, float originY)
+                                       float originX, float originY,float originZ)
     : CoordinateSystem2D(radius, phi, originX, originY) {
     this->theta = theta;
+    this->originZ = originZ;
 }
 #endif
 
@@ -128,18 +129,23 @@ CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float height)
     this->height = height;
 }
 CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float height,
-                                       float originX, float originY)
+                                       float originX, float originY, float originZ)
     : CoordinateSystem2D(radius, phi, originX, originY) {
     this->height = height;
+    this->originZ = originZ;
 }
 #endif
-float CoordinateSystem2D::getX() { return this->X; }
-float CoordinateSystem2D::getY() { return this->Y; }
-float CoordinateSystem2D::getPhi() { return this->phi; }
-float CoordinateSystem2D::getRadius() { return this->radius; }
-float CoordinateSystem3D::getTheta() { return this->theta; }
-float CoordinateSystem3D::getHeight() { return this->height; }
-float CoordinateSystem3D::getZ() { return this->Z; }
+float CoordinateSystem2D::getX()       { return this->X; }
+float CoordinateSystem2D::getY()       { return this->Y; }
+float CoordinateSystem2D::getPhi()     { return this->phi; }
+float CoordinateSystem2D::getOriginX() { return this->originX; }
+float CoordinateSystem2D::getOriginY() { return this->originY; }
+float CoordinateSystem2D::getRadius()  { return this->radius; }
+float CoordinateSystem3D::getTheta()   { return this->theta; }
+float CoordinateSystem3D::getHeight()  { return this->height; }
+float CoordinateSystem3D::getZ()       { return this->Z; }
+float CoordinateSystem3D::getOriginZ() { return this->originZ; }
+
 float CoordinateSystem3D::getRadiusSphere() {
     return pyth3D(this->X, this->Y, this->Z);
 }

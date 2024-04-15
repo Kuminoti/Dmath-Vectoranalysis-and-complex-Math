@@ -70,6 +70,8 @@ class CoordinateSystem2D {
     float getX();
     float getY();
     float getPhi();
+    float getOriginX();
+    float getOriginY();
 
 #ifdef CARTESIAN_IS_2D_STANDARD
     CoordinateSystem2D(float XY);
@@ -88,6 +90,7 @@ class CoordinateSystem3D : public CoordinateSystem2D {
     float Z;
     float theta;
     float height;
+    float originZ;
 
   protected: // Protected methods;
     void cartesianToSphere();
@@ -105,21 +108,22 @@ class CoordinateSystem3D : public CoordinateSystem2D {
     float getTheta();
     float getHeight();
     float getZ();
+    float getOriginZ();
 
 #ifdef CARTESIAN_IS_3D_STANDARD
     CoordinateSystem3D(float XYZ);
     CoordinateSystem3D(float X, float Y, float Z);
-    CoordinateSystem3D(float X, float Y, float Z, float originX, float originY);
+    CoordinateSystem3D(float X, float Y, float Z, float originX, float originY, float originZ);
 #endif
 
 #ifdef SPHERE_IS_STANDARD
     CoordinateSystem3D(float radius, float phi, float theta);
-    CoordinateSystem3D(float radius, float phi, float theta, float originX, float originY);
+    CoordinateSystem3D(float radius, float phi, float theta, float originX, float originY, float originZ);
 #endif
 
 #ifdef CYLINDER_IS_STANDARD
     CoordinateSystem3D(float radius, float phi, float height);
-    CoordinateSystem3D(float radius, float phi, float hieght, float originX, float originY);
+    CoordinateSystem3D(float radius, float phi, float hieght, float originX, float originY, float originZ);
 #endif
 
 }; // CoordinateSystem3D
