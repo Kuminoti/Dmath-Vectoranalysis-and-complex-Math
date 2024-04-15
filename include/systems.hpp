@@ -10,7 +10,7 @@
 #define PI 3.14159265358979323846
 #define TWOPI 2 * PI
 #define FOUR_PI 2 * PI
-#define NAMESPACESTART namespace Dvec {
+#define NAMESPACESTART namespace Dmath {
 #define NAMESPACEEND }
 
 // uncomment to choose your standard coordinate system

@@ -1,6 +1,6 @@
 #include "../include/mathVector.hpp"
 
-using namespace Dvec;
+using namespace Dmath;
 // Helper functions:
 
 float Vec2D::distance(Vec2D Mathvector){
