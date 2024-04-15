@@ -24,4 +24,4 @@ IndentCaseLabels: true
 IndentWrappedFunctionNames: false
 ColumnLimit: 0
 
-ColumnLimit: 100
+ColumnLimit: 150
