@@ -15,11 +15,11 @@
 
 // uncomment to choose your standard coordinate system
 
-#define CARTESIAN_IS_2D_STANDARD // Cartesian system: X,Y
+#define CARTESIAN_IS_2D_STANDARD   // Cartesian system: X,Y
 //#define POLAR_IS_STANDARD        //Polar system: Radius, phi
 
 #define CARTESIAN_IS_3D_STANDARD   //Cartesian system: X,Y,Z
-//#define SPHERE_IS_STANDARD // Sphere system: Radius, phi, phi
+//#define SPHERE_IS_STANDARD       // Sphere system: Radius, phi, phi
 //#define CYLINDER_IS_STANDARD     //Cylinder system: Radius, phi, height
 
 #if (defined(SPHERE_IS_STANDARD) || defined(CYLINDER_IS_STANDARD)) &&                              \
