@@ -5,6 +5,7 @@ project(Mathvector)
 
 set(SOURCE_FILES src/mathvector.cpp src/systems.cpp)
 
+set(CMAKE_BINARY_DIR bin)
 
 include_directories(include)
 

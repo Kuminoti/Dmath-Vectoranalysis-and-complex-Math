@@ -2,6 +2,7 @@
 bin/
 .vscode/
 bin/
+lib/
 
 #cmake stuff
 CMakeLists.txt.user
@@ -21,10 +22,4 @@ a.out
 test
 test.cpp
 
-#WORKING
-include/field.hpp
-include/scalarfield.hpp
-include/Vectorfield.hpp
-include/differentialGeometry.hpp
 
-theorie.txt
