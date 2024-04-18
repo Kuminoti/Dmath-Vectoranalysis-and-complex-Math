@@ -4,6 +4,7 @@
 
 //2D curves
 
+// createVectorCurve erschafft eine vektoriele parametrisierte kurve
 std::vector<Dmath::Vec2D> Dmath::VectorCurve2D::createVectorCurve(){
     std::vector<Dmath::Vec2D> output;
     for(double i = 0; i<this->numberOfElements; i+= resolution){
@@ -11,6 +12,33 @@ std::vector<Dmath::Vec2D> Dmath::VectorCurve2D::createVectorCurve(){
     }
     return output;
 }
+
+/* createVectorialCurve erschafft eine kurve aus zusammenhängenden vektoren, dessen
+    * ursprung der letzte Vektor ist "quasi zusammenhängend" ->->->
+    * der ursprung eines vektors ist der wert des letzt (auser beim start 0,0)
+    * also z.B:
+    * der erste  vektor(0;3)ursprung(0;0)
+    * der zweite vektor(1;2)ursprung(0;3) also die koordinatendes letzten Vektors
+    * ->->->
+*/
+std::vector<Dmath::Vec2D> Dmath::VectorCurve2D::createVectorialCurve(){
+    std::vector<Dmath::Vec2D> output;
+    int iterations = 0;
+    for(double i = this->curveStart; i<curveStopp; i+=resolution){
+        if(i == this->curveStart){
+            output.push_back(Dmath::Vec2D(this->mainXFunc(i),this->mainXFunc(i),0,0));
+            iterations++;
+        } else {
+            //Die 3. und 4. variable im konstruktor geben den ursprung vom vector an, wenn er nicht bei 0 startet,
+            //so kann man eine simple kurve bestehend aus zusammenhängenden vectoren dargestellt werden
+            output.push_back(Dmath::Vec2D(this->mainXFunc(i),this->mainYFunc(i),output[iterations-1].getX(),output[iterations-1].getX()));
+            iterations++;
+        }
+    }
+    return output;
+}
+
+
 
 Dmath::VectorCurve2D::VectorCurve2D(std::function<float(float)> xFunc,std::function<float(float)> yFunc){
     this->mainXFunc = xFunc;
@@ -68,6 +96,25 @@ std::vector<Dmath::Vec3D> Dmath::VectorCurve3D::createVectorCurve(){
     }
     return output;
 }
+
+std::vector<Dmath::Vec3D> Dmath::VectorCurve3D::createVectorialCurve(){
+    std::vector<Dmath::Vec3D> output;
+    int iterations = 0;
+    for(double i = this->curveStart; i<curveStopp; i+=resolution){
+        if(i == this->curveStart){
+            output.push_back(Dmath::Vec3D(this->mainXFunc(i),this->mainYFunc(i), this->mainZFunc(i),0,0,0));
+            iterations++;
+        } else {
+            //Die 3. und 4. variable im konstruktor geben den ursprung vom vector an, wenn er nicht bei 0 startet,
+            //so kann man eine simple kurve bestehend aus zusammenhängenden vectoren dargestellt werden
+            output.push_back(Dmath::Vec3D(this->mainXFunc(i),this->mainYFunc(i),this->mainZFunc(i),output[iterations-1].getX(),output[iterations-1].getY(),output[iterations-1].getZ()));
+            iterations++;
+        }
+    }
+    return output;
+}
+
+
 
 Dmath::VectorCurve3D::VectorCurve3D(std::function<float(float)> xFunc,std::function<float(float)> yFunc,std::function<float(float)> zFunc){
     this->mainXFunc = xFunc;
