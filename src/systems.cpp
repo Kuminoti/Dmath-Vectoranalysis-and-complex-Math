@@ -60,11 +60,15 @@ void CoordinateSystem3D::cylinderToSphere() {
 CoordinateSystem2D::CoordinateSystem2D(float XY){
     this->X = XY;
     this->Y = XY;
+    this->originX = 0;
+    this->originY = 0;
 }
 
 CoordinateSystem2D::CoordinateSystem2D(float x, float y) {
     this->X = x;
     this->Y = y;
+    this->originX = 0;
+    this->originY = 0;
 }
 
 CoordinateSystem2D::CoordinateSystem2D(float x, float y, float originX,
@@ -89,18 +93,28 @@ CoordinateSystem2D::CoordinateSystem2D(float radius, float phi, float originX,
 CoordinateSystem2D::CoordinateSystem2D(float radius, float phi) {
     this->radius = radius;
     this->phi = phi;
+    this->originX = 0;
+    this->originY = 0;
 }
 #endif
 
 #ifdef CARTESIAN_IS_3D_STANDARD
 
 CoordinateSystem3D::CoordinateSystem3D(float XYZ) : CoordinateSystem2D(XYZ)  {
-    
+    this->X = XYZ;
+    this->Y = XYZ;
+    this->Z = XYZ;
+    this->originX = 0;
+    this->originY = 0;
+    this->originZ = 0;
 }
 
 CoordinateSystem3D::CoordinateSystem3D(float X, float Y, float Z)
     : CoordinateSystem2D(X, Y) {
     this->Z = Z;
+    this->originX = 0;
+    this->originY = 0;
+    this->originZ = 0;
 }
 
 CoordinateSystem3D::CoordinateSystem3D(float X, float Y, float Z, float originX, float originY, float originZ)
@@ -114,6 +128,9 @@ CoordinateSystem3D::CoordinateSystem3D(float X, float Y, float Z, float originX,
 CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float theta)
     : CoordinateSystem2D(radius, phi) {
     this->theta = theta;
+        this->originX = 0;
+    this->originY = 0;
+    this->originZ = 0;
 }
 CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float theta,
                                        float originX, float originY,float originZ)
@@ -127,6 +144,9 @@ CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float theta,
 CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float height)
     : CoordinateSystem2D(radius, phi) {
     this->height = height;
+    this->originX = 0;
+    this->originY = 0;
+    this->originZ = 0;
 }
 CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float height,
                                        float originX, float originY, float originZ)
