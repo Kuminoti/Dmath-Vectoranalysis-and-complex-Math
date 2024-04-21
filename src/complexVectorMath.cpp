@@ -4,23 +4,8 @@
 
 //2D curves
 
-// createVectorCurve erschafft eine vektoriele parametrisierte kurve
-std::vector<Dmath::Vec2D> Dmath::VectorCurve2D::createVectorCurve(){
-    std::vector<Dmath::Vec2D> output;
-    for(double i = 0; i<this->numberOfElements; i+= resolution){
-        output.push_back(Dmath::Vec2D(this->mainXFunc(i),mainYFunc(i)));
-    }
-    return output;
-}
 
-/* createVectorialCurve erschafft eine kurve aus zusammenhängenden vektoren, dessen
-    * ursprung der letzte Vektor ist "quasi zusammenhängend" ->->->
-    * der ursprung eines vektors ist der wert des letzt (auser beim start 0,0)
-    * also z.B:
-    * der erste  vektor(0;3)ursprung(0;0)
-    * der zweite vektor(1;2)ursprung(0;3) also die koordinatendes letzten Vektors
-    * ->->->
-*/
+
 std::vector<Dmath::Vec2D> Dmath::VectorCurve2D::createVectorialCurve(){
     std::vector<Dmath::Vec2D> output;
     int iterations = 0;
@@ -29,9 +14,8 @@ std::vector<Dmath::Vec2D> Dmath::VectorCurve2D::createVectorialCurve(){
             output.push_back(Dmath::Vec2D(this->mainXFunc(i),this->mainXFunc(i),0,0));
             iterations++;
         } else {
-            //Die 3. und 4. variable im konstruktor geben den ursprung vom vector an, wenn er nicht bei 0 startet,
-            //so kann man eine simple kurve bestehend aus zusammenhängenden vectoren dargestellt werden
-            output.push_back(Dmath::Vec2D(this->mainXFunc(i),this->mainYFunc(i),output[iterations-1].getX(),output[iterations-1].getX()));
+
+            output.push_back(Dmath::Vec2D(this->mainXFunc(i),this->mainYFunc(i),output[iterations-1].getX(),output[iterations-1].getY()));
             iterations++;
         }
     }
@@ -44,7 +28,7 @@ Dmath::VectorCurve2D::VectorCurve2D(std::function<float(float)> xFunc,std::funct
     this->mainXFunc = xFunc;
     this->mainYFunc = yFunc;
     this->numberOfElements = static_cast<int>((this->curveStopp - this->curveStart) / this->resolution);
-    this->mainCurve = this->createVectorCurve();
+    this->mainCurve = this->createVectorialCurve();
 }
 
 Dmath::VectorCurve2D::VectorCurve2D(std::function<float(float)> xFunc,std::function<float(float)> yFunc, float start, float stopp, float res){
@@ -54,7 +38,8 @@ Dmath::VectorCurve2D::VectorCurve2D(std::function<float(float)> xFunc,std::funct
     this->curveStopp = stopp;
     this->resolution = res;
     this->numberOfElements = static_cast<int>((this->curveStopp - this->curveStart) / this->resolution);
-    this->mainCurve = this->createVectorCurve();
+    this->mainCurve = this->createVectorialCurve();
+    
 }
 
 Dmath::VectorCurve2D Dmath::VectorCurve2D::createStandardCurve(std::function<float(float)> funcX,std::function<float(float)> funcY ){
@@ -64,6 +49,7 @@ Dmath::VectorCurve2D Dmath::VectorCurve2D::createStandardCurve(std::function<flo
 Dmath::VectorCurve2D Dmath::VectorCurve2D::createCustomCurve(std::function<float(float)> funcX,std::function<float(float)> funcY,float start,float stopp,float res ){
     return Dmath::VectorCurve2D(funcX,funcY,start,stopp,res);
 }
+
 
 Dmath::Vec2D Dmath::VectorCurve2D::getVectorFromPoint(float point){
     if(point > this->curveStopp || point < this->curveStart){
@@ -83,8 +69,28 @@ Dmath::Vec2D Dmath::VectorCurve2D::getVectorFromFunction(float vecX, float vecY)
 }
 
 
+Dmath::Vec2D Dmath::VectorCurve2D::tangentVector(float t){
+    float h = 0.000001; 
+    float x_t_plus_h = this->mainXFunc(t + h);
+    float x_t_minus_h = this->mainXFunc(t - h);
+    float y_t_plus_h = this->mainYFunc(t + h);
+    float y_t_minus_h = this->mainYFunc(t - h);
 
+    float dx = (x_t_plus_h - x_t_minus_h) / (2 * h); 
+    float dy = (y_t_plus_h - y_t_minus_h) / (2 * h); 
 
+    return Dmath::Vec2D(dx, dy); 
+}
+
+float Dmath::VectorCurve2D::curveLenght(){
+        float lenght = 0;
+        for(int i = 0; i<this->mainCurve.size(); i++){
+            std::cout << this->mainCurve[i].getAbs() <<std::endl;
+            lenght += this->mainCurve[i].getAbs();
+        }
+        lenght = lenght*resolution;
+        return lenght;
+    }
 
 
 
@@ -105,8 +111,6 @@ std::vector<Dmath::Vec3D> Dmath::VectorCurve3D::createVectorialCurve(){
             output.push_back(Dmath::Vec3D(this->mainXFunc(i),this->mainYFunc(i), this->mainZFunc(i),0,0,0));
             iterations++;
         } else {
-            //Die 3. und 4. variable im konstruktor geben den ursprung vom vector an, wenn er nicht bei 0 startet,
-            //so kann man eine simple kurve bestehend aus zusammenhängenden vectoren dargestellt werden
             output.push_back(Dmath::Vec3D(this->mainXFunc(i),this->mainYFunc(i),this->mainZFunc(i),output[iterations-1].getX(),output[iterations-1].getY(),output[iterations-1].getZ()));
             iterations++;
         }
@@ -159,4 +163,39 @@ Dmath::Vec3D Dmath::VectorCurve3D::getVectorFromPoint(float point){
     int foundPoint = static_cast<int> (point/this->resolution);
     Dmath::Vec3D outputVector = this->mainCurve[foundPoint];
     return outputVector;
+}
+
+
+Dmath::Vec3D  Dmath::VectorCurve3D::tangentVector(float t){
+    float h = 0.00000001; // Kleine Schrittweite
+    float x_t_plus_h = this->mainXFunc(t + h);
+    float x_t_minus_h = this->mainXFunc(t - h);
+    float y_t_plus_h = this->mainYFunc(t + h);
+    float y_t_minus_h = this->mainYFunc(t - h);
+    float z_t_plus_h = this->mainZFunc(t + h);
+    float z_t_minus_h = this->mainZFunc(t - h);
+
+    // Überprüfung, ob die Funktionswerte positiv oder negativ sind
+    bool x_positive = (x_t_plus_h >= 0) && (x_t_minus_h >= 0);
+    bool y_positive = (y_t_plus_h >= 0) && (y_t_minus_h >= 0);
+    bool z_positive = (y_t_plus_h >= 0) && (y_t_minus_h >= 0);
+
+    // Berechnung des Tangentialvektors
+    float dx = (x_t_plus_h - x_t_minus_h) / (2 * h); // Zentrale Differenz für die Ableitung von x nach t
+    float dy = (y_t_plus_h - y_t_minus_h) / (2 * h); // Zentrale Differenz für die Ableitung von y nach t
+    float dz = (z_t_plus_h - z_t_minus_h) / (2 * h); // Zentrale Differenz für die Ableitung von y nach t
+    // Wenn die Funktionswerte negativ sind, invertiere den Tangentialvektor
+    if (!x_positive) dx = -dx;
+    if (!y_positive) dy = -dy;
+
+    return Dmath::Vec3D(dx, dy,dz); // Tangentialvektor
+}
+
+
+float Dmath::VectorCurve3D::curveLenght(){
+    float lenght = 0;
+    for(int i = 0; i<this->mainCurve.size(); i++){
+        lenght += this->mainCurve[i].getAbs();
+    }
+    return lenght;
 }

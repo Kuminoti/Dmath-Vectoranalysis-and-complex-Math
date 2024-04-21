@@ -11,7 +11,7 @@ NAMESPACESTART
 class VectorCurve2D {
   private:
     // createVectorCurve erschafft eine vektoriele parametrisierte kurve
-    std::vector<Dmath::Vec2D> createVectorCurve();
+    
 
     /* createVectorialCurve erschafft eine kurve aus zusammenhängenden vektoren, dessen
      * ursprung der letzte Vektor ist "quasi zusammenhängend" ->->->
@@ -41,11 +41,15 @@ class VectorCurve2D {
   public:
     static VectorCurve2D createStandardCurve(std::function<float(float)> funcX,std::function<float(float)> funcY );
     static VectorCurve2D createCustomCurve(std::function<float(float)> funcX,std::function<float(float)> funcY,float start,float stopp,float res );
-
     //Getters
     Dmath::Vec2D getVectorFromFunction(float vecX, float vecY);
     Dmath::Vec2D getVectorFromPoint(float point);
+
+    Vec2D tangentVector(float t);
+
+    float curveLenght();
 };
+    
 
 class VectorCurve3D {
   private:
@@ -71,6 +75,10 @@ class VectorCurve3D {
 
     Dmath::Vec3D getVectorFromFunction(float xValue, float yValue, float zValue);
     Dmath::Vec3D getVectorFromPoint(float point);
+
+    Vec3D tangentVector(float t);
+
+    float curveLenght();
 };
 
 
