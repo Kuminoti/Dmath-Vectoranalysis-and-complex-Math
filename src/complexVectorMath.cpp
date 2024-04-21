@@ -9,13 +9,13 @@
 std::vector<Dmath::Vec2D> Dmath::VectorCurve2D::createVectorialCurve(){
     std::vector<Dmath::Vec2D> output;
     int iterations = 0;
-    for(double i = this->curveStart; i<curveStopp; i+=resolution){
-        if(i == this->curveStart){
-            output.push_back(Dmath::Vec2D(this->mainXFunc(i),this->mainXFunc(i),0,0));
+    for(double i = this->systemStart; i<systemStopp; i+=resolution){
+        if(i == this->systemStart){
+            output.push_back(Dmath::Vec2D(this->xFunc(i),this->yFunc(i),0,0));
             iterations++;
         } else {
 
-            output.push_back(Dmath::Vec2D(this->mainXFunc(i),this->mainYFunc(i),output[iterations-1].getX(),output[iterations-1].getY()));
+            output.push_back(Dmath::Vec2D(this->xFunc(i),this->yFunc(i),output[iterations-1].getX(),output[iterations-1].getY()));
             iterations++;
         }
     }
@@ -24,20 +24,13 @@ std::vector<Dmath::Vec2D> Dmath::VectorCurve2D::createVectorialCurve(){
 
 
 
-Dmath::VectorCurve2D::VectorCurve2D(std::function<float(float)> xFunc,std::function<float(float)> yFunc){
-    this->mainXFunc = xFunc;
-    this->mainYFunc = yFunc;
-    this->numberOfElements = static_cast<int>((this->curveStopp - this->curveStart) / this->resolution);
+Dmath::VectorCurve2D::VectorCurve2D(std::function<float(float)> xFunc,std::function<float(float)> yFunc)
+    : VectorialDifferentialGeometry2D (xFunc,yFunc) {
     this->mainCurve = this->createVectorialCurve();
 }
 
-Dmath::VectorCurve2D::VectorCurve2D(std::function<float(float)> xFunc,std::function<float(float)> yFunc, float start, float stopp, float res){
-    this->mainXFunc = xFunc;
-    this->mainYFunc = yFunc;
-    this->curveStart = start;
-    this->curveStopp = stopp;
-    this->resolution = res;
-    this->numberOfElements = static_cast<int>((this->curveStopp - this->curveStart) / this->resolution);
+Dmath::VectorCurve2D::VectorCurve2D(std::function<float(float)> xFunc,std::function<float(float)> yFunc, float start, float stopp, float res)
+    : VectorialDifferentialGeometry2D(xFunc,yFunc,resolution,systemStart,systemStopp){
     this->mainCurve = this->createVectorialCurve();
     
 }
@@ -52,7 +45,7 @@ Dmath::VectorCurve2D Dmath::VectorCurve2D::createCustomCurve(std::function<float
 
 
 Dmath::Vec2D Dmath::VectorCurve2D::getVectorFromPoint(float point){
-    if(point > this->curveStopp || point < this->curveStart){
+    if(point > this->systemStart || point < this->systemStopp){
         std::cerr << "Error index out of limit! \n Returning a null vector \n" ;
             return Dmath::Vec2D::zeroVector();
         }
@@ -62,8 +55,8 @@ Dmath::Vec2D Dmath::VectorCurve2D::getVectorFromPoint(float point){
 }
 
 Dmath::Vec2D Dmath::VectorCurve2D::getVectorFromFunction(float vecX, float vecY){
-    float xValue = this->mainXFunc(vecX);
-    float yValue = this->mainYFunc(vecY);
+    float xValue = this->xFunc(vecX);
+    float yValue = this->yFunc(vecY);
     Dmath::Vec2D outputVector(xValue, yValue);
     return outputVector;
 }
@@ -71,10 +64,10 @@ Dmath::Vec2D Dmath::VectorCurve2D::getVectorFromFunction(float vecX, float vecY)
 
 Dmath::Vec2D Dmath::VectorCurve2D::tangentVector(float t){
     float h = 0.000001; 
-    float x_t_plus_h = this->mainXFunc(t + h);
-    float x_t_minus_h = this->mainXFunc(t - h);
-    float y_t_plus_h = this->mainYFunc(t + h);
-    float y_t_minus_h = this->mainYFunc(t - h);
+    float x_t_plus_h = this->xFunc(t + h);
+    float x_t_minus_h = this->xFunc(t - h);
+    float y_t_plus_h = this->yFunc(t + h);
+    float y_t_minus_h = this->yFunc(t - h);
 
     float dx = (x_t_plus_h - x_t_minus_h) / (2 * h); 
     float dy = (y_t_plus_h - y_t_minus_h) / (2 * h); 
@@ -95,23 +88,17 @@ float Dmath::VectorCurve2D::curveLenght(){
 
 
 //3D curves
-std::vector<Dmath::Vec3D> Dmath::VectorCurve3D::createVectorCurve(){
-    std::vector<Dmath::Vec3D> output;
-    for(double i = 0; i<this->numberOfElements; i+= this->resolution){
-        output.push_back(Dmath::Vec3D(this->mainXFunc(i),this->mainYFunc(i),this->mainZFunc(i)));
-    }
-    return output;
-}
+
 
 std::vector<Dmath::Vec3D> Dmath::VectorCurve3D::createVectorialCurve(){
     std::vector<Dmath::Vec3D> output;
     int iterations = 0;
-    for(double i = this->curveStart; i<curveStopp; i+=resolution){
-        if(i == this->curveStart){
-            output.push_back(Dmath::Vec3D(this->mainXFunc(i),this->mainYFunc(i), this->mainZFunc(i),0,0,0));
+    for(double i = this->systemStart; i<systemStopp; i+=resolution){
+        if(i == this->systemStart){
+            output.push_back(Dmath::Vec3D(this->xFunc(i),this->yFunc(i), this->zFunc(i),0,0,0));
             iterations++;
         } else {
-            output.push_back(Dmath::Vec3D(this->mainXFunc(i),this->mainYFunc(i),this->mainZFunc(i),output[iterations-1].getX(),output[iterations-1].getY(),output[iterations-1].getZ()));
+            output.push_back(Dmath::Vec3D(this->xFunc(i),this->yFunc(i),this->zFunc(i),output[iterations-1].getX(),output[iterations-1].getY(),output[iterations-1].getZ()));
             iterations++;
         }
     }
@@ -120,23 +107,17 @@ std::vector<Dmath::Vec3D> Dmath::VectorCurve3D::createVectorialCurve(){
 
 
 
-Dmath::VectorCurve3D::VectorCurve3D(std::function<float(float)> xFunc,std::function<float(float)> yFunc,std::function<float(float)> zFunc){
-    this->mainXFunc = xFunc;
-    this->mainYFunc = yFunc;
-    this->mainZFunc = zFunc;
-    this->numberOfElements = static_cast<int>((this->curveStopp - this->curveStart) / this->resolution);
-    this->mainCurve = this->createVectorCurve();
+Dmath::VectorCurve3D::VectorCurve3D(std::function<float(float)> xFunc,std::function<float(float)> yFunc,std::function<float(float)> zFunc)
+: VectorialDifferentialGeometry3D(xFunc,yFunc,zFunc){
+
+
+    this->mainCurve = this->createVectorialCurve();
 }
 
-Dmath::VectorCurve3D::VectorCurve3D(std::function<float(float)> xFunc,std::function<float(float)> yFunc,std::function<float(float)> zFunc, float start, float stopp, float res){
-    this->mainXFunc = xFunc;
-    this->mainYFunc = yFunc;
-    this->mainZFunc = zFunc;
-    this->curveStart = start;
-    this->curveStopp = stopp;
-    this->resolution = res;
-    this->numberOfElements = static_cast<int>((this->curveStopp - this->curveStart) / this->resolution);
-    this->mainCurve = this->createVectorCurve();
+Dmath::VectorCurve3D::VectorCurve3D(std::function<float(float)> xFunc,std::function<float(float)> yFunc,std::function<float(float)> zFunc, float start, float stopp, float res)
+: VectorialDifferentialGeometry3D(xFunc,yFunc,zFunc,systemStart,systemStopp,resolution){
+    
+    this->mainCurve = this->createVectorialCurve();
 }
 
 Dmath::VectorCurve3D Dmath::VectorCurve3D::createStandardCurve(std::function<float(float)> funcX,std::function<float(float)> funcY,std::function<float(float)> zFunc ){
@@ -148,15 +129,15 @@ Dmath::VectorCurve3D Dmath::VectorCurve3D::createCustomCurve(std::function<float
 }
 
 Dmath::Vec3D  Dmath::VectorCurve3D::getVectorFromFunction(float xValue, float yValue, float zValue){
-    float vecX = this->mainXFunc(xValue);
-    float vecY = this->mainYFunc(yValue);
-    float vecZ = this->mainZFunc(zValue);
+    float vecX = this->xFunc(xValue);
+    float vecY = this->yFunc(yValue);
+    float vecZ = this->zFunc(zValue);
     Dmath::Vec3D outputVector(vecX,vecY,vecZ);
     return outputVector;
 }
 
 Dmath::Vec3D Dmath::VectorCurve3D::getVectorFromPoint(float point){
-    if(point > this->curveStopp || point < this->curveStart){
+    if(point > this->systemStart || point < this->systemStopp){
         std::cerr << "Error index out of limit! \n Returning a null vector \n" ;
         return Dmath::Vec3D::zeroVector();
     }
@@ -168,12 +149,12 @@ Dmath::Vec3D Dmath::VectorCurve3D::getVectorFromPoint(float point){
 
 Dmath::Vec3D  Dmath::VectorCurve3D::tangentVector(float t){
     float h = 0.00000001; // Kleine Schrittweite
-    float x_t_plus_h = this->mainXFunc(t + h);
-    float x_t_minus_h = this->mainXFunc(t - h);
-    float y_t_plus_h = this->mainYFunc(t + h);
-    float y_t_minus_h = this->mainYFunc(t - h);
-    float z_t_plus_h = this->mainZFunc(t + h);
-    float z_t_minus_h = this->mainZFunc(t - h);
+    float x_t_plus_h = this->xFunc(t + h);
+    float x_t_minus_h = this->xFunc(t - h);
+    float y_t_plus_h = this->yFunc(t + h);
+    float y_t_minus_h = this->yFunc(t - h);
+    float z_t_plus_h = this->zFunc(t + h);
+    float z_t_minus_h = this->zFunc(t - h);
 
     // Überprüfung, ob die Funktionswerte positiv oder negativ sind
     bool x_positive = (x_t_plus_h >= 0) && (x_t_minus_h >= 0);

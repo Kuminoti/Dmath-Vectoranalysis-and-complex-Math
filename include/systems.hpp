@@ -6,6 +6,7 @@
 #include <cmath>
 #include <iostream>
 #include <vector>
+#include <functional>
 
 #define PI 3.14159265358979323846
 #define TWOPI 2 * PI
@@ -128,6 +129,54 @@ class CoordinateSystem3D : public CoordinateSystem2D {
 
 }; // CoordinateSystem3D
 
-#endif // SYSTEM_IS_SET
+class VectorialDifferentialGeometry2D{
+  protected:
+    std::function<float(float)> xFunc;
+    std::function<float(float)> yFunc;
 
+    float resolution  = 0.1;
+    float systemStart = 0;
+    float systemStopp = TWOPI;
+    int numberOfElements;
+
+    VectorialDifferentialGeometry2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc);
+    VectorialDifferentialGeometry2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, 
+                                    float systemStart, float systemStopp, float resolution);
+
+  public:
+    std::function<float(float)> getXFunction();
+    std::function<float(float)> getYFunction();
+
+    float getNumberOfElements();
+    float getResolution();
+    float getStart();
+    float getEnd();
+
+    float getDataAtX(float data);
+    float getDataAtY(float data);
+};
+
+class VectorialDifferentialGeometry3D : public VectorialDifferentialGeometry2D {
+  protected:
+    std::function<float(float)> zFunc;
+
+    VectorialDifferentialGeometry3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, std::function<float(float)> zFunc);
+    VectorialDifferentialGeometry3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, std::function<float(float)> zFunc,
+                                    float systemStart, float systemStopp, float resolution);
+
+
+  public:
+
+    std::function<float(float)> getZfunction();
+    float getDataAtZ(float data);
+    
+   
+};
+
+
+
+
+
+
+#endif // SYSTEM_IS_SET
 #endif // SYSTEMS_H includeguard

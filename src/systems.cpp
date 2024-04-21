@@ -174,3 +174,38 @@ float CoordinateSystem3D::getRadiusCylinder() {
 }
 
 #endif
+
+
+//DIfferential geometry
+
+
+VectorialDifferentialGeometry2D::VectorialDifferentialGeometry2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc){
+    this->xFunc = xFunc;
+    this->yFunc = yFunc;
+
+    this->numberOfElements = static_cast<int>((this->systemStopp-this->systemStart)/resolution);
+}
+
+
+VectorialDifferentialGeometry2D::VectorialDifferentialGeometry2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, float systemStart, float systemStopp, float resolution){
+    this->xFunc = xFunc;
+    this->yFunc = yFunc;
+
+    this->resolution  = resolution;
+    this->systemStart = systemStart;
+    this->systemStopp = systemStopp;
+
+    this->numberOfElements = static_cast<int>((this->systemStart - this->systemStopp)/ this->resolution);
+}
+
+
+std::function<float(float)> VectorialDifferentialGeometry2D::getXFunction(){ return this->xFunc;           }
+std::function<float(float)> VectorialDifferentialGeometry2D::getYFunction(){ return this->yFunc;           }
+std::function<float(float)> VectorialDifferentialGeometry3D::getZfunction(){ return this->zFunc;           }
+float VectorialDifferentialGeometry2D::getNumberOfElements()               { return this->numberOfElements;}
+float VectorialDifferentialGeometry2D::getResolution()                     { return this->resolution;      }
+float VectorialDifferentialGeometry2D::getStart()                          { return this->systemStart;     }
+float VectorialDifferentialGeometry2D::getEnd()                            { return this->systemStopp;     }
+float VectorialDifferentialGeometry2D::getDataAtX(float data)              { return this->xFunc(data);     }
+float VectorialDifferentialGeometry2D::getDataAtY(float data)              { return this->yFunc(data);     }
+float VectorialDifferentialGeometry3D::getDataAtZ(float data)              { return this->zFunc(data);     }
