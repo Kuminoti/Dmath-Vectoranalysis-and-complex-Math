@@ -198,6 +198,18 @@ VectorialDifferentialGeometry2D::VectorialDifferentialGeometry2D(std::function<f
     this->numberOfElements = static_cast<int>((this->systemStart - this->systemStopp)/ this->resolution);
 }
 
+VectorialDifferentialGeometry3D::VectorialDifferentialGeometry3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, std::function<float(float)> zFunc)
+: VectorialDifferentialGeometry2D(xFunc, yFunc){
+
+    this->zFunc = zFunc;
+   
+}
+
+VectorialDifferentialGeometry3D::VectorialDifferentialGeometry3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc,std::function<float(float)> zFunc , float systemStart, float systemStopp, float resolution)
+: VectorialDifferentialGeometry2D(xFunc,yFunc,systemStart,systemStopp,resolution){
+    this->zFunc = zFunc;
+}
+
 
 std::function<float(float)> VectorialDifferentialGeometry2D::getXFunction(){ return this->xFunc;           }
 std::function<float(float)> VectorialDifferentialGeometry2D::getYFunction(){ return this->yFunc;           }
