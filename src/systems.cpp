@@ -128,7 +128,7 @@ CoordinateSystem3D::CoordinateSystem3D(float X, float Y, float Z, float originX,
 CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float theta)
     : CoordinateSystem2D(radius, phi) {
     this->theta = theta;
-        this->originX = 0;
+    this->originX = 0;
     this->originY = 0;
     this->originZ = 0;
 }
