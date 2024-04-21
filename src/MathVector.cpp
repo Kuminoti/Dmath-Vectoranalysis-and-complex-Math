@@ -85,8 +85,9 @@ Vec2D Vec2D::rotateVector(float angle) {
 }
 
 float Vec2D::distance(Vec2D Mathvector){
-    float dx = std::abs(Mathvector.X - this->X);
-    float dy = std::abs(Mathvector.Y - this->Y);
+  
+    float dx = std::abs(Mathvector.aX - this->aX);
+    float dy = std::abs(Mathvector.aY - this->aY);
     float result =  std::sqrt(dx * dx + dy * dy);
     return result;
 }
@@ -173,6 +174,14 @@ void Vec2D::calcDZ(){
     this->distanceToZero = 0;
     return;
   }
+  else if(this->originX != 0 && this->originY == 0){
+    this->distanceToZero = this->originX;
+    return;
+  }
+  else if(this->originY != 0 && this->originX == 0){
+    this->distanceToZero = this->originY;
+    return;
+  }
   float result = 0;
   this->calcAbsXY();
   //AYS absolute Y sqared ...
@@ -180,56 +189,6 @@ void Vec2D::calcDZ(){
   float AYS = this->aY * this->aY;
   result = std::sqrt(AYS + AYS);
   this->distanceToZero = result;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void Vec3D::calcAXYZ(){
-  if(this->originX != 0 || this->originY != 0){
-      this->aX = this->X + this->originX;
-      this->aY = this->Y + this->originY;
-      this->aZ = this->Z + this->originZ;
-    }
-}
-
-
-
-void Vec3D::calcDTZ(){
- if(this->originX == 0 && this->originY == 0 && this->originZ == 0){
-    this->distanceToZero = 0;
-    return;
-  }
-  float result = 0;
-  this->calcAXYZ();
-  //AYS absolute Y sqared ...
-  float AXS = this->aX * this->aX;
-  float AYS = this->aY * this->aY;
-  result = std::sqrt(AYS + AYS);
-  this->distanceToZero = result;  
-}
-
-void Vec3D::calcAbs() {
-  float result = std::sqrt((this->X * this->X) + (this->Y * this->Y) +
-                           (this->Z * this->Z));
-  this->abs = result;
 }
 
 
@@ -266,6 +225,51 @@ float Vec2D::rectangleCircumfrance(Vec2D MathVector) {
   return Circumfrance;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void Vec3D::calcAXYZ(){
+  if(this->originX != 0 || this->originY != 0){
+      this->aX = this->X + this->originX;
+      this->aY = this->Y + this->originY;
+      this->aZ = this->Z + this->originZ;
+    }
+}
+
+void Vec3D::calcDTZ(){
+ if(this->originX == 0 && this->originY == 0 && this->originZ == 0){
+    this->distanceToZero = 0;
+    return;
+  }
+  float result = 0;
+  this->calcAXYZ();
+  //AYS absolute Y sqared ...
+  float AXS = this->aX * this->aX;
+  float AYS = this->aY * this->aY;
+  result = std::sqrt(AYS + AYS);
+  this->distanceToZero = result;  
+}
+
+void Vec3D::calcAbs() {
+  float result = std::sqrt((this->X * this->X) + (this->Y * this->Y) +
+                           (this->Z * this->Z));
+  this->abs = result;
+}
+
 float Vec3D::calcAngle(Vec3D Mathvector) {
   float product = this->dotProduct(Mathvector);
   float absProduct = this->getAbs() * Mathvector.getAbs();
@@ -286,12 +290,14 @@ Vec3D Vec3D::vecProduct(Vec3D Mathvector) {
   return Vec3D(resultX, resultY, resultZ);
 }
 
+
 Vec3D Vec3D::add(Vec3D Mathvector) {
   float resultX = this->X + Mathvector.X;
   float resultY = this->Y + Mathvector.Y;
   float resultZ = this->Z + Mathvector.Z;
   return Vec3D(resultX, resultY, resultZ);
 }
+ 
 
 Vec3D Vec3D::subtract(Vec3D Mathvector) {
   float resultX = this->X - Mathvector.X;
@@ -322,6 +328,7 @@ float Vec3D::sphereSystemVolume() {
   float result = fourThreePi * radiusCubed;
   return result;
 }
+
 float Vec3D::sphereSystemSurface() {
   // formula: 4π * radius²
   float result = FOUR_PI * (this->radius * this->radius);
@@ -379,12 +386,15 @@ float Vec3D::getSphereRadius(){
 #ifdef CARTESIAN_IS_2D_STANDARD
 
 Vec2D::Vec2D(float XY) : CoordinateSystem2D(XY){
-  
+  this->aX = XY;
+  this->aY = XY;
   this->calcAbs();
   this->cartesianToPolar();
 }
 
 Vec2D::Vec2D(float X, float Y) : CoordinateSystem2D(X, Y) {
+  this->aX = X;
+  this->aY = Y;
   this->calcAbs();
   this->cartesianToPolar();
 }
@@ -405,6 +415,8 @@ Vec2D Vec2D::zeroVector() { return Vec2D(0, 0); }
 Vec2D::Vec2D(float radius, float phi) : CoordinateSystem2D(radius, phi) {
   this->calcAbs();
   this->polarToCartesian();
+  this->aX = this->X;
+  this->aY = this->Y;
 }
 
 #endif
@@ -416,6 +428,9 @@ Vec3D::Vec3D(float radius, float phi, float theta)
   this->calcAbs();
   this->sphereToCatesian();
   this->sphereToCylinder();
+  this->aX = this->X;
+  this->aY = this->Y;
+  this->aZ = this->Z;
 }
 #endif
 
@@ -425,6 +440,9 @@ Vec3D::Vec3D(float radius, float phi, float height)
 
   this->cartesianToSphere();
   this->cartesianToCylinder();
+  this->aX = this->X;
+  this->aY = this->Y;
+  this->aZ = this->Z;
 }
 #endif
 
@@ -435,6 +453,9 @@ Vec3D::Vec3D(float XYZ) : CoordinateSystem3D(XYZ) {
   this->cartesianToSphere();
   this->cartesianToCylinder();
   this->calcAbs();  
+  this->aX = XYZ;
+  this->aY = XYZ;
+  this->aZ = XYZ;
 }
 
 Vec3D::Vec3D(float X, float Y, float Z, float originX, float originY, float originZ)
@@ -442,12 +463,17 @@ Vec3D::Vec3D(float X, float Y, float Z, float originX, float originY, float orig
   this->cartesianToSphere();
   this->cartesianToCylinder();
   this->calcAbs();
+  this->calcAXYZ();
+  this->calcDTZ();
 }
 
 Vec3D::Vec3D(float X, float Y, float Z) : CoordinateSystem3D(X, Y, Z) {
   this->cartesianToSphere();
   this->cartesianToCylinder();
   this->calcAbs();
+  this->aX = this->X;
+  this->aY = this->Y;
+  this->aZ = this->Z;
 }
 #endif
 
