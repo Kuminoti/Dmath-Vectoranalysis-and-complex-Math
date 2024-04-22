@@ -155,23 +155,8 @@ CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float height,
     this->originZ = originZ;
 }
 #endif
-float CoordinateSystem2D::getX()       { return this->X; }
-float CoordinateSystem2D::getY()       { return this->Y; }
-float CoordinateSystem2D::getPhi()     { return this->phi; }
-float CoordinateSystem2D::getOriginX() { return this->originX; }
-float CoordinateSystem2D::getOriginY() { return this->originY; }
-float CoordinateSystem2D::getRadius()  { return this->radius; }
-float CoordinateSystem3D::getTheta()   { return this->theta; }
-float CoordinateSystem3D::getHeight()  { return this->height; }
-float CoordinateSystem3D::getZ()       { return this->Z; }
-float CoordinateSystem3D::getOriginZ() { return this->originZ; }
 
-float CoordinateSystem3D::getRadiusSphere() {
-    return pyth3D(this->X, this->Y, this->Z);
-}
-float CoordinateSystem3D::getRadiusCylinder() {
-    return pyth2D(this->X, this->Y);
-}
+
 
 #endif
 
@@ -179,7 +164,7 @@ float CoordinateSystem3D::getRadiusCylinder() {
 //DIfferential geometry
 
 
-VectorialDifferentialGeometry2D::VectorialDifferentialGeometry2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc){
+VectorAnalysis2D::VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc){
     this->xFunc = xFunc;
     this->yFunc = yFunc;
 
@@ -187,7 +172,7 @@ VectorialDifferentialGeometry2D::VectorialDifferentialGeometry2D(std::function<f
 }
 
 
-VectorialDifferentialGeometry2D::VectorialDifferentialGeometry2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, float systemStart, float systemStopp, float resolution){
+VectorAnalysis2D::VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, float systemStart, float systemStopp, float resolution){
     this->xFunc = xFunc;
     this->yFunc = yFunc;
 
@@ -198,26 +183,21 @@ VectorialDifferentialGeometry2D::VectorialDifferentialGeometry2D(std::function<f
     this->numberOfElements = static_cast<int>((this->systemStart - this->systemStopp)/ this->resolution);
 }
 
-VectorialDifferentialGeometry3D::VectorialDifferentialGeometry3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, std::function<float(float)> zFunc)
-: VectorialDifferentialGeometry2D(xFunc, yFunc){
+VectorAnalysis3D::VectorAnalysis3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, std::function<float(float)> zFunc)
+: VectorAnalysis2D(xFunc, yFunc){
 
     this->zFunc = zFunc;
    
 }
 
-VectorialDifferentialGeometry3D::VectorialDifferentialGeometry3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc,std::function<float(float)> zFunc , float systemStart, float systemStopp, float resolution)
-: VectorialDifferentialGeometry2D(xFunc,yFunc,systemStart,systemStopp,resolution){
+VectorAnalysis3D::VectorAnalysis3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc,std::function<float(float)> zFunc , float systemStart, float systemStopp, float resolution)
+: VectorAnalysis2D(xFunc,yFunc,systemStart,systemStopp,resolution){
     this->zFunc = zFunc;
 }
 
-
-std::function<float(float)> VectorialDifferentialGeometry2D::getXFunction(){ return this->xFunc;           }
-std::function<float(float)> VectorialDifferentialGeometry2D::getYFunction(){ return this->yFunc;           }
-std::function<float(float)> VectorialDifferentialGeometry3D::getZfunction(){ return this->zFunc;           }
-float VectorialDifferentialGeometry2D::getNumberOfElements()               { return this->numberOfElements;}
-float VectorialDifferentialGeometry2D::getResolution()                     { return this->resolution;      }
-float VectorialDifferentialGeometry2D::getStart()                          { return this->systemStart;     }
-float VectorialDifferentialGeometry2D::getEnd()                            { return this->systemStopp;     }
-float VectorialDifferentialGeometry2D::getDataAtX(float data)              { return this->xFunc(data);     }
-float VectorialDifferentialGeometry2D::getDataAtY(float data)              { return this->yFunc(data);     }
-float VectorialDifferentialGeometry3D::getDataAtZ(float data)              { return this->zFunc(data);     }
+float CoordinateSystem3D::getRadiusSphere() {
+    return pyth3D(this->X, this->Y, this->Z);
+}
+float CoordinateSystem3D::getRadiusCylinder() {
+    return pyth2D(this->X, this->Y);
+}

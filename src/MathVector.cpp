@@ -284,9 +284,9 @@ float Vec3D::dotProduct(Vec3D Mathvector) {
 }
 
 Vec3D Vec3D::vecProduct(Vec3D Mathvector) {
-  double resultX = this->Y * Mathvector.Z - this->Z * Mathvector.Y;
-  double resultY = this->Z * Mathvector.X - this->X * Mathvector.Z;
-  double resultZ = this->X * Mathvector.Y - this->Y * Mathvector.X;
+  float resultX = this->Y * Mathvector.Z - this->Z * Mathvector.Y;
+  float resultY = this->Z * Mathvector.X - this->X * Mathvector.Z;
+  float resultZ = this->X * Mathvector.Y - this->Y * Mathvector.X;
   return Vec3D(resultX, resultY, resultZ);
 }
 

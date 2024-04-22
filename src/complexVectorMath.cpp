@@ -9,7 +9,7 @@
 std::vector<Dmath::Vec2D> Dmath::VectorCurve2D::createVectorialCurve(){
     std::vector<Dmath::Vec2D> output;
     int iterations = 0;
-    for(double i = this->systemStart; i<systemStopp; i+=resolution){
+    for(float i = this->systemStart; i<systemStopp; i+=resolution){
         if(i == this->systemStart){
             output.push_back(Dmath::Vec2D(this->xFunc(i),this->yFunc(i),0,0));
             iterations++;
@@ -25,12 +25,12 @@ std::vector<Dmath::Vec2D> Dmath::VectorCurve2D::createVectorialCurve(){
 
 
 Dmath::VectorCurve2D::VectorCurve2D(std::function<float(float)> xFunc,std::function<float(float)> yFunc)
-    : VectorialDifferentialGeometry2D (xFunc,yFunc) {
+    : VectorAnalysis2D(xFunc,yFunc) {
     this->mainCurve = this->createVectorialCurve();
 }
 
 Dmath::VectorCurve2D::VectorCurve2D(std::function<float(float)> xFunc,std::function<float(float)> yFunc, float start, float stopp, float res)
-    : VectorialDifferentialGeometry2D(xFunc,yFunc,resolution,systemStart,systemStopp){
+    : VectorAnalysis2D(xFunc,yFunc,resolution,systemStart,systemStopp){
     this->mainCurve = this->createVectorialCurve();
     
 }
@@ -93,7 +93,7 @@ float Dmath::VectorCurve2D::curveLenght(){
 std::vector<Dmath::Vec3D> Dmath::VectorCurve3D::createVectorialCurve(){
     std::vector<Dmath::Vec3D> output;
     int iterations = 0;
-    for(double i = this->systemStart; i<systemStopp; i+=resolution){
+    for(float i = this->systemStart; i<systemStopp; i+=resolution){
         if(i == this->systemStart){
             output.push_back(Dmath::Vec3D(this->xFunc(i),this->yFunc(i), this->zFunc(i),0,0,0));
             iterations++;
@@ -108,14 +108,14 @@ std::vector<Dmath::Vec3D> Dmath::VectorCurve3D::createVectorialCurve(){
 
 
 Dmath::VectorCurve3D::VectorCurve3D(std::function<float(float)> xFunc,std::function<float(float)> yFunc,std::function<float(float)> zFunc)
-: VectorialDifferentialGeometry3D(xFunc,yFunc,zFunc){
+: VectorAnalysis3D(xFunc,yFunc,zFunc){
 
 
     this->mainCurve = this->createVectorialCurve();
 }
 
 Dmath::VectorCurve3D::VectorCurve3D(std::function<float(float)> xFunc,std::function<float(float)> yFunc,std::function<float(float)> zFunc, float start, float stopp, float res)
-: VectorialDifferentialGeometry3D(xFunc,yFunc,zFunc,systemStart,systemStopp,resolution){
+: VectorAnalysis3D(xFunc,yFunc,zFunc,systemStart,systemStopp,resolution){
     
     this->mainCurve = this->createVectorialCurve();
 }

@@ -67,12 +67,14 @@ class CoordinateSystem2D {
     void cartesianToPolar();
 
   public:
-    virtual float getRadius();
-    float getX();
-    float getY();
-    float getPhi();
-    float getOriginX();
-    float getOriginY();
+
+    inline float getX()       { return this->X;       }
+    inline float getY()       { return this->Y;       }   
+    inline float getPhi()     { return this->phi;     }
+    inline float getOriginX() { return this->originX; }
+    inline float getOriginY() { return this->originY; }
+    inline float getRadius()  { return this->radius;  }
+
 
 #ifdef CARTESIAN_IS_2D_STANDARD
     CoordinateSystem2D(float XY);
@@ -104,13 +106,16 @@ class CoordinateSystem3D : public CoordinateSystem2D {
     void cylinderToSphere();
 
   public: // Public Methods
+
+
+    inline float getTheta()   { return this->theta;   }
+    inline float getHeight()  { return this->height;  }
+    inline float getZ()       { return this->Z;       } 
+    inline float getOriginZ() { return this->originZ; }
+
     float getRadiusSphere();
     float getRadiusCylinder();
-    float getTheta();
-    float getHeight();
-    float getZ();
-    float getOriginZ();
-
+    
 #ifdef CARTESIAN_IS_3D_STANDARD
     CoordinateSystem3D(float XYZ);
     CoordinateSystem3D(float X, float Y, float Z);
@@ -129,7 +134,8 @@ class CoordinateSystem3D : public CoordinateSystem2D {
 
 }; // CoordinateSystem3D
 
-class VectorialDifferentialGeometry2D{
+#ifdef CARTESIAN_IS_2D_STANDARD
+class VectorAnalysis2D{
   protected:
     std::function<float(float)> xFunc;
     std::function<float(float)> yFunc;
@@ -139,44 +145,42 @@ class VectorialDifferentialGeometry2D{
     float systemStopp = TWOPI;
     int numberOfElements;
 
-    VectorialDifferentialGeometry2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc);
-    VectorialDifferentialGeometry2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, 
+    VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc);
+    VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, 
                                     float systemStart, float systemStopp, float resolution);
 
   public:
-    std::function<float(float)> getXFunction();
-    std::function<float(float)> getYFunction();
 
-    float getNumberOfElements();
-    float getResolution();
-    float getStart();
-    float getEnd();
 
-    float getDataAtX(float data);
-    float getDataAtY(float data);
+    inline float getNumberOfElements()               { return this->numberOfElements;}
+    inline float getResolution()                     { return this->resolution;      }
+    inline float getStart()                          { return this->systemStart;     }
+    inline float getEnd()                            { return this->systemStopp;     }
+    inline float getDataAtX(float data)              { return this->xFunc(data);     }
+    inline float getDataAtY(float data)              { return this->yFunc(data);     }
+    inline std::function<float(float)> getXFunction(){ return this->xFunc;           }
+    inline std::function<float(float)> getYFunction(){ return this->yFunc;           }
+    
+
 };
 
-class VectorialDifferentialGeometry3D : public VectorialDifferentialGeometry2D {
+#endif //CARTESIAN_IS_2D_STANDARD
+
+#ifdef CARTESIAN_IS_3D_STANDARD
+class VectorAnalysis3D: public VectorAnalysis2D{
   protected:
     std::function<float(float)> zFunc;
 
-    VectorialDifferentialGeometry3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, std::function<float(float)> zFunc);
-    VectorialDifferentialGeometry3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, std::function<float(float)> zFunc,
+    VectorAnalysis3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, std::function<float(float)> zFunc);
+    VectorAnalysis3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, std::function<float(float)> zFunc,
                                     float systemStart, float systemStopp, float resolution);
-
 
   public:
 
-    std::function<float(float)> getZfunction();
-    float getDataAtZ(float data);
-    
+    inline std::function<float(float)> getZfunction(){ return this->zFunc;           }
+    inline float getDataAtZ(float data)              { return this->zFunc(data);     }
    
 };
-
-
-
-
-
-
+#endif //CARTESIAN_IS_2D_STANDARD
 #endif // SYSTEM_IS_SET
 #endif // SYSTEMS_H includeguard

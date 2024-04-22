@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef COMPLEXVECTORMATH_HPP
 #define COMPLEXVECTORMATH_HPP
 
@@ -5,10 +7,9 @@
 #include<algorithm>
 #include"mathVector.hpp"
 
-
 NAMESPACESTART
 
-class VectorCurve2D : public VectorialDifferentialGeometry2D {
+class VectorCurve2D : public VectorAnalysis2D{
   private:
     
     std::vector<Dmath::Vec2D> createVectorialCurve();
@@ -22,17 +23,43 @@ class VectorCurve2D : public VectorialDifferentialGeometry2D {
   public:
     static VectorCurve2D createStandardCurve(std::function<float(float)> funcX,std::function<float(float)> funcY );
     static VectorCurve2D createCustomCurve(std::function<float(float)> funcX,std::function<float(float)> funcY,float start,float stopp,float res );
+    
     //Getters
     Dmath::Vec2D getVectorFromFunction(float vecX, float vecY);
     Dmath::Vec2D getVectorFromPoint(float point);
+    Dmath::Vec2D tangentVector(float t);
 
-    Vec2D tangentVector(float t);
-
+    float getPitchOnPoint(float t);
     float curveLenght();
+
+    float MaximumX(){
+      float maxX = 0;
+      for(size_t i = 0 ; i<this->mainCurve.size(); i++){
+        if(this->mainCurve[i].getX() > maxX){
+          maxX = this->mainCurve[i].getX();
+        } else {
+          continue;
+        }
+      }
+      return maxX;
+    }
+
+    float minimumX(){
+      float minX = 9999999;
+      for(int i = 0; i<this->mainCurve.size(); i++){
+        if(this->mainCurve[i].getX() < minX){
+          minX = this->mainCurve[i].getX();
+        } else {
+          continue;
+        }
+      }
+      return minX;
+    }
+
 };
     
 
-class VectorCurve3D : public VectorialDifferentialGeometry3D{
+class VectorCurve3D : public VectorAnalysis3D{
   private:
     std::vector<Dmath::Vec3D> mainCurve;
     std::vector<Dmath::Vec3D> createVectorialCurve();
@@ -51,4 +78,4 @@ class VectorCurve3D : public VectorialDifferentialGeometry3D{
 
 
 NAMESPACEEND //Dmath namespace
-#endif
+#endif //include guard
