@@ -85,7 +85,65 @@ float Dmath::VectorCurve2D::curveLenght(){
         return lenght;
     }
 
+float Dmath::VectorCurve2D::maximumY(){
+    float maxY = 0;
+    for(size_t i = 0; i<this->mainCurve.size(); i++){
+        if(this->mainCurve[i].getY() > maxY){
+            maxY = this->mainCurve[i].getY();
+        } else {
+            continue;
+        }
+    }
+    return maxY;
+}
 
+
+float Dmath::VectorCurve2D::minimumY(){
+      float minY = 9999999;
+      for(int i = 0; i<this->mainCurve.size(); i++){
+        if(this->mainCurve[i].getY() < minY){
+          minY = this->mainCurve[i].getY();
+        } else {
+          continue;
+        }
+      }
+      return minY;
+    }
+
+float Dmath::VectorCurve2D::MaximumX(){
+    float maxX = 0;
+    for(size_t i = 0 ; i<this->mainCurve.size(); i++){
+        if(this->mainCurve[i].getX() > maxX){
+            maxX = this->mainCurve[i].getX();
+        } else {
+            continue;
+        }
+    }
+    return maxX;
+}
+
+float Dmath::VectorCurve2D::calculateSlopeOnPoint(float t){
+    Dmath::Vec2D vec = this->tangentVector(t);
+    float result = 0;
+    if(vec.getY() != 0){
+        result = vec.getX() / vec.getY();
+    } else {
+        return 0;
+    }
+    return result; 
+}
+
+float Dmath::VectorCurve2D::minimumX(){
+    float minX = 9999999;
+    for(int i = 0; i<this->mainCurve.size(); i++){
+        if(this->mainCurve[i].getX() < minX){
+            minX = this->mainCurve[i].getX();
+        } else {
+            continue;
+        }
+    }
+    return minX;
+}
 
 //3D curves
 
@@ -128,7 +186,7 @@ Dmath::VectorCurve3D Dmath::VectorCurve3D::createCustomCurve(std::function<float
     return Dmath::VectorCurve3D(funcX,funcY,zFunc,start,stopp,res);
 }
 
-Dmath::Vec3D  Dmath::VectorCurve3D::getVectorFromFunction(float xValue, float yValue, float zValue){
+Dmath::Vec3D  Dmath::VectorCurve3D::getVectorFromFunction(float xValue, float yValue, float zValue) {
     float vecX = this->xFunc(xValue);
     float vecY = this->yFunc(yValue);
     float vecZ = this->zFunc(zValue);
@@ -136,7 +194,7 @@ Dmath::Vec3D  Dmath::VectorCurve3D::getVectorFromFunction(float xValue, float yV
     return outputVector;
 }
 
-Dmath::Vec3D Dmath::VectorCurve3D::getVectorFromPoint(float point){
+Dmath::Vec3D Dmath::VectorCurve3D::getVectorFromPoint(float point)  {
     if(point > this->systemStart || point < this->systemStopp){
         std::cerr << "Error index out of limit! \n Returning a null vector \n" ;
         return Dmath::Vec3D::zeroVector();

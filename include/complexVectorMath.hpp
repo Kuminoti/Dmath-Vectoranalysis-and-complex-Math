@@ -29,33 +29,15 @@ class VectorCurve2D : public VectorAnalysis2D{
     Dmath::Vec2D getVectorFromPoint(float point);
     Dmath::Vec2D tangentVector(float t);
 
-    float getPitchOnPoint(float t);
+    // NEEDS TESTING
+    float calculateSlopeOnPoint(float t);
     float curveLenght();
 
-    float MaximumX(){
-      float maxX = 0;
-      for(size_t i = 0 ; i<this->mainCurve.size(); i++){
-        if(this->mainCurve[i].getX() > maxX){
-          maxX = this->mainCurve[i].getX();
-        } else {
-          continue;
-        }
-      }
-      return maxX;
-    }
-
-    float minimumX(){
-      float minX = 9999999;
-      for(int i = 0; i<this->mainCurve.size(); i++){
-        if(this->mainCurve[i].getX() < minX){
-          minX = this->mainCurve[i].getX();
-        } else {
-          continue;
-        }
-      }
-      return minX;
-    }
-
+    // NEEDS TESTING
+    float maximumY();
+    float minimumY();
+    float MaximumX();
+    float minimumX();
 };
     
 
@@ -68,9 +50,12 @@ class VectorCurve3D : public VectorAnalysis3D{
   public:
     static VectorCurve3D createStandardCurve(std::function<float(float)> funcX,std::function<float(float)> funcY, std::function<float(float)> funcZ );
     static VectorCurve3D createCustomCurve  (std::function<float(float)> funcX,std::function<float(float)> funcY, std::function<float(float)> funcZ,float start,float stopp,float res);
+
     Dmath::Vec3D getVectorFromFunction(float xValue, float yValue, float zValue);
     Dmath::Vec3D getVectorFromPoint(float point);
+
     Vec3D tangentVector(float t);
+    float calculateSlopeOnPoint(float t);
     float curveLenght();
 };
 

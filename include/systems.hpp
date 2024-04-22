@@ -52,7 +52,9 @@
 #endif
 
 #ifdef SYSTEM_IS_SET
-class CoordinateSystem2D {
+
+// Coordinatesystem2D is used as an abstraction for other classes like the 2 main Vector classes
+class CoordinateSystem2D { 
   protected:
     float X;
     float Y;
@@ -107,7 +109,7 @@ class CoordinateSystem3D : public CoordinateSystem2D {
 
   public: // Public Methods
 
-
+    //Basic inline getters
     inline float getTheta()   { return this->theta;   }
     inline float getHeight()  { return this->height;  }
     inline float getZ()       { return this->Z;       } 
@@ -150,7 +152,7 @@ class VectorAnalysis2D{
                                     float systemStart, float systemStopp, float resolution);
 
   public:
-
+    
 
     inline float getNumberOfElements()               { return this->numberOfElements;}
     inline float getResolution()                     { return this->resolution;      }

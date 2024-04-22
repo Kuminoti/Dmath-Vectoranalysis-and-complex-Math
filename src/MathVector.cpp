@@ -484,7 +484,14 @@ float Vec2D::lenght()               { return this->getAbs(); }
 float Vec2D::getAX()                { return this->aX;       }
 float Vec2D::getAY()                { return this->aY;       }
 float Vec2D::getDistanceToZero()    { return this->distanceToZero;}
-void Vec3D::setX(float X)           { this->X = X; }
+
+
+//TODO update the setters
+void Vec3D::setX(float X){
+  this->X = X;
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
+ }
 void Vec3D::setY(float Y)           { this->Y = Y; }
 void Vec3D::setZ(float Z)           { this->Z = Z; }
 void Vec3D::setHeight(float height) { this->height = height; }
