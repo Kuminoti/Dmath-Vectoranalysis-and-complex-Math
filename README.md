@@ -96,7 +96,26 @@ There are methods for interacting and working with these Vectors:
 ## Simple Description of Differential Geometry
 
 Differential geometry extends the principles of calculus to the study of curves, surfaces, and higher-dimensional spaces. It focuses on properties that remain invariant under transformations, such as curvature, torsion, and tangent vectors. In the context of the provided code, differential geometry is used to analyze the behavior of vectorial described parametric curves, including determining their tangent vectors, calculating slopes, and measuring lengths and much more. It provides tools for understanding the geometric properties of curves and surfaces and enables the study of their intrinsic and extrinsic characteristics. Differential geometry plays a fundamental role in fields such as physics, engineering, and computer graphics, where precise geometric descriptions are essential.  
-**This part of the library is not finished and primarily experimental; new features and optimizations will come soon.**
+**This part of the library is not finished and primarily experimental and might not be optimised and can have buggs; new features, bug fixes and optimizations will come soon.**
+
+## Parametric Curves
+A parametric curve is a mathematical representation of a line or path in space, where the position of a point on the curve is described as a function of one or more parameters. These parameters can represent time or any other independent variable. The function then defines the coordinates of each point along the curve as a function of these parameters. In a two-dimensional space, for example, a parametric curve can be defined by describing the xx and yy coordinates of a point as functions of a parameter t, such as:
+
+x = f(t) x=f(t)  
+y = g(t) y=g(t)  
+
+This allows for a dynamic description of the curve's path as the parameter t varies.  
+Within this library, the curve's data along the xx and yy (and zz, if applicable) axes is encapsulated within a vector structure. Conceptually, the curve is represented as an aggregation of vectors, each aligned with the tangent direction of the curve at a specific point.
+
+## Vector curves
+To create curves using the VectorCurve2D or VectorCurve3D classes, you can utilize the static methods createStandardCurve() and createCustomCurve(). These methods serve different purposes:
+
+- createStandardCurve() is pre-configured with default settings. It automatically sets the curve range from 0 to TWOPI (2π) and uses a resolution of 0.1 units. You only need to provide the functions for the x and y data.
+
+- On the other hand, createCustomCurve() allows users to define all parameters themselves. This includes specifying the X-function, the Y-function, the start and end points of the curve, and the desired resolution.
+
+
+
 
 ### Coming Soon
 - More optimizations and bug fixes
