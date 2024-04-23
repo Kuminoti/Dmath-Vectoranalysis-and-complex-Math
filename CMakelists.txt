@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 project(Mathvector)
 
 
-set(SOURCE_FILES src/mathvector.cpp src/systems.cpp)
+set(SOURCE_FILES src/MathVector.cpp src/systems.cpp src/VectorCurve.cpp)
 
 set(CMAKE_BINARY_DIR bin)
 
