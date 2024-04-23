@@ -17,9 +17,10 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
-#testing
+#testing and todo
 a.out 
 test
 test.cpp
+todo
 
 

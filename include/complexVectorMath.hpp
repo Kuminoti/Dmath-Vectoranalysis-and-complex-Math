@@ -17,21 +17,27 @@ class VectorCurve2D : public VectorAnalysis2D{
   protected:
     std::vector<Dmath::Vec2D> mainCurve;
 
+    //Constructos for sinmple parametric Vector curves (tested)
     VectorCurve2D(std::function<float(float)> xFunc,std::function<float(float)> yFunc);
     VectorCurve2D(std::function<float(float)> xFunc,std::function<float(float)> yFunc, float start, float stopp, float res);
 
   public:
+    //Create a parametric Vector curve (tested)
     static VectorCurve2D createStandardCurve(std::function<float(float)> funcX,std::function<float(float)> funcY );
     static VectorCurve2D createCustomCurve(std::function<float(float)> funcX,std::function<float(float)> funcY,float start,float stopp,float res );
     
-    //Getters
+    //Getters (tested)
     Dmath::Vec2D getVectorFromFunction(float vecX, float vecY);
     Dmath::Vec2D getVectorFromPoint(float point);
     Dmath::Vec2D tangentVector(float t);
 
     // NEEDS TESTING
-    float calculateSlopeOnPoint(float t);
     float curveLenght();
+    float calculateSlopeOnPoint(float t);
+    float dotProductVectorCurve(Dmath::VectorCurve2D vec);
+    
+    Dmath::VectorCurve2D curveFusion(){}
+    Dmath::VectorCurve2D addCurve(Dmath::VectorCurve2D curve);
 
     // NEEDS TESTING
     float maximumY();
@@ -55,8 +61,12 @@ class VectorCurve3D : public VectorAnalysis3D{
     Dmath::Vec3D getVectorFromPoint(float point);
 
     Vec3D tangentVector(float t);
-    float calculateSlopeOnPoint(float t);
+
+    float dotProductVectorCurve(Dmath::VectorCurve3D vec);    
+    float calculateSlopeXOnPoint(float t);
+    float calculateSlopeYOnPoint(float t);
     float curveLenght();
+
 };
 
 

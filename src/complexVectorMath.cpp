@@ -133,6 +133,38 @@ float Dmath::VectorCurve2D::calculateSlopeOnPoint(float t){
     return result; 
 }
 
+
+
+
+float Dmath::VectorCurve2D::dotProductVectorCurve(Dmath::VectorCurve2D vec){
+    float curveOneStart = this->getStart();
+    float curveTwoStart = vec.getStart();
+    float curveOneEnd   = this->getEnd();
+    float curveTwoEnd   = vec.getEnd();
+    float dotProduct    = 0;
+
+    size_t startIdx = 0;
+    size_t endIdx = std::min(this->mainCurve.size(), vec.mainCurve.size());
+
+    // Bestimme den Startindex basierend auf den Startpunkten der Kurven
+    if (curveOneStart >= curveTwoStart) {
+        startIdx = curveOneStart;
+    } else {
+        startIdx = curveTwoStart;
+    }
+    // Bestimme den Endindex basierend auf den Endpunkten der Kurven
+    if (curveOneEnd <= curveTwoEnd) {
+        endIdx = curveOneEnd;
+    } else {
+        endIdx = curveTwoEnd;
+    }
+    // Berechne das Skalarprodukt für den relevanten Bereich der Kurven
+    for (size_t i = startIdx; i < endIdx; i++) {
+        dotProduct += this->mainCurve[i].dotProduct(vec.mainCurve[i]);
+    }
+    return dotProduct;
+}
+
 float Dmath::VectorCurve2D::minimumX(){
     float minX = 9999999;
     for(int i = 0; i<this->mainCurve.size(); i++){
@@ -145,8 +177,60 @@ float Dmath::VectorCurve2D::minimumX(){
     return minX;
 }
 
+Dmath::VectorCurve2D Dmath::VectorCurve2D::addCurve(Dmath::VectorCurve2D curve){
+    float mainCurveEnd  = this->getEnd();
+    float otherCurveEnd = this->getEnd();
+    float newCurveEnd   = TWOPI;
+
+    float mainCurveStart  = this->getStart();
+    float otherCurveStart = this->getStart();
+    float newCurveStart   = 0;
+
+    if( mainCurveEnd >= otherCurveEnd ){
+    newCurveEnd = otherCurveEnd;
+    } 
+    if(mainCurveStart >= otherCurveStart){
+    newCurveStart = mainCurveStart;
+    }
+
+    auto newX = [this,&curve](float t) -> float { return this->xFunc(t) + curve.xFunc(t); };
+    auto newY = [this,&curve](float t) -> float { return this->yFunc(t) + curve.yFunc(t); };
+
+    return VectorCurve2D(newX,newY,mainCurveStart,mainCurveEnd,0.1);
+}
+
+
 //3D curves
 
+float Dmath::VectorCurve3D::dotProductVectorCurve(Dmath::VectorCurve3D vec) {
+
+    float curveOneStart = this->getStart();
+    float curveTwoStart = vec.getStart();
+    float curveOneEnd   = this->getEnd();
+    float curveTwoEnd   = vec.getEnd();
+    float dotProduct    = 0;
+
+    size_t startIdx = 0;
+    size_t endIdx = std::min(this->mainCurve.size(), vec.mainCurve.size());
+
+    // Bestimme den Startindex basierend auf den Startpunkten der Kurven
+    if (curveOneStart >= curveTwoStart) {
+        startIdx = curveOneStart;
+    } else {
+        startIdx = curveTwoStart;
+    }
+    // Bestimme den Endindex basierend auf den Endpunkten der Kurven
+    if (curveOneEnd <= curveTwoEnd) {
+        endIdx = curveOneEnd;
+    } else {
+        endIdx = curveTwoEnd;
+    }
+    // Berechne das Skalarprodukt für den relevanten Bereich der Kurven
+    for (size_t i = startIdx; i < endIdx; i++) {
+        dotProduct += this->mainCurve[i].dotProduct(vec.mainCurve[i]);
+    }
+    return dotProduct;
+}
 
 std::vector<Dmath::Vec3D> Dmath::VectorCurve3D::createVectorialCurve(){
     std::vector<Dmath::Vec3D> output;
@@ -237,4 +321,27 @@ float Dmath::VectorCurve3D::curveLenght(){
         lenght += this->mainCurve[i].getAbs();
     }
     return lenght;
+}
+
+float Dmath::VectorCurve3D::calculateSlopeXOnPoint(float t){
+    Dmath::Vec3D vec = this->tangentVector(t);
+    float result = 0;
+    if(vec.getX() != 0){
+        result = vec.getZ() /vec.getX() ;
+    } else {
+        return 0;
+    }
+    return result; 
+}
+
+
+float Dmath::VectorCurve3D::calculateSlopeYOnPoint(float t){
+    Dmath::Vec3D vec = this->tangentVector(t);
+    float result = 0;
+    if(vec.getY() != 0){
+        result = vec.getZ() /vec.getY();
+    } else {
+        return 0;
+    }
+    return result; 
 }
