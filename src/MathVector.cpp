@@ -491,7 +491,27 @@ void Vec3D::setX(float X){
   this->X = X;
   this->cartesianToCylinder();
   this->cartesianToSphere();
- }
+}
+
+void Vec3D::moveVectorZ(float moveZ){
+  this->originZ += moveZ;
+  this->calcAXYZ();
+  this->calcDTZ();
+}
+
+void Vec3D::moveVectorY(float moveY){
+  this->originY += moveY;
+  this->calcAXYZ();
+  this->calcDTZ();
+}
+
+
+void Vec3D::moveVectorY(float moveX){
+  this->originX += moveX;
+  this->calcAXYZ();
+  this->calcDTZ();
+}
+
 void Vec3D::setY(float Y)           { this->Y = Y; }
 void Vec3D::setZ(float Z)           { this->Z = Z; }
 void Vec3D::setHeight(float height) { this->height = height; }

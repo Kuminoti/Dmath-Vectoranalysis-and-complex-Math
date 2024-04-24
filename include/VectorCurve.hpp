@@ -55,7 +55,8 @@ class VectorCurve2D : public VectorAnalysis2D{
     float MaximumX();
     float minimumX();
 
-    size_t numberOfZeroPoints();
+    size_t numberOfYZeroPoints();
+    size_t numberOfXZeroPoints();
 };
     
 
@@ -63,16 +64,17 @@ class VectorCurve3D : public VectorAnalysis3D{
   private:
     std::vector<Dmath::Vec3D> mainCurve;
     std::vector<Dmath::Vec3D> createVectorialCurve();
+    
     VectorCurve3D(std::function<float(float)> xFunc,std::function<float(float)> yFunc, std::function<float(float)> zFunc);
     VectorCurve3D(std::function<float(float)> xFunc,std::function<float(float)> yFunc, std::function<float(float)> zFunc, float start, float stopp, float res);
+
   public:
     static VectorCurve3D createStandardCurve(std::function<float(float)> funcX,std::function<float(float)> funcY, std::function<float(float)> funcZ );
     static VectorCurve3D createCustomCurve  (std::function<float(float)> funcX,std::function<float(float)> funcY, std::function<float(float)> funcZ,float start,float stopp,float res);
 
     Dmath::Vec3D getVectorFromFunction(float xValue, float yValue, float zValue);
     Dmath::Vec3D getVectorFromPoint(float point);
-
-    Vec3D tangentVector(float t);
+    Dmath::Vec3D tangentVector(float t);
 
     float dotProductVectorCurve(VectorCurve3D vec);    
     float calculateSlopeXOnPoint(float t);
@@ -83,6 +85,15 @@ class VectorCurve3D : public VectorAnalysis3D{
     float minimumY();
     float maximumX();
     float minimumX();
+
+    size_t numberOfXZeroPoints();
+    size_t numberOfYZeroPoints();
+    size_t numberOfZZeroPoints();
+
+    void moveX(float moveX);
+    void moveY(float moveY);
+    void moveZ(float moveZ);
+    void moveCurve(float X, float Y, float Z);
 
 };
 

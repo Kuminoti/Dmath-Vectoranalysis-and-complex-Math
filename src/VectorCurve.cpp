@@ -138,12 +138,25 @@ float Dmath::VectorCurve2D::calculateSlopeOnPoint(float t){
     return result; 
 }
 
-size_t Dmath::VectorCurve2D::numberOfZeroPoints() {
+size_t Dmath::VectorCurve2D::numberOfYZeroPoints() {
     size_t zeroPoints = 0;
     size_t iterations = 1; 
     for (size_t i = 1; i < this->mainCurve.size(); ++i) {
         if ((this->mainCurve[i].getY() > 0 && this->mainCurve[iterations - 1].getY() < 0) ||
             (this->mainCurve[i].getY() < 0 && this->mainCurve[iterations - 1].getY() > 0)) {
+            zeroPoints++;
+        }
+        iterations++;
+    }
+    return zeroPoints;
+}
+
+size_t Dmath::VectorCurve2D::numberOfXZeroPoints() {
+    size_t zeroPoints = 0;
+    size_t iterations = 1; 
+    for (size_t i = 1; i < this->mainCurve.size(); ++i) {
+        if ((this->mainCurve[i].getX() > 0 && this->mainCurve[iterations - 1].getX() < 0) ||
+            (this->mainCurve[i].getX() < 0 && this->mainCurve[iterations - 1].getX() > 0)) {
             zeroPoints++;
         }
         iterations++;
@@ -416,4 +429,43 @@ float Dmath::VectorCurve3D::maximumY(){
         }
     }
     return maxY;
+}
+
+size_t Dmath::VectorCurve3D::numberOfXZeroPoints() {
+    size_t zeroPoints = 0;
+    size_t iterations = 1; 
+    for (size_t i = 1; i < this->mainCurve.size(); ++i) {
+        if ((this->mainCurve[i].getX() > 0 && this->mainCurve[iterations - 1].getX() < 0) ||
+            (this->mainCurve[i].getX() < 0 && this->mainCurve[iterations - 1].getX() > 0)) {
+            zeroPoints++;
+        }
+        iterations++;
+    }
+    return zeroPoints;
+}
+
+size_t Dmath::VectorCurve3D::numberOfYZeroPoints() {
+    size_t zeroPoints = 0;
+    size_t iterations = 1; 
+    for (size_t i = 1; i < this->mainCurve.size(); ++i) {
+        if ((this->mainCurve[i].getY() > 0 && this->mainCurve[iterations - 1].getY() < 0) ||
+            (this->mainCurve[i].getY() < 0 && this->mainCurve[iterations - 1].getY() > 0)) {
+            zeroPoints++;
+        }
+        iterations++;
+    }
+    return zeroPoints;
+}
+
+size_t Dmath::VectorCurve3D::numberOfZZeroPoints() {
+    size_t zeroPoints = 0;
+    size_t iterations = 1; 
+    for (size_t i = 1; i < this->mainCurve.size(); ++i) {
+        if ((this->mainCurve[i].getZ() > 0 && this->mainCurve[iterations - 1].getZ() < 0) ||
+            (this->mainCurve[i].getZ() < 0 && this->mainCurve[iterations - 1].getZ() > 0)) {
+            zeroPoints++;
+        }
+        iterations++;
+    }
+    return zeroPoints;
 }
