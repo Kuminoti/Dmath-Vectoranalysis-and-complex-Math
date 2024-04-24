@@ -123,3 +123,13 @@ To create curves using the VectorCurve2D or VectorCurve3D classes, you can utili
 - Scalar fields
 - Integrals
 - Contact points of two curves
+
+
+
+
+
+$$
+\oint_C \mathbf{F} \cdot d\mathbf{r} = \int_a^b \mathbf{F}(\mathbf{r}(t)) \cdot \mathbf{r}'(t) \, dt
+$$
+
+

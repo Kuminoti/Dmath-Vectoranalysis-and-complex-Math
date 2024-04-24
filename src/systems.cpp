@@ -167,7 +167,9 @@ CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float height,
 VectorAnalysis2D::VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc){
     this->xFunc = xFunc;
     this->yFunc = yFunc;
-
+    this->systemStart = 0;
+    this->systemStopp = TWOPI;
+    this->resolution  = 0.1;
     this->numberOfElements = static_cast<int>((this->systemStopp-this->systemStart)/resolution);
 }
 
