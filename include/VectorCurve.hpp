@@ -55,6 +55,10 @@ class VectorCurve2D : public VectorAnalysis2D{
     float MaximumX();
     float minimumX();
 
+    void moveX(float moveX);
+    void moveY(float moveY);
+    void moveCurve(float moveX, float moveY);
+
     size_t numberOfYZeroPoints();
     size_t numberOfXZeroPoints();
 };

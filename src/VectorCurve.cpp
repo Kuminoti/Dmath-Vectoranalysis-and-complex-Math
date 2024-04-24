@@ -245,6 +245,41 @@ Dmath::VectorCurve2D Dmath::VectorCurve2D::addCurve(Dmath::VectorCurve2D curve){
 }
 
 
+void Dmath::VectorCurve2D::moveCurve(float moveX, float moveY){
+    for(size_t i = 0; i<this->mainCurve.size(); i++){
+        this->mainCurve[i].moveVector(moveX,moveY);
+    }
+}
+
+void Dmath::VectorCurve2D::moveX(float moveX){
+    for (size_t i = 0; i < this->mainCurve.size(); i++){
+        this->mainCurve[i].moveVectorX(moveX);
+    }
+}
+
+void Dmath::VectorCurve2D::moveY(float moveY){
+    for (size_t i = 0; i < this->mainCurve.size(); i++){
+        this->mainCurve[i].moveVectorY(moveY);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //3D curves
 
 float Dmath::VectorCurve3D::dotProductVectorCurve(Dmath::VectorCurve3D vec) {
@@ -468,4 +503,29 @@ size_t Dmath::VectorCurve3D::numberOfZZeroPoints() {
         iterations++;
     }
     return zeroPoints;
+}
+
+
+void Dmath::VectorCurve3D::moveZ(float moveZ){
+    for(size_t i = 0; i<this->mainCurve.size(); i++){
+        this->mainCurve[i].moveVectorZ(moveZ);
+    }
+}
+
+void Dmath::VectorCurve3D::moveY(float moveY){
+    for(size_t i = 0; i<this->mainCurve.size(); i++){
+        this->mainCurve[i].moveVectorY(moveY);
+    }
+}
+
+void Dmath::VectorCurve3D::moveX(float moveX){
+    for(size_t i = 0; i<this->mainCurve.size(); i++){
+        this->mainCurve[i].moveVectorX(moveX);
+    }
+}
+
+void Dmath::VectorCurve3D::moveCurve(float moveX, float moveY, float moveZ){
+    for (size_t i = 0; i < this->mainCurve.size(); i++){
+        this->mainCurve[i].moveVector(moveX,moveY,moveZ);
+    }
 }
