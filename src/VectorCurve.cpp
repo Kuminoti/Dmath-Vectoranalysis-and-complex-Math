@@ -81,6 +81,19 @@ Dmath::Vec2D Dmath::VectorCurve2D::tangentVector(float t){
     return Dmath::Vec2D(dx, dy); 
 }
 
+Dmath::Vec2D Dmath::VectorCurve2D::tangetUnitVector(float t){
+    Dmath::Vec2D newVector = this->tangentVector(t);
+    newVector.normalize();
+    return newVector;
+}
+
+Dmath::Vec2D Dmath::VectorCurve2D::principalNormalUnitVector(float t){
+    Dmath::Vec2D newVec = this->tangetUnitVector(t);
+    newVec.normalize();
+    return newVec;
+}
+
+
 float Dmath::VectorCurve2D::curveLenght(){
     float lenght = 0;
     for(int i = 0; i<this->mainCurve.size(); i++){
@@ -382,6 +395,18 @@ Dmath::Vec3D  Dmath::VectorCurve3D::tangentVector(float t){
     if (!y_positive) dy = -dy;
 
     return Dmath::Vec3D(dx, dy,dz); 
+}
+
+Dmath::Vec3D Dmath::VectorCurve3D::tangetUnitVector(float t){
+    Dmath::Vec3D newVector = this->tangentVector(t);
+    newVector.normalize();
+    return newVector;
+}
+
+Dmath::Vec3D Dmath::VectorCurve3D::principalNormalUnitVector(float t){
+    Dmath::Vec3D newVec = this->tangetUnitVector(t);
+    newVec.normalize();
+    return newVec;
 }
 
 

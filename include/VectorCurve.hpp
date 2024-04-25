@@ -31,8 +31,10 @@ class VectorCurve2D : public VectorAnalysis2D{
     Dmath::Vec2D getVectorFromFunction(float vecX, float vecY);   //Returns a vector calculated from the two functions
     Dmath::Vec2D getVectorFromPoint(float point);                 //Returns a vector on the point t
     Dmath::Vec2D getVectorFromStdVec(float index);                //Returns a specific index of the std::vector
+
     Dmath::Vec2D tangentVector(float t);
-    //Dmath::Vec2D tangetUnitVector(float t);
+    Dmath::Vec2D tangetUnitVector(float t);
+    Dmath::Vec2D principalNormalUnitVector(float t);
 
     // NEEDS TESTING
 
@@ -82,6 +84,9 @@ class VectorCurve3D : public VectorAnalysis3D{
     Dmath::Vec3D getVectorFromFunction(float xValue, float yValue, float zValue);
     Dmath::Vec3D getVectorFromPoint(float point);
     Dmath::Vec3D tangentVector(float t);
+
+    Dmath::Vec3D tangetUnitVector(float t);
+    Dmath::Vec3D principalNormalUnitVector(float t);
 
     float dotProductVectorCurve(VectorCurve3D vec);    
     float calculateSlopeXOnPoint(float t);
