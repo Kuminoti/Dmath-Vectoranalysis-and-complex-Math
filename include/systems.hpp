@@ -162,7 +162,7 @@ class VectorAnalysis2D{
     inline float getDataAtY(float data)              { return this->yFunc(data);     }
     inline std::function<float(float)> getXFunction(){ return this->xFunc;           }
     inline std::function<float(float)> getYFunction(){ return this->yFunc;           }
-    
+      
 
 };
 

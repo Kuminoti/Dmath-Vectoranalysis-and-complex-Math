@@ -506,8 +506,17 @@ void Vec3D::moveVectorY(float moveY){
 }
 
 
-void Vec3D::moveVectorY(float moveX){
+void Vec3D::moveVectorX(float moveX){
   this->originX += moveX;
+  this->calcAXYZ();
+  this->calcDTZ();
+}
+
+void Dmath::Vec3D::moveVector(float moveX, float moveY, float moveZ){
+  this->originX += moveX;
+  this->originY += moveY;
+  this->originZ += moveZ;
+
   this->calcAXYZ();
   this->calcDTZ();
 }

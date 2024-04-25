@@ -18,7 +18,7 @@ CTestTestfile.cmake
 _deps
 
 #testing and todo
-
+vectorFields.hpp
 test
 test.cpp
 todo
