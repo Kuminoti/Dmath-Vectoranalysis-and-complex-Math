@@ -28,8 +28,9 @@ class VectorCurve2D : public VectorAnalysis2D{
     static VectorCurve2D createCustomCurve(std::function<float(float)> funcX, std::function<float(float)> funcY, float start, float stopp, float res );
     
     //Getters (tested)
-    Dmath::Vec2D getVectorFromFunction(float vecX, float vecY);
-    Dmath::Vec2D getVectorFromPoint(float point);
+    Dmath::Vec2D getVectorFromFunction(float vecX, float vecY);   //Returns a vector calculated from the two functions
+    Dmath::Vec2D getVectorFromPoint(float point);                 //Returns a vector on the point t
+    Dmath::Vec2D getVectorFromStdVec(float index);                //Returns a specific index of the std::vector
     Dmath::Vec2D tangentVector(float t);
 
     // NEEDS TESTING
