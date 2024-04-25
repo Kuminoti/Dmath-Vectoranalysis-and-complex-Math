@@ -5,6 +5,12 @@ using namespace Dmath;
 
 //Operator overloading
 
+Vec2D Vec2D::operator/(float scalarValue){
+  float valueX = this->X / scalarValue;
+  float valueY = this->Y / scalarValue;
+  return Vec2D(valueX, valueY);
+}
+
 Vec2D Vec2D::operator+(Vec2D &Mathvector) {
   float resultX = this->X + Mathvector.X;
   float resultY = this->Y + Mathvector.Y;

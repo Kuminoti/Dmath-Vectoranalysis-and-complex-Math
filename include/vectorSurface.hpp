@@ -62,6 +62,7 @@ class VectorSurface : public VectorAnalysis3D{
         this->yFunc = yFunc;
         this->zFunc = zFunc;
         this->createVectorSurface();
+        this->calculateSurfaceNormals();
     }
 
   public:
@@ -84,8 +85,8 @@ class VectorSurface : public VectorAnalysis3D{
                 Dmath::Vec3D dv = calculatePartialDerivativeV(i, j);
 
                 // Berechne die Flächennormale als Kreuzprodukt
-                Dmath::Vec3D normal = du.vecProduct(dv).normalize(); // Normalisierung für Einheitsnormalenvektor
-
+                Dmath::Vec3D normal = du.vecProduct(dv);// Normalisierung für Einheitsnormalenvektor
+                normal.normalize();
                 surfaceNormals.push_back(normal);
                 iterations++;
             }

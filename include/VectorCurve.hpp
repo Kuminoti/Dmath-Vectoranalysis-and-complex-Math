@@ -32,6 +32,7 @@ class VectorCurve2D : public VectorAnalysis2D{
     Dmath::Vec2D getVectorFromPoint(float point);                 //Returns a vector on the point t
     Dmath::Vec2D getVectorFromStdVec(float index);                //Returns a specific index of the std::vector
     Dmath::Vec2D tangentVector(float t);
+    //Dmath::Vec2D tangetUnitVector(float t);
 
     // NEEDS TESTING
 

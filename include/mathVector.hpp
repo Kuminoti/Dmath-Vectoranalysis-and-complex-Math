@@ -19,10 +19,11 @@ class Vec2D : public CoordinateSystem2D {
 
   public:
     // Basic operrator overloading:
+    Vec2D operator/(float scalarValue);                     //divides all components of the Vector with the scalar value and returns it
     Vec2D operator+(Vec2D& Mathvector);                     //Basic Vector addition
     Vec2D operator-(Vec2D& Mathvector);                     //Basic Vector subtractions
     float operator*(Vec2D& Mathvector);                     //Calculates the dotproduct of two vectors
-
+    
 #ifdef CARTESIAN_IS_2D_STANDARD
     Vec2D(float XY);                                        // creates a Vector with the same x and y value
     Vec2D(float X, float Y);                                // basic x and y vector
