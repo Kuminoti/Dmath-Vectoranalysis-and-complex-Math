@@ -40,7 +40,7 @@ class Vec2D : public CoordinateSystem2D {
     float getDistanceToZero();                           // Gets the distance to [ 0 ; 0 ] from a vector with a non zero start
     float getAbs();                                      // Calculates the absolutvalue
     float lenght();                                      // Calculates the length of a vector
-    
+
     float dotProduct(Vec2D Mathvector);                  // Calculates Scalar product
     float calcAngle(Vec2D Mathvector);                   // Calculates the angle between 2 vectors
     float distance(Vec2D Mathvector);                    // Calculates the distance between vectors
@@ -59,6 +59,8 @@ class Vec2D : public CoordinateSystem2D {
     void setY(float value);                              // Basic y setter
     void setPhi(float value);                            // Setter for the angle in a polar system
     void setRadius(float radius);                        // Setter for the radius in a polar system
+
+    void normalize();
 
     void setOriginX(float newOriginX);
     void setOriginY(float newOriginY);
@@ -113,6 +115,7 @@ class Vec3D : public CoordinateSystem3D {
     void setX(float X);
     void setY(float Y);
     void setZ(float Z);
+    void normalize();
 
     void setPhi(float phi);       // For spheresystems (radius, angle Phi, angle Theta)
     void setHeight(float phi);    // For cylinder systems (radius, angle, height);
@@ -132,6 +135,7 @@ class Vec3D : public CoordinateSystem3D {
     Vec3D vecProduct(Vec3D Mathvector);
     Vec3D add(Vec3D Mathvector);
     Vec3D subtract(Vec3D Mathvector);
+  
 
     // Return a spezial vector
     static Vec3D zeroVector(); // Returns a Vector with lenght 0

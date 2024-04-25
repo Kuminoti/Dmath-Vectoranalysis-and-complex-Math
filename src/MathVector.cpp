@@ -168,6 +168,10 @@ void Vec2D::calcAbs() {
   this->abs = result;
 }
 
+void Vec2D::normalize(){
+  this->X = this->X / this->abs;
+  this->Y = this->Y / this->abs;
+}
 
 void Vec2D::calcDZ(){
   if(this->originX == 0 && this-> originY == 0){
@@ -519,6 +523,12 @@ void Dmath::Vec3D::moveVector(float moveX, float moveY, float moveZ){
 
   this->calcAXYZ();
   this->calcDTZ();
+}
+
+void Vec3D::normalize(){
+  this->X = this->X/this->abs;
+  this->Y = this->Y/this->abs;
+  this->Z = this->Z/this->abs;
 }
 
 void Vec3D::setY(float Y)           { this->Y = Y; }

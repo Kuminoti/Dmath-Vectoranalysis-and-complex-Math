@@ -162,14 +162,18 @@ CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float height,
 
 
 //DIfferential geometry
-
+VectorAnalysis2D::VectorAnalysis2D(float systemStart, float systemStopp, float resolution){
+    this->systemStart = systemStart;
+    this->systemStopp = systemStopp;
+    this->resolution  = resolution;
+}
 
 VectorAnalysis2D::VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc){
     this->xFunc = xFunc;
     this->yFunc = yFunc;
-    this->systemStart = 0;
+    this->systemStart = ZERO;
     this->systemStopp = TWOPI;
-    this->resolution  = 0.1;
+    this->resolution  = STDRES;
     this->numberOfElements = static_cast<int>((this->systemStopp-this->systemStart)/resolution);
 }
 
@@ -185,10 +189,10 @@ VectorAnalysis2D::VectorAnalysis2D(std::function<float(float)> xFunc, std::funct
     this->numberOfElements = static_cast<int>((this->systemStart - this->systemStopp)/ this->resolution);
 }
 
- getVectorFromFunctions(){
 
-}
-
+VectorAnalysis3D::VectorAnalysis3D(float systemStart, float systemStopp, float resolution) :
+ VectorAnalysis2D(systemStart,systemStopp,resolution){}
+                                
 
 VectorAnalysis3D::VectorAnalysis3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, std::function<float(float)> zFunc)
 : VectorAnalysis2D(xFunc, yFunc){

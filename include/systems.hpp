@@ -8,6 +8,8 @@
 #include <vector>
 #include <functional>
 
+#define STDRES 0.1f 
+#define ZERO 0
 #define PI 3.14159265358979323846
 #define TWOPI 2 * PI
 #define FOUR_PI 2 * PI
@@ -142,11 +144,12 @@ class VectorAnalysis2D{
     std::function<float(float)> xFunc;
     std::function<float(float)> yFunc;
 
-    float resolution;
-    float systemStart;
-    float systemStopp;
+    float resolution = STDRES;
+    float systemStart = ZERO;
+    float systemStopp = TWOPI;
     int numberOfElements;
 
+    VectorAnalysis2D(float systemStart, float systemStopp, float resolution);
     VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc);
     VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, 
                                     float systemStart, float systemStopp, float resolution);
@@ -162,7 +165,7 @@ class VectorAnalysis2D{
     inline float getDataAtY(float data)              { return this->yFunc(data);     }
     inline std::function<float(float)> getXFunction(){ return this->xFunc;           }
     inline std::function<float(float)> getYFunction(){ return this->yFunc;           }
-      
+
 
 };
 
@@ -172,7 +175,7 @@ class VectorAnalysis2D{
 class VectorAnalysis3D: public VectorAnalysis2D{
   protected:
     std::function<float(float)> zFunc;
-
+    VectorAnalysis3D(float systemStart, float systemStopp, float resolution);
     VectorAnalysis3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, std::function<float(float)> zFunc);
     VectorAnalysis3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, std::function<float(float)> zFunc,
                                     float systemStart, float systemStopp, float resolution);

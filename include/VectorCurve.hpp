@@ -18,6 +18,7 @@ class VectorCurve2D : public VectorAnalysis2D{
     std::vector<Dmath::Vec2D> mainCurve;
 
     //Constructos for sinmple parametric Vector curves (tested)
+    
     VectorCurve2D(std::function<float(float)> xFunc,std::function<float(float)> yFunc);
     VectorCurve2D(std::function<float(float)> xFunc,std::function<float(float)> yFunc, float start, float stopp, float res);
 
