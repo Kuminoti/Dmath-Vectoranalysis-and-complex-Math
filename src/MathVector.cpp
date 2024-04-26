@@ -84,10 +84,15 @@ void Vec2D::calcAbsXY(){
 
 // Vec2D functions:
 
-Vec2D Vec2D::rotateVector(float angle) {
-  float newX = this->getX() * std::cos(angle) - this->getY() * std::sin(angle);
-  float newY = this->getX() * std::sin(angle) + this->getY() * std::cos(angle);
+Vec2D Vec2D::rotateVector(float radians) {
+  float newX = this->getX() * std::cos(radians) - this->getY() * std::sin(radians);
+  float newY = this->getX() * std::sin(radians) + this->getY() * std::cos(radians);
   return Vec2D(newX, newY);
+}
+
+void Vec2D::rotateThisVector(float radians){
+  this->X = this->getX() * std::cos(radians) - this->getY() * std::sin(radians);
+  this->Y = this->getX() * std::sin(radians) + this->getY() * std::cos(radians);
 }
 
 float Vec2D::distance(Vec2D Mathvector){
@@ -194,7 +199,7 @@ void Vec2D::calcDZ(){
   }
   float result = 0;
   this->calcAbsXY();
-  float result = this->mathHelper.pyth(this->aX,this->aY);
+  result = this->mathHelper.pyth(this->aX,this->aY);
   this->distanceToZero = result;
 }
 
@@ -286,6 +291,34 @@ float Vec3D::dotProduct(Vec3D Mathvector) {
   float result =
       this->X * Mathvector.X + this->Y * Mathvector.Y + this->Z * Mathvector.Z;
   return result;
+}
+
+Dmath::Vec3D Vec3D::rotateVector(float radiansPhi, float radiansTheta) {
+    float r = this->radius;
+    float theta = this->theta;
+    float phi = this->phi;
+
+    float newTheta = theta + radiansTheta;
+    float newPhi = phi + radiansPhi;
+
+    float newX = r * std::sin(newTheta) * std::cos(newPhi);
+    float newY = r * std::sin(newTheta) * std::sin(newPhi);
+    float newZ = r * std::cos(newTheta);
+
+    return Dmath::Vec3D(newX, newY, newZ);
+}
+
+void Vec3D::rotateThisVector(float radiansPhi, float radiansTheta){
+    float r = this->radius;
+    float theta = this->theta;
+    float phi = this->phi;
+
+    float newTheta = theta + radiansTheta;
+    float newPhi = phi + radiansPhi;
+
+    this->X = r * std::sin(newTheta) * std::cos(newPhi);
+    this->Y = r * std::sin(newTheta) * std::sin(newPhi);
+    this->Z = r * std::cos(newTheta);
 }
 
 Vec3D Vec3D::vecProduct(Vec3D Mathvector) {

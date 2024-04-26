@@ -69,11 +69,11 @@ class Vec2D : public CoordinateSystem2D {
     void moveVectorX(float move);                        // Moves the vector in a specific x-direction
     void moveVectorY(float move);                        // Moves the vector in a specific y-direction
     void moveVector(float moveX, float moveY);           // Moves the vector in a specific x and y direction 
-
+    void rotateThisVector(float radiants);
     // You can use methods instead of operators
     Vec2D add(Vec2D Mathvector);                         // Adding 2 vectors
     Vec2D subtract(Vec2D Mathvector);                    // Subtract 2 vectors
-    Vec2D rotateVector(float angle);                     // Rotates a vector dependent op the angle
+    Vec2D rotateVector(float radians);                     // Rotates a vector dependent op the angle
 
     // spezial Vectors
     static Vec2D polarVector(float radius, float angle); // Creates a Vector in a polar system
@@ -122,11 +122,11 @@ class Vec3D : public CoordinateSystem3D {
     void setHeight(float phi);    // For cylinder systems (radius, angle, height);
     void setTheta(float phi);     // For spheresystems (radius, angle Phi, angle Theta);
 
-    void moveVectorX(float move);                        // Moves the vector in a specific x-direction
+    void moveVectorX(float move); // Moves the vector in a specific x-direction
     void moveVectorY(float move);  
     void moveVectorZ(float Z);        
     void moveVector(float moveX, float moveY, float moveZ);           
-
+    void rotateThisVector(float radiansPhi, float radiansTheta);
 
     // Calculations that return a scalar value
     float dotProduct(Vec3D Mathvector);
@@ -136,7 +136,8 @@ class Vec3D : public CoordinateSystem3D {
     Vec3D vecProduct(Vec3D Mathvector);
     Vec3D add(Vec3D Mathvector);
     Vec3D subtract(Vec3D Mathvector);
-  
+
+    Dmath::Vec3D rotateVector(float radiansPhi, float radiansTheta);
 
     // Return a spezial vector
     static Vec3D zeroVector(); // Returns a Vector with lenght 0

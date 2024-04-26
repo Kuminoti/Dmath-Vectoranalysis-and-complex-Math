@@ -72,7 +72,8 @@
 // A helper class with some pre defined functions
 class MathHelper{
   private:
-    float h = 0.0001;       //Resolution for Derivative
+    float h  = 0.0001;      //Resolution for Derivative
+    float dx = 0.0001;      //Stepps for Antiderivative
     int numSteps = 1000;    //Stepps for the integral
 
   public:
@@ -87,6 +88,9 @@ class MathHelper{
 
     float calculateDerivativeAt(std::function<float(float)> f, float x);
     float calculateDefiniteIntegral(std::function<float(float)> f, float a, float b);
+    
+    std::function<float(float)> calculateAntiderivative(std::function<float(float)> f, float x0);
+    std::function<float(float)> calculateDerivative(std::function<float(float)> f);
 };
 
 

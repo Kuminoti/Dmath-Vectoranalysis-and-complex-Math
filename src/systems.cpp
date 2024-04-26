@@ -21,6 +21,21 @@ float MathHelper::calculateDefiniteIntegral(std::function<float(float)> f, float
     return sum;
 }
 
+std::function<float(float)> MathHelper::calculateAntiderivative(std::function<float(float)> f, float x0) {
+    float integral = 0.0;
+    std::function<float(float)> antiderivative = [f, x0, this, integral](float x) mutable {
+        integral += f(x) * this->dx;
+        return integral;
+    };
+    return antiderivative;
+}
+
+std::function<float(float)> MathHelper::calculateDerivative(std::function<float(float)> f) {
+    return [f, this](float x) {
+        return (f(x + dx) - f(x)) / dx; // Vorwärtsdifferenzenquotient zur Approximation der Ableitung
+    };
+}
+
 
 void CoordinateSystem2D::polarToCartesian() {
     this->X = radius * std::cos(this->phi);
