@@ -170,7 +170,7 @@ void Vec2D::moveVector(float moveX, float moveY){
 }
 
 void Vec2D::calcAbs() {
-  float result = std::sqrt((this->X * this->X) + (this->Y * this->Y));
+  float result = this->mathHelper.pyth(this->X,this->Y);
   this->abs = result;
 }
 
@@ -275,9 +275,7 @@ void Vec3D::calcDTZ(){
 }
 
 void Vec3D::calcAbs() {
-  float result = std::sqrt((this->X * this->X) + (this->Y * this->Y) +
-                           (this->Z * this->Z));
-  this->abs = result;
+  float result = this->mathHelper.pyth3D(this->X,this->Y,this->Z);
 }
 
 float Vec3D::calcAngle(Vec3D Mathvector) {

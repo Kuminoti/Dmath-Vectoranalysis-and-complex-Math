@@ -68,6 +68,16 @@
 
 #ifdef SYSTEM_IS_SET
 
+
+// A helper class with some pre defined functions
+class MathHelper{
+  public:
+    inline float pyth(float x, float y){return std::sqrt((x*x) + (y*y) );}
+    inline float pyth3D(float x, float y, float z){return std::sqrt((x*x) + (y*y) +(z*z) );}
+    inline float sinFunc(float x){return std::sin(x);}
+};
+
+
 // Coordinatesystem2D is used as an abstraction for other classes like the 2 main Vector classes
 class CoordinateSystem2D { 
   protected:
@@ -84,7 +94,8 @@ class CoordinateSystem2D {
     void cartesianToPolar();
 
   public:
-
+    MathHelper mathHelper;
+    
     inline float getX()       { return this->X;       }
     inline float getY()       { return this->Y;       }   
     inline float getPhi()     { return this->phi;     }
@@ -168,7 +179,7 @@ class VectorAnalysis2D{
                                     float systemStart, float systemStopp, float resolution);
 
   public:
-  
+
     inline float getNumberOfElements()               { return this->numberOfElements;}
     inline float getResolution()                     { return this->resolution;      }
     inline float getStart()                          { return this->systemStart;     }

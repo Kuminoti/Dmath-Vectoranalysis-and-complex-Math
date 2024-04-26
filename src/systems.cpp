@@ -62,6 +62,7 @@ CoordinateSystem2D::CoordinateSystem2D(float XY){
     this->Y = XY;
     this->originX = 0;
     this->originY = 0;
+    
 }
 
 CoordinateSystem2D::CoordinateSystem2D(float x, float y) {
