@@ -1,13 +1,26 @@
 #include "../include/systems.hpp"
 
-float pyth2D(float x, float y) { return std::sqrt((x * x) + (y * y)); }
+#ifdef SYSTEM_IS_SET
 
-// Pythagorean theorem for 3D vectors
-float pyth3D(float x, float y, float z) {
-    return std::sqrt((x * x) + (y * y) + (z * z));
+//MathHelper methods:
+
+float  MathHelper::calculateDerivativeAt(std::function<float(float)> f, float x) {
+    float fx_plus_h = f(x + this->h);
+    float fx_minus_h = f(x - this->h);
+    float derivative = (fx_plus_h - fx_minus_h) / (2 * this->h);
+    return derivative;
 }
 
-#ifdef SYSTEM_IS_SET
+float MathHelper::calculateDefiniteIntegral(std::function<float(float)> f, float a, float b) {
+    float sum = 0.0;
+    float dx = (b - a) / this->numSteps;
+    for (int i = 0; i < this->numSteps; ++i) {
+        float x = a + i * dx;
+        sum += f(x) * dx;
+    }
+    return sum;
+}
+
 
 void CoordinateSystem2D::polarToCartesian() {
     this->X = radius * std::cos(this->phi);
@@ -15,18 +28,18 @@ void CoordinateSystem2D::polarToCartesian() {
 }
 
 void CoordinateSystem2D::cartesianToPolar() {
-    this->radius = pyth2D(this->X, this->Y);
+    this->radius = this->mathHelper.pyth(this->X, this->Y);
     this->phi = std::atan2(this->Y, this->X);
 }
 
 void CoordinateSystem3D::cartesianToSphere() {
-    this->radius = pyth3D(this->X, this->Y, this->Z);
+    this->radius = this->mathHelper.pyth3D(this->X, this->Y, this->Z);
     this->phi = std::atan2(this->Y, this->X);
-    this->theta = std::acos((this->Z / pyth3D(this->X, this->Y, this->Z)));
+    this->theta = std::acos((this->Z / radius));
 }
 
 void CoordinateSystem3D::cartesianToCylinder() {
-    this->radius = pyth2D(this->X, this->Y);
+    this->radius = this->mathHelper.pyth(this->X, this->Y);
     this->phi = std::atan2(this->Y, this->X);
     this->height = this->Z;
 }
@@ -50,7 +63,7 @@ void CoordinateSystem3D::cylinderToCartesian() {
 }
 
 void CoordinateSystem3D::cylinderToSphere() {
-    this->radius = pyth2D(this->radius, this->height);
+    this->radius = this->mathHelper.pyth(this->radius, this->height);
     // this->phi = this->phi;
     this->theta = std::atan2(this->radius, this->height);
 }
@@ -167,6 +180,7 @@ VectorAnalysis2D::VectorAnalysis2D(float systemStart, float systemStopp, float r
     this->systemStart = systemStart;
     this->systemStopp = systemStopp;
     this->resolution  = resolution;
+    this->numberOfElements = this->mathHelper.numOfElements(systemStart,systemStopp,resolution);
 }
 
 VectorAnalysis2D::VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc){
@@ -175,7 +189,7 @@ VectorAnalysis2D::VectorAnalysis2D(std::function<float(float)> xFunc, std::funct
     this->systemStart = ZERO;
     this->systemStopp = TWOPI;
     this->resolution  = STDRES;
-    this->numberOfElements = static_cast<int>((this->systemStopp-this->systemStart)/resolution);
+    this->numberOfElements = this->mathHelper.numOfElements(ZERO,TWOPI,STDRES);
 }
 
 
@@ -187,7 +201,7 @@ VectorAnalysis2D::VectorAnalysis2D(std::function<float(float)> xFunc, std::funct
     this->systemStart = systemStart;
     this->systemStopp = systemStopp;
 
-    this->numberOfElements = static_cast<int>((this->systemStart - this->systemStopp)/ this->resolution);
+    this->numberOfElements = this->mathHelper.numOfElements(systemStart,systemStopp,resolution);
 }
 
 
@@ -208,8 +222,8 @@ VectorAnalysis3D::VectorAnalysis3D(std::function<float(float)> xFunc, std::funct
 }
 
 float CoordinateSystem3D::getRadiusSphere() {
-    return pyth3D(this->X, this->Y, this->Z);
+    return this->mathHelper.pyth3D(this->X, this->Y, this->Z);
 }
 float CoordinateSystem3D::getRadiusCylinder() {
-    return pyth2D(this->X, this->Y);
+    return this->mathHelper.pyth(this->X, this->Y);
 }

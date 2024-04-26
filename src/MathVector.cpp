@@ -194,10 +194,7 @@ void Vec2D::calcDZ(){
   }
   float result = 0;
   this->calcAbsXY();
-  //AYS absolute Y sqared ...
-  float AXS = this->aX * this->aX;
-  float AYS = this->aY * this->aY;
-  result = std::sqrt(AYS + AYS);
+  float result = this->mathHelper.pyth(this->aX,this->aY);
   this->distanceToZero = result;
 }
 

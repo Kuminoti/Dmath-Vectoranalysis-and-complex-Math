@@ -71,10 +71,22 @@
 
 // A helper class with some pre defined functions
 class MathHelper{
+  private:
+    float h = 0.0001;       //Resolution for Derivative
+    int numSteps = 1000;    //Stepps for the integral
+
   public:
+
     inline float pyth(float x, float y){return std::sqrt((x*x) + (y*y) );}
     inline float pyth3D(float x, float y, float z){return std::sqrt((x*x) + (y*y) +(z*z) );}
-    inline float sinFunc(float x){return std::sin(x);}
+
+    inline float sinFunc (float x) { return std::sin(x); }
+    inline float cosFunc (float x) { return std::cos(x); }
+    inline float tanFunc (float x) { return std::cos(x); }
+    inline float numOfElements(float start, float stopp, float res){ return static_cast<int> ((stopp-start)/res);}
+
+    float calculateDerivativeAt(std::function<float(float)> f, float x);
+    float calculateDefiniteIntegral(std::function<float(float)> f, float a, float b);
 };
 
 
@@ -95,7 +107,7 @@ class CoordinateSystem2D {
 
   public:
     MathHelper mathHelper;
-    
+
     inline float getX()       { return this->X;       }
     inline float getY()       { return this->Y;       }   
     inline float getPhi()     { return this->phi;     }
@@ -189,6 +201,7 @@ class VectorAnalysis2D{
     inline std::function<float(float)> getXFunction(){ return this->xFunc;           }
     inline std::function<float(float)> getYFunction(){ return this->yFunc;           }
 
+    MathHelper mathHelper;
 
 };
 
