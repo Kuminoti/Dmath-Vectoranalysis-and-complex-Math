@@ -174,6 +174,7 @@ class VectorAnalysis2D{
 #ifdef CARTESIAN_IS_3D_STANDARD
 class VectorAnalysis3D: public VectorAnalysis2D{
   protected:
+    std::vector<Dmath::Vec3D> system;
     std::function<float(float)> zFunc;
     VectorAnalysis3D(float systemStart, float systemStopp, float resolution);
     VectorAnalysis3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, std::function<float(float)> zFunc);
@@ -184,6 +185,12 @@ class VectorAnalysis3D: public VectorAnalysis2D{
 
     inline std::function<float(float)> getZfunction(){ return this->zFunc;           }
     inline float getDataAtZ(float data)              { return this->zFunc(data);     }
+
+    float getMaxX(){
+      for(size_t i = 0; i<this->system.size(); i++){
+        
+      }
+    }
    
 };
 #endif //CARTESIAN_IS_2D_STANDARD
