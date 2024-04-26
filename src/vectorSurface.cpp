@@ -174,3 +174,17 @@ float Dmath::VectorSurface::minZ(){
     }
     return min;
 }
+
+
+float Dmath::VectorSurface::calculatePerimeter() {
+    float perimeter = 0.0;
+    size_t numPoints = this->mainSurface.size();
+
+    perimeter += (mainSurface[numPoints - 1] - mainSurface[0]).getAbs();
+
+    for (size_t i = 1; i < numPoints; ++i) {
+        perimeter += (mainSurface[i] - mainSurface[i - 1]).getAbs();
+    }
+
+    return perimeter;
+}

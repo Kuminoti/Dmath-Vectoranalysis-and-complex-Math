@@ -53,6 +53,8 @@ class VectorSurface : public VectorAnalysis3D{
     float maxZ();
     float minZ();
 
+    float calculatePerimeter();
+
 };
 
 NAMESPACEEND
