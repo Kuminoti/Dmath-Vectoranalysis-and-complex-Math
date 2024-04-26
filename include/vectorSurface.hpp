@@ -14,11 +14,10 @@ class VectorSurface : public VectorAnalysis3D{
 
     std::vector<Dmath::Vec3D> mainSurface;
     std::vector<Dmath::Vec3D> surfaceNormals;
+    float epsilon = 0.001;
 
 
     Dmath::Vec3D calculatePartialDerivativeU(float u, float v) {
-        // Hier berechnest du die partielle Ableitung nach u
-        float epsilon = 0.001; // Kleiner Wert für die numerische Ableitung
         float du_x = (xFunc(u + epsilon, v) - xFunc(u - epsilon, v)) / (2 * epsilon);
         float du_y = (yFunc(u + epsilon, v) - yFunc(u - epsilon, v)) / (2 * epsilon);
         float du_z = (zFunc(u + epsilon, v) - zFunc(u - epsilon, v)) / (2 * epsilon);
@@ -28,7 +27,7 @@ class VectorSurface : public VectorAnalysis3D{
 
     Dmath::Vec3D calculatePartialDerivativeV(float u, float v) {
         // Hier berechnest du die partielle Ableitung nach v
-        float epsilon = 0.001; // Kleiner Wert für die numerische Ableitung
+       
         float dv_x = (xFunc(u, v + epsilon) - xFunc(u, v - epsilon)) / (2 * epsilon);
         float dv_y = (yFunc(u, v + epsilon) - yFunc(u, v - epsilon)) / (2 * epsilon);
         float dv_z = (zFunc(u, v + epsilon) - zFunc(u, v - epsilon)) / (2 * epsilon);
@@ -76,7 +75,7 @@ class VectorSurface : public VectorAnalysis3D{
         return VectorSurface(xFunc,yFunc,zFunc,systemStart,systemStopp,resolution);
     }
 
-        void calculateSurfaceNormals() {
+    void calculateSurfaceNormals() {
         size_t iterations = 0;
         for (float i = systemStart; i <= systemStopp; i += resolution) {
             for (float j = systemStart; j <= systemStopp; j += resolution) {
@@ -92,6 +91,23 @@ class VectorSurface : public VectorAnalysis3D{
             }
         }
     }
+
+    Dmath::Vec3D calculatePartialDerivativeU(float u, float v) {
+        float du_x = (xFunc(u + epsilon, v) - xFunc(u - epsilon, v)) / (2 * epsilon);
+        float du_y = (yFunc(u + epsilon, v) - yFunc(u - epsilon, v)) / (2 * epsilon);
+        float du_z = (zFunc(u + epsilon, v) - zFunc(u - epsilon, v)) / (2 * epsilon);
+
+        return Dmath::Vec3D(du_x, du_y, du_z);
+    }
+
+    Dmath::Vec3D calculatePartialDerivativeV(float u, float v) {
+        float dv_x = (xFunc(u, v + epsilon) - xFunc(u, v - epsilon)) / (2 * epsilon);
+        float dv_y = (yFunc(u, v + epsilon) - yFunc(u, v - epsilon)) / (2 * epsilon);
+        float dv_z = (zFunc(u, v + epsilon) - zFunc(u, v - epsilon)) / (2 * epsilon);
+        return Dmath::Vec3D(dv_x, dv_y, dv_z);
+    }
+
+    
 
 
 };

@@ -17,10 +17,11 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
-#testing and todo
+#testing, working and todo
 vectorFields.hpp
 test
 test.cpp
 todo
+Documentation/
 
 

@@ -47,7 +47,7 @@ class VectorCurve2D : public VectorAnalysis2D{
     float calculateSlopeOnPoint(float t);
     float dotProductVectorCurve(Dmath::VectorCurve2D vec);
     float calculateAreaXAchsis(float tStart, float tEnd);
-
+    float getCurvature(float t);
 
     
     //VectorCurve2D curveFusion(){}
@@ -92,6 +92,7 @@ class VectorCurve3D : public VectorAnalysis3D{
     float calculateSlopeXOnPoint(float t);
     float calculateSlopeYOnPoint(float t);
     float curveLenght();
+    float getCurvature(float t);
 
     float maximumY();
     float minimumY();

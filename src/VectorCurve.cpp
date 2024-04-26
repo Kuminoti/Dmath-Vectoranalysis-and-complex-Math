@@ -375,6 +375,9 @@ Dmath::Vec3D Dmath::VectorCurve3D::getVectorFromPoint(float point)  {
     return outputVector;
 }
 
+
+
+
 Dmath::Vec3D  Dmath::VectorCurve3D::tangentVector(float t){
     float h = 0.00000001; 
     float x_t_plus_h = this->xFunc(t + h);
