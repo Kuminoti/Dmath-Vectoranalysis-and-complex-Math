@@ -8,15 +8,28 @@
 #include <vector>
 #include <functional>
 
-#define STDRES 0.1f 
-#define ZERO 0
+#define STDRES 0.1f               //The standard resolution for more dimensional vector systems
+#define ZERO 0                    //Standard zero used as a constant for the startpoint in more dimensional vector systems
 #define PI 3.14159265358979323846
 #define TWOPI 2 * PI
 #define FOUR_PI 2 * PI
 #define NAMESPACESTART namespace Dmath {
 #define NAMESPACEEND }
 
-// uncomment to choose your standard coordinate system
+/* This file is used to create a base and an abstraction for the other classes and systems.
+ * The CoordinateSystem2D and CoordinateSystem3D classes will be inherited to the Vec2D and Vec3D
+ * classes the classes for the basic vectors.
+ * The VectorAnalysis2D and VectorAnalysis3D will be inherited to the VectorCurve and Vectorsurface classes
+ * 
+ * In this file you can choose the standard Coordinate system for you calculations and it contains important
+ * mathmatical constants and data.
+*/
+
+
+
+
+
+//Uncomment to choose your standard coordinate system
 
 #define CARTESIAN_IS_2D_STANDARD   // Cartesian system: X,Y
 //#define POLAR_IS_STANDARD        //Polar system: Radius, phi
@@ -155,8 +168,7 @@ class VectorAnalysis2D{
                                     float systemStart, float systemStopp, float resolution);
 
   public:
-    
-
+  
     inline float getNumberOfElements()               { return this->numberOfElements;}
     inline float getResolution()                     { return this->resolution;      }
     inline float getStart()                          { return this->systemStart;     }
@@ -174,7 +186,7 @@ class VectorAnalysis2D{
 #ifdef CARTESIAN_IS_3D_STANDARD
 class VectorAnalysis3D: public VectorAnalysis2D{
   protected:
-    std::vector<Dmath::Vec3D> system;
+    
     std::function<float(float)> zFunc;
     VectorAnalysis3D(float systemStart, float systemStopp, float resolution);
     VectorAnalysis3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, std::function<float(float)> zFunc);
@@ -186,13 +198,8 @@ class VectorAnalysis3D: public VectorAnalysis2D{
     inline std::function<float(float)> getZfunction(){ return this->zFunc;           }
     inline float getDataAtZ(float data)              { return this->zFunc(data);     }
 
-    float getMaxX(){
-      for(size_t i = 0; i<this->system.size(); i++){
-        
-      }
-    }
    
 };
-#endif //CARTESIAN_IS_2D_STANDARD
+#endif 
 #endif // SYSTEM_IS_SET
 #endif // SYSTEMS_H includeguard
