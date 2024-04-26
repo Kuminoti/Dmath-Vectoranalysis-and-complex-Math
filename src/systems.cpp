@@ -31,8 +31,9 @@ std::function<float(float)> MathHelper::calculateAntiderivative(std::function<fl
 }
 
 std::function<float(float)> MathHelper::calculateDerivative(std::function<float(float)> f) {
-    return [f, this](float x) {
-        return (f(x + dx) - f(x)) / dx; // Vorwärtsdifferenzenquotient zur Approximation der Ableitung
+    float dx = this->dx; // Hier wird dx explizit kopiert, um Rundungsfehler zu vermeiden
+    return [f, dx](float x) {
+        return (f(x + dx) - f(x)) / dx;
     };
 }
 
