@@ -184,7 +184,8 @@ class VectorAnalysis2D{
     std::function<float(float)> xFunc;
     std::function<float(float)> yFunc;
 
-    float resolution = STDRES;
+    float rotation    = ZERO;
+    float resolution  = STDRES;
     float systemStart = ZERO;
     float systemStopp = TWOPI;
     int numberOfElements;
@@ -193,6 +194,8 @@ class VectorAnalysis2D{
     VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc);
     VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, 
                                     float systemStart, float systemStopp, float resolution);
+    VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, 
+                                    float systemStart, float systemStopp, float resolution, float rotation);
 
   public:
 

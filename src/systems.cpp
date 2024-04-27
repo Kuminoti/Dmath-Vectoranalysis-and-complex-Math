@@ -196,12 +196,14 @@ VectorAnalysis2D::VectorAnalysis2D(float systemStart, float systemStopp, float r
     this->systemStart = systemStart;
     this->systemStopp = systemStopp;
     this->resolution  = resolution;
+    this->resolution  = ZERO;
     this->numberOfElements = this->mathHelper.numOfElements(systemStart,systemStopp,resolution);
 }
 
 VectorAnalysis2D::VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc){
     this->xFunc = xFunc;
     this->yFunc = yFunc;
+    this->rotation    = ZERO;
     this->systemStart = ZERO;
     this->systemStopp = TWOPI;
     this->resolution  = STDRES;
@@ -216,8 +218,20 @@ VectorAnalysis2D::VectorAnalysis2D(std::function<float(float)> xFunc, std::funct
     this->resolution  = resolution;
     this->systemStart = systemStart;
     this->systemStopp = systemStopp;
-
+    this->rotation    = ZERO;
     this->numberOfElements = this->mathHelper.numOfElements(systemStart,systemStopp,resolution);
+}
+
+VectorAnalysis2D::VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, float systemStart, float systemStopp, float resolution, float rotation){
+    this->xFunc = xFunc;
+    this->yFunc = yFunc;
+
+    this->resolution  = resolution;
+    this->systemStart = systemStart;
+    this->systemStopp = systemStopp;
+    this->rotation    = rotation;
+
+    this->numberOfElements = this->mathHelper.numOfElements(systemStart,systemStopp,resolution);  
 }
 
 

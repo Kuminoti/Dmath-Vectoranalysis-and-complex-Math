@@ -29,6 +29,16 @@ Dmath::VectorCurve2D::VectorCurve2D(std::function<float(float)> xFunc,std::funct
     this->mainCurve = this->createVectorialCurve();   
 }
 
+Dmath::VectorCurve2D::VectorCurve2D(std::function<float(float)> xFunc,std::function<float(float)> yFunc, float start, float stopp, float res, std::vector<Dmath::Vec2D> mainCurve) : 
+VectorAnalysis2D(xFunc,yFunc,start,stopp,res){
+    this->mainCurve = mainCurve;
+}
+
+Dmath::VectorCurve2D::VectorCurve2D(std::function<float(float)> xFunc,std::function<float(float)> yFunc, float start, float stopp, float res, std::vector<Dmath::Vec2D> mainCurve, float rotation) : 
+VectorAnalysis2D(xFunc,yFunc,start,stopp,res,rotation){
+    this->mainCurve = mainCurve;
+}
+
 Dmath::VectorCurve2D Dmath::VectorCurve2D::createStandardCurve(std::function<float(float)> funcX,std::function<float(float)> funcY ){
     return Dmath::VectorCurve2D(funcX,funcY);
 }
@@ -36,6 +46,7 @@ Dmath::VectorCurve2D Dmath::VectorCurve2D::createStandardCurve(std::function<flo
 Dmath::VectorCurve2D Dmath::VectorCurve2D::createCustomCurve(std::function<float(float)> funcX,std::function<float(float)> funcY,float start,float stopp,float res ){
     return Dmath::VectorCurve2D(funcX,funcY,start,stopp,res);
 }
+
 
 
 Dmath::Vec2D Dmath::VectorCurve2D::getVectorFromPoint(float point){
@@ -46,6 +57,10 @@ Dmath::Vec2D Dmath::VectorCurve2D::getVectorFromPoint(float point){
     int foundPoint = static_cast<int> (point/this->resolution);
     Dmath::Vec2D outputVector = this->mainCurve[foundPoint];
     return outputVector;
+}
+
+Dmath::Vec2D Dmath::VectorCurve2D::getVectorFromStdVec(size_t index){
+    return this->mainCurve[index];
 }
 
 Dmath::Vec2D Dmath::VectorCurve2D::getVectorFromFunction(float vecX, float vecY){
@@ -375,7 +390,9 @@ Dmath::Vec3D Dmath::VectorCurve3D::getVectorFromPoint(float point)  {
     return outputVector;
 }
 
-
+Dmath::Vec3D Dmath::VectorCurve3D::getVectorFromStdVec(size_t index){
+    return this->mainCurve[index];
+}
 
 
 Dmath::Vec3D  Dmath::VectorCurve3D::tangentVector(float t){
@@ -556,4 +573,18 @@ void Dmath::VectorCurve3D::moveCurve(float moveX, float moveY, float moveZ){
     for (size_t i = 0; i < this->mainCurve.size(); i++){
         this->mainCurve[i].moveVector(moveX,moveY,moveZ);
     }
+}
+
+void Dmath::VectorCurve3D::rotateThisCurve(float phi, float theta){
+    for(size_t i = 0; i<this->mainCurve.size(); i++){
+        this->mainCurve[i].rotateThisVector(phi,theta);
+    }
+}
+
+Dmath::VectorCurve3D Dmath::VectorCurve3D::rotateCurve(float phi, float theta){
+    std::vector<Dmath::Vec3D> newVec;
+    for(size_t i = 0; i<this->mainCurve.size(); i++){
+        newVec.push_back(this->mainCurve[i].rotateVector(phi,theta));
+    }
+    return VectorCurve3D(this->xFunc,this->yFunc,this->zFunc,this->systemStart,this->systemStopp,this->resolution,newVec);
 }

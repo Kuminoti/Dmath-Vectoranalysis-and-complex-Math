@@ -17,10 +17,17 @@ class VectorCurve2D : public VectorAnalysis2D{
   protected:
     std::vector<Dmath::Vec2D> mainCurve;
 
+
     //Constructos for sinmple parametric Vector curves (tested)
     
     VectorCurve2D(std::function<float(float)> xFunc,std::function<float(float)> yFunc);
     VectorCurve2D(std::function<float(float)> xFunc,std::function<float(float)> yFunc, float start, float stopp, float res);
+
+    //Constructos for sinmple parametric Vector curves (not fully tested)
+
+    VectorCurve2D(std::function<float(float)> xFunc,std::function<float(float)> yFunc, float start, float stopp, float res, std::vector<Dmath::Vec2D> mainCurve);
+    VectorCurve2D(std::function<float(float)> xFunc,std::function<float(float)> yFunc, float start, float stopp, float res, std::vector<Dmath::Vec2D> mainCurve, float rotation);
+
 
   public:
     //Create a parametric Vector curve (tested)
@@ -30,7 +37,7 @@ class VectorCurve2D : public VectorAnalysis2D{
     //Getters (tested)
     Dmath::Vec2D getVectorFromFunction(float vecX, float vecY);   //Returns a vector calculated from the two functions
     Dmath::Vec2D getVectorFromPoint(float point);                 //Returns a vector on the point t
-    Dmath::Vec2D getVectorFromStdVec(float index);                //Returns a specific index of the std::vector
+    Dmath::Vec2D getVectorFromStdVec(size_t index);                //Returns a specific index of the std::vector
 
     Dmath::Vec2D tangentVector(float t);
     Dmath::Vec2D tangetUnitVector(float t);
@@ -53,6 +60,7 @@ class VectorCurve2D : public VectorAnalysis2D{
     //VectorCurve2D curveFusion(){}
     VectorCurve2D addCurve(VectorCurve2D curve);
     VectorCurve2D subtractCurve(VectorCurve2D curve);
+    VectorCurve2D rotateCurve(float radiants);
 
     // NEEDS TESTING
     float maximumY();
@@ -64,6 +72,9 @@ class VectorCurve2D : public VectorAnalysis2D{
     void moveY(float moveY);
     void moveCurve(float moveX, float moveY);
 
+    void rotateThisCurve(float radiants);
+    
+
     size_t numberOfYZeroPoints();
     size_t numberOfXZeroPoints();
 };
@@ -71,9 +82,15 @@ class VectorCurve2D : public VectorAnalysis2D{
 
 class VectorCurve3D : public VectorAnalysis3D{
   private:
+
+    float rotationPhi;
+    float rotationTheta;
+
     std::vector<Dmath::Vec3D> mainCurve;
     std::vector<Dmath::Vec3D> createVectorialCurve();
-    
+
+    VectorCurve3D(std::function<float(float)> xFunc,std::function<float(float)> yFunc, std::function<float(float)> zFunc, float start, float stopp, float res, std::vector<Dmath::Vec3D> mainCurve, float rotationPhi, float rotationTheta);
+    VectorCurve3D(std::function<float(float)> xFunc,std::function<float(float)> yFunc, std::function<float(float)> zFunc, float start, float stopp, float res, std::vector<Dmath::Vec3D> mainCurve);
     VectorCurve3D(std::function<float(float)> xFunc,std::function<float(float)> yFunc, std::function<float(float)> zFunc);
     VectorCurve3D(std::function<float(float)> xFunc,std::function<float(float)> yFunc, std::function<float(float)> zFunc, float start, float stopp, float res);
 
@@ -83,14 +100,22 @@ class VectorCurve3D : public VectorAnalysis3D{
 
     Dmath::Vec3D getVectorFromFunction(float xValue, float yValue, float zValue);
     Dmath::Vec3D getVectorFromPoint(float point);
+    Dmath::Vec3D getVectorFromStdVec(size_t index); 
     Dmath::Vec3D tangentVector(float t);
 
     Dmath::Vec3D tangetUnitVector(float t);
     Dmath::Vec3D principalNormalUnitVector(float t);
 
+
+    //add() subtract() etc...
+
+    VectorCurve3D rotateCurve(float phi, float theta);
+
     float dotProductVectorCurve(VectorCurve3D vec);    
     float calculateSlopeXOnPoint(float t);
     float calculateSlopeYOnPoint(float t);
+    float calculateArea();
+    float calculateSpecificArea(float start, float stopp);
     float curveLenght();
     float getCurvature(float t);
 
@@ -107,6 +132,7 @@ class VectorCurve3D : public VectorAnalysis3D{
     void moveY(float moveY);
     void moveZ(float moveZ);
     void moveCurve(float X, float Y, float Z);
+    void rotateThisCurve(float phi, float theta);
 
 };
 
