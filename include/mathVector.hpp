@@ -11,7 +11,8 @@ class Vec2D : public CoordinateSystem2D {
     float aX;                                               // Absolute X the coordinate of a vector that does not start at zero
     float aY;                                               // Absolute Y the coordinate of a vector that does not start at zero
     float abs;                                              // The absolute value or lenght of a vector
-    float distanceToZero;                                   // Calculates the distance to zero for a vector that dont start at zero
+    float distanceToZero;   
+    float vectorRotation;                                
     void calcDZ();                                          // Calculates the distance to zero
     void calcAbs();                                         // Calculates the absolute value
     void calcAbsXY();                                       // Calculates and sets the absolute x and y coordinates
@@ -39,6 +40,7 @@ class Vec2D : public CoordinateSystem2D {
     float getAX();                                       // Gets the absolute X coordinate from a vector with a non zero start
     float getAY();                                       // Gets the absolute X coordinate from a vector with a non zero start
     float getDistanceToZero();                           // Gets the distance to [ 0 ; 0 ] from a vector with a non zero start
+    float getRotationAngle();                            // Gets the rotation angle for rotated vectors
     float getAbs();                                      // Calculates the absolutvalue
     float lenght();                                      // Calculates the length of a vector
 
@@ -69,11 +71,12 @@ class Vec2D : public CoordinateSystem2D {
     void moveVectorX(float move);                        // Moves the vector in a specific x-direction
     void moveVectorY(float move);                        // Moves the vector in a specific y-direction
     void moveVector(float moveX, float moveY);           // Moves the vector in a specific x and y direction 
-    void rotateThisVector(float radiants);
+    void rotateThisVector(float value);
+
     // You can use methods instead of operators
     Vec2D add(Vec2D Mathvector);                         // Adding 2 vectors
     Vec2D subtract(Vec2D Mathvector);                    // Subtract 2 vectors
-    Vec2D rotateVector(float radians);                     // Rotates a vector dependent op the angle
+    Vec2D rotateVector(float radians);                   // Rotates a vector dependent op the angle
 
     // spezial Vectors
     static Vec2D polarVector(float radius, float angle); // Creates a Vector in a polar system
@@ -126,7 +129,7 @@ class Vec3D : public CoordinateSystem3D {
     void moveVectorY(float move);  
     void moveVectorZ(float Z);        
     void moveVector(float moveX, float moveY, float moveZ);           
-    void rotateThisVector(float radiansPhi, float radiansTheta);
+    void rotateThisVector(float phi, float Theta);
 
     // Calculations that return a scalar value
     float dotProduct(Vec3D Mathvector);

@@ -28,8 +28,19 @@
 */
 
 
-
-
+//Choose your prefered angle unit with (un)commenting the fitting macro
+//#define STANDARD_ANGLE_UNIT_DEG
+#define STANDARD_ANGLE_UNIT_RAD
+#if(defined(STANDARD_ANGLE_UNIT_DEG) || defined(STANDARD_ANGLE_UNIT_RAD))
+#define ANGLE_UNIT_SET
+#else
+#if(defined(STANDARD_ANGLE_UNIT_DEG) && defined(STANDARD_ANGLE_UNIT_RAD))
+#warning "Both angle units are set standard will be radiants!"
+#undef STANDARD_ANGLE_UNIT_DEG
+#define STANDARD_ANGLE_UNIT_RAD
+#define ANGLE_UNIT_SET
+#endif
+#endif
 
 //Uncomment to choose your standard coordinate system
 
@@ -68,7 +79,10 @@
 #error "FATAL ERROR NO SYSTEM SET"
 #endif
 
-#ifdef SYSTEM_IS_SET
+#if (defined(SYSTEM_IS_SET) && defined(ANGLE_UNIT_SET))
+#define SYSTEM_READY
+
+
 
 
 // A helper class with some pre defined functions
@@ -77,13 +91,15 @@ class MathHelper{
     float h  = 0.0001;           //Resolution for Derivative
     float dx = 0.000000001;      //Stepps for Antiderivative
     int numSteps = 1000;         //Stepps for the integral
-    inline float radiansToDegrees(double radians) {return radians * RAD_TO_DEG;}
-    inline float degreesToRadians(double degrees) {return degrees * DEG_TO_RAD; }
+    
 
   public:
 
     inline float pyth(float x, float y){return std::sqrt((x*x) + (y*y) );}
     inline float pyth3D(float x, float y, float z){return std::sqrt((x*x) + (y*y) +(z*z) );}
+
+    inline float radiansToDegrees(double radians) {return radians * RAD_TO_DEG;}
+    inline float degreesToRadians(double degrees) {return degrees * DEG_TO_RAD;}
 
     inline float sinFunc (float x) { return std::sin(x); }
     inline float cosFunc (float x) { return std::cos(x); }
@@ -188,10 +204,10 @@ class VectorAnalysis2D{
     std::function<float(float)> xFunc;
     std::function<float(float)> yFunc;
 
-    float rotation    = ZERO;
     float resolution  = STDRES;
     float systemStart = ZERO;
     float systemStopp = TWOPI;
+    float rotation;
     int numberOfElements;
 
     VectorAnalysis2D(float systemStart, float systemStopp, float resolution);

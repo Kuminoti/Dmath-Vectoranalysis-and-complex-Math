@@ -65,7 +65,14 @@ float angleFromCos(float cosTheta) {
     std::cerr << "Error: cos(theta) wrong value" << std::endl;
     result = 0;
   } else {
+
+#ifdef STANDARD_ANGLE_UNIT_DEG
     result = std::acos(cosTheta) * 180 / PI;
+#endif
+
+#ifdef STANDARD_ANGLE_UNIT_RAD
+    result = std::acos(cosTheta);
+#endif
   }
   return result;
 }
@@ -84,16 +91,7 @@ void Vec2D::calcAbsXY(){
 
 // Vec2D functions:
 
-Vec2D Vec2D::rotateVector(float radians) {
-  float newX = this->getX() * std::cos(radians) - this->getY() * std::sin(radians);
-  float newY = this->getX() * std::sin(radians) + this->getY() * std::cos(radians);
-  return Vec2D(newX, newY);
-}
 
-void Vec2D::rotateThisVector(float radians){
-  this->X = this->getX() * std::cos(radians) - this->getY() * std::sin(radians);
-  this->Y = this->getX() * std::sin(radians) + this->getY() * std::cos(radians);
-}
 
 float Vec2D::distance(Vec2D Mathvector){
   
@@ -293,33 +291,6 @@ float Vec3D::dotProduct(Vec3D Mathvector) {
   return result;
 }
 
-Dmath::Vec3D Vec3D::rotateVector(float radiansPhi, float radiansTheta) {
-    float r = this->radius;
-    float theta = this->theta;
-    float phi = this->phi;
-
-    float newTheta = theta + radiansTheta;
-    float newPhi = phi + radiansPhi;
-
-    float newX = r * std::sin(newTheta) * std::cos(newPhi);
-    float newY = r * std::sin(newTheta) * std::sin(newPhi);
-    float newZ = r * std::cos(newTheta);
-
-    return Dmath::Vec3D(newX, newY, newZ);
-}
-
-void Vec3D::rotateThisVector(float radiansPhi, float radiansTheta){
-    float r = this->radius;
-    float theta = this->theta;
-    float phi = this->phi;
-
-    float newTheta = theta + radiansTheta;
-    float newPhi = phi + radiansPhi;
-
-    this->X = r * std::sin(newTheta) * std::cos(newPhi);
-    this->Y = r * std::sin(newTheta) * std::sin(newPhi);
-    this->Z = r * std::cos(newTheta);
-}
 
 Vec3D Vec3D::vecProduct(Vec3D Mathvector) {
   float resultX = this->Y * Mathvector.Z - this->Z * Mathvector.Y;
@@ -421,33 +392,70 @@ float Vec3D::getSphereRadius(){
     return result;
 }
 
-#ifdef CARTESIAN_IS_2D_STANDARD
 
-Vec2D::Vec2D(float XY) : CoordinateSystem2D(XY){
-  this->aX = XY;
-  this->aY = XY;
-  this->calcAbs();
-  this->cartesianToPolar();
+
+
+
+float Vec3D::getAbs()               { return this->abs;      }
+float Vec2D::getAbs()               { return this->abs;      }
+float Vec2D::lenght()               { return this->getAbs(); }
+float Vec2D::getAX()                { return this->aX;       }
+float Vec2D::getAY()                { return this->aY;       }
+float Vec2D::getDistanceToZero()    { return this->distanceToZero; }
+float Vec2D::getRotationAngle()     { return this->vectorRotation; }
+
+//TODO update the setters
+void Vec3D::setX(float X){
+  this->X = X;
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
 }
 
-Vec2D::Vec2D(float X, float Y) : CoordinateSystem2D(X, Y) {
-  this->aX = X;
-  this->aY = Y;
-  this->calcAbs();
-  this->cartesianToPolar();
+void Vec3D::moveVectorZ(float moveZ){
+  this->originZ += moveZ;
+  this->calcAXYZ();
+  this->calcDTZ();
 }
 
-Vec2D::Vec2D(float X, float Y, float originX, float originY)
-    : CoordinateSystem2D(X, Y, originX, originY) {
-  this->calcAbsXY();
-  this->calcDZ();
-  this->calcAbs();
-  this->cartesianToPolar();
+void Vec3D::moveVectorY(float moveY){
+  this->originY += moveY;
+  this->calcAXYZ();
+  this->calcDTZ();
 }
 
-Vec2D Vec2D::zeroVector() { return Vec2D(0, 0); }
 
-#endif
+void Vec3D::moveVectorX(float moveX){
+  this->originX += moveX;
+  this->calcAXYZ();
+  this->calcDTZ();
+}
+
+void Dmath::Vec3D::moveVector(float moveX, float moveY, float moveZ){
+  this->originX += moveX;
+  this->originY += moveY;
+  this->originZ += moveZ;
+
+  this->calcAXYZ();
+  this->calcDTZ();
+}
+
+void Vec3D::normalize(){
+  this->X = this->X/this->abs;
+  this->Y = this->Y/this->abs;
+  this->Z = this->Z/this->abs;
+}
+
+void Vec3D::setY(float Y)           { this->Y = Y; }
+void Vec3D::setZ(float Z)           { this->Z = Z; }
+void Vec3D::setHeight(float height) { this->height = height; }
+void Vec3D::setPhi(float phi)       { this->phi = phi; }
+void Vec3D::setTheta(float theta)   { this->theta = theta; }
+
+
+//Macro dependent code:
+
+#ifdef SYSTEM_READY
+
 
 #ifdef POLAR_IS_STANDARD
 Vec2D::Vec2D(float radius, float phi) : CoordinateSystem2D(radius, phi) {
@@ -515,58 +523,140 @@ Vec3D::Vec3D(float X, float Y, float Z) : CoordinateSystem3D(X, Y, Z) {
 }
 #endif
 
+#ifdef CARTESIAN_IS_2D_STANDARD
 
-float Vec3D::getAbs()               { return this->abs; }
-float Vec2D::getAbs()               { return this->abs;      }
-float Vec2D::lenght()               { return this->getAbs(); }
-float Vec2D::getAX()                { return this->aX;       }
-float Vec2D::getAY()                { return this->aY;       }
-float Vec2D::getDistanceToZero()    { return this->distanceToZero;}
-
-
-//TODO update the setters
-void Vec3D::setX(float X){
-  this->X = X;
-  this->cartesianToCylinder();
-  this->cartesianToSphere();
+Vec2D::Vec2D(float XY) : CoordinateSystem2D(XY){
+  this->aX = XY;
+  this->aY = XY;
+  this->calcAbs();
+  this->cartesianToPolar();
 }
 
-void Vec3D::moveVectorZ(float moveZ){
-  this->originZ += moveZ;
-  this->calcAXYZ();
-  this->calcDTZ();
+Vec2D::Vec2D(float X, float Y) : CoordinateSystem2D(X, Y) {
+  this->aX = X;
+  this->aY = Y;
+  this->calcAbs();
+  this->cartesianToPolar();
 }
 
-void Vec3D::moveVectorY(float moveY){
-  this->originY += moveY;
-  this->calcAXYZ();
-  this->calcDTZ();
+Vec2D::Vec2D(float X, float Y, float originX, float originY)
+    : CoordinateSystem2D(X, Y, originX, originY) {
+  this->calcAbsXY();
+  this->calcDZ();
+  this->calcAbs();
+  this->cartesianToPolar();
 }
 
+Vec2D Vec2D::zeroVector() { return Vec2D(0, 0); }
 
-void Vec3D::moveVectorX(float moveX){
-  this->originX += moveX;
-  this->calcAXYZ();
-  this->calcDTZ();
+#endif
+
+#ifdef STANDARD_ANGLE_UNIT_RAD
+Dmath::Vec3D Vec3D::rotateVector(float Phi, float Theta) {
+    float r = this->radius;
+    float theta = this->theta;
+    float phi = this->phi;
+
+    float newTheta = theta + Theta;
+    float newPhi = phi + Phi;
+
+    float newX = (r * std::sin(newTheta) * std::cos(newPhi));
+    float newY = (r * std::sin(newTheta) * std::sin(newPhi));
+    float newZ = (r * std::cos(newTheta));
+
+    return Dmath::Vec3D(newX, newY, newZ);
 }
 
-void Dmath::Vec3D::moveVector(float moveX, float moveY, float moveZ){
-  this->originX += moveX;
-  this->originY += moveY;
-  this->originZ += moveZ;
+#endif
 
-  this->calcAXYZ();
-  this->calcDTZ();
+#ifdef STANDARD_ANGLE_UNIT_DEG
+Dmath::Vec3D Vec3D::rotateVector(float Phi, float Theta) {
+    float r = this->radius;
+    float theta = this->theta;
+    float phi = this->phi;
+
+    float newTheta = theta + Theta;
+    float newPhi = phi + Phi;
+
+    float newX = (r * std::sin(newTheta) * std::cos(newPhi)) * RAD_TO_DEG;
+    float newY = (r * std::sin(newTheta) * std::sin(newPhi)) * RAD_TO_DEG ;
+    float newZ = (r * std::cos(newTheta))* RAD_TO_DEG;
+
+    return Dmath::Vec3D(newX, newY, newZ);
 }
 
-void Vec3D::normalize(){
-  this->X = this->X/this->abs;
-  this->Y = this->Y/this->abs;
-  this->Z = this->Z/this->abs;
+#endif
+
+#ifdef STANDARD_ANGLE_UNIT_DEG
+
+void Vec3D::rotateThisVector(float Phi, float Theta){
+    float r = this->radius;
+    float theta = this->theta;
+    float phi = this->phi;
+
+    float newTheta = theta + Theta;
+    float newPhi = phi + Phi;
+
+    this->X = (r * std::sin(newTheta) * std::cos(newPhi)) * RAD_TO_DEG;
+    this->Y = (r * std::sin(newTheta) * std::sin(newPhi)) * RAD_TO_DEG;
+    this->Z = r * std::cos(newTheta)  * RAD_TO_DEG;
 }
 
-void Vec3D::setY(float Y)           { this->Y = Y; }
-void Vec3D::setZ(float Z)           { this->Z = Z; }
-void Vec3D::setHeight(float height) { this->height = height; }
-void Vec3D::setPhi(float phi)       { this->phi = phi; }
-void Vec3D::setTheta(float theta)   { this->theta = theta; }
+#endif 
+
+#ifdef STANDARD_ANGLE_UNIT_RAD
+
+void Vec3D::rotateThisVector(float Phi, float Theta){
+    float r = this->radius;
+    float theta = this->theta;
+    float phi = this->phi;
+
+    float newTheta = theta + Theta;
+    float newPhi = phi + Phi;
+
+    this->X = (r * std::sin(newTheta) * std::cos(newPhi)) * RAD_TO_DEG;
+    this->Y = (r * std::sin(newTheta) * std::sin(newPhi)) * RAD_TO_DEG;
+    this->Z = r * std::cos(newTheta)  * RAD_TO_DEG;
+}
+
+#endif 
+
+#ifdef STANDARD_ANGLE_UNIT_RAD
+Vec2D Vec2D::rotateVector(float angle) {
+  float newX = this->getX() * std::cos(angle) - this->getY() * std::sin(angle);
+  float newY = this->getX() * std::sin(angle) + this->getY() * std::cos(angle);
+  return Vec2D(newX, newY);
+}
+#endif
+
+#ifdef STANDARD_ANGLE_UNIT_DEG
+Vec2D Vec2D::rotateVector(float vlaue) {
+  float newX = this->getX() * std::cos(angle) - this->getY() * std::sin(angle);
+  float newY = this->getX() * std::sin(angle) + this->getY() * std::cos(angle);
+  newX = newX * RAD_TO_DEG;
+  newY = newY * RAD_TO_DEG:
+  return Vec2D(newX, newY);
+}
+#endif
+
+#ifdef STANDARD_ANGLE_UNIT_RAD
+void Vec2D::rotateThisVector(float value){
+  this->X = this->getX() * std::cos(value) - this->getY() * std::sin(value);
+  this->Y = this->getX() * std::sin(value) + this->getY() * std::cos(value);
+  this->vectorRotation = value;
+}
+#endif
+
+#ifdef STANDARD_ANGLE_UNIT_DEG
+void Vec2D::rotateThisVectorDEG(float degrees){
+  float newX = this->getX() * std::cos(degrees) - this->getY() * std::sin(degrees);
+  float newY = this->getX() * std::sin(degrees) + this->getY() * std::cos(degrees);
+  this->X    = newX * RAD_TO_DEG;
+  this->Y    = newY * RAD_TO_DEG;
+  this->vectorRotation = degrees;
+}
+
+#endif
+
+
+#endif
