@@ -13,6 +13,8 @@
 #define PI 3.14159265358979323846
 #define TWOPI 2 * PI
 #define FOUR_PI 2 * PI
+#define RAD_TO_DEG 180.f/PI
+#define DEG_TO_RAD PI/180.f
 #define NAMESPACESTART namespace Dmath {
 #define NAMESPACEEND }
 
@@ -72,9 +74,11 @@
 // A helper class with some pre defined functions
 class MathHelper{
   private:
-    float h  = 0.0001;      //Resolution for Derivative
+    float h  = 0.0001;           //Resolution for Derivative
     float dx = 0.000000001;      //Stepps for Antiderivative
-    int numSteps = 1000;    //Stepps for the integral
+    int numSteps = 1000;         //Stepps for the integral
+    inline float radiansToDegrees(double radians) {return radians * RAD_TO_DEG;}
+    inline float degreesToRadians(double degrees) {return degrees * DEG_TO_RAD; }
 
   public:
 
