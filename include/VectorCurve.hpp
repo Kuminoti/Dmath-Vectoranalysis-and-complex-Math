@@ -60,7 +60,7 @@ class VectorCurve2D : public VectorAnalysis2D{
     //VectorCurve2D curveFusion(){}
     VectorCurve2D addCurve(VectorCurve2D curve);
     VectorCurve2D subtractCurve(VectorCurve2D curve);
-    VectorCurve2D rotateCurve(float radiants);
+    //VectorCurve2D rotateCurve(float radiants);
 
     // NEEDS TESTING
     float maximumY();

@@ -352,7 +352,10 @@ std::vector<Dmath::Vec3D> Dmath::VectorCurve3D::createVectorialCurve(){
     return output;
 }
 
-
+Dmath::VectorCurve3D::VectorCurve3D(std::function<float(float)> xFunc,std::function<float(float)> yFunc,std::function<float(float)> zFunc,float start, float stopp, float res,std::vector<Dmath::Vec3D> mainCurve)
+: VectorAnalysis3D(xFunc,yFunc,zFunc,start,stopp,res){
+    this->mainCurve = mainCurve;
+}
 
 Dmath::VectorCurve3D::VectorCurve3D(std::function<float(float)> xFunc,std::function<float(float)> yFunc,std::function<float(float)> zFunc)
 : VectorAnalysis3D(xFunc,yFunc,zFunc){
@@ -360,7 +363,7 @@ Dmath::VectorCurve3D::VectorCurve3D(std::function<float(float)> xFunc,std::funct
 }
 
 Dmath::VectorCurve3D::VectorCurve3D(std::function<float(float)> xFunc,std::function<float(float)> yFunc,std::function<float(float)> zFunc, float start, float stopp, float res)
-: VectorAnalysis3D(xFunc,yFunc,zFunc,systemStart,systemStopp,resolution){
+: VectorAnalysis3D(xFunc,yFunc,zFunc,start,stopp,res){
     this->mainCurve = this->createVectorialCurve();
 }
 
@@ -371,6 +374,10 @@ Dmath::VectorCurve3D Dmath::VectorCurve3D::createStandardCurve(std::function<flo
 Dmath::VectorCurve3D Dmath::VectorCurve3D::createCustomCurve(std::function<float(float)> funcX,std::function<float(float)> funcY,std::function<float(float)> zFunc, float start,float stopp,float res ){
     return Dmath::VectorCurve3D(funcX,funcY,zFunc,start,stopp,res);
 }
+
+// Dmath::VectorCurve3D Dmath::VectorCurve3D::createCustomCurve(std::function<float(float)> funcX,std::function<float(float)> funcY,std::function<float(float)> zFunc, float start,float stopp,float res ){
+//     return Dmath::VectorCurve3D(funcX,funcY,zFunc,start,stopp,res);
+// }
 
 Dmath::Vec3D  Dmath::VectorCurve3D::getVectorFromFunction(float xValue, float yValue, float zValue) {
     float vecX = this->xFunc(xValue);

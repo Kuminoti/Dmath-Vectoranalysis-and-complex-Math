@@ -207,7 +207,7 @@ class VectorAnalysis2D{
     float resolution  = STDRES;
     float systemStart = ZERO;
     float systemStopp = TWOPI;
-    float rotation;
+    float rotation    = ZERO;
     int numberOfElements;
 
     VectorAnalysis2D(float systemStart, float systemStopp, float resolution);

@@ -236,22 +236,6 @@ float Vec2D::rectangleCircumfrance(Vec2D MathVector) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void Vec3D::calcAXYZ(){
   if(this->originX != 0 || this->originY != 0){
       this->aX = this->X + this->originX;
@@ -404,7 +388,6 @@ float Vec2D::getAY()                { return this->aY;       }
 float Vec2D::getDistanceToZero()    { return this->distanceToZero; }
 float Vec2D::getRotationAngle()     { return this->vectorRotation; }
 
-//TODO update the setters
 void Vec3D::setX(float X){
   this->X = X;
   this->cartesianToCylinder();
@@ -455,7 +438,6 @@ void Vec3D::setTheta(float theta)   { this->theta = theta; }
 //Macro dependent code:
 
 #ifdef SYSTEM_READY
-
 
 #ifdef POLAR_IS_STANDARD
 Vec2D::Vec2D(float radius, float phi) : CoordinateSystem2D(radius, phi) {
