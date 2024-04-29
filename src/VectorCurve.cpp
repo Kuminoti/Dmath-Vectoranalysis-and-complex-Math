@@ -340,7 +340,7 @@ float Dmath::VectorCurve3D::dotProductVectorCurve(Dmath::VectorCurve3D vec) {
 std::vector<Dmath::Vec3D> Dmath::VectorCurve3D::createVectorialCurve(){
     std::vector<Dmath::Vec3D> output;
     int iterations = 0;
-    for(float i = this->systemStart; i<systemStopp; i+=resolution){
+    for(float i = this->systemStart; i<this->numberOfElements; i+=resolution){
         if(i == this->systemStart){
             output.push_back(Dmath::Vec3D(this->xFunc(i),this->yFunc(i), this->zFunc(i),0,0,0));
             iterations++;

@@ -42,6 +42,8 @@ class VectorCurve2D : public VectorAnalysis2D{
     Dmath::Vec2D tangentVector(float t);
     Dmath::Vec2D tangetUnitVector(float t);
     Dmath::Vec2D principalNormalUnitVector(float t);
+    inline std::vector<Dmath::Vec2D> getMainCurve(){ return this->mainCurve;}
+
 
     // NEEDS TESTING
 
@@ -55,7 +57,9 @@ class VectorCurve2D : public VectorAnalysis2D{
     float dotProductVectorCurve(Dmath::VectorCurve2D vec);
     float calculateAreaXAchsis(float tStart, float tEnd);
     float getCurvature(float t);
-
+    float getT(float originX, float originY){
+      
+    }
     
     //VectorCurve2D curveFusion(){}
     VectorCurve2D addCurve(VectorCurve2D curve);

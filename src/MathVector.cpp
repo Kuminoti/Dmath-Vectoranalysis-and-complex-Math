@@ -43,6 +43,17 @@ Vec3D Vec3D::operator-(Vec3D &Mathvector) {
   return Vec3D(resultX, resultY, resultZ);
 }
 
+Vec3D Vec3D::operator/(float scalarValue){
+  double newX = this->X / scalarValue;
+  double newY = this->Y / scalarValue;
+  double newZ = this->Z / scalarValue;
+
+  Vec3D newVector(newX,newY,newZ);
+  if(this->originX != 0 || this->originY != 0 || this->originZ != 0){
+    newVector.setOriginX(this->originX);
+  }
+}
+
 float Vec3D::operator*(Vec3D &Mathvector) {
   return this->dotProduct(Mathvector);
 }
@@ -434,6 +445,11 @@ void Vec3D::setHeight(float height) { this->height = height; }
 void Vec3D::setPhi(float phi)       { this->phi = phi; }
 void Vec3D::setTheta(float theta)   { this->theta = theta; }
 
+void Vec3D::setOriginX(double Value){
+  this->originX = Value;
+  this->calcAXYZ();
+  this->calcDTZ();
+}
 
 //Macro dependent code:
 

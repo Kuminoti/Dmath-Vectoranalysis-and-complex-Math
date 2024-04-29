@@ -99,7 +99,9 @@ class Vec3D : public CoordinateSystem3D {
   public: // Operator overloading
     Vec3D operator+(Vec3D& Mathvector);
     Vec3D operator-(Vec3D& Mathvector);
+    Vec3D operator/(float scalarValue);
     float operator*(Vec3D& Mathvector);
+
 
 #ifdef CARTESIAN_IS_3D_STANDARD
     Vec3D(float XYZ);
@@ -119,7 +121,15 @@ class Vec3D : public CoordinateSystem3D {
     void setX(float X);
     void setY(float Y);
     void setZ(float Z);
+
+    void setOriginX(double value);
+    void setOriginY(double value);
+    void setOriginZ(double value);
+
     void normalize();
+
+
+    //SetOrigin!!!!!!!
 
     void setPhi(float phi);       // For spheresystems (radius, angle Phi, angle Theta)
     void setHeight(float phi);    // For cylinder systems (radius, angle, height);
