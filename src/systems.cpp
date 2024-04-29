@@ -4,35 +4,35 @@
 
 //MathHelper methods:
 
-float  MathHelper::calculateDerivativeAt(std::function<float(float)> f, float x) {
-    float fx_plus_h = f(x + this->h);
-    float fx_minus_h = f(x - this->h);
-    float derivative = (fx_plus_h - fx_minus_h) / (2 * this->h);
+double  MathHelper::calculateDerivativeAt(std::function<double(double)> f, double x) {
+    double fx_plus_h = f(x + this->h);
+    double fx_minus_h = f(x - this->h);
+    double derivative = (fx_plus_h - fx_minus_h) / (2 * this->h);
     return derivative;
 }
 
-float MathHelper::calculateDefiniteIntegral(std::function<float(float)> f, float a, float b) {
-    float sum = 0.0;
-    float dx = (b - a) / this->numSteps;
+double MathHelper::calculateDefiniteIntegral(std::function<double(double)> f, double a, double b) {
+    double sum = 0.0;
+    double dx = (b - a) / this->numSteps;
     for (int i = 0; i < this->numSteps; ++i) {
-        float x = a + i * dx;
+        double x = a + i * dx;
         sum += f(x) * dx;
     }
     return sum;
 }
 
-std::function<float(float)> MathHelper::calculateAntiderivative(std::function<float(float)> f, float x0) {
-    float integral = 0.0;
-    std::function<float(float)> antiderivative = [f, x0, this, integral](float x) mutable {
+std::function<double(double)> MathHelper::calculateAntiderivative(std::function<double(double)> f, double x0) {
+    double integral = 0.0;
+    std::function<double(double)> antiderivative = [f, x0, this, integral](double x) mutable {
         integral += f(x) * this->dx;
         return integral;
     };
     return antiderivative;
 }
 
-std::function<float(float)> MathHelper::calculateDerivative(std::function<float(float)> f) {
-    float dx = this->dx; // Hier wird dx explizit kopiert, um Rundungsfehler zu vermeiden
-    return [f, dx](float x) {
+std::function<double(double)> MathHelper::calculateDerivative(std::function<double(double)> f) {
+    double dx = this->dx; // Hier wird dx explizit kopiert, um Rundungsfehler zu vermeiden
+    return [f, dx](double x) {
         return (f(x + dx) - f(x)) / dx;
     };
 }
@@ -86,7 +86,7 @@ void CoordinateSystem3D::cylinderToSphere() {
 
 #ifdef CARTESIAN_IS_2D_STANDARD
 
-CoordinateSystem2D::CoordinateSystem2D(float XY){
+CoordinateSystem2D::CoordinateSystem2D(double XY){
     this->X = XY;
     this->Y = XY;
     this->originX = 0;
@@ -94,15 +94,15 @@ CoordinateSystem2D::CoordinateSystem2D(float XY){
     
 }
 
-CoordinateSystem2D::CoordinateSystem2D(float x, float y) {
+CoordinateSystem2D::CoordinateSystem2D(double x, double y) {
     this->X = x;
     this->Y = y;
     this->originX = 0;
     this->originY = 0;
 }
 
-CoordinateSystem2D::CoordinateSystem2D(float x, float y, float originX,
-                                       float originY) {
+CoordinateSystem2D::CoordinateSystem2D(double x, double y, double originX,
+                                       double originY) {
     this->X = x;
     this->Y = y;
     this->originX = originX;
@@ -112,15 +112,15 @@ CoordinateSystem2D::CoordinateSystem2D(float x, float y, float originX,
 #endif
 
 #ifdef POLAR_IS_STANDARD
-CoordinateSystem2D::CoordinateSystem2D(float radius, float phi, float originX,
-                                       float originY) {
+CoordinateSystem2D::CoordinateSystem2D(double radius, double phi, double originX,
+                                       double originY) {
     this->radius = radius;
     this->phi = phi;
     this->originX = originX;
     this->originY = originY;
     }
 
-CoordinateSystem2D::CoordinateSystem2D(float radius, float phi) {
+CoordinateSystem2D::CoordinateSystem2D(double radius, double phi) {
     this->radius = radius;
     this->phi = phi;
     this->originX = 0;
@@ -130,7 +130,7 @@ CoordinateSystem2D::CoordinateSystem2D(float radius, float phi) {
 
 #ifdef CARTESIAN_IS_3D_STANDARD
 
-CoordinateSystem3D::CoordinateSystem3D(float XYZ) : CoordinateSystem2D(XYZ)  {
+CoordinateSystem3D::CoordinateSystem3D(double XYZ) : CoordinateSystem2D(XYZ)  {
     this->X = XYZ;
     this->Y = XYZ;
     this->Z = XYZ;
@@ -139,7 +139,7 @@ CoordinateSystem3D::CoordinateSystem3D(float XYZ) : CoordinateSystem2D(XYZ)  {
     this->originZ = 0;
 }
 
-CoordinateSystem3D::CoordinateSystem3D(float X, float Y, float Z)
+CoordinateSystem3D::CoordinateSystem3D(double X, double Y, double Z)
     : CoordinateSystem2D(X, Y) {
     this->Z = Z;
     this->originX = 0;
@@ -147,7 +147,7 @@ CoordinateSystem3D::CoordinateSystem3D(float X, float Y, float Z)
     this->originZ = 0;
 }
 
-CoordinateSystem3D::CoordinateSystem3D(float X, float Y, float Z, float originX, float originY, float originZ)
+CoordinateSystem3D::CoordinateSystem3D(double X, double Y, double Z, double originX, double originY, double originZ)
     : CoordinateSystem2D(X, Y, originX, originY) {
     this->Z = Z;
     this->originZ = originZ;
@@ -155,15 +155,15 @@ CoordinateSystem3D::CoordinateSystem3D(float X, float Y, float Z, float originX,
 #endif
 
 #ifdef SPHERE_IS_STANDARD
-CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float theta)
+CoordinateSystem3D::CoordinateSystem3D(double radius, double phi, double theta)
     : CoordinateSystem2D(radius, phi) {
     this->theta = theta;
     this->originX = 0;
     this->originY = 0;
     this->originZ = 0;
 }
-CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float theta,
-                                       float originX, float originY,float originZ)
+CoordinateSystem3D::CoordinateSystem3D(double radius, double phi, double theta,
+                                       double originX, double originY,double originZ)
     : CoordinateSystem2D(radius, phi, originX, originY) {
     this->theta = theta;
     this->originZ = originZ;
@@ -171,15 +171,15 @@ CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float theta,
 #endif
 
 #ifdef CYLINDER_IS_STANDARD
-CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float height)
+CoordinateSystem3D::CoordinateSystem3D(double radius, double phi, double height)
     : CoordinateSystem2D(radius, phi) {
     this->height = height;
     this->originX = 0;
     this->originY = 0;
     this->originZ = 0;
 }
-CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float height,
-                                       float originX, float originY, float originZ)
+CoordinateSystem3D::CoordinateSystem3D(double radius, double phi, double height,
+                                       double originX, double originY, double originZ)
     : CoordinateSystem2D(radius, phi, originX, originY) {
     this->height = height;
     this->originZ = originZ;
@@ -192,7 +192,7 @@ CoordinateSystem3D::CoordinateSystem3D(float radius, float phi, float height,
 
 
 //DIfferential geometry
-VectorAnalysis2D::VectorAnalysis2D(float systemStart, float systemStopp, float resolution){
+VectorAnalysis2D::VectorAnalysis2D(double systemStart, double systemStopp, double resolution){
     this->systemStart = systemStart;
     this->systemStopp = systemStopp;
     this->resolution  = resolution;
@@ -200,7 +200,7 @@ VectorAnalysis2D::VectorAnalysis2D(float systemStart, float systemStopp, float r
     this->numberOfElements = this->mathHelper.numOfElements(systemStart,systemStopp,resolution);
 }
 
-VectorAnalysis2D::VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc){
+VectorAnalysis2D::VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc){
     this->xFunc = xFunc;
     this->yFunc = yFunc;
     this->rotation    = ZERO;
@@ -211,7 +211,7 @@ VectorAnalysis2D::VectorAnalysis2D(std::function<float(float)> xFunc, std::funct
 }
 
 
-VectorAnalysis2D::VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, float systemStart, float systemStopp, float resolution){
+VectorAnalysis2D::VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, double systemStart, double systemStopp, double resolution){
     this->xFunc = xFunc;
     this->yFunc = yFunc;
 
@@ -222,7 +222,7 @@ VectorAnalysis2D::VectorAnalysis2D(std::function<float(float)> xFunc, std::funct
     this->numberOfElements = this->mathHelper.numOfElements(systemStart,systemStopp,resolution);
 }
 
-VectorAnalysis2D::VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, float systemStart, float systemStopp, float resolution, float rotation){
+VectorAnalysis2D::VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, double systemStart, double systemStopp, double resolution, double rotation){
     this->xFunc = xFunc;
     this->yFunc = yFunc;
 
@@ -235,25 +235,25 @@ VectorAnalysis2D::VectorAnalysis2D(std::function<float(float)> xFunc, std::funct
 }
 
 
-VectorAnalysis3D::VectorAnalysis3D(float systemStart, float systemStopp, float resolution) :
+VectorAnalysis3D::VectorAnalysis3D(double systemStart, double systemStopp, double resolution) :
  VectorAnalysis2D(systemStart,systemStopp,resolution){}
                                 
 
-VectorAnalysis3D::VectorAnalysis3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, std::function<float(float)> zFunc)
+VectorAnalysis3D::VectorAnalysis3D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, std::function<double(double)> zFunc)
 : VectorAnalysis2D(xFunc, yFunc){
 
     this->zFunc = zFunc;
    
 }
 
-VectorAnalysis3D::VectorAnalysis3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc,std::function<float(float)> zFunc , float systemStart, float systemStopp, float resolution)
+VectorAnalysis3D::VectorAnalysis3D(std::function<double(double)> xFunc, std::function<double(double)> yFunc,std::function<double(double)> zFunc , double systemStart, double systemStopp, double resolution)
 : VectorAnalysis2D(xFunc,yFunc,systemStart,systemStopp,resolution){
     this->zFunc = zFunc;
 }
 
-float CoordinateSystem3D::getRadiusSphere() {
+double CoordinateSystem3D::getRadiusSphere() {
     return this->mathHelper.pyth3D(this->X, this->Y, this->Z);
 }
-float CoordinateSystem3D::getRadiusCylinder() {
+double CoordinateSystem3D::getRadiusCylinder() {
     return this->mathHelper.pyth(this->X, this->Y);
 }

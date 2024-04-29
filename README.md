@@ -37,10 +37,10 @@ You can define which coordinate system to use by uncommenting the corresponding 
 The Vec2D class represents a 2D vector. It provides methods for basic vector operations and supports both Cartesian and polar coordinate systems.
 
 #### Constructors
-- Vec2D(float XY): Constructs a 2D vector in Cartesian coordinates with the same X and Y value.
-- Vec2D(float X, float Y): Constructs a 2D vector in Cartesian coordinates with the given X and Y components.
-- Vec2D(float X, float Y, float originX, float originY): Constructs a 2D vector in Cartesian Coordinates with a defined non-zero start point.
-- Vec2D(float radius, float angle): Constructs a 2D vector in polar coordinates with the given radius and angle.
+- Vec2D(double XY): Constructs a 2D vector in Cartesian coordinates with the same X and Y value.
+- Vec2D(double X, double Y): Constructs a 2D vector in Cartesian coordinates with the given X and Y components.
+- Vec2D(double X, double Y, double originX, double originY): Constructs a 2D vector in Cartesian Coordinates with a defined non-zero start point.
+- Vec2D(double radius, double angle): Constructs a 2D vector in polar coordinates with the given radius and angle.
 
 #### Methods
 
@@ -59,10 +59,10 @@ The Vec2D class represents a 2D vector. It provides methods for basic vector ope
 The Vec3D class extends Vec2D to represent 3D vectors. It provides additional methods for vector operations in 3D space and supports Cartesian, spherical, and cylindrical coordinate systems.
 
 #### Constructors
-- Vec3D(float XYZ): Constructs a 3D vector in Cartesian coordinates with the same X and Y value.
-- Vec3D(float X, float Y, float Z): Constructs a 3D vector in Cartesian coordinates with the given X, Y, and Z components.
-- Vec3D(float radius, float phi, float theta): Constructs a 3D vector in spherical coordinates with the given radius, phi, and theta.
-- Vec3D(float radius, float phi, float height): Constructs a 3D vector in cylindrical coordinates with the given radius, phi, and height.
+- Vec3D(double XYZ): Constructs a 3D vector in Cartesian coordinates with the same X and Y value.
+- Vec3D(double X, double Y, double Z): Constructs a 3D vector in Cartesian coordinates with the given X, Y, and Z components.
+- Vec3D(double radius, double phi, double theta): Constructs a 3D vector in spherical coordinates with the given radius, phi, and theta.
+- Vec3D(double radius, double phi, double height): Constructs a 3D vector in cylindrical coordinates with the given radius, phi, and height.
 
 #### Methods
 - Methods inherited from Vec2D.
@@ -75,14 +75,14 @@ The Vec3D class extends Vec2D to represent 3D vectors. It provides additional me
 Vectors with origins other than zero possess both absolute and relative coordinates. For instance, consider the vector [0;2], which begins at Y = 2. Its absolute Y-coordinate is 4, as it starts at 2 and extends 2 units upward to reach Y = 4. In the code, these absolute coordinates are called aX and aY.  
 There are methods for interacting and working with these Vectors:   
 - CalcDistance(): calculates the distance between Vectors
-- MoveVectorX(float move): Moves the vector in a specific x-direction
-- MoveVectorY(float move): Moves the vector in a specific y-direction
-- MoveVector(float moveX, float moveY): Moves the vector in a specific x and y direction
+- MoveVectorX(double move): Moves the vector in a specific x-direction
+- MoveVectorY(double move): Moves the vector in a specific y-direction
+- MoveVector(double moveX, double moveY): Moves the vector in a specific x and y direction
 - GetAX(): Gets the absolute X coordinate from a vector with a non-zero start
 - GetAY(): Gets the absolute X coordinate from a vector with a non-zero start
 - GetDistanceToZero(): Gets the distance to [ 0 ; 0 ] from a vector with a non-zero start
-- SetOriginX(float newOriginX): Sets the y-Origin to a specific value
-- SetOriginY(float newOriginY): Sets the y-Origin to a specific value
+- SetOriginX(double newOriginX): Sets the y-Origin to a specific value
+- SetOriginY(double newOriginY): Sets the y-Origin to a specific value
 
 #### Basic Operators: + - *
 

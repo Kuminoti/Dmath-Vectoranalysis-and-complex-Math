@@ -88,43 +88,43 @@
 // A helper class with some pre defined functions
 class MathHelper{
   private:
-    float h  = 0.0001;           //Resolution for Derivative
-    float dx = 0.000000001;      //Stepps for Antiderivative
+    double h  = 0.0001;           //Resolution for Derivative
+    double dx = 0.000000001;      //Stepps for Antiderivative
     int numSteps = 1000;         //Stepps for the integral
     
 
   public:
 
-    inline float pyth(float x, float y){return std::sqrt((x*x) + (y*y) );}
-    inline float pyth3D(float x, float y, float z){return std::sqrt((x*x) + (y*y) +(z*z) );}
+    inline double pyth(double x, double y){return std::sqrt((x*x) + (y*y) );}
+    inline double pyth3D(double x, double y, double z){return std::sqrt((x*x) + (y*y) +(z*z) );}
 
-    inline float radiansToDegrees(double radians) {return radians * RAD_TO_DEG;}
-    inline float degreesToRadians(double degrees) {return degrees * DEG_TO_RAD;}
+    inline double radiansToDegrees(double radians) {return radians * RAD_TO_DEG;}
+    inline double degreesToRadians(double degrees) {return degrees * DEG_TO_RAD;}
 
-    inline float sinFunc (float x) { return std::sin(x); }
-    inline float cosFunc (float x) { return std::cos(x); }
-    inline float tanFunc (float x) { return std::cos(x); }
-    inline float numOfElements(float start, float stopp, float res){ return static_cast<int> ((stopp-start)/res);}
+    inline double sinFunc (double x) { return std::sin(x); }
+    inline double cosFunc (double x) { return std::cos(x); }
+    inline double tanFunc (double x) { return std::cos(x); }
+    inline double numOfElements(double start, double stopp, double res){ return static_cast<int> ((stopp-start)/res);}
 
-    float calculateDerivativeAt(std::function<float(float)> f, float x);
-    float calculateDefiniteIntegral(std::function<float(float)> f, float a, float b);
+    double calculateDerivativeAt(std::function<double(double)> f, double x);
+    double calculateDefiniteIntegral(std::function<double(double)> f, double a, double b);
 
-    std::function<float(float)> calculateAntiderivative(std::function<float(float)> f, float x0);
-    std::function<float(float)> calculateDerivative(std::function<float(float)> f);
+    std::function<double(double)> calculateAntiderivative(std::function<double(double)> f, double x0);
+    std::function<double(double)> calculateDerivative(std::function<double(double)> f);
 };
 
 
 // Coordinatesystem2D is used as an abstraction for other classes like the 2 main Vector classes
 class CoordinateSystem2D { 
   protected:
-    float X;
-    float Y;
+    double X;
+    double Y;
 
-    float radius;
-    float phi;
+    double radius;
+    double phi;
 
-    float originX;
-    float originY;
+    double originX;
+    double originY;
 
     void polarToCartesian();
     void cartesianToPolar();
@@ -132,32 +132,32 @@ class CoordinateSystem2D {
   public:
     MathHelper mathHelper;
 
-    inline float getX()       { return this->X;       }
-    inline float getY()       { return this->Y;       }   
-    inline float getPhi()     { return this->phi;     }
-    inline float getOriginX() { return this->originX; }
-    inline float getOriginY() { return this->originY; }
-    inline float getRadius()  { return this->radius;  }
+    inline double getX()       { return this->X;       }
+    inline double getY()       { return this->Y;       }   
+    inline double getPhi()     { return this->phi;     }
+    inline double getOriginX() { return this->originX; }
+    inline double getOriginY() { return this->originY; }
+    inline double getRadius()  { return this->radius;  }
 
 
 #ifdef CARTESIAN_IS_2D_STANDARD
-    CoordinateSystem2D(float XY);
-    CoordinateSystem2D(float x, float y);
-    CoordinateSystem2D(float x, float y, float originX, float originY);
+    CoordinateSystem2D(double XY);
+    CoordinateSystem2D(double x, double y);
+    CoordinateSystem2D(double x, double y, double originX, double originY);
 #endif
 
 #ifdef POLAR_IS_STANDARD
-    CoordinateSystem2D(float radius, float phi);
-    CoordinateSystem2D(float radius, float phi, float originX, float originY);
+    CoordinateSystem2D(double radius, double phi);
+    CoordinateSystem2D(double radius, double phi, double originX, double originY);
 #endif
 }; // CoordinateSystem2D
 
 class CoordinateSystem3D : public CoordinateSystem2D {
   protected: // protected data
-    float Z;
-    float theta;
-    float height;
-    float originZ;
+    double Z;
+    double theta;
+    double height;
+    double originZ;
 
   protected: // Protected methods;
     void cartesianToSphere();
@@ -172,28 +172,28 @@ class CoordinateSystem3D : public CoordinateSystem2D {
   public: // Public Methods
 
     //Basic inline getters
-    inline float getTheta()   { return this->theta;   }
-    inline float getHeight()  { return this->height;  }
-    inline float getZ()       { return this->Z;       } 
-    inline float getOriginZ() { return this->originZ; }
+    inline double getTheta()   { return this->theta;   }
+    inline double getHeight()  { return this->height;  }
+    inline double getZ()       { return this->Z;       } 
+    inline double getOriginZ() { return this->originZ; }
 
-    float getRadiusSphere();
-    float getRadiusCylinder();
+    double getRadiusSphere();
+    double getRadiusCylinder();
     
 #ifdef CARTESIAN_IS_3D_STANDARD
-    CoordinateSystem3D(float XYZ);
-    CoordinateSystem3D(float X, float Y, float Z);
-    CoordinateSystem3D(float X, float Y, float Z, float originX, float originY, float originZ);
+    CoordinateSystem3D(double XYZ);
+    CoordinateSystem3D(double X, double Y, double Z);
+    CoordinateSystem3D(double X, double Y, double Z, double originX, double originY, double originZ);
 #endif
 
 #ifdef SPHERE_IS_STANDARD
-    CoordinateSystem3D(float radius, float phi, float theta);
-    CoordinateSystem3D(float radius, float phi, float theta, float originX, float originY, float originZ);
+    CoordinateSystem3D(double radius, double phi, double theta);
+    CoordinateSystem3D(double radius, double phi, double theta, double originX, double originY, double originZ);
 #endif
 
 #ifdef CYLINDER_IS_STANDARD
-    CoordinateSystem3D(float radius, float phi, float height);
-    CoordinateSystem3D(float radius, float phi, float hieght, float originX, float originY, float originZ);
+    CoordinateSystem3D(double radius, double phi, double height);
+    CoordinateSystem3D(double radius, double phi, double hieght, double originX, double originY, double originZ);
 #endif
 
 }; // CoordinateSystem3D
@@ -201,32 +201,32 @@ class CoordinateSystem3D : public CoordinateSystem2D {
 #ifdef CARTESIAN_IS_2D_STANDARD
 class VectorAnalysis2D{
   protected:
-    std::function<float(float)> xFunc;
-    std::function<float(float)> yFunc;
+    std::function<double(double)> xFunc;
+    std::function<double(double)> yFunc;
 
-    float resolution  = STDRES;
-    float systemStart = ZERO;
-    float systemStopp = TWOPI;
-    float rotation    = ZERO;
+    double resolution  = STDRES;
+    double systemStart = ZERO;
+    double systemStopp = TWOPI;
+    double rotation    = ZERO;
     int numberOfElements;
 
-    VectorAnalysis2D(float systemStart, float systemStopp, float resolution);
-    VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc);
-    VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, 
-                                    float systemStart, float systemStopp, float resolution);
-    VectorAnalysis2D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, 
-                                    float systemStart, float systemStopp, float resolution, float rotation);
+    VectorAnalysis2D(double systemStart, double systemStopp, double resolution);
+    VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc);
+    VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, 
+                                    double systemStart, double systemStopp, double resolution);
+    VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, 
+                                    double systemStart, double systemStopp, double resolution, double rotation);
 
   public:
 
-    inline float getNumberOfElements()               { return this->numberOfElements;}
-    inline float getResolution()                     { return this->resolution;      }
-    inline float getStart()                          { return this->systemStart;     }
-    inline float getEnd()                            { return this->systemStopp;     }
-    inline float getDataAtX(float data)              { return this->xFunc(data);     }
-    inline float getDataAtY(float data)              { return this->yFunc(data);     }
-    inline std::function<float(float)> getXFunction(){ return this->xFunc;           }
-    inline std::function<float(float)> getYFunction(){ return this->yFunc;           }
+    inline double getNumberOfElements()               { return this->numberOfElements;}
+    inline double getResolution()                     { return this->resolution;      }
+    inline double getStart()                          { return this->systemStart;     }
+    inline double getEnd()                            { return this->systemStopp;     }
+    inline double getDataAtX(double data)              { return this->xFunc(data);     }
+    inline double getDataAtY(double data)              { return this->yFunc(data);     }
+    inline std::function<double(double)> getXFunction(){ return this->xFunc;           }
+    inline std::function<double(double)> getYFunction(){ return this->yFunc;           }
 
     MathHelper mathHelper;
 
@@ -238,16 +238,16 @@ class VectorAnalysis2D{
 class VectorAnalysis3D: public VectorAnalysis2D{
   protected:
     
-    std::function<float(float)> zFunc;
-    VectorAnalysis3D(float systemStart, float systemStopp, float resolution);
-    VectorAnalysis3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, std::function<float(float)> zFunc);
-    VectorAnalysis3D(std::function<float(float)> xFunc, std::function<float(float)> yFunc, std::function<float(float)> zFunc,
-                                    float systemStart, float systemStopp, float resolution);
+    std::function<double(double)> zFunc;
+    VectorAnalysis3D(double systemStart, double systemStopp, double resolution);
+    VectorAnalysis3D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, std::function<double(double)> zFunc);
+    VectorAnalysis3D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, std::function<double(double)> zFunc,
+                                    double systemStart, double systemStopp, double resolution);
 
   public:
 
-    inline std::function<float(float)> getZfunction(){ return this->zFunc;           }
-    inline float getDataAtZ(float data)              { return this->zFunc(data);     }
+    inline std::function<double(double)> getZfunction(){ return this->zFunc;           }
+    inline double getDataAtZ(double data)              { return this->zFunc(data);     }
 
    
 };

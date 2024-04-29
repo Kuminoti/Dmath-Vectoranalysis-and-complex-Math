@@ -2,8 +2,8 @@
 
 
 
-Dmath::VectorSurface::VectorSurface(std::function<float(float, float)> xFunc, std::function<float(float, float)> yFunc,
-    std::function<float(float, float)> zFunc, float systemStart, float systemStopp, float resolution) :
+Dmath::VectorSurface::VectorSurface(std::function<double(double, double)> xFunc, std::function<double(double, double)> yFunc,
+    std::function<double(double, double)> zFunc, double systemStart, double systemStopp, double resolution) :
     VectorAnalysis3D(systemStart,systemStopp,resolution){
     this->xFunc = xFunc;
     this->yFunc = yFunc;
@@ -12,50 +12,50 @@ Dmath::VectorSurface::VectorSurface(std::function<float(float, float)> xFunc, st
     this->calculateSurfaceNormals();
 }
 
-float Dmath::VectorSurface::integrateSurfaceArea() {
-    float area = 0.0;
+double Dmath::VectorSurface::integrateSurfaceArea() {
+    double area = 0.0;
     for (size_t i = 0; i < this->mainSurface.size(); ++i) {
         Dmath::Vec3D du = this->calculatePartialDerivativeU(this->mainSurface[i].getX(), this->mainSurface[i].getY());
         Dmath::Vec3D dv = this->calculatePartialDerivativeV(this->mainSurface[i].getX(), this->mainSurface[i].getY());
         Dmath::Vec3D normal = du.vecProduct(dv);
-        float local_area = normal.getAbs();
+        double local_area = normal.getAbs();
         area += local_area;
     }
     return area;
 }
 
 
-Dmath::VectorSurface Dmath::VectorSurface::createCustomSurface(std::function<float(float, float)> xFunc, std::function<float(float, float)> yFunc,
-    std::function<float(float, float)> zFunc, float systemStart, float systemStopp, float resolution){
+Dmath::VectorSurface Dmath::VectorSurface::createCustomSurface(std::function<double(double, double)> xFunc, std::function<double(double, double)> yFunc,
+    std::function<double(double, double)> zFunc, double systemStart, double systemStopp, double resolution){
     return VectorSurface(xFunc,yFunc,zFunc,systemStart,systemStopp,resolution);
 }
 
-Dmath::VectorSurface Dmath::VectorSurface::createStandardSurface(std::function<float(float, float)> xFunc, std::function<float(float, float)> yFunc,
-    std::function<float(float, float)> zFunc){
+Dmath::VectorSurface Dmath::VectorSurface::createStandardSurface(std::function<double(double, double)> xFunc, std::function<double(double, double)> yFunc,
+    std::function<double(double, double)> zFunc){
     return VectorSurface(xFunc,yFunc,zFunc,ZERO,TWOPI,STDRES);
 }
 
-Dmath::Vec3D Dmath::VectorSurface::calculatePartialDerivativeU(float u, float v) {
-    float du_x = (this->xFunc(u + this->epsilon, v) - this->xFunc(u - this->epsilon, v)) / (2 * this->epsilon);
-    float du_y = (this->yFunc(u + this->epsilon, v) - this->yFunc(u - this->epsilon, v)) / (2 * this->epsilon);
-    float du_z = (this->zFunc(u + this->epsilon, v) - this->zFunc(u - this->epsilon, v)) / (2 * this->epsilon);
+Dmath::Vec3D Dmath::VectorSurface::calculatePartialDerivativeU(double u, double v) {
+    double du_x = (this->xFunc(u + this->epsilon, v) - this->xFunc(u - this->epsilon, v)) / (2 * this->epsilon);
+    double du_y = (this->yFunc(u + this->epsilon, v) - this->yFunc(u - this->epsilon, v)) / (2 * this->epsilon);
+    double du_z = (this->zFunc(u + this->epsilon, v) - this->zFunc(u - this->epsilon, v)) / (2 * this->epsilon);
 
     return Dmath::Vec3D(du_x, du_y, du_z);
 }
 
 
-Dmath::Vec3D Dmath::VectorSurface::calculatePartialDerivativeV(float u, float v) {       
-    float dv_x = (this->xFunc(u, v + this->epsilon) - this->xFunc(u, v - this->epsilon)) / (2 * this->epsilon);
-    float dv_y = (this->yFunc(u, v + this->epsilon) - this->yFunc(u, v - this->epsilon)) / (2 * this->epsilon);
-    float dv_z = (this->zFunc(u, v + this->epsilon) - this->zFunc(u, v - this->epsilon)) / (2 * this->epsilon);
+Dmath::Vec3D Dmath::VectorSurface::calculatePartialDerivativeV(double u, double v) {       
+    double dv_x = (this->xFunc(u, v + this->epsilon) - this->xFunc(u, v - this->epsilon)) / (2 * this->epsilon);
+    double dv_y = (this->yFunc(u, v + this->epsilon) - this->yFunc(u, v - this->epsilon)) / (2 * this->epsilon);
+    double dv_z = (this->zFunc(u, v + this->epsilon) - this->zFunc(u, v - this->epsilon)) / (2 * this->epsilon);
 
     return Dmath::Vec3D(dv_x, dv_y, dv_z);
 }
 
 void Dmath::VectorSurface::createVectorSurface() {
     size_t iterations = 0;
-    for (float i = this->systemStart; i <= this->systemStopp; i += this->resolution) {
-        for (float j = this->systemStart; j <= this->systemStopp; j += this->resolution) {
+    for (double i = this->systemStart; i <= this->systemStopp; i += this->resolution) {
+        for (double j = this->systemStart; j <= this->systemStopp; j += this->resolution) {
             if (iterations == 0) {
                 this->mainSurface.push_back(Dmath::Vec3D(xFunc(i, j), yFunc(i, j), zFunc(i, j)));
             } else {
@@ -76,8 +76,8 @@ void Dmath::VectorSurface::createVectorSurface() {
 
 void Dmath::VectorSurface::calculateSurfaceNormals() {
     size_t iterations = 0;
-    for (float i = this->systemStart; i <= this->systemStopp; i += this->resolution) {
-        for (float j = this->systemStart; j <= this->systemStopp; j += this->resolution) {
+    for (double i = this->systemStart; i <= this->systemStopp; i += this->resolution) {
+        for (double j = this->systemStart; j <= this->systemStopp; j += this->resolution) {
             // Berechne partielle Ableitungen nach u und v
             Dmath::Vec3D du = this->calculatePartialDerivativeU(i, j);
             Dmath::Vec3D dv = this->calculatePartialDerivativeV(i, j);
@@ -90,17 +90,17 @@ void Dmath::VectorSurface::calculateSurfaceNormals() {
     }
 }
 
-Dmath::Vec3D Dmath::VectorSurface::getVectorAtPointT(float t){
+Dmath::Vec3D Dmath::VectorSurface::getVectorAtPointT(double t){
         if(t <= this->systemStopp && t >= this->systemStart){
-            float t_index = t / this->resolution;
+            double t_index = t / this->resolution;
             return this->mainSurface[t_index];
         } else {
             return Dmath::Vec3D::zeroVector();
         }
     }
 
-float Dmath::VectorSurface::maxX(){
-    float max = 0;
+double Dmath::VectorSurface::maxX(){
+    double max = 0;
     for(size_t i = 0; i< this->mainSurface.size(); i++){
         if(this->mainSurface[i].getX() > max){
             max = this->mainSurface[i].getX();
@@ -112,8 +112,8 @@ float Dmath::VectorSurface::maxX(){
 
 }
 
-float Dmath::VectorSurface::maxY(){
-    float max = 0;
+double Dmath::VectorSurface::maxY(){
+    double max = 0;
     for(size_t i = 0; i< this->mainSurface.size(); i++){
         if(this->mainSurface[i].getY() > max){
             max = this->mainSurface[i].getY();
@@ -125,8 +125,8 @@ float Dmath::VectorSurface::maxY(){
 
 }
 
-float Dmath::VectorSurface::maxZ(){
-    float max = 0;
+double Dmath::VectorSurface::maxZ(){
+    double max = 0;
     for(size_t i = 0; i< this->mainSurface.size(); i++){
         if(this->mainSurface[i].getZ() > max){
             max = this->mainSurface[i].getZ();
@@ -139,8 +139,8 @@ float Dmath::VectorSurface::maxZ(){
 
 
 
-float Dmath::VectorSurface::minX(){
-    float min = this->mainSurface[0].getX();
+double Dmath::VectorSurface::minX(){
+    double min = this->mainSurface[0].getX();
     for(size_t i = 0; i< this->mainSurface.size(); i++){
         if(this->mainSurface[i].getX() < min){
             min = this->mainSurface[i].getX();
@@ -151,8 +151,8 @@ float Dmath::VectorSurface::minX(){
     return min;
 }
 
-float Dmath::VectorSurface::minY(){
-    float min = this->mainSurface[0].getY();
+double Dmath::VectorSurface::minY(){
+    double min = this->mainSurface[0].getY();
     for(size_t i = 0; i< this->mainSurface.size(); i++){
         if(this->mainSurface[i].getY() < min){
             min = this->mainSurface[i].getY();
@@ -163,8 +163,8 @@ float Dmath::VectorSurface::minY(){
     return min;
 }
 
-float Dmath::VectorSurface::minZ(){
-    float min = this->mainSurface[0].getZ();
+double Dmath::VectorSurface::minZ(){
+    double min = this->mainSurface[0].getZ();
     for(size_t i = 0; i< this->mainSurface.size(); i++){
         if(this->mainSurface[i].getZ() < min){
             min = this->mainSurface[i].getZ();
@@ -176,8 +176,8 @@ float Dmath::VectorSurface::minZ(){
 }
 
 
-float Dmath::VectorSurface::calculatePerimeter() {
-    float perimeter = 0.0;
+double Dmath::VectorSurface::calculatePerimeter() {
+    double perimeter = 0.0;
     size_t numPoints = this->mainSurface.size();
 
     perimeter += (mainSurface[numPoints - 1] - mainSurface[0]).getAbs();
