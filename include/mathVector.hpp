@@ -11,14 +11,10 @@ NAMESPACESTART
 
 class Vec2D : public CoordinateSystem2D {
   private:
-    double aX;                                               // Absolute X the coordinate of a vector that does not start at zero
-    double aY;                                               // Absolute Y the coordinate of a vector that does not start at zero
     double abs;                                              // The absolute value or lenght of a vector
     double distanceToZero;   
     double vectorRotation;                                
-    void calcDZ();                                          // Calculates the distance to zero
     void calcAbs();                                         // Calculates the absolute value
-    void calcAbsXY();                                       // Calculates and sets the absolute x and y coordinates
     
 
   public:
@@ -40,9 +36,7 @@ class Vec2D : public CoordinateSystem2D {
 
     // Math with scalar results
 
-    double getAX();                                       // Gets the absolute X coordinate from a vector with a non zero start
-    double getAY();                                       // Gets the absolute X coordinate from a vector with a non zero start
-    double getDistanceToZero();                           // Gets the distance to [ 0 ; 0 ] from a vector with a non zero start
+
     double getRotationAngle();                            // Gets the rotation angle for rotated vectors
     double getAbs();                                      // Calculates the absolutvalue
     double lenght();                                      // Calculates the length of a vector
@@ -93,14 +87,11 @@ class Vec2D : public CoordinateSystem2D {
 class SystemGeometry;
 class Vec3D : public CoordinateSystem3D {
   private:
-    double aX;
-    double aY;
-    double aZ;
-    double distanceToZero;
+
     double abs;
     void calcAbs();
-    void calcDTZ();
-    void calcAXYZ();
+    
+    
 
   public: // Operator overloading
 
@@ -131,9 +122,7 @@ class Vec3D : public CoordinateSystem3D {
     void setY(double Y);
     void setZ(double Z);
 
-    void setOriginX(double value);
-    void setOriginY(double value);
-    void setOriginZ(double value);
+
 
     void normalize();
 

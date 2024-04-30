@@ -7,8 +7,6 @@
 
 #ifdef SYSTEM_READY
 
-
-
 NAMESPACESTART
 
 class Vec3D;

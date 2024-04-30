@@ -84,6 +84,75 @@ void CoordinateSystem3D::cylinderToSphere() {
     this->theta = std::atan2(this->radius, this->height);
 }
 
+void CoordinateSystem2D::calcAbsXY() {
+    if(this->originX != 0 || this->originY != 0){
+        this->aX = this->X + this->originX;
+        this->aY = this->Y + this->originY;
+    }
+}
+
+
+void CoordinateSystem2D::setOriginX(double move){
+  this->originX = move;
+  this->calcAbsXY();
+  this->calcDZ();
+}
+
+void CoordinateSystem2D::setOriginY(double move){
+  this->originY = move;
+  this->calcAbsXY();
+  this->calcDZ();
+}
+
+void CoordinateSystem3D::setOriginX(double Value){
+  this->originX = Value;
+  this->calcAXYZ();
+  this->calcDTZ();
+}
+
+void CoordinateSystem3D::setOriginY(double Value){
+  this->originY = Value;
+  this->calcAXYZ();
+  this->calcDTZ();
+}
+
+void CoordinateSystem3D::setOriginZ(double Value){
+  this->originZ = Value;
+  this->calcAXYZ();
+  this->calcDTZ();
+}
+
+void CoordinateSystem3D::calcAXYZ(){
+    if(this->originX != 0 || this->originY != 0 || this->originZ != 0){
+        this->aX = this->originX + this->X;
+        this->aY = this->originY + this->Y; 
+        this->aZ = this->originZ + this->Z;
+    }
+}
+
+void CoordinateSystem3D::calcDTZ(){
+ if(this->originX == 0 && this->originY == 0 && this->originZ == 0){
+    this->distanceToZero = 0;
+    return;
+  }
+  double result = 0;
+  this->calcAXYZ();
+  //AYS absolute Y sqared ...
+  double AXS = this->aX * this->aX;
+  double AYS = this->aY * this->aY;
+  result = std::sqrt(AYS + AYS);
+  this->distanceToZero = result;  
+}
+
+void CoordinateSystem2D::calcDZ(){
+    float result = 0;
+    if(this->originX != 0 || this->originY != 0){
+        result = this->mathHelper.pyth(this->aX,this->aY);
+    }
+    else { result = 0;}
+  this->distanceToZero = result;
+}
+
 #ifdef CARTESIAN_IS_2D_STANDARD
 
 CoordinateSystem2D::CoordinateSystem2D(double XY){
@@ -91,6 +160,8 @@ CoordinateSystem2D::CoordinateSystem2D(double XY){
     this->Y = XY;
     this->originX = 0;
     this->originY = 0;
+    this->aX = 0;
+    this->aY = 0;
     
 }
 
@@ -107,6 +178,8 @@ CoordinateSystem2D::CoordinateSystem2D(double x, double y, double originX,
     this->Y = y;
     this->originX = originX;
     this->originY = originY;
+    this->calcAbsXY();
+    this->calcDZ();
 }
 
 #endif
@@ -118,7 +191,9 @@ CoordinateSystem2D::CoordinateSystem2D(double radius, double phi, double originX
     this->phi = phi;
     this->originX = originX;
     this->originY = originY;
+    this->calcAbsXY();
     }
+
 
 CoordinateSystem2D::CoordinateSystem2D(double radius, double phi) {
     this->radius = radius;

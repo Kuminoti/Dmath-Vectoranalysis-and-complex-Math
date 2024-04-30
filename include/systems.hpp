@@ -126,19 +126,34 @@ class CoordinateSystem2D {
     double originX;
     double originY;
 
+    double aX;
+    double aY;
+
+    double distanceToZero;
+
     void polarToCartesian();
     void cartesianToPolar();
+
+    void calcAbsXY();
+    void calcDZ();                                          // Calculates the distance to zero
+
 
   public:
     MathHelper mathHelper;
 
     inline double getX()       { return this->X;       }
-    inline double getY()       { return this->Y;       }   
+    inline double getY()       { return this->Y;       }
+    inline double getAX()      { return this->aX;      }
+    inline double getAY()      { return this->aY;      }   
     inline double getPhi()     { return this->phi;     }
+    inline double getRadius()  { return this->radius;  }    
     inline double getOriginX() { return this->originX; }
     inline double getOriginY() { return this->originY; }
-    inline double getRadius()  { return this->radius;  }
+   
+    void setOriginX(double newOriginX);
+    void setOriginY(double newOriginY);
 
+    inline double getDistanceZero(){ return this->distanceToZero; } 
 
 #ifdef CARTESIAN_IS_2D_STANDARD
     CoordinateSystem2D(double XY);
@@ -155,6 +170,7 @@ class CoordinateSystem2D {
 class CoordinateSystem3D : public CoordinateSystem2D {
   protected: // protected data
     double Z;
+    double aZ;
     double theta;
     double height;
     double originZ;
@@ -168,6 +184,9 @@ class CoordinateSystem3D : public CoordinateSystem2D {
 
     void cylinderToCartesian();
     void cylinderToSphere();
+    void calcDTZ();
+    void calcAXYZ();
+    
 
   public: // Public Methods
 
@@ -176,6 +195,12 @@ class CoordinateSystem3D : public CoordinateSystem2D {
     inline double getHeight()  { return this->height;  }
     inline double getZ()       { return this->Z;       } 
     inline double getOriginZ() { return this->originZ; }
+
+    void setOriginX(double Value);
+
+    void setOriginY(double Value);
+
+    void setOriginZ(double Value);
 
     double getRadiusSphere();
     double getRadiusCylinder();

@@ -90,12 +90,12 @@ double angleFromCos(double cosTheta) {
 }
 
 
-void Vec2D::calcAbsXY(){
-  if(this->originX != 0 || this->originY != 0){
-    this->aX = this->X + this->originX;
-    this->aY = this->Y + this->originY;
-  }
-}
+// void Vec2D::calcAbsXY(){
+//   if(this->originX != 0 || this->originY != 0){
+//     this->aX = this->X + this->originX;
+//     this->aY = this->Y + this->originY;
+//   }
+// }
 
 
 
@@ -152,17 +152,7 @@ void Vec2D::setRadius(double value) {
   this->polarToCartesian();
 }
 
-void Vec2D::setOriginX(double move){
-  this->originX = move;
-  this->calcAbsXY();
-  this->calcDZ();
-}
 
-void Vec2D::setOriginY(double move){
-  this->originY = move;
-  this->calcAbsXY();
-  this->calcDZ();
-}
 
 
 void Vec2D::moveVectorX(double move){
@@ -194,24 +184,7 @@ void Vec2D::normalize(){
   this->Y = this->Y / this->abs;
 }
 
-void Vec2D::calcDZ(){
-  if(this->originX == 0 && this-> originY == 0){
-    this->distanceToZero = 0;
-    return;
-  }
-  else if(this->originX != 0 && this->originY == 0){
-    this->distanceToZero = this->originX;
-    return;
-  }
-  else if(this->originY != 0 && this->originX == 0){
-    this->distanceToZero = this->originY;
-    return;
-  }
-  double result = 0;
-  this->calcAbsXY();
-  result = this->mathHelper.pyth(this->aX,this->aY);
-  this->distanceToZero = result;
-}
+
 
 
 double Vec2D::dotProduct(Vec2D Mathvector) {
@@ -247,28 +220,6 @@ double Vec2D::rectangleCircumfrance(Vec2D MathVector) {
   return Circumfrance;
 }
 
-
-void Vec3D::calcAXYZ(){
-  if(this->originX != 0 || this->originY != 0){
-      this->aX = this->X + this->originX;
-      this->aY = this->Y + this->originY;
-      this->aZ = this->Z + this->originZ;
-    }
-}
-
-void Vec3D::calcDTZ(){
- if(this->originX == 0 && this->originY == 0 && this->originZ == 0){
-    this->distanceToZero = 0;
-    return;
-  }
-  double result = 0;
-  this->calcAXYZ();
-  //AYS absolute Y sqared ...
-  double AXS = this->aX * this->aX;
-  double AYS = this->aY * this->aY;
-  result = std::sqrt(AYS + AYS);
-  this->distanceToZero = result;  
-}
 
 void Vec3D::calcAbs() {
   double result = this->mathHelper.pyth3D(this->X,this->Y,this->Z);
@@ -348,9 +299,7 @@ double Vec3D::getSphereRadius(){
 
 double Vec2D::getAbs()               { return this->abs;      }
 double Vec2D::lenght()               { return this->getAbs(); }
-double Vec2D::getAX()                { return this->aX;       }
-double Vec2D::getAY()                { return this->aY;       }
-double Vec2D::getDistanceToZero()    { return this->distanceToZero; }
+
 double Vec2D::getRotationAngle()     { return this->vectorRotation; }
 
 void Vec3D::setX(double X){
@@ -399,23 +348,7 @@ void Vec3D::setHeight(double height) { this->height = height; }
 void Vec3D::setPhi(double phi)       { this->phi = phi; }
 void Vec3D::setTheta(double theta)   { this->theta = theta; }
 
-void Vec3D::setOriginX(double Value){
-  this->originX = Value;
-  this->calcAXYZ();
-  this->calcDTZ();
-}
 
-void Vec3D::setOriginY(double Value){
-  this->originY = Value;
-  this->calcAXYZ();
-  this->calcDTZ();
-}
-
-void Vec3D::setOriginZ(double Value){
-  this->originZ = Value;
-  this->calcAXYZ();
-  this->calcDTZ();
-}
 
 //Macro dependent code:
 
@@ -463,9 +396,9 @@ Vec3D::Vec3D(double XYZ) : CoordinateSystem3D(XYZ) {
   this->cartesianToSphere();
   this->cartesianToCylinder();
   this->calcAbs();  
-  this->aX = XYZ;
-  this->aY = XYZ;
-  this->aZ = XYZ;
+  this->aX = 0;
+  this->aY = 0;
+  this->aZ = 0;
 }
 
 Vec3D::Vec3D(double X, double Y, double Z, double originX, double originY, double originZ)
