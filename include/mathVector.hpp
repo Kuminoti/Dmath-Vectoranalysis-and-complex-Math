@@ -3,9 +3,12 @@
 #ifndef VECTORMATH_H
 #define VECTORMATH_H
 #include "systems.hpp"
-#ifdef SYSTEM_IS_SET
 
+#ifdef SYSTEM_READY
+#include"systemGeometry.hpp"
 NAMESPACESTART
+
+
 class Vec2D : public CoordinateSystem2D {
   private:
     double aX;                                               // Absolute X the coordinate of a vector that does not start at zero
@@ -83,8 +86,11 @@ class Vec2D : public CoordinateSystem2D {
     static Vec2D zeroVector();                           // Creates a vector with lenght 0
 };
 
+#ifdef SYSTEMGEOMETRY_HPP //aus systemGeometry.hpp
 
 //Most of the methods in the Vec3D class ar simular to the methods in the Vec2D class
+
+class SystemGeometry;
 class Vec3D : public CoordinateSystem3D {
   private:
     double aX;
@@ -97,6 +103,9 @@ class Vec3D : public CoordinateSystem3D {
     void calcAXYZ();
 
   public: // Operator overloading
+
+    Dmath::SystemGeometry *systemGeometry;
+
     Vec3D operator+(Vec3D& Mathvector);
     Vec3D operator-(Vec3D& Mathvector);
     Vec3D operator/(double scalarValue);
@@ -129,8 +138,6 @@ class Vec3D : public CoordinateSystem3D {
     void normalize();
 
 
-    //SetOrigin!!!!!!!
-
     void setPhi(double phi);       // For spheresystems (radius, angle Phi, angle Theta)
     void setHeight(double phi);    // For cylinder systems (radius, angle, height);
     void setTheta(double phi);     // For spheresystems (radius, angle Phi, angle Theta);
@@ -157,22 +164,13 @@ class Vec3D : public CoordinateSystem3D {
     static Vec3D sphereVector(double radius, double angleOne, double angleTwo);
     static Vec3D cylinderVector(double radius, double angle, double height);
 
-    // Volumes and surfaces of sphere and cylinder systems
-    double cylinderSystemVolume();
-    double cylinderSystemSurface();
-    double cylinderSystemLateralSurface();
 
-    double sphereSystemVolume();
-    double sphereSystemSurface();
-
-    // Volumes and surface from a cuboid build with vectors
-    double cuboidVolume(Vec3D MathVector, Vec3D MathVectorTwo);
-    double cuboidSurface(Vec3D MathVector, Vec3D MathVectorTwo);
-
-    double getAbs();
+    inline double getAbs(){return this->abs; }
     double getSphereRadius();
     double getCylinderRadius();
 };
+#endif
+
 
 #endif // SYSTEM_IS_SET
 NAMESPACEEND

@@ -1,4 +1,5 @@
 #include "../include/mathVector.hpp"
+#include "../include/systemGeometry.hpp"
 
 using namespace Dmath;
 // Helper functions:
@@ -271,6 +272,7 @@ void Vec3D::calcDTZ(){
 
 void Vec3D::calcAbs() {
   double result = this->mathHelper.pyth3D(this->X,this->Y,this->Z);
+  this->abs = result;
 }
 
 double Vec3D::calcAngle(Vec3D Mathvector) {
@@ -325,57 +327,9 @@ Vec3D Vec3D::cylinderVector(double radius, double angle, double height) {
   return Vec3D(Xvalue, Yvalue, Zvalue);
 }
 
-double Vec3D::sphereSystemVolume() {
-  // formula: 4/3 π * r³
-  double fourThreePi = (4 / 3) * PI;
-  double radiusCubed = (this->radius * this->radius * this->radius);
-  double result = fourThreePi * radiusCubed;
-  return result;
-}
-
-double Vec3D::sphereSystemSurface() {
-  // formula: 4π * radius²
-  double result = FOUR_PI * (this->radius * this->radius);
-  return result;
-}
-
-double Vec3D::cylinderSystemVolume() {
-  // formula B * h
-  double baseSide = PI * (this->radius * this->radius);
-  return baseSide * this->height;
-}
-
-double Vec3D::cylinderSystemSurface() {
-  // formula: Baseside * LateralSurface
-  double baseSide = PI * (this->radius * this->radius);
-  double LateralSurface = this->cylinderSystemLateralSurface();
-  return 2 * baseSide * LateralSurface;
-}
-
-double Vec3D::cylinderSystemLateralSurface() {
-  // formula: 2π * r * h
-  double result = TWOPI * this->radius * this->height;
-  return result;
-}
 
 Vec3D Vec3D::zeroVector() { return Vec3D(0, 0, 0); }
 
-double Vec3D::cuboidVolume(Vec3D MathVector, Vec3D MathVectorTwo) {
-  // formula: A*B*C or in this case: |vector1| * |vector2| * |vector3|
-  double A = this->getAbs();
-  double B = MathVector.getAbs();
-  double C = MathVectorTwo.getAbs();
-  double result = A * B * C;
-  return result;
-}
-
-double Vec3D::cuboidSurface(Vec3D MathVector, Vec3D MathVectorTwo) {
-  double productOne = this->dotProduct(MathVector);
-  double productTwo = this->dotProduct(MathVectorTwo);
-  double productThree = MathVector.dotProduct(MathVectorTwo);
-  double result = 2 * (productOne + productTwo + productThree);
-  return result;
-}
 
 double Vec3D::getCylinderRadius(){
     double  result = std::sqrt((this->X*this->X)+(this->Y*this->Y));
@@ -384,6 +338,7 @@ double Vec3D::getCylinderRadius(){
 
 double Vec3D::getSphereRadius(){
     double  result = std::sqrt((this->X*this->X)+(this->Y*this->Y)+(this->Y*this->Y));
+    
     return result;
 }
 
@@ -391,7 +346,6 @@ double Vec3D::getSphereRadius(){
 
 
 
-double Vec3D::getAbs()               { return this->abs;      }
 double Vec2D::getAbs()               { return this->abs;      }
 double Vec2D::lenght()               { return this->getAbs(); }
 double Vec2D::getAX()                { return this->aX;       }
