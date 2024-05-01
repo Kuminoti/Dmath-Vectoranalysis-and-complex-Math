@@ -113,8 +113,8 @@ class MathHelper{
 
 
     double sigmaAdd(std::function<double(double)> mainFunc,size_t start, size_t end);
-
     double piMultiply(std::function<double(double)> mainFunc,size_t start, size_t end);
+
 };
 
 
@@ -248,10 +248,10 @@ class VectorAnalysis2D{
 
   public:
 
-    inline double getNumberOfElements()               { return this->numberOfElements;}
-    inline double getResolution()                     { return this->resolution;      }
-    inline double getStart()                          { return this->systemStart;     }
-    inline double getEnd()                            { return this->systemStopp;     }
+    inline double getNumberOfElements()                { return this->numberOfElements;}
+    inline double getResolution()                      { return this->resolution;      }
+    inline double getStart()                           { return this->systemStart;     }
+    inline double getEnd()                             { return this->systemStopp;     }
     inline double getDataAtX(double data)              { return this->xFunc(data);     }
     inline double getDataAtY(double data)              { return this->yFunc(data);     }
     inline std::function<double(double)> getXFunction(){ return this->xFunc;           }

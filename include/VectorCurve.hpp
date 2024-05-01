@@ -142,11 +142,16 @@ class VectorCurve3D : public VectorAnalysis3D{
 
 class ImplicidVectorCurve2D : public VectorCurve2D{
   protected:
-    std::function<float(float, float)> componentOne;
-    std::function<float(float, float)> componentTwo;
+    //For example X² + 2Y = 3X +4Y²
+    std::function<double(double, double)> componentOne;
+    std::function<double(double, double)> componentTwo;
 
-    std::function<float(float)>  funcOne;
-    std::function<float(float)>  funcTwo;
+
+    //For example X² + Y² = 0
+    std::function<double(double, double)> oneComponentCurve;
+
+    ImplicidVectorCurve2D(std::function<double(double, double)> componentOne, std::function<double(double, double)> componentTwo);
+
 };
 
 

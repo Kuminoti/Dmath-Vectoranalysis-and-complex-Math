@@ -291,7 +291,11 @@ void Dmath::VectorCurve2D::moveY(double moveY){
     }
 }
 
-
+void Dmath::VectorCurve2D::rotateThisCurve(double radiants){
+    for(int i = 0; i<this->mainCurve.size(); i++){
+        this->mainCurve[i].rotateThisVector(radiants);
+    }
+}
 
 
 
