@@ -53,6 +53,7 @@ Vec3D Vec3D::operator/(double scalarValue){
   if(this->originX != 0 || this->originY != 0 || this->originZ != 0){
     newVector.setOriginX(this->originX);
   }
+  return newVector;
 }
 
 double Vec3D::operator*(Vec3D &Mathvector) {
@@ -527,11 +528,11 @@ Vec2D Vec2D::rotateVector(double angle) {
 #endif
 
 #ifdef STANDARD_ANGLE_UNIT_DEG
-Vec2D Vec2D::rotateVector(double vlaue) {
+Vec2D Vec2D::rotateVector(double angle) {
   double newX = this->getX() * std::cos(angle) - this->getY() * std::sin(angle);
   double newY = this->getX() * std::sin(angle) + this->getY() * std::cos(angle);
   newX = newX * RAD_TO_DEG;
-  newY = newY * RAD_TO_DEG:
+  newY = newY * RAD_TO_DEG;
   return Vec2D(newX, newY);
 }
 #endif
@@ -544,16 +545,7 @@ void Vec2D::rotateThisVector(double value){
 }
 #endif
 
-#ifdef STANDARD_ANGLE_UNIT_DEG
-void Vec2D::rotateThisVectorDEG(double degrees){
-  double newX = this->getX() * std::cos(degrees) - this->getY() * std::sin(degrees);
-  double newY = this->getX() * std::sin(degrees) + this->getY() * std::cos(degrees);
-  this->X    = newX * RAD_TO_DEG;
-  this->Y    = newY * RAD_TO_DEG;
-  this->vectorRotation = degrees;
-}
 
-#endif
 
 
 #endif

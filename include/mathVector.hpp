@@ -62,8 +62,8 @@ class Vec2D : public CoordinateSystem2D {
 
     void normalize();
 
-    void setOriginX(double newOriginX);
-    void setOriginY(double newOriginY);
+    // void setOriginX(double newOriginX);
+    // void setOriginY(double newOriginY);
    
     void moveVectorX(double move);                        // Moves the vector in a specific x-direction
     void moveVectorY(double move);                        // Moves the vector in a specific y-direction

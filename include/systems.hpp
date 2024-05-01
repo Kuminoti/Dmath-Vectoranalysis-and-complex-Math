@@ -29,15 +29,14 @@
 
 
 //Choose your prefered angle unit with (un)commenting the fitting macro
-//#define STANDARD_ANGLE_UNIT_DEG
-#define STANDARD_ANGLE_UNIT_RAD
+#define STANDARD_ANGLE_UNIT_DEG
+//#define STANDARD_ANGLE_UNIT_RAD
 #if(defined(STANDARD_ANGLE_UNIT_DEG) || defined(STANDARD_ANGLE_UNIT_RAD))
 #define ANGLE_UNIT_SET
 #else
 #if(defined(STANDARD_ANGLE_UNIT_DEG) && defined(STANDARD_ANGLE_UNIT_RAD))
 #warning "Both angle units are set standard will be radiants!"
 #undef STANDARD_ANGLE_UNIT_DEG
-#define STANDARD_ANGLE_UNIT_RAD
 #define ANGLE_UNIT_SET
 #endif
 #endif

@@ -46,11 +46,12 @@ void CoordinateSystem2D::polarToCartesian() {
 void CoordinateSystem2D::cartesianToPolar() {
     this->radius = this->mathHelper.pyth(this->X, this->Y);
     this->phi = std::atan2(this->Y, this->X);
+    
 }
 
 void CoordinateSystem3D::cartesianToSphere() {
     this->radius = this->mathHelper.pyth3D(this->X, this->Y, this->Z);
-    this->phi = std::atan2(this->Y, this->X);
+    this->phi =  std::atan2(this->Y, this->X);
     this->theta = std::acos((this->Z / radius));
 }
 
@@ -140,6 +141,7 @@ void CoordinateSystem3D::calcDTZ(){
   //AYS absolute Y sqared ...
   double AXS = this->aX * this->aX;
   double AYS = this->aY * this->aY;
+  double AZS = this->aZ * this->aZ;
   result = std::sqrt(AYS + AYS);
   this->distanceToZero = result;  
 }
