@@ -140,6 +140,15 @@ class VectorCurve3D : public VectorAnalysis3D{
 
 
 
+class ImplicidVectorCurve2D : public VectorCurve2D{
+  protected:
+    std::function<float(float, float)> componentOne;
+    std::function<float(float, float)> componentTwo;
+
+    std::function<float(float)>  funcOne;
+    std::function<float(float)>  funcTwo;
+};
+
 
 NAMESPACEEND //Dmath namespace
 #endif //include guard

@@ -37,6 +37,30 @@ std::function<double(double)> MathHelper::calculateDerivative(std::function<doub
     };
 }
 
+double MathHelper::piMultiply(std::function<double(double)> mainFunc,size_t start, size_t end){
+    double result = 0;
+    if(start >= end){
+    return 0;
+    }
+    for(int i = start; i<end; i++){
+    result+= mainFunc(i);
+    }
+    return result;
+}
+
+
+double MathHelper::sigmaAdd(std::function<double(double)> mainFunc,size_t start, size_t end){
+    double result = 0;
+    if(start >= end){
+    return 0;
+    }
+    for(int i = start; i<end; i++){
+    result += mainFunc(i);
+    }
+    return result;
+}
+
+
 
 void CoordinateSystem2D::polarToCartesian() {
     this->X = radius * std::cos(this->phi);
@@ -48,6 +72,31 @@ void CoordinateSystem2D::cartesianToPolar() {
     this->phi = std::atan2(this->Y, this->X);
     
 }
+
+
+
+void CoordinateSystem2D::calcAbsXY() {
+    if(this->originX != 0 || this->originY != 0){
+        this->aX = this->X + this->originX;
+        this->aY = this->Y + this->originY;
+    }
+}
+
+
+void CoordinateSystem2D::setOriginX(double move){
+  this->originX = move;
+  this->calcAbsXY();
+  this->calcDZ();
+}
+
+void CoordinateSystem2D::setOriginY(double move){
+  this->originY = move;
+  this->calcAbsXY();
+  this->calcDZ();
+}
+
+
+
 
 void CoordinateSystem3D::cartesianToSphere() {
     this->radius = this->mathHelper.pyth3D(this->X, this->Y, this->Z);
@@ -83,26 +132,6 @@ void CoordinateSystem3D::cylinderToSphere() {
     this->radius = this->mathHelper.pyth(this->radius, this->height);
     // this->phi = this->phi;
     this->theta = std::atan2(this->radius, this->height);
-}
-
-void CoordinateSystem2D::calcAbsXY() {
-    if(this->originX != 0 || this->originY != 0){
-        this->aX = this->X + this->originX;
-        this->aY = this->Y + this->originY;
-    }
-}
-
-
-void CoordinateSystem2D::setOriginX(double move){
-  this->originX = move;
-  this->calcAbsXY();
-  this->calcDZ();
-}
-
-void CoordinateSystem2D::setOriginY(double move){
-  this->originY = move;
-  this->calcAbsXY();
-  this->calcDZ();
 }
 
 void CoordinateSystem3D::setOriginX(double Value){

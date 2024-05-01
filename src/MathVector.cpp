@@ -30,35 +30,7 @@ double Vec2D::operator*(Vec2D &Mathvector) {
   return this->dotProduct(Mathvector);
 }
 
-Vec3D Vec3D::operator+(Vec3D &Mathvector) {
-  double resultX = this->X + Mathvector.X;
-  double resultY = this->Y + Mathvector.Y;
-  double resultZ = this->Z + Mathvector.Z;
-  return Vec3D(resultX, resultY, resultZ);
-}
 
-Vec3D Vec3D::operator-(Vec3D &Mathvector) {
-  double resultX = this->X - Mathvector.X;
-  double resultY = this->Y - Mathvector.Y;
-  double resultZ = this->Z - Mathvector.Z;
-  return Vec3D(resultX, resultY, resultZ);
-}
-
-Vec3D Vec3D::operator/(double scalarValue){
-  double newX = this->X / scalarValue;
-  double newY = this->Y / scalarValue;
-  double newZ = this->Z / scalarValue;
-
-  Vec3D newVector(newX,newY,newZ);
-  if(this->originX != 0 || this->originY != 0 || this->originZ != 0){
-    newVector.setOriginX(this->originX);
-  }
-  return newVector;
-}
-
-double Vec3D::operator*(Vec3D &Mathvector) {
-  return this->dotProduct(Mathvector);
-}
 
 // Calculate cosine of the angle between two vectors
 double cosAngle(double dotProduct, double absProduct) {
@@ -221,6 +193,12 @@ double Vec2D::rectangleCircumfrance(Vec2D MathVector) {
   return Circumfrance;
 }
 
+double Vec2D::getAbs()               { return this->abs;      }
+double Vec2D::lenght()               { return this->getAbs(); }
+
+double Vec2D::getRotationAngle()     { return this->vectorRotation; }
+
+
 
 void Vec3D::calcAbs() {
   double result = this->mathHelper.pyth3D(this->X,this->Y,this->Z);
@@ -295,14 +273,6 @@ double Vec3D::getSphereRadius(){
 }
 
 
-
-
-
-double Vec2D::getAbs()               { return this->abs;      }
-double Vec2D::lenght()               { return this->getAbs(); }
-
-double Vec2D::getRotationAngle()     { return this->vectorRotation; }
-
 void Vec3D::setX(double X){
   this->X = X;
   this->cartesianToCylinder();
@@ -349,6 +319,36 @@ void Vec3D::setHeight(double height) { this->height = height; }
 void Vec3D::setPhi(double phi)       { this->phi = phi; }
 void Vec3D::setTheta(double theta)   { this->theta = theta; }
 
+
+Vec3D Vec3D::operator+(Vec3D &Mathvector) {
+  double resultX = this->X + Mathvector.X;
+  double resultY = this->Y + Mathvector.Y;
+  double resultZ = this->Z + Mathvector.Z;
+  return Vec3D(resultX, resultY, resultZ);
+}
+
+Vec3D Vec3D::operator-(Vec3D &Mathvector) {
+  double resultX = this->X - Mathvector.X;
+  double resultY = this->Y - Mathvector.Y;
+  double resultZ = this->Z - Mathvector.Z;
+  return Vec3D(resultX, resultY, resultZ);
+}
+
+Vec3D Vec3D::operator/(double scalarValue){
+  double newX = this->X / scalarValue;
+  double newY = this->Y / scalarValue;
+  double newZ = this->Z / scalarValue;
+
+  Vec3D newVector(newX,newY,newZ);
+  if(this->originX != 0 || this->originY != 0 || this->originZ != 0){
+    newVector.setOriginX(this->originX);
+  }
+  return newVector;
+}
+
+double Vec3D::operator*(Vec3D &Mathvector) {
+  return this->dotProduct(Mathvector);
+}
 
 
 //Macro dependent code:

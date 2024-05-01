@@ -110,6 +110,11 @@ class MathHelper{
 
     std::function<double(double)> calculateAntiderivative(std::function<double(double)> f, double x0);
     std::function<double(double)> calculateDerivative(std::function<double(double)> f);
+
+
+    double sigmaAdd(std::function<double(double)> mainFunc,size_t start, size_t end);
+
+    double piMultiply(std::function<double(double)> mainFunc,size_t start, size_t end);
 };
 
 
