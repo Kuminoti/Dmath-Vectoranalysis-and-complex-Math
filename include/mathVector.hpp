@@ -62,18 +62,16 @@ class Vec2D : public CoordinateSystem2D {
 
     void normalize();
 
-    // void setOriginX(double newOriginX);
-    // void setOriginY(double newOriginY);
    
     void moveVectorX(double move);                        // Moves the vector in a specific x-direction
     void moveVectorY(double move);                        // Moves the vector in a specific y-direction
-    void moveVector(double moveX, double moveY);           // Moves the vector in a specific x and y direction 
+    void moveVector(double moveX, double moveY);          // Moves the vector in a specific x and y direction 
     void rotateThisVector(double value);
 
     // You can use methods instead of operators
     Vec2D add(Vec2D Mathvector);                         // Adding 2 vectors
     Vec2D subtract(Vec2D Mathvector);                    // Subtract 2 vectors
-    Vec2D rotateVector(double radians);                   // Rotates a vector dependent op the angle
+    Vec2D rotateVector(double radians);                  // Rotates a vector dependent op the angle
 
     // spezial Vectors
     static Vec2D polarVector(double radius, double angle); // Creates a Vector in a polar system
@@ -122,18 +120,25 @@ class Vec3D : public CoordinateSystem3D {
     void setY(double Y);
     void setZ(double Z);
 
-
+    
 
     void normalize();
-
 
     void setPhi(double phi);       // For spheresystems (radius, angle Phi, angle Theta)
     void setHeight(double phi);    // For cylinder systems (radius, angle, height);
     void setTheta(double phi);     // For spheresystems (radius, angle Phi, angle Theta);
+    
+    double getSphereRadius();
+    double getCylinderRadius();
+    inline double getAbs(){return this->abs; }
 
-    void moveVectorX(double move); // Moves the vector in a specific x-direction
-    void moveVectorY(double move);  
-    void moveVectorZ(double Z);        
+    //The moveVector() method will move the vectors in the x,y and Z directions
+    void moveVector(double moveX, double moveY, double moveZ);
+
+    void moveVectorX(double moveX); // Moves the vector in a specific x-direction
+    void moveVectorY(double moveY); // Moves the vector in a specific y-direction
+    void moveVectorZ(double moveZ); // Moves the vector in a specific y-direction
+
     void moveVector(double moveX, double moveY, double moveZ);           
     void rotateThisVector(double phi, double Theta);
 
@@ -150,13 +155,10 @@ class Vec3D : public CoordinateSystem3D {
 
     // Return a spezial vector
     static Vec3D zeroVector(); // Returns a Vector with lenght 0
+
     static Vec3D sphereVector(double radius, double angleOne, double angleTwo);
     static Vec3D cylinderVector(double radius, double angle, double height);
 
-
-    inline double getAbs(){return this->abs; }
-    double getSphereRadius();
-    double getCylinderRadius();
 };
 #endif
 

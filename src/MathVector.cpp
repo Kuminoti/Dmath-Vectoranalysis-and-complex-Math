@@ -262,13 +262,12 @@ Vec3D Vec3D::zeroVector() { return Vec3D(0, 0, 0); }
 
 
 double Vec3D::getCylinderRadius(){
-    double  result = std::sqrt((this->X*this->X)+(this->Y*this->Y));
+    double  result = this->mathHelper.pyth(this->X, this->Y);
     return result;
 }
 
 double Vec3D::getSphereRadius(){
-    double  result = std::sqrt((this->X*this->X)+(this->Y*this->Y)+(this->Y*this->Y));
-    
+    double  result = this->mathHelper.pyth3D(this->X,this->Y,this->Z);
     return result;
 }
 
