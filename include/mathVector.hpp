@@ -120,16 +120,15 @@ class Vec3D : public CoordinateSystem3D {
     void setY(double Y);
     void setZ(double Z);
 
-    
-
     void normalize();
 
     void setPhi(double phi);       // For spheresystems (radius, angle Phi, angle Theta)
     void setHeight(double phi);    // For cylinder systems (radius, angle, height);
     void setTheta(double phi);     // For spheresystems (radius, angle Phi, angle Theta);
-    
+
     double getSphereRadius();
     double getCylinderRadius();
+
     inline double getAbs(){return this->abs; }
 
     //The moveVector() method will move the vectors in the x,y and Z directions
@@ -139,8 +138,11 @@ class Vec3D : public CoordinateSystem3D {
     void moveVectorY(double moveY); // Moves the vector in a specific y-direction
     void moveVectorZ(double moveZ); // Moves the vector in a specific y-direction
 
-    void moveVector(double moveX, double moveY, double moveZ);           
+
     void rotateThisVector(double phi, double Theta);
+
+    // The rotateVector method will return a new Vector based on the original and the given rotation
+    Dmath::Vec3D rotateVector(double radiansPhi, double radiansTheta);
 
     // Calculations that return a scalar value
     double dotProduct(Vec3D Mathvector);
@@ -151,7 +153,7 @@ class Vec3D : public CoordinateSystem3D {
     Vec3D add(Vec3D Mathvector);
     Vec3D subtract(Vec3D Mathvector);
 
-    Dmath::Vec3D rotateVector(double radiansPhi, double radiansTheta);
+    
 
     // Return a spezial vector
     static Vec3D zeroVector(); // Returns a Vector with lenght 0

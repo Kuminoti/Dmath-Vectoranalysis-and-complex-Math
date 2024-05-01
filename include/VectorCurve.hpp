@@ -82,6 +82,8 @@ class VectorCurve2D : public VectorAnalysis2D{
 };
     
 
+
+
 class VectorCurve3D : public VectorAnalysis3D{
   private:
 
