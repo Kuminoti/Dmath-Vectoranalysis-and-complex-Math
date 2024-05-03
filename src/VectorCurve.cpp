@@ -116,6 +116,7 @@ double Dmath::VectorCurve2D::getCurvature(double t){
     double curvature = 0;
     Dmath::Vec2D vec = this->principalNormalUnitVector(t);
     curvature = vec.getAbs();
+    return curvature;
 }
 
 
