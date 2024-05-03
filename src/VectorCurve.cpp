@@ -451,6 +451,17 @@ Dmath::Vec3D Dmath::VectorCurve3D::principalNormalUnitVector(double t){
     return newVec;
 }
 
+double Dmath::VectorCurve3D::getCurvature(double t){
+      if(t > this->systemStopp || t < this->systemStart){
+        //Error t out of range!
+        return 0;
+      }
+      double curvature = 0;
+      Dmath::Vec3D vec = this->principalNormalUnitVector(t);
+      curvature = vec.getAbs();
+      return curvature;
+    }
+
 
 double Dmath::VectorCurve3D::curveLenght(){
     double lenght = 0;
