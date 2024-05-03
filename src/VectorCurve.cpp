@@ -223,6 +223,16 @@ Dmath::VectorCurve2D Dmath::VectorCurve2D::subtractCurve(VectorCurve2D curve){
     return Dmath::VectorCurve2D(newXFunc,newYFunc,mainCurveStart,mainCurveEnd,0.1);
 }
 
+
+Dmath::VectorCurve2D Dmath::VectorCurve2D::rotateCurve(double radiants){
+    std::vector<Dmath::Vec2D> newCurve;
+    for(size_t i = 0; i<this->mainCurve.size(); i++){
+    //This function rotates all vectors in the main curve und pushes it in a new std::vector
+    newCurve.push_back(this->mainCurve[i].rotateVector(radiants));
+    }
+    return VectorCurve2D(this->xFunc,this->yFunc,this->systemStart,this->systemStopp,this->resolution,newCurve);
+}
+
 double Dmath::VectorCurve2D::dotProductVectorCurve(Dmath::VectorCurve2D vec){
     double curveOneStart = this->getStart();
     double curveTwoStart = vec.getStart();
