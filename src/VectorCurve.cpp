@@ -108,6 +108,16 @@ Dmath::Vec2D Dmath::VectorCurve2D::principalNormalUnitVector(double t){
     return newVec;
 }
 
+double Dmath::VectorCurve2D::getCurvature(double t){
+    if( t > this->systemStopp || t < this->systemStart){
+        //T out of range!
+        return 0.0;
+    }
+    double curvature = 0;
+    Dmath::Vec2D vec = this->principalNormalUnitVector(t);
+    curvature = vec.getAbs();
+}
+
 
 double Dmath::VectorCurve2D::curveLenght(){
     double lenght = 0;

@@ -57,7 +57,6 @@ class VectorCurve2D : public VectorAnalysis2D{
     double dotProductVectorCurve(Dmath::VectorCurve2D vec);
     double calculateAreaXAchsis(double tStart, double tEnd);
     double getCurvature(double t);
-    //double getT(double originX, double originY){}
     
     //VectorCurve2D curveFusion(){}
     VectorCurve2D addCurve(VectorCurve2D curve);
