@@ -39,14 +39,30 @@ class VectorCurve2D : public VectorAnalysis2D{
     Dmath::Vec2D getVectorFromPoint(double point);                 //Returns a vector on the point t
     Dmath::Vec2D getVectorFromStdVec(size_t index);                //Returns a specific index of the std::vector
 
-    Dmath::Vec2D tangentVector(double t);
-    Dmath::Vec2D tangetUnitVector(double t);
-    Dmath::Vec2D principalNormalUnitVector(double t);
-    inline std::vector<Dmath::Vec2D> getMainCurve(){ return this->mainCurve;}
-
-
     // NEEDS TESTING
 
+    /*
+     *The tangential vector at a point of a parameterized curve points in the direction of the tangent
+     * to the curve at that point and represents the direction of local change of the curve at that point.
+    */ 
+    Dmath::Vec2D tangentVector(double t);
+
+    /*
+     *The tangent unit vector at a point of a parameterized curve is a vector that points in the same direction
+     * as the tangent vector at that point but has a length of 1. It represents the direction of the tangent to the curve at that point,
+     * without taking into account the speed of change of the curve.
+     */
+    Dmath::Vec2D tangetUnitVector(double t);
+    
+    /*
+     * The principal normal unit vector at a point of a parameterized curve is a vector that is perpendicular to the tangent unit vector
+     * at that point and has a length of 1. It represents the direction of maximum curvature of the curve at that point,
+     * i.e. the direction in which the curve is curved the most
+     */
+    Dmath::Vec2D principalNormalUnitVector(double t);
+
+
+    inline std::vector<Dmath::Vec2D> getMainCurve(){ return this->mainCurve;}
 
     //operator overloading:
     inline VectorCurve2D operator+ (VectorCurve2D curve){ return addCurve(curve);      }
@@ -58,7 +74,6 @@ class VectorCurve2D : public VectorAnalysis2D{
     double calculateAreaXAchsis(double tStart, double tEnd);
     double getCurvature(double t);
     
-    //VectorCurve2D curveFusion(){}
     VectorCurve2D addCurve(VectorCurve2D curve);
     VectorCurve2D subtractCurve(VectorCurve2D curve);
     VectorCurve2D rotateCurve(double radiants);
