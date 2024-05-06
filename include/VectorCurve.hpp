@@ -36,8 +36,8 @@ class VectorCurve2D : public VectorAnalysis2D{
     
     //Getters (tested)
     Dmath::Vec2D getVectorFromFunction(double vecX, double vecY);   //Returns a vector calculated from the two functions
-    Dmath::Vec2D getVectorFromPoint(double point);                 //Returns a vector on the point t
-    Dmath::Vec2D getVectorFromStdVec(size_t index);                //Returns a specific index of the std::vector
+    Dmath::Vec2D getVectorFromPoint(double point);                  //Returns a vector on the point t
+    Dmath::Vec2D getVectorFromStdVec(size_t index);                 //Returns a specific index of the std::vector
 
     // NEEDS TESTING
 
@@ -53,7 +53,7 @@ class VectorCurve2D : public VectorAnalysis2D{
      * without taking into account the speed of change of the curve.
      */
     Dmath::Vec2D tangetUnitVector(double t);
-    
+
     /*
      * The principal normal unit vector at a point of a parameterized curve is a vector that is perpendicular to the tangent unit vector
      * at that point and has a length of 1. It represents the direction of maximum curvature of the curve at that point,
@@ -72,6 +72,7 @@ class VectorCurve2D : public VectorAnalysis2D{
     double calculateSlopeOnPoint(double t);
     double dotProductVectorCurve(Dmath::VectorCurve2D vec);
     double calculateAreaXAchsis(double tStart, double tEnd);
+    double calculateAreaYAchsis(double tStart, double tEnd);
     double getCurvature(double t);
     
     VectorCurve2D addCurve(VectorCurve2D curve);
@@ -79,6 +80,8 @@ class VectorCurve2D : public VectorAnalysis2D{
     VectorCurve2D rotateCurve(double radiants);
 
     // NEEDS TESTING
+
+    //Returns the maxima und minima x-points of the given curve
     double maximumY();
     double minimumY();
     double MaximumX();
@@ -132,8 +135,11 @@ class VectorCurve3D : public VectorAnalysis3D{
     double dotProductVectorCurve(VectorCurve3D vec);    
     double calculateSlopeXOnPoint(double t);
     double calculateSlopeYOnPoint(double t);
-    double calculateArea();
-    double calculateSpecificArea(double start, double stopp);
+    
+    double calculateSlopeOnPoint(double t);
+    double calculateAreaXAchsis(double tStart, double tEnd);
+    double calculateAreaYAchsis(double tStart, double tEnd);
+    double calculateAreaZAchsis(double tStart, double tEnd);
     double curveLenght();
     double getCurvature(double t);
 

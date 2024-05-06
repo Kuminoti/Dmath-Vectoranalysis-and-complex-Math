@@ -363,3 +363,6 @@ double CoordinateSystem3D::getRadiusSphere() {
 double CoordinateSystem3D::getRadiusCylinder() {
     return this->mathHelper.pyth(this->X, this->Y);
 }
+
+
+

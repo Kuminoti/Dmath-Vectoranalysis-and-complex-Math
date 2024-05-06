@@ -72,8 +72,8 @@ Dmath::Vec2D Dmath::VectorCurve2D::getVectorFromFunction(double vecX, double vec
 
 
 double Dmath::VectorCurve2D::calculateAreaXAchsis(double tStart, double tEnd){
-    auto yAbsolute = [&](double t) ->double { return std::abs(yFunc(t)); };
-    auto dx_dt     = [&](double t) ->double { return std::abs(calculateSlopeOnPoint(t)); };
+    auto yAbsolute = [&](double t) ->double { return std::abs(this->xFunc(t)); };
+    auto dx_dt     = [&](double t) ->double { return std::abs(this->calculateSlopeOnPoint(t)); };
 
     double area = 0.0;
     double dt = 0.001; 
@@ -81,6 +81,71 @@ double Dmath::VectorCurve2D::calculateAreaXAchsis(double tStart, double tEnd){
         area += yAbsolute(t) * dx_dt(t) * dt;
     }
     return area;
+}
+
+double Dmath::VectorCurve2D::calculateAreaYAchsis(double tStart, double tEnd){
+    auto xAbsolute = [&](double t) ->double { return std::abs(this->yFunc(t)); };
+    auto dx_dt     = [&](double t) ->double { return std::abs(this->calculateSlopeOnPoint(t)); };
+
+    double area = 0.0;
+    double dt = 0.001; 
+    for (double t = tStart; t < tEnd; t += dt) {
+        area += xAbsolute(t) * dx_dt(t) * dt;
+    }
+    return area;
+}
+
+double Dmath::VectorCurve3D::calculateAreaZAchsis(double tStart, double tEnd){
+    auto zAbsolute = [&](double t) -> double { return std::abs(this->zFunc(t)); };
+    auto dz_dt     = [&](double t) -> double { return std::abs(this->calculateSlopeOnPoint(t)); };
+
+    double area = 0.0;
+    double dt = 0.001; 
+    for (double t = tStart; t < tEnd; t += dt) {
+        area += zAbsolute(t) * dz_dt(t) * dt;
+    }
+    return area;
+}
+
+double Dmath::VectorCurve3D::calculateAreaYAchsis(double tStart, double tEnd){
+    auto yAbsolute = [&](double t) -> double { return std::abs(this->yFunc(t)); };
+    auto dy_dt     = [&](double t) -> double { return std::abs(this->calculateSlopeOnPoint(t)); };
+
+    double area = 0.0;
+    double dt = 0.001; 
+    for (double t = tStart; t < tEnd; t += dt) {
+        area += yAbsolute(t) * dy_dt(t) * dt;
+    }
+    return area;
+}
+
+double Dmath::VectorCurve3D::calculateAreaXAchsis(double tStart, double tEnd){
+    auto xAbsolute = [&](double t) -> double { return std::abs(this->xFunc(t)); };
+    auto dx_dt     = [&](double t) -> double { return std::abs(this->calculateSlopeOnPoint(t)); };
+
+    double area = 0.0;
+    double dt = 0.001; 
+    for (double t = tStart; t < tEnd; t += dt) {
+        area += xAbsolute(t) * dx_dt(t) * dt;
+    }
+    return area;
+}
+
+
+
+
+
+double Dmath::VectorCurve3D::calculateSlopeOnPoint(double t) {
+    Dmath::Vec3D vec = this->tangentVector(t);
+
+    if (vec.getY() != 0) {
+        return vec.getX() / vec.getY(); 
+    } else if (vec.getZ() != 0) {
+        return vec.getX() / vec.getZ(); 
+    } else {
+        
+        return 0;
+    }
 }
 
 Dmath::Vec2D Dmath::VectorCurve2D::tangentVector(double t){
