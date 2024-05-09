@@ -127,140 +127,80 @@ The `SystemGeometry` class provides functionality for calculating specific prope
 Differential geometry extends the principles of calculus to the study of curves, surfaces, and higher-dimensional spaces. It focuses on properties that remain invariant under transformations, such as curvature, torsion, and tangent vectors. In the context of the provided code, differential geometry is used to analyze the behavior of vectorial described parametric curves, including determining their tangent vectors, calculating slopes, and measuring lengths and much more. It provides tools for understanding the geometric properties of curves and surfaces and enables the study of their intrinsic and extrinsic characteristics. Differential geometry plays a fundamental role in fields such as physics, engineering, and computer graphics, where precise geometric descriptions are essential.  
 **This part of the library is not finished and primarily experimental and might not be optimised and can have buggs; new features, bug fixes and optimizations will come soon.**
   
-## Representations of curves 
-### Code representation of curves:
+## Representations of Curves
 
-There exsists diffrent types of classes for diffrent curves.  
-But every type of curve is basicly represented by a std::vector filled with mathmatical vectors, witch length, direction and privios origin will togerther represent a curve. The std::vector is filled by a specific algorithem that will create all data given on the input parameters.  
+### Code Representation of Curves
 
-A curve in this library needs 3 things:  
-- **Functions for every component:** In the class represented by a std::function objects, the xFunc and yFunc (and zFunc).
-- **A range:** The curve need a specific range, form were to were it is calculated. in the class this is represented by the systemStart member and the systemStopp member  
-- **A resolution:** Since a computer can not calculate infinitly small data the curve is calculated in stepps with a speciffic value.  
+Different types of classes exist for various curves, but essentially, every curve is represented by a `std::vector` filled with mathematical vectors. These vectors encompass length, direction, and the previous origin, collectively defining a curve. The `std::vector` is populated by a specific algorithm, which generates all necessary data based on input parameters.
 
+A curve in this library necessitates three elements:
 
-The range and resolution of curves are standardised in all classes.
-systemStart is set to 0.  
-systemStopp is set to 2PI
-resolution  is set to 0.1 
+- **Functions for Every Component:** Within the class, represented by `std::function` objects, the `xFunc` and `yFunc` (and optionally `zFunc`) are required.
+- **A Range:** The curve requires a specific range, delineating from where to where it is calculated. This is symbolized within the class by `systemStart` and `systemStop`.
+- **A Resolution:** Since computers cannot compute infinitely small data, the curve is calculated in steps with a specific value.
 
-### A curve can be represented in different ways:  
-### Function graphs:  
-A function that assigns each element from the set of definitions D a corresponding value in the set of real numbers  ℝ.  
-    f: D → ℝ, x ↦ f(x)  
-    A pobular Example ist parabola, the function graph a the quadratic function:  
-    f(X) = X²  
+The range and resolution of curves are standardized across all classes:
+- `systemStart` is set to 0.
+- `systemStop` is set to (2PI).
+- `resolution` is set to 0.1.
 
-#### Code reprentation:  
-A simple function graph can be represented by a list of values created from a function.
+### Different Ways to Represent a Curve
 
-### Parametric Curves
+#### Function Graphs
+
+A function graph assigns each element from the set of definitions \(D\) a corresponding value in the set of real numbers \(\mathbb{R}\):
+f: D → ℝ , x → f(x)
+
+A popular example is the parabola, represented by the quadratic function:
+f(x) = x²
+
+#### Parametric Curves
+
 A parametric curve is a mathematical representation of a line or path in space, where the position of a point on the curve is described as a function of one or more parameters:  
-    [A, B] → ℝ, t ↦ (x(t), y(t))  
+ [A, B] → ℝ, t ↦ (x(t), y(t))  
 
- These parameters can represent time or any other independent variable. The function then defines the coordinates of each point along the curve as a function of these parameters. In a two-dimensional space, for example, a parametric curve can be defined by describing the xx and yy coordinates of a point as functions of a parameter t, such as:
+These parameters can represent time or any other independent variable. The function defines the coordinates of each point along the curve as a function of these parameters. In a two-dimensional space, for instance, a parametric curve can be defined by describing the \(x\) and \(y\) coordinates of a point as functions of a parameter (t), such as:  
+[x = f(t), y = g(t)]
 
-x = f(t) y=g(t)  
+This dynamic description allows for a varying path of the curve as the parameter (t) changes. Within this library, the curve's data along the (x) and (y) (and (z), if applicable) axes is encapsulated within a vector structure, representing the curve as an aggregation of vectors aligned with the tangent direction at specific points.
 
-This allows for a dynamic description of the curve's path as the parameter t varies.  
-Within this library, the curve's data along the xx and yy (and zz, if applicable) axes is encapsulated within a vector structure. Conceptually, the curve is represented as an aggregation of vectors, each aligned with the tangent direction of the curve at a specific point.
+### Code Representation of Parametric Curves
 
-#### Code representation:
+A parametric curve can be described as a series of mathematical vectors. To create such a curve, utilize the `VectorCurve2D` class for 2D systems or the `VectorCurve3D` class for 3D systems.
 
-Since a paramatric curve contains a x and y component a parametric curve can be describes as a serious of mathmetical vectors.  
-To crate a curve like that use the VectorCurve2D class for 2D systems or the VectorCurve3D class of 3D systems.  
+Two static methods facilitate the creation of `VectorCurve2D` or `VectorCurve3D` objects:
 
-To create a VectorCurve2D or VectorCurve3D object you can use two static methods:  
-- `VectorCurve2D createStandardCurve(std::function<double(double)> funcX, std::function<double(double)> funcY )`;  
-   - Creates a curve with the standards set in the class directly, you only need to enter the functions for the x and y (and Z) components. 
-   - Returns a Vectorcurve object.  
+- `VectorCurve2D createStandardCurve(std::function<double(double)> funcX, std::function<double(double)> funcY)`:
+   - Creates a curve with predefined standards, requiring only the functions for the (x) and (y) (and (z)) components.
+   - Returns a `VectorCurve` object.
 
-
-~~~
+```cpp
+// Your main.cpp
 
 #include<iostream>
 #include"VectorCurve.hpp"
 
-// Your main.cpp
-
 // Sine function (x(t) = sin(t))
-auto sinFunc = [](double x) ->double { return std::sin(x);};
+auto sinFunc = [](double x) -> double { return std::sin(x); };
 
 // Cosine function (y(t) = cos(t))
-auto cosFunc = [](double x) ->double { return std::cos(x);};
+auto cosFunc = [](double x) -> double { return std::cos(x); };
 
-//creation of a simple vector curve in parametric representation
-Dmath::VectorCurve2D myCurve = Dmath::VectorCurve2D::createStandardCurve(sinFunc,cosFunc);
+// Creation of a simple vector curve in parametric representation
+Dmath::VectorCurve2D myCurve = Dmath::VectorCurve2D::createStandardCurve(sinFunc, cosFunc);
 
 int main(int argc, char** argv){
 
-  //Get the x value a t = 2
+  // Get the x value at t = 2
   std::cout << myCurve.getDataAtX(2) << std::endl;
 
-  //Get the y value a t = 2
+  // Get the y value at t = 2
   std::cout << myCurve.getDataAtY(2) << std::endl;
 
   return EXIT_SUCCESS;
 }
+```
 
-~~~
-
-- `VectorCurve2D createCustomCurve(std::function<double(double)> funcX, std::function<double(double)> funcY, double start, double stopp, double res )`;  
-    - Creates a curve with the range and resolution given by the user
-    - Creates a vector curve
-
-~~~
-#include<iostream>
-#include"VectorCurve.hpp"
-
-
-// Your main.cpp
-
-// Sine function (x(t) = sin(t))
-auto sinFunc = [](double x) ->double { return std::sin(x);};
-
-// Cosine function (y(t) = cos(t))
-auto cosFunc = [](double x) ->double { return std::cos(x);};
-
-// Startpoint of the curves calculation:
-double curveStart = -10;
-
-// Endpoint of the curves calculation:
-double curveEnd = 10;
-
-// Resolution of the curve
-double resolution = 0.1; // Curve will be calculated in 0.1-stepps
-
-//creation of a simple vector curve in parametric representation
-
-/*
- * This function needs 5 things:
- * The function for the x component,
- * The function for the y component,
- * The start of the curve,
- * The end of the curve,
- * The curves resolution
- */ 
-
-Dmath::VectorCurve2D myCurve = Dmath::VectorCurve2D::createCustomCurve(sinFunc, cosFunc, curveStart, curveEnd, resolution );
-
-int main(int argc, char** argv){
-
-  //Get the x value a t = 2
-  std::cout << myCurve.getDataAtX(2) << std::endl;
-
-  //Get the y value a t = 2
-  std::cout << myCurve.getDataAtY(2) << std::endl;
-
-  std::cout << myCurve.getEnd() << std::endl ;
-
-  std::cout << myCurve.getStart() << std::endl;
-
-  std::cout << myCurve.getResolution() << std::endl;
-
-  return EXIT_SUCCESS;
-}
-~~~
   
 With this example a curve will be created like this: 
 *An oversimplefied demonstration:*  
