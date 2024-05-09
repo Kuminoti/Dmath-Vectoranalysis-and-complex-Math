@@ -142,7 +142,7 @@ class Vec3D : public CoordinateSystem3D {
     void rotateThisVector(double phi, double Theta);
 
     // The rotateVector method will return a new Vector based on the original and the given rotation
-    Dmath::Vec3D rotateVector(double radiansPhi, double radiansTheta);
+    Vec3D rotateVector(double radiansPhi, double radiansTheta);
 
     // Calculations that return a scalar value
     double dotProduct(Vec3D Mathvector);

@@ -316,6 +316,13 @@ VectorAnalysis2D::VectorAnalysis2D(std::function<double(double)> xFunc, std::fun
     this->numberOfElements = this->mathHelper.numOfElements(ZERO,TWOPI,STDRES);
 }
 
+VectorAnalysis2D::VectorAnalysis2D(std::function<double(double,double)> mainFunc, double start, double stopp, double resolution){
+    this->mainFunc = mainFunc;
+    this->systemStart = start;
+    this->systemStopp = systemStopp;
+    this->resolution  = resolution;
+    this->numberOfElements = this->mathHelper.numOfElements(start,stopp,resolution);
+}
 
 VectorAnalysis2D::VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, double systemStart, double systemStopp, double resolution){
     this->xFunc = xFunc;

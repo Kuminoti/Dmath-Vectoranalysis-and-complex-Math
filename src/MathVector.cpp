@@ -484,7 +484,9 @@ Dmath::Vec3D Vec3D::rotateVector(double Phi, double Theta) {
 
 #endif
 
-#ifdef STANDARD_ANGLE_UNIT_DEG
+
+
+
 
 void Vec3D::rotateThisVector(double Phi, double Theta){
     double r = this->radius;
@@ -494,29 +496,12 @@ void Vec3D::rotateThisVector(double Phi, double Theta){
     double newTheta = theta + Theta;
     double newPhi = phi + Phi;
 
-    this->X = (r * std::sin(newTheta) * std::cos(newPhi)) * RAD_TO_DEG;
-    this->Y = (r * std::sin(newTheta) * std::sin(newPhi)) * RAD_TO_DEG;
-    this->Z = r * std::cos(newTheta)  * RAD_TO_DEG;
+    this->X = (r * std::sin(newTheta) * std::cos(newPhi));
+    this->Y = (r * std::sin(newTheta) * std::sin(newPhi));
+    this->Z = r * std::cos(newTheta);
 }
 
-#endif 
-
-#ifdef STANDARD_ANGLE_UNIT_RAD
-
-void Vec3D::rotateThisVector(double Phi, double Theta){
-    double r = this->radius;
-    double theta = this->theta;
-    double phi = this->phi;
-
-    double newTheta = theta + Theta;
-    double newPhi = phi + Phi;
-
-    this->X = (r * std::sin(newTheta) * std::cos(newPhi)) * RAD_TO_DEG;
-    this->Y = (r * std::sin(newTheta) * std::sin(newPhi)) * RAD_TO_DEG;
-    this->Z = r * std::cos(newTheta)  * RAD_TO_DEG;
-}
-
-#endif 
+ 
 
 #ifdef STANDARD_ANGLE_UNIT_RAD
 Vec2D Vec2D::rotateVector(double angle) {
@@ -536,13 +521,13 @@ Vec2D Vec2D::rotateVector(double angle) {
 }
 #endif
 
-#ifdef STANDARD_ANGLE_UNIT_RAD
+
 void Vec2D::rotateThisVector(double value){
   this->X = this->getX() * std::cos(value) - this->getY() * std::sin(value);
   this->Y = this->getX() * std::sin(value) + this->getY() * std::cos(value);
   this->vectorRotation = value;
 }
-#endif
+
 
 
 

@@ -162,17 +162,41 @@ class VectorCurve3D : public VectorAnalysis3D{
 
 
 
-class ImplicidVectorCurve2D : public VectorCurve2D{
+class ImplicidVectorCurve2D : public VectorAnalysis2D{
   protected:
-    //For example X² + 2Y = 3X +4Y²
-    std::function<double(double, double)> componentOne;
-    std::function<double(double, double)> componentTwo;
-
 
     //For example X² + Y² = 0
-    std::function<double(double, double)> oneComponentCurve;
+    std::function<double(double, double)> implicidCurve;
+    std::vector<Dmath::Vec2D> mainCurve;
 
-    ImplicidVectorCurve2D(std::function<double(double, double)> componentOne, std::function<double(double, double)> componentTwo);
+    ImplicidVectorCurve2D(std::function<double(double, double)> implicidCurve, double start, double stopp, double res) : VectorAnalysis2D(implicidCurve,start,stopp,res) {
+      
+    }
+
+    void createImplicidCurve(){
+
+      /* Es wird z.B die funtion X² + Y² eingefügt
+       * die Kurve x² + y² = 0 bildet einen einheitskreis
+       * im loop eins wird der x-wert auf einen wert gesetzt und 
+       * dann werden alle y-werte durchgeloopt um zu prüfen welcher
+       * y-wert (als funktions argument) mit dem x-wert(funktionsargument)
+       * 0 ergibt.
+       * wenn 0 rauskommt werden die werte in einem mathematischen Vektor
+       * gespeichert und in den std::vector mainCurve gepushed
+       * somit hat man aus einer implizit dargestellten kurve eine 
+       * vektoriell dargestellte. 
+       * 
+      */ 
+      double tempVecOriginX = 0;
+      double tempVecOriginY = 0;
+      for (size_t i = this->systemStart; i < this->numberOfElements; i+=this->resolution){
+        for(size_t j = this->systemStart; j < this->numberOfElements; j+=this->resolution){
+          if(this->implicidCurve(i,j) == 0 ){
+            this->mainCurve.push_back(Dmath::Vec2D(i,j,tempVecOriginX,tempVecOriginY));
+          }
+        }
+      }
+    }
 
 };
 

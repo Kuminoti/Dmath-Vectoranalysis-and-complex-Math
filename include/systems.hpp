@@ -230,6 +230,13 @@ class CoordinateSystem3D : public CoordinateSystem2D {
 #ifdef CARTESIAN_IS_2D_STANDARD
 class VectorAnalysis2D{
   protected:
+
+    // One main function for implicid curves
+
+    std::function<double(double,double)> mainFunc;
+
+
+    // X and Y-functions
     std::function<double(double)> xFunc;
     std::function<double(double)> yFunc;
 
@@ -241,10 +248,9 @@ class VectorAnalysis2D{
 
     VectorAnalysis2D(double systemStart, double systemStopp, double resolution);
     VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc);
-    VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, 
-                                    double systemStart, double systemStopp, double resolution);
-    VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, 
-                                    double systemStart, double systemStopp, double resolution, double rotation);
+    VectorAnalysis2D(std::function<double(double,double)> mainFunc, double systemStart, double systemStopp, double resolution);
+    VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, double systemStart, double systemStopp, double resolution);
+    VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, double systemStart, double systemStopp, double resolution, double rotation);
 
   public:
 
