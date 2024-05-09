@@ -7,6 +7,10 @@ using namespace Dmath;
 //Operator overloading
 
 Vec2D Vec2D::operator/(double scalarValue){
+  if(scalarValue == 0){
+    // Division by 0 is undefined
+    return Dmath::Vec2D::zeroVector();
+  }
   double valueX = this->X / scalarValue;
   double valueY = this->Y / scalarValue;
   return Vec2D(valueX, valueY);
@@ -153,6 +157,10 @@ void Vec2D::calcAbs() {
 }
 
 void Vec2D::normalize(){
+  if(this->abs == 0){
+    // Division by zero is undefined
+    return;
+  }
   this->X = this->X / this->abs;
   this->Y = this->Y / this->abs;
 }
@@ -307,6 +315,10 @@ void Dmath::Vec3D::moveVector(double moveX, double moveY, double moveZ){
 }
 
 void Vec3D::normalize(){
+  if(this->abs == 0){
+    // Division by zero is undefined
+    return;
+  }
   this->X = this->X/this->abs;
   this->Y = this->Y/this->abs;
   this->Z = this->Z/this->abs;
@@ -334,6 +346,10 @@ Vec3D Vec3D::operator-(Vec3D &Mathvector) {
 }
 
 Vec3D Vec3D::operator/(double scalarValue){
+  if(scalarValue == 0){
+    // Division by zero is undefined
+    return Dmath::Vec3D::zeroVector();
+  }
   double newX = this->X / scalarValue;
   double newY = this->Y / scalarValue;
   double newZ = this->Z / scalarValue;
