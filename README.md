@@ -131,8 +131,18 @@ Differential geometry extends the principles of calculus to the study of curves,
 ### Code representation of curves:
 
 There exsists diffrent types of classes for diffrent curves.  
-But every type of curve is basicly represented by a std::vector filled with mathmatical vectors, wich length, direction and privios origin will togerther represent a curve. The std::vector is filled with a specific algorithem that will create all data given on the input parameters.  
+But every type of curve is basicly represented by a std::vector filled with mathmatical vectors, witch length, direction and privios origin will togerther represent a curve. The std::vector is filled by a specific algorithem that will create all data given on the input parameters.  
 
+A curve in this library needs 3 things:  
+- **Functions for every component:** In the class represented by a std::function objects, the xFunc and yFunc (and zFunc).
+- **A range:** The curve need a specific range, form were to were it is calculated. in the class this is represented by the systemStart member and the systemStopp member  
+- **A resolution:** Since a computer can not calculate infinitly small data the curve is calculated in stepps with a speciffic value.  
+
+
+The range and resolution of curves are standardised in all classes.
+systemStart is set to 0.  
+systemStopp is set to 2PI
+resolution  is set to 0.1 
 
 ### A curve can be represented in different ways:  
 ### Function graphs:  
@@ -159,13 +169,122 @@ Within this library, the curve's data along the xx and yy (and zz, if applicable
 
 Since a paramatric curve contains a x and y component a parametric curve can be describes as a serious of mathmetical vectors.  
 To crate a curve like that use the VectorCurve2D class for 2D systems or the VectorCurve3D class of 3D systems.  
-An object of this class needs 3 things:  
-- **Functions for every component:** In the class represented by a std::function objects, the xFunc and yFunc (and zFunc).
-- **A range:** The curve need a specific range, form were to were it is calculated. in the class this is represented by the systemStart member and the systemStopp member  
-- **A resolution:** Since a computer can not calculate infinitly small data the curve is calculated in stepps with a speciffic value.  
 
-*An oversimplefied demonstration:* 
-**[systemStopp, systemStart] → ℝ, t ↦ (xFunc, yFunc)**
+To create a VectorCurve2D or VectorCurve3D object you can use two static methods:  
+- `VectorCurve2D createStandardCurve(std::function<double(double)> funcX, std::function<double(double)> funcY )`;  
+   - Creates a curve with the standards set in the class directly, you only need to enter the functions for the x and y (and Z) components. 
+   - Returns a Vectorcurve object.  
+
+
+~~~
+
+#include<iostream>
+#include"VectorCurve.hpp"
+
+// Your main.cpp
+
+// Sine function (x(t) = sin(t))
+auto sinFunc = [](double x) ->double { return std::sin(x);};
+
+// Cosine function (y(t) = cos(t))
+auto cosFunc = [](double x) ->double { return std::cos(x);};
+
+//creation of a simple vector curve in parametric representation
+Dmath::VectorCurve2D myCurve = Dmath::VectorCurve2D::createStandardCurve(sinFunc,cosFunc);
+
+int main(int argc, char** argv){
+
+  //Get the x value a t = 2
+  std::cout << myCurve.getDataAtX(2) << std::endl;
+
+  //Get the y value a t = 2
+  std::cout << myCurve.getDataAtY(2) << std::endl;
+
+  return EXIT_SUCCESS;
+}
+
+~~~
+
+- `VectorCurve2D createCustomCurve(std::function<double(double)> funcX, std::function<double(double)> funcY, double start, double stopp, double res )`;  
+    - Creates a curve with the range and resolution given by the user
+    - Creates a vector curve
+
+~~~
+#include<iostream>
+#include"VectorCurve.hpp"
+
+
+// Your main.cpp
+
+// Sine function (x(t) = sin(t))
+auto sinFunc = [](double x) ->double { return std::sin(x);};
+
+// Cosine function (y(t) = cos(t))
+auto cosFunc = [](double x) ->double { return std::cos(x);};
+
+// Startpoint of the curves calculation:
+double curveStart = -10;
+
+// Endpoint of the curves calculation:
+double curveEnd = 10;
+
+// Resolution of the curve
+double resolution = 0.1; // Curve will be calculated in 0.1-stepps
+
+//creation of a simple vector curve in parametric representation
+
+/*
+ * This function needs 5 things:
+ * The function for the x component,
+ * The function for the y component,
+ * The start of the curve,
+ * The end of the curve,
+ * The curves resolution
+ */ 
+
+Dmath::VectorCurve2D myCurve = Dmath::VectorCurve2D::createCustomCurve(sinFunc, cosFunc, curveStart, curveEnd, resolution );
+
+int main(int argc, char** argv){
+
+  //Get the x value a t = 2
+  std::cout << myCurve.getDataAtX(2) << std::endl;
+
+  //Get the y value a t = 2
+  std::cout << myCurve.getDataAtY(2) << std::endl;
+
+  std::cout << myCurve.getEnd() << std::endl ;
+
+  std::cout << myCurve.getStart() << std::endl;
+
+  std::cout << myCurve.getResolution() << std::endl;
+
+  return EXIT_SUCCESS;
+}
+~~~
+  
+With this example a curve will be created like this: 
+*An oversimplefied demonstration:*  
+**[curveStart, curveEnd] → ℝ, t ↦ (sinFunc, cosFunc)**  
+
+### **VectorCurve2D Class Methods**
+
+The vectorCurve classes contain a lot of mathmatical operations and functionalities:
+
+- Dmath::Vec2D getVectorFromFunction(double vecX, double vecY);
+    - Description: Returns a vector calculated from the x and y functions of the class
+    - Input: the x value and the y value (input args for the xFunc and yFunc)
+    - Return: A new 2D vector with X = this->xFunc(vecX) and Y = this->yFunc(vecY)  
+         
+- Dmath::Vec2D getVectorFromPoint(double point);                  
+    - Description: Returns a vector on the point t
+    - Input: the point t.
+    - Return: A new 2D vector with X = this->xFunc(point) and Y = this->yFunc(point)
+- Dmath::Vec2D getVectorFromStdVec(size_t index);
+    - Returns a specific element of the std::vector
+    - Input: The number or index of the wanted element
+    - Return: The Vector at index ...  this->maincurve[ index ];
+
+
 
 
 ### Inpricid curves
@@ -176,6 +295,8 @@ X² + Y² = 1
 
 this eqation describes the unit circle on the plane.
 
+#### Code representation
+An impliced curve can be 
 
 
 
