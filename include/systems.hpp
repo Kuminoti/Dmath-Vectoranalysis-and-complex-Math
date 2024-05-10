@@ -11,6 +11,7 @@
 #define STDRES 0.1f               //The standard resolution for more dimensional vector systems
 #define ZERO 0                    //Standard zero used as a constant for the startpoint in more dimensional vector systems
 #define PI 3.14159265358979323846
+#define EULER 2.718281828459045
 #define TWOPI 2 * PI
 #define FOUR_PI 2 * PI
 #define RAD_TO_DEG 180.f/PI
@@ -93,6 +94,11 @@ class MathHelper{
     
 
   public:
+
+    inline double hyperbolicCotangent(double X){ return this->hyperbolicCosine(X)/this->hyperbolicSine(X); }
+  inline double hyperbolicTangent(double X)  { return this->hyperbolicSine(X)/this->hyperbolicCosine(X); }
+  inline double hyperbolicCosine(double X)   { return (0.5*(std::pow(EULER,X) + std::pow(EULER,-X)));    }
+  inline double hyperbolicSine(double X)     { return (0.5*(std::pow(EULER,X) - std::pow(EULER,-X)));    }
 
     inline double pyth(double x, double y){return std::sqrt((x*x) + (y*y) );}
     inline double pyth3D(double x, double y, double z){return std::sqrt((x*x) + (y*y) +(z*z) );}
