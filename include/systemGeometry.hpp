@@ -13,6 +13,11 @@ class Vec3D;
 
 class SystemGeometry{
 public:
+  inline double hyperbolicCotangent(double X){ return this->hyperbolicCosine(X)/this->hyperbolicSine(X); }
+  inline double hyperbolicTangent(double X)  { return this->hyperbolicSine(X)/this->hyperbolicCosine(X); }
+  inline double hyperbolicCosine(double X)   { return (0.5*(std::pow(EULER,X) + std::pow(EULER,-X)));    }
+  inline double hyperbolicSine(double X)     { return (0.5*(std::pow(EULER,X) - std::pow(EULER,-X)));    }
+
   double cylinderSystemVolume(Dmath::Vec3D vector);
   double cylinderSystemSurface(Dmath::Vec3D vector);
   double cylinderSystemLateralSurface(Dmath::Vec3D vector);
