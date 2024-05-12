@@ -58,7 +58,7 @@ Dmath::VectorCurve2D Dmath::VectorCurve2D::createCustomCurve(std::function<doubl
 
 
 Dmath::Vec2D Dmath::VectorCurve2D::getVectorFromPoint(double point){
-    if(point > this->systemStart || point < this->systemStopp){
+    if(point < this->systemStart || point > this->systemStopp){
         std::cerr << "Error index out of limit! \n Returning a null vector \n" ;
             return Dmath::Vec2D::zeroVector();
     }
