@@ -19,7 +19,8 @@
 #define NAMESPACESTART namespace Dmath {
 #define NAMESPACEEND }
 
-/* This file is used to create a base and an abstraction for the other classes and systems.
+/* 
+ * This file is used to create a base and an abstraction for the other classes and systems.
  * The CoordinateSystem2D and CoordinateSystem3D classes will be inherited to the Vec2D and Vec3D
  * classes the classes for the basic vectors.
  * The VectorAnalysis2D and VectorAnalysis3D will be inherited to the VectorCurve and Vectorsurface classes
