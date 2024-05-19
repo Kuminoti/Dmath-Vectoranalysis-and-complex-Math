@@ -9,9 +9,19 @@
 
 NAMESPACESTART
 
-
-
-
+/* 
+ * A simple explanation of a parametric displayed curve:
+ * In mathematics, a parameter representation is a representation
+ * in which the points of a curve or surface are passed through
+ * as a function of one or more variables, the parameters
+ * r(t) = (x(t) = 2t ; y(t) = t²)
+ * 
+ * [A, B] → ℝ, t ↦ (x(t), y(t))
+ * 
+ * In my Code the x and y components are stored in a list of 
+ * Dmath::vector objects, to describe a parametric curve.
+ * 
+*/ 
 
 class VectorCurve2D : public VectorAnalysis2D{
   private:
