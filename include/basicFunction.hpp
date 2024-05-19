@@ -45,7 +45,16 @@ class BasicFunction {
     //Returns the area between the X-achsis and the graph
     double areaXachsis(double start, double stopp);
     double getSlopeAt(double Value){
-        
+        double result = 0;
+        double pointXZero = Value - 0.001;
+        double xOneValue  = this->mainFunc(Value);
+        double xZeroValue = this->mainFunc(pointXZero);
+
+        double resultOne = xOneValue - xZeroValue;
+        double resultTwo = Value - pointXZero;
+
+        result = (resultOne/resultTwo);
+        return result;
     }
 
 
