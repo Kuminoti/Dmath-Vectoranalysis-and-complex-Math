@@ -4,6 +4,7 @@
 
 #include"systems.hpp"
 
+NAMESPACESTART
 class BasicFunction {
   protected: // protected members:
     std::function<double(double)> mainFunc;
@@ -102,5 +103,9 @@ class BasicFunction {
 class PolarFunction : public BasicFunction {
 
 };
+
+
+
+NAMESPACEEND
 
 #endif // Include guard
