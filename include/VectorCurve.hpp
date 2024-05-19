@@ -19,29 +19,24 @@ NAMESPACESTART
  * [A, B] → ℝ, t ↦ (x(t), y(t))
  * 
  * In my Code the x and y components are stored in a list of 
- * Dmath::vector objects, to describe a parametric curve.
+ * Dmath::vector objects, to describe a parametric curve. 
  * 
 */ 
 
 class VectorCurve2D : public VectorAnalysis2D{
   private:
-    
     std::vector<Dmath::Vec2D> createVectorialCurve();
 
   protected:
     std::vector<Dmath::Vec2D> mainCurve;
 
-
     //Constructos for sinmple parametric Vector curves (tested)
-    
     VectorCurve2D(std::function<double(double)> xFunc,std::function<double(double)> yFunc);
     VectorCurve2D(std::function<double(double)> xFunc,std::function<double(double)> yFunc, double start, double stopp, double res);
 
     //Constructos for sinmple parametric Vector curves (not fully tested)
-
     VectorCurve2D(std::function<double(double)> xFunc,std::function<double(double)> yFunc, double start, double stopp, double res, std::vector<Dmath::Vec2D> mainCurve);
     VectorCurve2D(std::function<double(double)> xFunc,std::function<double(double)> yFunc, double start, double stopp, double res, std::vector<Dmath::Vec2D> mainCurve, double rotation);
-
 
   public:
     //Create a parametric Vector curve (tested)
