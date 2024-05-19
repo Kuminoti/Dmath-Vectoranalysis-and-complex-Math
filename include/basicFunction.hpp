@@ -5,7 +5,7 @@
 #include"systems.hpp"
 
 NAMESPACESTART
-class BasicFunction {
+class BasicFunction {    
   protected: // protected members:
     std::function<double(double)> mainFunc;
     std::vector<double> fX;
@@ -100,9 +100,6 @@ class BasicFunction {
 
 };
 
-class PolarFunction : public BasicFunction {
-
-};
 
 
 
