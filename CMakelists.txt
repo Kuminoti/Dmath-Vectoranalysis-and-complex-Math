@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.15)
 
 project(Mathvector)
 
@@ -6,12 +6,12 @@ set(SOURCE_FILES src/MathVector.cpp src/systems.cpp src/VectorCurve.cpp src/syst
 
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
 
-
+set(CXX_STANDARD 20)
 
 include_directories(include)
 
 add_library(mathvector SHARED ${SOURCE_FILES})
-add_library(libmathvector STATIC ${SOURCE_FILES})
+
 target_compile_definitions( mathvector PUBLIC WORKING )
 # Set the output directories
 set_target_properties(mathvector PROPERTIES

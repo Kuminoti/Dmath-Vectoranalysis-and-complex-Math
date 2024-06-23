@@ -1,5 +1,6 @@
-#include "../include/mathVector.hpp"
+#include"../include/mathVector.hpp"
 #include "../include/systemGeometry.hpp"
+
 
 using namespace Dmath;
 // Helper functions:
@@ -202,7 +203,7 @@ double Vec2D::rectangleCircumfrance(Vec2D MathVector) {
 }
 
 double Vec2D::getAbs()               { return this->abs;      }
-double Vec2D::lenght()               { return this->getAbs(); }
+double Vec2D::getLenght()               { return this->getAbs(); }
 
 double Vec2D::getRotationAngle()     { return this->vectorRotation; }
 

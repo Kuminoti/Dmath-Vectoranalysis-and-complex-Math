@@ -21,10 +21,10 @@
     #define NAMESPACESTART namespace Dmath {
     #define NAMESPACEEND }
 
-    #ifdef WORKING
+
         #include <iostream>
         #define LOGGER(info){ std::cout<< __FILE__ << " " << __LINE__ << " " << info <<std::endl;}
-    #endif //WORKING
+
     
 
 
