@@ -362,7 +362,7 @@ double Dmath::VectorCurve2D::dotProductVectorCurve(Dmath::VectorCurve2D vec){
     double dotProduct    = 0;
 
     size_t startIdx = 0;
-    size_t endIdx = std::min(this->mainCurve.size(), vec.mainCurve.size());
+    size_t endIdx = static_cast<size_t>(std::min(this->mainCurve.size(), vec.mainCurve.size()));
 
     if (curveOneStart >= curveTwoStart) {
         startIdx = curveOneStart;

@@ -452,7 +452,7 @@ Vec2D::Vec2D(double X, double Y) : CoordinateSystem2D(X, Y) {
   this->cartesianToPolar();
 }
 
-Vec2D::Vec2D(double X, double Y, double originX, double originY)
+Vec2D::Vec2D(double X, double Y, double originX, double originY) 
     : CoordinateSystem2D(X, Y, originX, originY) {
   this->calcAbsXY();
   this->calcDZ();

@@ -5,6 +5,11 @@
 #include "systems.hpp"
 
 #ifdef SYSTEM_READY
+
+#ifdef MATRIX_HPP
+  #define DMATRIX
+#endif
+
 #include"systemGeometry.hpp"
 NAMESPACESTART
 

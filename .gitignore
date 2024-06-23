@@ -3,6 +3,8 @@ bin/
 .vscode/
 bin/
 lib/
+build/
+include/test/
 
 #cmake stuff
 CMakeLists.txt.user
@@ -19,6 +21,7 @@ _deps
 
 #testing, working and todo
 vectorFields.hpp
+Matrix.hpp
 test
 test.cpp
 todo
