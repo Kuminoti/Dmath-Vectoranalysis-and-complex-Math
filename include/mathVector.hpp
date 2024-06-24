@@ -143,6 +143,9 @@ class Vec3D : public CoordinateSystem3D {
 
   public: // Public Constructors
 
+    //NULL vector
+    Vec3D();
+
 #ifdef CARTESIAN_IS_3D_STANDARD
     Vec3D(double XYZ);
     Vec3D(double X, double Y, double Z);

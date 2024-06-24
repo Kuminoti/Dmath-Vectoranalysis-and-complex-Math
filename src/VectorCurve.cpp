@@ -566,7 +566,9 @@ Dmath::Vec3D Dmath::VectorCurve3D::getVectorFromStdVec(size_t index){
 
 Dmath::Vec3D  Dmath::VectorCurve3D::tangentVector(double t){
     if(t > this->systemStopp || t < this->systemStart){
+#ifdef WORKING
         std::cerr << "Error out of range, returning zero vector" <<std::endl;
+#endif
         return Dmath::Vec3D::zeroVector();
     }
     double h = 0.00000001; 

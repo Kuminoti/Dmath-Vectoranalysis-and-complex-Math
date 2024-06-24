@@ -41,7 +41,9 @@ double Vec2D::operator*(Vec2D &Mathvector) {
 double cosAngle(double dotProduct, double absProduct) {
   double result = 0;
   if (absProduct == 0) {
+#ifdef WORKING
     std::cerr << "Vector abs is Zero" << std::endl;
+#endif //Working
     result = 0;
   } else {
     result = dotProduct / absProduct;
@@ -52,7 +54,9 @@ double cosAngle(double dotProduct, double absProduct) {
 double angleFromCos(double cosTheta) {
   double result = 0;
   if (cosTheta > 1 || cosTheta < -1) {
+#ifdef WORKING
     std::cerr << "Error: cos(theta) wrong value" << std::endl;
+#endif
     result = 0;
   } else {
 
@@ -267,7 +271,9 @@ Vec3D Vec3D::cylinderVector(double radius, double angle, double height) {
 }
 
 
-Vec3D Vec3D::zeroVector() { return Vec3D(0, 0, 0); }
+Vec3D Vec3D::zeroVector() { 
+  return Vec3D(); 
+  }
 
 
 double Vec3D::getCylinderRadius(){
@@ -406,7 +412,14 @@ Vec3D::Vec3D(double radius, double phi, double height)
 }
 #endif
 
+Vec3D::Vec3D() : CoordinateSystem3D() {
+    
+}
+
+
 #ifdef CARTESIAN_IS_3D_STANDARD
+
+
 
 Vec3D::Vec3D(double XYZ) : CoordinateSystem3D(XYZ) {
   

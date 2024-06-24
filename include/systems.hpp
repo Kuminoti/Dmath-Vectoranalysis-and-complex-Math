@@ -115,6 +115,10 @@ class MathHelper{
 // Coordinatesystem2D is used as an abstraction for other classes like the 2 main Vector classes
 class CoordinateSystem2D { 
   protected:
+    void* NULLVECX = 0;
+    void* NULLVECY = 0;
+    void* NULLVECZ = 0;
+
     double X;
     double Y;
 
@@ -153,6 +157,12 @@ class CoordinateSystem2D {
 
     inline double getDistanceZero(){ return this->distanceToZero; } 
 
+    CoordinateSystem2D(){
+      this->NULLVECX = CNULL;
+      this->NULLVECZ = CNULL;
+      this->NULLVECY = CNULL;
+    }
+
 #ifdef CARTESIAN_IS_2D_STANDARD
     CoordinateSystem2D(double XY);
     CoordinateSystem2D(double x, double y);
@@ -167,6 +177,11 @@ class CoordinateSystem2D {
 
 class CoordinateSystem3D : public CoordinateSystem2D {
   protected: // protected data
+    //For zero or nullvectors
+    void* NULLVECX = 0;
+    void* NULLVECY = 0;
+    void* NULLVECZ = 0;
+
     double Z;
     double aZ;
     double theta;
@@ -202,7 +217,14 @@ class CoordinateSystem3D : public CoordinateSystem2D {
 
     double getRadiusSphere();
     double getRadiusCylinder();
-    
+    //Zerovector / NULL vector constructor
+
+    CoordinateSystem3D() : CoordinateSystem2D(){
+      this->NULLVECX = CNULL;
+      this->NULLVECY = CNULL;
+      this->NULLVECZ = CNULL;
+    }
+
 #ifdef CARTESIAN_IS_3D_STANDARD
     CoordinateSystem3D(double XYZ);
     CoordinateSystem3D(double X, double Y, double Z);
