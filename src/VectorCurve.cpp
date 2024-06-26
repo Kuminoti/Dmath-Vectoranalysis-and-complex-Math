@@ -1,7 +1,5 @@
 #include"../include/VectorCurve.hpp"
 
-
-
 //2D curves
 
 std::vector<Dmath::Vec2D> Dmath::VectorCurve2D::createVectorialCurve(){
@@ -18,8 +16,6 @@ std::vector<Dmath::Vec2D> Dmath::VectorCurve2D::createVectorialCurve(){
     }
     return output;
 }
-
-
 
 
 // Constructors
@@ -54,13 +50,15 @@ Dmath::VectorCurve2D Dmath::VectorCurve2D::createCustomCurve(std::function<doubl
 
 
 
-
-
-
+//Pick a specific vector from one point of the curve
 Dmath::Vec2D Dmath::VectorCurve2D::getVectorFromPoint(double point){
     if(point < this->systemStart || point > this->systemStopp){
+
+#ifdef WORKING
         std::cerr << "Error index out of limit! \n Returning a null vector \n" ;
-            return Dmath::Vec2D::zeroVector();
+#endif
+
+        return Dmath::Vec2D::zeroVector();
     }
     //Calculate the origin of the new vector, based of the last Vectors position 
     double newOriginX = this->xFunc(point - this->resolution);
@@ -76,15 +74,23 @@ Dmath::Vec2D Dmath::VectorCurve2D::getVectorFromPoint(double point){
     return outputVector;
 }
 
+
 Dmath::Vec2D Dmath::VectorCurve2D::getVectorFromStdVec(size_t index){
     // Check if the input is in range
     if(index > this->mainCurve.size() || index < 0){
+
+#ifdef WORKING
+
         std::cerr << "Error index out of range, returning zeroVector" <<std::endl;
+
+#endif
+
         return Dmath::Vec2D::zeroVector();
     }
     return this->mainCurve[index];
 }
 
+//Pic a vector from a specific point in the functions
 Dmath::Vec2D Dmath::VectorCurve2D::getVectorFromFunction(double vecX, double vecY){
 
     double xValue = this->xFunc(vecX); // VecX = X(t)
@@ -95,9 +101,19 @@ Dmath::Vec2D Dmath::VectorCurve2D::getVectorFromFunction(double vecX, double vec
 }
 
 
+
+//Integration
+
+//Calculates the Area between the curve and the x-achsis
 double Dmath::VectorCurve2D::calculateAreaXAchsis(double tStart, double tEnd){
     if(tStart < this->systemStart || tEnd > this->systemStopp){
+
+#ifdef WORKING
+
         std::cerr << "Error out of range" <<std::endl;
+
+#endif
+
         return 0;
     }
     auto yAbsolute = [&](double t) ->double { return std::abs(this->xFunc(t)); };
@@ -113,7 +129,12 @@ double Dmath::VectorCurve2D::calculateAreaXAchsis(double tStart, double tEnd){
 
 double Dmath::VectorCurve2D::calculateAreaYAchsis(double tStart, double tEnd){
     if(tStart < this->systemStart || tEnd > this->systemStopp){
+
+#ifdef WORKING
+
         std::cerr << "Error out of range" <<std::endl;
+
+#endif
         return 0;
     }
     auto xAbsolute = [&](double t) ->double { return std::abs(this->yFunc(t)); };
@@ -129,7 +150,13 @@ double Dmath::VectorCurve2D::calculateAreaYAchsis(double tStart, double tEnd){
 
 double Dmath::VectorCurve3D::calculateAreaZAchsis(double tStart, double tEnd){
     if(tStart < this->systemStart || tEnd > this->systemStopp){
+
+#ifdef WORKING
+
         std::cerr << "Error out of range" <<std::endl;
+
+#endif
+
         return 0;
     }
     auto zAbsolute = [&](double t) -> double { return std::abs(this->zFunc(t)); };
@@ -145,7 +172,13 @@ double Dmath::VectorCurve3D::calculateAreaZAchsis(double tStart, double tEnd){
 
 double Dmath::VectorCurve3D::calculateAreaYAchsis(double tStart, double tEnd){
     if(tStart < this->systemStart || tEnd > this->systemStopp){
+
+#ifdef WORKING
+
         std::cerr << "Error out of range" <<std::endl;
+
+#endif
+
         return 0;
     }
     auto yAbsolute = [&](double t) -> double { return std::abs(this->yFunc(t)); };
@@ -161,7 +194,12 @@ double Dmath::VectorCurve3D::calculateAreaYAchsis(double tStart, double tEnd){
 
 double Dmath::VectorCurve3D::calculateAreaXAchsis(double tStart, double tEnd){
     if(tStart < this->systemStart || tEnd > this->systemStopp){
+
+#ifdef WORKING
+
         std::cerr << "Error out of range" <<std::endl;
+
+#endif
         return 0;
     }
     auto xAbsolute = [&](double t) -> double { return std::abs(this->xFunc(t)); };
@@ -194,7 +232,13 @@ double Dmath::VectorCurve3D::calculateSlopeOnPoint(double t) {
 
 Dmath::Vec2D Dmath::VectorCurve2D::tangentVector(double t){
     if(t > this->systemStopp || t < this->systemStart){
+
+#ifdef WORKING
+
         std::cerr << "Error out of range, returning zero vector" <<std::endl;
+
+#endif// WORKING
+
         return Dmath::Vec2D::zeroVector();
     }
     double h = 0.000001; 
@@ -211,7 +255,13 @@ Dmath::Vec2D Dmath::VectorCurve2D::tangentVector(double t){
 
 Dmath::Vec2D Dmath::VectorCurve2D::tangetUnitVector(double t){
     if(t > this->systemStopp || t < this->systemStart){
+
+#ifdef WORKING
+
         std::cerr << "Error out of range, returning zero vector" <<std::endl;
+
+#endif// WORKING
+
         return Dmath::Vec2D::zeroVector();
     }
     Dmath::Vec2D newVector = this->tangentVector(t);
@@ -221,7 +271,13 @@ Dmath::Vec2D Dmath::VectorCurve2D::tangetUnitVector(double t){
 
 Dmath::Vec2D Dmath::VectorCurve2D::principalNormalUnitVector(double t){
     if(t > this->systemStopp || t < this->systemStart){
+
+#ifdef WORKING
+
         std::cerr << "Error out of range, returning zero vector" <<std::endl;
+
+#endif
+
         return Dmath::Vec2D::zeroVector();
     }
     Dmath::Vec2D newVec = this->tangetUnitVector(t);
@@ -298,6 +354,11 @@ double Dmath::VectorCurve2D::calculateSlopeOnPoint(double t){
     return result; 
 }
 
+
+
+
+// Needs to be optimised
+
 size_t Dmath::VectorCurve2D::numberOfYZeroPoints() {
     size_t zeroPoints = 0;
     size_t iterations = 1; 
@@ -311,12 +372,13 @@ size_t Dmath::VectorCurve2D::numberOfYZeroPoints() {
     return zeroPoints;
 }
 
+
 size_t Dmath::VectorCurve2D::numberOfXZeroPoints() {
     size_t zeroPoints = 0;
     size_t iterations = 1; 
     for (size_t i = 1; i < this->mainCurve.size(); ++i) {
-        if ((this->mainCurve[i].getX() > 0 && this->mainCurve[iterations - 1].getX() < 0) ||
-            (this->mainCurve[i].getX() < 0 && this->mainCurve[iterations - 1].getX() > 0)) {
+        if ((this->mainCurve[i].getX() > -0.01 && this->mainCurve[iterations - 1].getX() < 0.010) ||
+            (this->mainCurve[i].getX() < 0.01 && this->mainCurve[iterations - 1].getX() > 0.10)) {
             zeroPoints++;
         }
         iterations++;
@@ -348,6 +410,7 @@ Dmath::VectorCurve2D Dmath::VectorCurve2D::subtractCurve(VectorCurve2D curve){
 Dmath::VectorCurve2D Dmath::VectorCurve2D::rotateCurve(double radiants){
     std::vector<Dmath::Vec2D> newCurve;
     for(size_t i = 0; i<this->mainCurve.size(); i++){
+
     //This function rotates all vectors in the main curve und pushes it in a new std::vector
     newCurve.push_back(this->mainCurve[i].rotateVector(radiants));
     }
@@ -444,16 +507,6 @@ void Dmath::VectorCurve2D::rotateThisCurve(double radiants){
 
 
 
-
-
-
-
-
-
-
-
-
-
 //3D curves
 
 double Dmath::VectorCurve3D::dotProductVectorCurve(Dmath::VectorCurve3D vec) {
@@ -535,7 +588,9 @@ Dmath::Vec3D  Dmath::VectorCurve3D::getVectorFromFunction(double xValue, double 
 
 Dmath::Vec3D Dmath::VectorCurve3D::getVectorFromPoint(double point)  {
     if(point > this->systemStart || point < this->systemStopp){
+#ifdef WORKING
         std::cerr << "Error index out of limit! \n Returning a null vector \n" ;
+#endif
         return Dmath::Vec3D::zeroVector();
     }
 
@@ -557,7 +612,13 @@ Dmath::Vec3D Dmath::VectorCurve3D::getVectorFromPoint(double point)  {
 
 Dmath::Vec3D Dmath::VectorCurve3D::getVectorFromStdVec(size_t index){
     if(index > this->mainCurve.size() || index < 0){
+
+#ifdef WORKING
+
         std::cerr << "Error out of range, returning zero vector" <<std::endl;
+
+#endif
+
         return Dmath::Vec3D::zeroVector();
     }
     return this->mainCurve[index];
@@ -566,9 +627,13 @@ Dmath::Vec3D Dmath::VectorCurve3D::getVectorFromStdVec(size_t index){
 
 Dmath::Vec3D  Dmath::VectorCurve3D::tangentVector(double t){
     if(t > this->systemStopp || t < this->systemStart){
+
 #ifdef WORKING
+
         std::cerr << "Error out of range, returning zero vector" <<std::endl;
+        
 #endif
+
         return Dmath::Vec3D::zeroVector();
     }
     double h = 0.00000001; 
@@ -635,6 +700,8 @@ double Dmath::VectorCurve3D::calculateSlopeXOnPoint(double t){
 }
 
 
+//Maximum and minimum
+
 double Dmath::VectorCurve3D::calculateSlopeYOnPoint(double t){
     Dmath::Vec3D vec = this->tangentVector(t);
     double result = 0;
@@ -695,6 +762,7 @@ double Dmath::VectorCurve3D::maximumY(){
     return maxY;
 }
 
+//Calculates the x-zeropoints of the curve by checking for X = 0 with a tollerance
 size_t Dmath::VectorCurve3D::numberOfXZeroPoints() {
     size_t zeroPoints = 0;
     size_t iterations = 1; 
@@ -708,6 +776,7 @@ size_t Dmath::VectorCurve3D::numberOfXZeroPoints() {
     return zeroPoints;
 }
 
+//Calculates the y-zeropoints of the curve by checking for Y = 0 with a tollerance
 size_t Dmath::VectorCurve3D::numberOfYZeroPoints() {
     size_t zeroPoints = 0;
     size_t iterations = 1; 
@@ -721,6 +790,7 @@ size_t Dmath::VectorCurve3D::numberOfYZeroPoints() {
     return zeroPoints;
 }
 
+//Calculates the Z-zeropoints of the curve by checking for Z = 0 with a tollerance
 size_t Dmath::VectorCurve3D::numberOfZZeroPoints() {
     size_t zeroPoints = 0;
     size_t iterations = 1; 
@@ -735,6 +805,7 @@ size_t Dmath::VectorCurve3D::numberOfZZeroPoints() {
 }
 
 
+//Curve movement
 void Dmath::VectorCurve3D::moveZ(double moveZ){
     for(size_t i = 0; i<this->mainCurve.size(); i++){
         this->mainCurve[i].moveVectorZ(moveZ);
@@ -759,12 +830,15 @@ void Dmath::VectorCurve3D::moveCurve(double moveX, double moveY, double moveZ){
     }
 }
 
+
+//Curve Rotation
 void Dmath::VectorCurve3D::rotateThisCurve(double phi, double theta){
     for(size_t i = 0; i<this->mainCurve.size(); i++){
         this->mainCurve[i].rotateThisVector(phi,theta);
     }
 }
 
+//Rotate the Curve based on two angles
 Dmath::VectorCurve3D Dmath::VectorCurve3D::rotateCurve(double phi, double theta){
     std::vector<Dmath::Vec3D> newVec;
     for(size_t i = 0; i<this->mainCurve.size(); i++){

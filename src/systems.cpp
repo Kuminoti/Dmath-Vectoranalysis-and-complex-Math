@@ -1,5 +1,5 @@
 #include "../include/systems.hpp"
-
+#include "../include/macros.hpp"
 #ifdef SYSTEM_IS_SET
 
 //MathHelper methods:
@@ -319,7 +319,7 @@ VectorAnalysis2D::VectorAnalysis2D(std::function<double(double)> xFunc, std::fun
 VectorAnalysis2D::VectorAnalysis2D(std::function<double(double,double)> mainFunc, double start, double stopp, double resolution){
     this->mainFunc = mainFunc;
     this->systemStart = start;
-    this->systemStopp = systemStopp;
+    this->systemStopp = stopp;
     this->resolution  = resolution;
     this->numberOfElements = this->mathHelper.numOfElements(start,stopp,resolution);
 }

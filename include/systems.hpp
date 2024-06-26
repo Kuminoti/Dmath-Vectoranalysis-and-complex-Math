@@ -17,61 +17,9 @@
 */
 
 
-//Choose your prefered angle unit with (un)commenting the fitting macro
-#define STANDARD_ANGLE_UNIT_DEG
-//#define STANDARD_ANGLE_UNIT_RAD
-#if(defined(STANDARD_ANGLE_UNIT_DEG) || defined(STANDARD_ANGLE_UNIT_RAD))
-#define ANGLE_UNIT_SET
-#else
-#if(defined(STANDARD_ANGLE_UNIT_DEG) && defined(STANDARD_ANGLE_UNIT_RAD))
-#warning "Both angle units are set standard will be radiants!"
-#undef STANDARD_ANGLE_UNIT_DEG
-#define ANGLE_UNIT_SET
-#endif
-#endif
-
-//Uncomment to choose your standard coordinate system
-
-#define CARTESIAN_IS_2D_STANDARD   // Cartesian system: X,Y
-//#define POLAR_IS_STANDARD        //Polar system: Radius, phi
-
-#define CARTESIAN_IS_3D_STANDARD   //Cartesian system: X,Y,Z
-//#define SPHERE_IS_STANDARD       // Sphere system: Radius, phi, phi
-//#define CYLINDER_IS_STANDARD     //Cylinder system: Radius, phi, height
-
-#if (defined(SPHERE_IS_STANDARD) || defined(CYLINDER_IS_STANDARD)) &&                              \
-    defined(CARTESIAN_IS_3D_STANDARD)
-#warning "Warning: More than one system is defined!"
-#undef CARTESIAN_IS_STANDARD
-#ifdef SPHERE_IS_STANDARD
-#undef CYLINDER_IS_STANDARD
-#warning "Sphere system will be standart!"
-#endif
-#warning "Cylinder system will be standart!"
-
-#endif
-
-#ifdef POLAR_IS_STANDARD
-#ifdef CARTESIAN_IS_2D_STANDARD
-#undef CARTESIAN_IS_2D_STANDARD
-#warning                                                                                           \
-    "Warning: You defined polar coordinates as standard and cartesian as 2D standard. Polar will be standard."
-#endif
-#endif
-
-#if (defined(SPHERE_IS_STANDARD) || defined(CYLINDER_IS_STANDARD) ||                               \
-     defined(CARTESIAN_IS_3D_STANDARD) || defined(POLAR_IS_STANDARD) ||                            \
-     defined(CARTESIAN_IS_2D_STANDARD))
-#define SYSTEM_IS_SET
-#else
-#error "FATAL ERROR NO SYSTEM SET"
-#endif
-
-#if (defined(SYSTEM_IS_SET) && defined(ANGLE_UNIT_SET))
-#define SYSTEM_READY
 
 
-
+#ifdef SYSTEM_READY
 
 // A helper class with some pre defined functions
 class MathHelper{
@@ -255,6 +203,8 @@ class VectorAnalysis2D{
     // X and Y-functions
     std::function<double(double)> xFunc;
     std::function<double(double)> yFunc;
+
+    std::function<void()> noFunc = []() {return CNULL;};
 
     double resolution  = STDRES;
     double systemStart = ZERO;

@@ -121,6 +121,7 @@ class VectorCurve3D : public VectorAnalysis3D{
     std::vector<Dmath::Vec3D> mainCurve;
     std::vector<Dmath::Vec3D> createVectorialCurve();
 
+    
     VectorCurve3D(std::function<double(double)> xFunc,std::function<double(double)> yFunc, std::function<double(double)> zFunc, double start, double stopp, double res, std::vector<Dmath::Vec3D> mainCurve, double rotationPhi, double rotationTheta);
     VectorCurve3D(std::function<double(double)> xFunc,std::function<double(double)> yFunc, std::function<double(double)> zFunc, double start, double stopp, double res, std::vector<Dmath::Vec3D> mainCurve);
     VectorCurve3D(std::function<double(double)> xFunc,std::function<double(double)> yFunc, std::function<double(double)> zFunc);

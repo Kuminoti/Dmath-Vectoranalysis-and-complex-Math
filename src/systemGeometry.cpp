@@ -37,14 +37,14 @@ double Dmath::SystemGeometry::cylinderSystemLateralSurface(Dmath::Vec3D mainVect
 
 double Dmath::SystemGeometry::cuboidVolume(Dmath::Vec3D mainVector, Dmath::Vec3D MathVector,Dmath::Vec3D MathVectorTwo) {
   // formula: A*B*C or in this case: |vector1| * |vector2| * |vector3|
-  std::cout<< mainVector.getX() <<std::endl;
+  ;
 
   double A = mainVector.getAbs();
   double B = MathVector.getAbs();
   double C = MathVectorTwo.getAbs();
 
   double result = A * B * C;
-  std::cout << A <<std::endl;
+  
   return result;
 }
 
