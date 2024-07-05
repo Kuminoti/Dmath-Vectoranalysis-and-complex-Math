@@ -7,7 +7,7 @@ using namespace Dmath;
 
 //Operator overloading
 
-Vec2D Vec2D::operator/(double scalarValue){
+Vec2D Vec2D::operator/( const double scalarValue){
   if(scalarValue == 0){
     // Division by 0 is undefined
     return Dmath::Vec2D::zeroVector();
@@ -17,21 +17,26 @@ Vec2D Vec2D::operator/(double scalarValue){
   return Vec2D(valueX, valueY);
 }
 
-Vec2D Vec2D::operator+(Vec2D &Mathvector) {
+Vec2D Vec2D::operator+(const Vec2D &Mathvector) {
   double resultX = this->X + Mathvector.X;
   double resultY = this->Y + Mathvector.Y;
 
   return Vec2D(resultX, resultY);
 }
 
-Vec2D Vec2D::operator-(Vec2D &Mathvector) {
+Vec2D Vec2D::operator-(const Vec2D &Mathvector) {
   double resultX = this->X - Mathvector.X;
   double resultY = this->Y - Mathvector.Y;
 
   return Vec2D(resultX, resultY);
 }
 
-double Vec2D::operator*(Vec2D &Mathvector) {
+
+Vec2D Vec2D::operator*(const double scalarValue){
+  Vec2D newVec(this->X * scalarValue, this->Y *scalarValue);
+}
+
+double Vec2D::operator*(const Vec2D &Mathvector) {
   return this->dotProduct(Mathvector);
 }
 

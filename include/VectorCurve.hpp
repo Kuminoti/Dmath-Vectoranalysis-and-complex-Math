@@ -164,10 +164,10 @@ class VectorCurve3D : public VectorAnalysis3D{
     size_t numberOfYZeroPoints();
     size_t numberOfZZeroPoints();
 
-    void moveX(double moveX);
-    void moveY(double moveY);
-    void moveZ(double moveZ);
-    void moveCurve(double X, double Y, double Z);
+    void moveX(const double moveX);
+    void moveY(const double moveY);
+    void moveZ(const double moveZ);
+    void moveCurve(const double X, double Y, double Z);
     void rotateThisCurve(double phi, double theta);
 
 };

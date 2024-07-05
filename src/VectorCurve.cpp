@@ -812,19 +812,19 @@ void Dmath::VectorCurve3D::moveZ(double moveZ){
     }
 }
 
-void Dmath::VectorCurve3D::moveY(double moveY){
+void Dmath::VectorCurve3D::moveY(const double moveY){
     for(size_t i = 0; i<this->mainCurve.size(); i++){
         this->mainCurve[i].moveVectorY(moveY);
     }
 }
 
-void Dmath::VectorCurve3D::moveX(double moveX){
+void Dmath::VectorCurve3D::moveX(const double moveX){
     for(size_t i = 0; i<this->mainCurve.size(); i++){
         this->mainCurve[i].moveVectorX(moveX);
     }
 }
 
-void Dmath::VectorCurve3D::moveCurve(double moveX, double moveY, double moveZ){
+void Dmath::VectorCurve3D::moveCurve(const double moveX,const double moveY,const double moveZ){
     for (size_t i = 0; i < this->mainCurve.size(); i++){
         this->mainCurve[i].moveVector(moveX,moveY,moveZ);
     }
@@ -832,7 +832,7 @@ void Dmath::VectorCurve3D::moveCurve(double moveX, double moveY, double moveZ){
 
 
 //Curve Rotation
-void Dmath::VectorCurve3D::rotateThisCurve(double phi, double theta){
+void Dmath::VectorCurve3D::rotateThisCurve(const double phi,const double theta){
     for(size_t i = 0; i<this->mainCurve.size(); i++){
         this->mainCurve[i].rotateThisVector(phi,theta);
     }

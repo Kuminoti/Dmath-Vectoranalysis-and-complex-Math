@@ -65,7 +65,6 @@ class CoordinateSystem2D {
   protected:
     void* NULLVECX = 0;
     void* NULLVECY = 0;
-    void* NULLVECZ = 0;
 
     double X;
     double Y;
