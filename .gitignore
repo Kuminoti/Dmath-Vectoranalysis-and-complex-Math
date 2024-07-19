@@ -26,5 +26,7 @@ test
 test.cpp
 todo
 Documentation/
-
-
+test.exe
+testing.exe
+analysis.hpp
+experimental/

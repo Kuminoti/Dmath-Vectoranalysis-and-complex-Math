@@ -10,10 +10,11 @@
     #include <algorithm>
     #include <thread>
     #include <chrono>
+    #include <type_traits>
 
 
-
-
+    #define ZERO_KELVINK -273.17
+    #define ZERO_KELVINC  273.17
     #define STDRES 0.05f                //The standard resolution for more dimensional vector systems
     #define ZERO 0                     //Standard zero used as a constant for the startpoint in more dimensional vector systems
     #define PI 3.14159265358979323846
@@ -23,8 +24,10 @@
     #define RAD_TO_DEG 180.f/PI
     #define DEG_TO_RAD PI/180.f
     #define CNULL ((void *)0)
+
+    #define NAMESPACETEST  namespace Testing {
     #define NAMESPACESTART namespace Dmath {
-    #define NAMESPACEEND }
+    #define NAMESPACEEND   }
 
 
 

@@ -34,6 +34,7 @@ Vec2D Vec2D::operator-(const Vec2D &Mathvector) {
 
 Vec2D Vec2D::operator*(const double scalarValue){
   Vec2D newVec(this->X * scalarValue, this->Y *scalarValue);
+  return newVec;
 }
 
 double Vec2D::operator*(const Vec2D &Mathvector) {

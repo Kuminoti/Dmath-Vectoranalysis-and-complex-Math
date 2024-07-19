@@ -16,17 +16,79 @@
  * mathmatical constants and data.
 */
 
+NAMESPACESTART
+#pragma region Datatypes
+template<typename d_type_one, typename d_type_two>
+struct Duo {
+    d_type_one one;
+    d_type_two two;
 
+    // Constructor using initializer list
+    Duo(d_type_one one, d_type_two two)
+        : one(one), two(two) {}
+
+    // Default constructor
+    Duo() : one(), two() {}
+
+    template<typename T = d_type_one, typename std::enable_if<std::is_same<T, d_type_two>::value, int>::type = 0>
+    constexpr void swap() {
+        d_type_one val = this->two;
+        this->two = this->one;
+        this->one = val;
+    }
+    
+};
+
+
+template<typename d_type_one, typename d_type_two, typename d_type_three>
+struct Trio{
+
+  d_type_one   one;
+  d_type_two   two;
+  d_type_three three;
+
+  Trio(d_type_one one, d_type_two two, d_type_three three) 
+      : one(one), two(two), three(three) {}
+
+
+  Trio(): one(), two(), three() {}
+
+  template<typename T = d_type_one, typename std::enable_if<std::is_same<T,d_type_two>::value, int>::type = 0>
+  constexpr void swapOneAndTwo(){
+    d_type_one val = this->two;
+    this->two = this->one;
+    this->one = val;
+  }
+  template<typename T = d_type_one, typename std::enable_if<std::is_same<T,d_type_three>::value, int>::type = 0>
+  constexpr void swapOneAndThree(){
+    d_type_one val = this->three;
+    this->three = this->one;
+    this->one = val;
+  }
+
+  template<typename T = d_type_two, typename std::enable_if<std::is_same<T,d_type_three>::value, int>::type = 0>
+  constexpr void swapTwoAndThree(){
+    d_type_three val = this->three;
+    this->three = this->two;
+    this->two = val;
+  }
+};
+
+
+#pragma endregion 
+NAMESPACEEND
 
 
 #ifdef SYSTEM_READY
 
+#pragma region MathHelper
 // A helper class with some pre defined functions
 class MathHelper{
   private:
+  
     double h  = 0.0001;           //Resolution for Derivative
     double dx = 0.000000001;      //Stepps for Antiderivative
-    int numSteps = 1000;         //Stepps for the integral
+    uint16_t numSteps = 1000;         //Stepps for the integral
     
 
   public:
@@ -59,7 +121,10 @@ class MathHelper{
 
 };
 
+#pragma endregion
 
+
+#pragma region 2D-Coordinates
 // Coordinatesystem2D is used as an abstraction for other classes like the 2 main Vector classes
 class CoordinateSystem2D { 
   protected:
@@ -86,6 +151,21 @@ class CoordinateSystem2D {
     void calcAbsXY();
     void calcDZ();                                          // Calculates the distance to zero
 
+  public:
+#ifdef CARTESIAN_IS_2D_STANDARD
+    CoordinateSystem2D(double XY);
+    CoordinateSystem2D(double x, double y);
+    CoordinateSystem2D(double x, double y, double originX, double originY);
+#endif
+
+#ifdef POLAR_IS_STANDARD
+    CoordinateSystem2D(double radius, double phi);
+    CoordinateSystem2D(double radius, double phi, double originX, double originY);
+#endif
+
+    virtual ~CoordinateSystem2D() = default;
+
+
 
   public:
     MathHelper mathHelper;
@@ -106,22 +186,17 @@ class CoordinateSystem2D {
 
     CoordinateSystem2D(){
       this->NULLVECX = CNULL;
-      this->NULLVECZ = CNULL;
+      
       this->NULLVECY = CNULL;
     }
 
-#ifdef CARTESIAN_IS_2D_STANDARD
-    CoordinateSystem2D(double XY);
-    CoordinateSystem2D(double x, double y);
-    CoordinateSystem2D(double x, double y, double originX, double originY);
-#endif
 
-#ifdef POLAR_IS_STANDARD
-    CoordinateSystem2D(double radius, double phi);
-    CoordinateSystem2D(double radius, double phi, double originX, double originY);
-#endif
 }; // CoordinateSystem2D
 
+#pragma endregion
+
+
+#pragma region 3D-Coordinates
 class CoordinateSystem3D : public CoordinateSystem2D {
   protected: // protected data
     //For zero or nullvectors
@@ -147,6 +222,28 @@ class CoordinateSystem3D : public CoordinateSystem2D {
     void calcDTZ();
     void calcAXYZ();
     
+  public: //Public constructors
+
+#ifdef CARTESIAN_IS_3D_STANDARD
+    CoordinateSystem3D(double XYZ);
+    CoordinateSystem3D(double X, double Y, double Z);
+    CoordinateSystem3D(double X, double Y, double Z, double originX, double originY, double originZ);
+#endif
+
+#ifdef SPHERE_IS_STANDARD
+    CoordinateSystem3D(double radius, double phi, double theta);
+    CoordinateSystem3D(double radius, double phi, double theta, double originX, double originY, double originZ);
+#endif
+
+#ifdef CYLINDER_IS_STANDARD
+    CoordinateSystem3D(double radius, double phi, double height);
+    CoordinateSystem3D(double radius, double phi, double hieght, double originX, double originY, double originZ);
+#endif
+
+
+    virtual ~CoordinateSystem3D() = default;
+
+
 
   public: // Public Methods
 
@@ -172,21 +269,6 @@ class CoordinateSystem3D : public CoordinateSystem2D {
       this->NULLVECZ = CNULL;
     }
 
-#ifdef CARTESIAN_IS_3D_STANDARD
-    CoordinateSystem3D(double XYZ);
-    CoordinateSystem3D(double X, double Y, double Z);
-    CoordinateSystem3D(double X, double Y, double Z, double originX, double originY, double originZ);
-#endif
-
-#ifdef SPHERE_IS_STANDARD
-    CoordinateSystem3D(double radius, double phi, double theta);
-    CoordinateSystem3D(double radius, double phi, double theta, double originX, double originY, double originZ);
-#endif
-
-#ifdef CYLINDER_IS_STANDARD
-    CoordinateSystem3D(double radius, double phi, double height);
-    CoordinateSystem3D(double radius, double phi, double hieght, double originX, double originY, double originZ);
-#endif
 
 }; // CoordinateSystem3D
 
@@ -198,6 +280,8 @@ class VectorAnalysis2D{
 
     std::function<double(double,double)> mainFunc;
 
+    std::function<Dmath::Duo<double,double>(double, double)> funcOne;
+    std::function<Dmath::Duo<double,double>(double, double)> funcTwo;
 
     // X and Y-functions
     std::function<double(double)> xFunc;
@@ -211,6 +295,8 @@ class VectorAnalysis2D{
     double rotation    = ZERO;
     int numberOfElements;
 
+
+    VectorAnalysis2D(std::function<Dmath::Duo<double,double>(double,double)> paramOne, std::function<Dmath::Duo<double,double>(double,double)> paramTwo);
     VectorAnalysis2D(double systemStart, double systemStopp, double resolution);
     VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc);
     VectorAnalysis2D(std::function<double(double,double)> mainFunc, double systemStart, double systemStopp, double resolution);
@@ -227,6 +313,8 @@ class VectorAnalysis2D{
     inline double getDataAtY(double data)              { return this->yFunc(data);     }
     inline std::function<double(double)> getXFunction(){ return this->xFunc;           }
     inline std::function<double(double)> getYFunction(){ return this->yFunc;           }
+
+    virtual ~VectorAnalysis2D() = default;
 
     MathHelper mathHelper;
 
@@ -251,6 +339,7 @@ class VectorAnalysis3D: public VectorAnalysis2D{
 
    
 };
+#pragma endregion
 #endif 
 #endif // SYSTEM_IS_SET
 #endif // SYSTEMS_H includeguard

@@ -63,7 +63,7 @@ class Vec2D : public CoordinateSystem2D {
     Vec2D(double radius, double phi);                          // Creates a Vector in a polar coordinatesystem
 #endif // POLAR_IS_STANDARD
 
-   
+   virtual ~Vec2D() = default;
 
   public: //getters and setters
 
@@ -76,10 +76,10 @@ class Vec2D : public CoordinateSystem2D {
     double getAbs();                                      // Calculates the absolutvalue
     double getLenght();                                   // Calculates the length of a vector
 
-    void setX(double value);                              // Basic x setter
-    void setY(double value);                              // Basic y setter
-    void setPhi(double value);                            // Setter for the angle in a polar system
-    void setRadius(double radius);                        // Setter for the radius in a polar system
+    void setX(const double value);                        // Basic x setter
+    void setY(const double value);                        // Basic y setter
+    void setPhi(const double value);                      // Setter for the angle in a polar system
+    void setRadius(const double radius);                  // Setter for the radius in a polar system
 
 
 
@@ -161,6 +161,29 @@ class Vec3D : public CoordinateSystem3D {
     Vec3D(double radius, double phi, double height);
 #endif
 
+
+
+
+//Code for vectorfields
+#ifdef VECTORFIELDS_HPP
+  private:
+    std::function<double(double)> xVectorFieldLineOne;
+    std::function<double(double)> yVectorFieldLineOne;
+
+    std::function<Dmath::Duo(double, double)> xVectorFieldLineTwo;
+    std::function<Dmath::Duo(double, double)> yVectorFieldLineTwo;
+
+    Vec2D(std::function<double(double)> funcX, std::function<double(double)> funcY);
+
+    Vec2D(std::function<Dmath::Duo<double,double>(double,double)> funcX, std::function<Dmath::Duo<double,double>(double,double)> funcY);
+
+
+#endif //VECTORFIELDS_HPP
+
+
+
+
+
   public: //Getters and Setters
     void setX(double X);
     void setY(double Y);
@@ -177,7 +200,8 @@ class Vec3D : public CoordinateSystem3D {
     double getSphereRadius();
     double getCylinderRadius();
 
-    inline double getAbs(){return this->abs; }
+    inline double getAZ() { return this->aZ;  }
+    inline double getAbs(){ return this->abs; }
 
     //The moveVector() method will move the vectors in the x,y and Z directions
     void moveVector(double moveX, double moveY, double moveZ);

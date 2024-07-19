@@ -298,11 +298,23 @@ CoordinateSystem3D::CoordinateSystem3D(double radius, double phi, double height,
 
 
 //DIfferential geometry
+
+VectorAnalysis2D::VectorAnalysis2D(std::function<Dmath::Duo<double,double>(double, double)> paramOne, std::function<Dmath::Duo<double,double>(double,double)> paramTwo){
+    this->resolution = STDRES;
+    this->systemStart = 0;
+    this->systemStopp = TWOPI;
+    this->numberOfElements = this->mathHelper.numOfElements(this->systemStart,this->systemStopp,this->resolution);
+
+    this->funcOne = paramOne;
+    this->funcTwo = paramTwo;
+}
+
+
 VectorAnalysis2D::VectorAnalysis2D(double systemStart, double systemStopp, double resolution){
     this->systemStart = systemStart;
     this->systemStopp = systemStopp;
     this->resolution  = resolution;
-    this->resolution  = ZERO;
+    
     this->numberOfElements = this->mathHelper.numOfElements(systemStart,systemStopp,resolution);
 }
 
