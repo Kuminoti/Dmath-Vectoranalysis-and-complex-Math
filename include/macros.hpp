@@ -15,6 +15,7 @@
 
     #define ZERO_KELVINK -273.17
     #define ZERO_KELVINC  273.17
+    #define ANALYSIS_RES 0.0001          //the standard resolution for clculating the area or slope aof a function
     #define STDRES 0.05f                //The standard resolution for more dimensional vector systems
     #define ZERO 0                     //Standard zero used as a constant for the startpoint in more dimensional vector systems
     #define PI 3.14159265358979323846
@@ -25,10 +26,12 @@
     #define DEG_TO_RAD PI/180.f
     #define CNULL ((void *)0)
 
-    #define NAMESPACETEST  namespace Testing {
-    #define NAMESPACESTART namespace Dmath {
-    #define NAMESPACEEND   }
+    #define NAMESPACETEST       namespace Testing {
+    #define NAMESPACEWORKING    namespace Working{
+    #define NAMESPACESTART      namespace Dmath {
+    #define NAMESPACEEND        }
 
+    
 
 
     #define  byte uint8_t
