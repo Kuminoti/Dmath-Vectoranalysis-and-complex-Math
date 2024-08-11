@@ -1,4 +1,7 @@
-# Math Library for vectors and more dimensional analysis
+# Math Library for vectors and more dimensional analysis  
+  
+
+  ## Warnig this Library is still in progress and neither the Lib or the Documentation are 100% complete!
 
 This is a simple C++ library for vector mathematics, vector analysis, and differential geometry, providing classes for 2D and 3D vectors, and the creation of more complex mathematical vector objects like vectorial parametric curves.
 
