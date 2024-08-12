@@ -21,6 +21,7 @@ struct Triangle3D{
 };
 
 struct Square2D{
+  Dmath::Vec2D sqr[4];
 
 };
 
