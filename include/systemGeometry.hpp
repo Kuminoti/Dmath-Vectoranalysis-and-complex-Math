@@ -9,21 +9,13 @@
 
 NAMESPACESTART
 
+
+
+class Vec2D;
 class Vec3D;
 
 
-struct Triangle2D{
-  Dmath::Vec2D tri[3];
-};
 
-struct Triangle3D{
-  Dmath::Vec3D tri[3];
-};
-
-struct Square2D{
-  Dmath::Vec2D sqr[4];
-
-};
 
 /* This class can be used to calculate gemometric data from
  * forms in coordinatesystems 
