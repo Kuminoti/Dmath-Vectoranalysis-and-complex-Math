@@ -8,6 +8,13 @@
 
 NAMESPACESTART
 
+typedef std::function<double(double)>                 singleVarFunction;
+typedef std::function<double(double, double)>         doubleVarFunction;
+typedef std::function<double(double, double, double)> tripleVarFunction;
+
+typedef std::vector<double> doubleVector;
+
+
 template<typename d_type_one, typename d_type_two>
 struct Duo {
     d_type_one one;
