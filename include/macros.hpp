@@ -26,12 +26,16 @@
     #define DEG_TO_RAD PI/180.f
     #define CNULL ((void *)0)
 
+    //Main Namespaces
     #define NAMESPACETEST       namespace Testing {
     #define NAMESPACEWORKING    namespace Working{
     #define NAMESPACESTART      namespace Dmath {
     #define NAMESPACEEND        }
 
-    
+    //For functional math later:
+    #define SINGLENULLFUNCTION [](double x) ->double                      { return 0; }
+    #define DOUBLENULLFUNCTION [](double x, double y) ->double            { return 0; }
+    #define TRIPLENULLFUNCTION [](double x, double y, double z) -> double { return 0; }  
 
 
     #define  byte uint8_t
