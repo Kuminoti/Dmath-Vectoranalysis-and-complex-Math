@@ -42,7 +42,8 @@ class BasicFunction {
     double areaXachsis(double start, double stopp);
     double getSlopeAt(double Value) {
         double result = 0;
-        double pointXZero = Value - 0.001;
+        double pointXZero = Value - 0.000001;
+        
         double xOneValue = this->mainFunc(Value);
         double xZeroValue = this->mainFunc(pointXZero);
 
