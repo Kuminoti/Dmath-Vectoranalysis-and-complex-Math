@@ -2,8 +2,7 @@
 
 
 
-Dmath::VectorSurface::VectorSurface(std::function<double(double, double)> xFunc, std::function<double(double, double)> yFunc,
-    std::function<double(double, double)> zFunc, double systemStart, double systemStopp, double resolution) :
+Dmath::VectorSurface::VectorSurface(std::function<double(double, double)> xFunc, std::function<double(double, double)> yFunc, std::function<double(double, double)> zFunc, double systemStart, double systemStopp, double resolution) :
     VectorAnalysis3D(systemStart,systemStopp,resolution){
     this->xFunc = xFunc;
     this->yFunc = yFunc;
@@ -57,6 +56,7 @@ void Dmath::VectorSurface::createVectorSurface() {
     for (double i = this->systemStart; i <= this->systemStopp; i += this->resolution) {
         for (double j = this->systemStart; j <= this->systemStopp; j += this->resolution) {
             if (iterations == 0) {
+                this->mainSurface.push_back(Dmath::Vec3D(xFunc(0,0)));
                 this->mainSurface.push_back(Dmath::Vec3D(xFunc(i, j), yFunc(i, j), zFunc(i, j)));
             } else {
                 this->mainSurface.push_back(

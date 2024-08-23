@@ -265,8 +265,13 @@ class VectorAnalysis2D{
 #ifdef CARTESIAN_IS_3D_STANDARD
 class VectorAnalysis3D: public VectorAnalysis2D{
   protected:
+
+    std::function<Dmath::Trio<double, double, double>(double, double, double)> functionX;
+    std::function<Dmath::Trio<double, double, double>(double, double, double)> functionY;
+    std::function<Dmath::Trio<double, double, double>(double, double, double)> functionZ;
     
     std::function<double(double)> zFunc;
+    
     VectorAnalysis3D(double systemStart, double systemStopp, double resolution);
     VectorAnalysis3D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, std::function<double(double)> zFunc);
     VectorAnalysis3D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, std::function<double(double)> zFunc,
