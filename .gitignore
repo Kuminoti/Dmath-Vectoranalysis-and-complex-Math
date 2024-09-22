@@ -21,14 +21,14 @@ _deps
 
 #testing, working and todo
 vectorFields.hpp
-Matrix.hpp
+
 test
 test.cpp
 todo
 Documentation/
 test.exe
 testing.exe
-analysis.hpp
+
 experimental/
 combef.txt
 experiments.cpp

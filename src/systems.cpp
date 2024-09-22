@@ -186,6 +186,24 @@ void CoordinateSystem2D::calcDZ(){
 
 #ifdef CARTESIAN_IS_2D_STANDARD
 
+CoordinateSystem2D::CoordinateSystem2D(Dmath::sVec2i vec){
+    this->X = static_cast<double>(vec.X);
+    this->Y = static_cast<double>(vec.Y);
+    this->originX = 0;
+    this->originY = 0;
+    this->aX = 0;
+    this->aY = 0;
+}
+
+CoordinateSystem2D::CoordinateSystem2D(Dmath::sVec2f vec){
+    this->X = static_cast<double>(vec.X);
+    this->Y = static_cast<double>(vec.Y);
+    this->originX = 0;
+    this->originY = 0;
+    this->aX = 0;
+    this->aY = 0;
+}
+
 CoordinateSystem2D::CoordinateSystem2D(double XY){
     this->X = XY;
     this->Y = XY;

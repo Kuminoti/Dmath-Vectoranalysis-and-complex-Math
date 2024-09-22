@@ -1,31 +1,44 @@
 #pragma once
+//File /include/macros.hpp
+//No Corresponding .cpp-file
+
 
 #ifndef DK_MACROS_HPP
-    #define DK_MACROS_HPP
+#define DK_MACROS_HPP
 
+/* This File contains all the necessary constants, librarys and macros for the project */
+
+
+    //Librarys needed for this project
     #include <cmath>
     #include <vector>
     #include <functional>
     #include <stdint.h>
     #include <algorithm>
     #include <thread>
-    #include <chrono>
     #include <type_traits>
 
+    //Physical and mathmatical constants, and constants
+    #define ZERO_KELVINK -273.17   //0Kelvin in celsius degrees
+    #define ZERO_KELVINC  273.17   //0Degrees Celsius in Kelvin
+    #define ANALYSIS_RES  0.0001   //the standard resolution for clculating the area or slope aof a function
 
-    #define ZERO_KELVINK -273.17
-    #define ZERO_KELVINC  273.17
-    #define ANALYSIS_RES 0.0001          //the standard resolution for clculating the area or slope aof a function
-    #define STDRES 0.05f                //The standard resolution for more dimensional vector systems
-    #define ZERO 0                     //Standard zero used as a constant for the startpoint in more dimensional vector systems
-    #define PI 3.14159265358979323846
-    #define EULER 2.718281828459045
-    #define TWOPI 2 * PI
-    #define FOUR_PI 2 * PI
-    #define RAD_TO_DEG 180.f/PI
-    #define DEG_TO_RAD PI/180.f
-    #define CNULL ((void *)0)
 
+    #define PI         3.14159265358979323846
+    #define EULER      2.718281828459045
+    #define TWOPI      (2 * PI)
+    #define FOUR_PI    (4 * PI)
+    #define RAD_TO_DEG (180.f/PI)              //Radiants to Degrees
+    #define DEG_TO_RAD (PI/180.f)              //Degres to Radiants
+    #define DEGTORAD(ANGLE) ((ANGLE)*DEG_TO_RAD)
+    #define RADTODEG(RADIANT) ((RADIANT)*RAD_TO_DEG)
+
+
+    #define STDRES     0.05f                 //The standard resolution for more dimensional vector systems
+    #define ZERO       0                     //Standard zero used as a constant for the startpoint in more dimensional vector systems
+    #define ROOT_TWO   1.41421               //The squareroot of 2
+    #define ROOT_THREE 1.7320                //The squareroot of 3
+    #define CNULL      ((void *)0)
     //Main Namespaces
     #define NAMESPACETEST       namespace Testing {
     #define NAMESPACEWORKING    namespace Working{
@@ -37,6 +50,11 @@
     #define DOUBLENULLFUNCTION [](double x, double y) ->double            { return 0; }
     #define TRIPLENULLFUNCTION [](double x, double y, double z) -> double { return 0; }  
 
+    #define SQUARED(data) ((data) * (data))
+    #define CUBED(data) ((data) * (data) * (data))
+    //Satz des pytagoras
+    #define PYTH(inputA, inputB) (std::sqrt((inputA * inputA) + (inputB * inputB)))
+    #define PYTH3(inputX, inputY, inputZ) (std::sqrt((inputX * inputX)+(inputY*inputY)+(inpuzZ*inputZ)))
 
     #define  byte uint8_t
     #define CARTESIAN_IS_3D_STANDARD

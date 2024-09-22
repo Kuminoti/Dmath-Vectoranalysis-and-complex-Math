@@ -64,9 +64,7 @@ class BasicFunction {
     double getMaximum();
     double getMinimum();
 
-    double getLength(){
-      
-    }
+    double getLength(); // NEEDS DEFINITION
 };
 
 // f(x,y) = ...

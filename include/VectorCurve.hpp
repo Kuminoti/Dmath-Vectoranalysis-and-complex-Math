@@ -1,11 +1,18 @@
 #pragma once
 
+//File: /include/VectorCurve.hpp
+//Corresponding CPP file:  /src/VectorCurve.cpp
+
+
+/* This File contains the classes for vectorially represented parameterized curves
+  in the two and tree dimensional euclidian room */
+
 #ifndef COMPLEXVECTORMATH_HPP
 #define COMPLEXVECTORMATH_HPP
 
 #include<functional>
 #include<algorithm>
-#include"mathVector.hpp"
+#include"mathVector.hpp" //A Curve is represented by a std::Vector of mathmatical vectors
 
 NAMESPACESTART
 
@@ -47,8 +54,6 @@ class VectorCurve2D : public VectorAnalysis2D{
     Dmath::Vec2D getVectorFromFunction(double vecX, double vecY);   //Returns a vector calculated from the two functions
     Dmath::Vec2D getVectorFromPoint(double point);                  //Returns a vector on the point t
     Dmath::Vec2D getVectorFromStdVec(size_t index);                 //Returns a specific index of the std::vector
-
-    // NEEDS TESTING
 
     /*
      *The tangential vector at a point of a parameterized curve points in the direction of the tangent
@@ -107,7 +112,7 @@ class VectorCurve2D : public VectorAnalysis2D{
     size_t numberOfXZeroPoints();
 
     inline std::vector<Dmath::Vec2D> getCurve(){ return this->mainCurve; }
-};
+}; //end of VectorCurve2D
     
 
 
@@ -170,7 +175,8 @@ class VectorCurve3D : public VectorAnalysis3D{
     void moveCurve(const double X, double Y, double Z);
     void rotateThisCurve(double phi, double theta);
 
-};
+    inline std::vector<Dmath::Vec3D> getStdVec(){ return this->mainCurve; }
+}; //end of VectorCurve3D
 
 
 
@@ -178,3 +184,5 @@ class VectorCurve3D : public VectorAnalysis3D{
 
 NAMESPACEEND //Dmath namespace
 #endif //include guard
+
+//File end

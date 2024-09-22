@@ -74,10 +74,10 @@ class CoordinateSystem2D {
     double X;
     double Y;
 
-    double radius;
-    double phi;
+    double radius;   //Randius and angle for polar-coordinates 
+    double phi;      //Angle phi
 
-    double originX;
+    double originX;  //
     double originY;
 
     double aX;
@@ -93,6 +93,11 @@ class CoordinateSystem2D {
 
   public:
 #ifdef CARTESIAN_IS_2D_STANDARD
+
+    //sVec is a struct with only an x, and y (and z) member defined in include/datatypes.hpp
+    CoordinateSystem2D(Dmath::sVec2f vec);
+    CoordinateSystem2D(Dmath::sVec2i vec);
+
     CoordinateSystem2D(double XY);
     CoordinateSystem2D(double x, double y);
     CoordinateSystem2D(double x, double y, double originX, double originY);
@@ -165,6 +170,10 @@ class CoordinateSystem3D : public CoordinateSystem2D {
   public: //Public constructors
 
 #ifdef CARTESIAN_IS_3D_STANDARD
+
+    CoordinateSystem3D(Dmath::sVec2f vec);
+    CoordinateSystem3D(Dmath::sVec2i vec);
+
     CoordinateSystem3D(double XYZ);
     CoordinateSystem3D(double X, double Y, double Z);
     CoordinateSystem3D(double X, double Y, double Z, double originX, double originY, double originZ);

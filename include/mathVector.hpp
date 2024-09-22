@@ -30,27 +30,7 @@ class Vec2D : public CoordinateSystem2D {
     Vec2D operator-(const Vec2D& Mathvector);                     //Basic Vector subtractions
     double operator*(const Vec2D& Mathvector);                    //Calculates the dotproduct of two vectors
 
-#ifdef DMATRIX //Mathmatical operations between vectors and matrices
 
-    Dmath::Matrix addToMatrix(Dmath::Matrix matrix){
-
-    }
-
-    Dmath::Matrix subtractMatrix(){
-
-    }
-
-    Dmath::Matrix operator+(Dmath::Matrix matrix){
-      
-    }
-
-    Dmath::Matrix operator-(Dmath::Matrix matrix){
-      
-    }
-
-    
-
-#endif //DMATRIX
 
   public: //Public Constructors
 #ifdef CARTESIAN_IS_2D_STANDARD
@@ -104,7 +84,7 @@ class Vec2D : public CoordinateSystem2D {
 
 
 
-    public: //vector transformations
+  public: //vector transformations
 
    
     void moveVectorX(double move);                        // Moves the vector in a specific x-direction
