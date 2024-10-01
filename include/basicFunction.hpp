@@ -17,23 +17,23 @@ class BasicFunction {
 
   private: // private methods:
     virtual void createCurve();
-    std::function<double(double)> mainFunc;
+    singleVarFunction mainFunc;
     std::vector<double> fX;
 
-    BasicFunction(std::function<double(double)> mainFunc);
-    BasicFunction(std::function<double(double)> mainFunc, double resolution); // Constructor for polarfunctions
-    BasicFunction(std::function<double(double)> mainFunc, double systemStart, double systemStopp, double resolution);
+    BasicFunction(singleVarFunction mainFunc);
+    BasicFunction(singleVarFunction, double resolution); // Constructor for polarfunctions
+    BasicFunction(singleVarFunction, double systemStart, double systemStopp, double resolution);
 
   public:
-    static BasicFunction createBasicFunctionGraph(std::function<double(double)> mainFunc) { return BasicFunction(mainFunc); }
+    static BasicFunction createBasicFunctionGraph(singleVarFunction mainFunc) { return BasicFunction(mainFunc); }
 
-    static BasicFunction createCustomFunctionGraph(std::function<double(double)> mainFunc, double systemStart, double systemStopp,
+    static BasicFunction createCustomFunctionGraph(singleVarFunction mainFunc, double systemStart, double systemStopp,
                                                    double resolution) {
         return BasicFunction(mainFunc, systemStart, systemStopp, resolution);
     }
 
     // r(phi) =
-    static BasicFunction PolarFunction(std::function<double(double)> mainFunc, double resolution) { return BasicFunction(mainFunc, resolution); }
+    static BasicFunction PolarFunction(singleVarFunction mainFunc, double resolution) { return BasicFunction(mainFunc, resolution); }
 
     // Returns the number of zero points
     size_t numberOfZeroPoints();
