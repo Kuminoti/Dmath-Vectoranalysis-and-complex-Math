@@ -171,8 +171,8 @@ class CoordinateSystem3D : public CoordinateSystem2D {
 
 #ifdef CARTESIAN_IS_3D_STANDARD
 
-    CoordinateSystem3D(Dmath::sVec2f vec);
-    CoordinateSystem3D(Dmath::sVec2i vec);
+    CoordinateSystem3D(Dmath::sVec3f vec);
+    CoordinateSystem3D(Dmath::sVec3i vec);
 
     CoordinateSystem3D(double XYZ);
     CoordinateSystem3D(double X, double Y, double Z);

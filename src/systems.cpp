@@ -254,6 +254,32 @@ CoordinateSystem2D::CoordinateSystem2D(double radius, double phi) {
 
 #ifdef CARTESIAN_IS_3D_STANDARD
 
+CoordinateSystem3D::CoordinateSystem3D(Dmath::sVec3f vec){
+    this->X = static_cast<double>(vec.X);
+    this->Y = static_cast<double>(vec.Y);
+    this->Z = static_cast<double>(vec.Z);
+    this->aX = 0;
+    this->aY = 0;
+    this->aZ = 0;
+    this->originX = 0;
+    this->originY = 0;
+    this->originZ = 0;
+}
+
+
+
+CoordinateSystem3D::CoordinateSystem3D(Dmath::sVec3i vec){
+    this->X = static_cast<double>(vec.X);
+    this->Y = static_cast<double>(vec.Y);
+    this->Z = static_cast<double>(vec.Z);
+    this->aX = 0;
+    this->aY = 0;
+    this->aZ = 0;
+    this->originX = 0;
+    this->originY = 0;
+    this->originZ = 0;
+}
+
 CoordinateSystem3D::CoordinateSystem3D(double XYZ) : CoordinateSystem2D(XYZ)  {
     this->X = XYZ;
     this->Y = XYZ;
