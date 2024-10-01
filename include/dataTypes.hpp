@@ -63,7 +63,7 @@ struct Duo {
         this->two = this->one;
         this->one = val;
     }
-    virtual ~Duo();
+    virtual ~Duo() = default;
 };
 
 
