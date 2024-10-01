@@ -7,12 +7,12 @@ void Dmath::BasicFunction::createCurve(){
     }
 }
 
-Dmath::BasicFunction::BasicFunction(std::function<double(double)> mainFunc){
+Dmath::BasicFunction::BasicFunction(singleVarFunction mainFunc){
     this->numberOfElements = static_cast<size_t>((this->systemStopp - this->systemStart)/this->resolution);
     this->createCurve();
 }
 
-Dmath::BasicFunction::BasicFunction(std::function<double(double)> mainFunc, double systemStart,double systemStopp, double resolution){
+Dmath::BasicFunction::BasicFunction(singleVarFunction mainFunc, double systemStart,double systemStopp, double resolution){
     this->systemStart = systemStart;
     this->systemStopp = systemStopp;
     this->resolution  = resolution;
