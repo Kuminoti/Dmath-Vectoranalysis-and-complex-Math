@@ -5,6 +5,7 @@ bin/
 lib/
 build/
 include/test/
+experimental/
 
 #cmake stuff
 CMakeLists.txt.user
@@ -29,6 +30,6 @@ Documentation/
 test.exe
 testing.exe
 
-experimental/
+
 combef.txt
 experiments.cpp

@@ -21,7 +21,7 @@
     //Physical and mathmatical constants, and constants
     #define ZERO_KELVINK -273.17   //0Kelvin in celsius degrees
     #define ZERO_KELVINC  273.17   //0Degrees Celsius in Kelvin
-    #define ANALYSIS_RES  0.0001   //the standard resolution for clculating the area or slope aof a function
+    #define ANALYSIS_RES  0.00001   //the standard resolution for clculating the area or slope aof a function
 
 
     #define PI         3.14159265358979323846

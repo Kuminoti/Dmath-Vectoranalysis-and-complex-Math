@@ -14,7 +14,7 @@
 NAMESPACESTART
 
 
-class Vec2D : public CoordinateSystem2D {
+class Vec2D : public CoordinateSystem2D {                     //CoordinateSystem2D contains the actual coordinates for cartesian and polar systems
   private: //Private members
     double abs;                                              // The absolute value or lenght of a vector
     double distanceToZero;   
@@ -34,6 +34,7 @@ class Vec2D : public CoordinateSystem2D {
 
   public: //Public Constructors
 #ifdef CARTESIAN_IS_2D_STANDARD
+    Vec2D() = default;
     Vec2D(double XY);                                        // creates a Vector with the same x and y value
     Vec2D(double X, double Y);                                // basic x and y vector
     Vec2D(double X, double Y, double originX, double originY);  // crates a vector with a specific non zero startpoint
