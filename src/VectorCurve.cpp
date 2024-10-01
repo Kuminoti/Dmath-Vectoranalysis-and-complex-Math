@@ -20,31 +20,31 @@ std::vector<Dmath::Vec2D> Dmath::VectorCurve2D::createVectorialCurve(){
 
 // Constructors
 
-Dmath::VectorCurve2D::VectorCurve2D(std::function<double(double)> xFunc,std::function<double(double)> yFunc)
+Dmath::VectorCurve2D::VectorCurve2D(singleVarFunction xFunc,singleVarFunction yFunc)
     : VectorAnalysis2D(xFunc,yFunc) {
     this->mainCurve = this->createVectorialCurve();
 }
 
-Dmath::VectorCurve2D::VectorCurve2D(std::function<double(double)> xFunc,std::function<double(double)> yFunc, double start, double stopp, double res)
+Dmath::VectorCurve2D::VectorCurve2D(singleVarFunction xFunc, singleVarFunction yFunc, double start, double stopp, double res)
     : VectorAnalysis2D(xFunc,yFunc,start,stopp,res){
     this->mainCurve = this->createVectorialCurve();   
 }
 
-Dmath::VectorCurve2D::VectorCurve2D(std::function<double(double)> xFunc,std::function<double(double)> yFunc, double start, double stopp, double res, std::vector<Dmath::Vec2D> mainCurve) : 
+Dmath::VectorCurve2D::VectorCurve2D(singleVarFunction xFunc,singleVarFunction yFunc, double start, double stopp, double res, std::vector<Dmath::Vec2D> mainCurve) : 
 VectorAnalysis2D(xFunc,yFunc,start,stopp,res){
     this->mainCurve = mainCurve;
 }
 
-Dmath::VectorCurve2D::VectorCurve2D(std::function<double(double)> xFunc,std::function<double(double)> yFunc, double start, double stopp, double res, std::vector<Dmath::Vec2D> mainCurve, double rotation) : 
+Dmath::VectorCurve2D::VectorCurve2D(singleVarFunction xFunc,singleVarFunction yFunc, double start, double stopp, double res, std::vector<Dmath::Vec2D> mainCurve, double rotation) : 
 VectorAnalysis2D(xFunc,yFunc,start,stopp,res,rotation){
     this->mainCurve = mainCurve;
 }
 
-Dmath::VectorCurve2D Dmath::VectorCurve2D::createStandardCurve(std::function<double(double)> funcX,std::function<double(double)> funcY ){
+Dmath::VectorCurve2D Dmath::VectorCurve2D::createStandardCurve(singleVarFunction funcX,singleVarFunction funcY ){
     return Dmath::VectorCurve2D(funcX,funcY);
 }
 
-Dmath::VectorCurve2D Dmath::VectorCurve2D::createCustomCurve(std::function<double(double)> funcX,std::function<double(double)> funcY,double start,double stopp,double res ){
+Dmath::VectorCurve2D Dmath::VectorCurve2D::createCustomCurve(singleVarFunction funcX,singleVarFunction funcY,double start,double stopp,double res ){
     return Dmath::VectorCurve2D(funcX,funcY,start,stopp,res);
 }
 

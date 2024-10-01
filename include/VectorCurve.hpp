@@ -38,17 +38,17 @@ class VectorCurve2D : public VectorAnalysis2D{
     std::vector<Dmath::Vec2D> mainCurve;
 
     //Constructos for sinmple parametric Vector curves (tested)
-    VectorCurve2D(std::function<double(double)> xFunc,std::function<double(double)> yFunc);
-    VectorCurve2D(std::function<double(double)> xFunc,std::function<double(double)> yFunc, double start, double stopp, double res);
+    VectorCurve2D(singleVarFunction xFunc,singleVarFunction yFunc);
+    VectorCurve2D(singleVarFunction xFunc,singleVarFunction yFunc, double start, double stopp, double res);
 
     //Constructos for sinmple parametric Vector curves (not fully tested)
-    VectorCurve2D(std::function<double(double)> xFunc,std::function<double(double)> yFunc, double start, double stopp, double res, std::vector<Dmath::Vec2D> mainCurve);
-    VectorCurve2D(std::function<double(double)> xFunc,std::function<double(double)> yFunc, double start, double stopp, double res, std::vector<Dmath::Vec2D> mainCurve, double rotation);
+    VectorCurve2D(singleVarFunction xFunc,singleVarFunction yFunc, double start, double stopp, double res, std::vector<Dmath::Vec2D> mainCurve);
+    VectorCurve2D(singleVarFunction xFunc,singleVarFunction yFunc, double start, double stopp, double res, std::vector<Dmath::Vec2D> mainCurve, double rotation);
 
   public:
     //Create a parametric Vector curve (tested)
-    static VectorCurve2D createStandardCurve(std::function<double(double)> funcX,std::function<double(double)> funcY );
-    static VectorCurve2D createCustomCurve(std::function<double(double)> funcX, std::function<double(double)> funcY, double start, double stopp, double res );
+    static VectorCurve2D createStandardCurve(singleVarFunction funcX, singleVarFunction funcY );
+    static VectorCurve2D createCustomCurve(singleVarFunction funcX,   singleVarFunction funcY, double start, double stopp, double res );
     
     //Getters (tested)
     Dmath::Vec2D getVectorFromFunction(double vecX, double vecY);   //Returns a vector calculated from the two functions
