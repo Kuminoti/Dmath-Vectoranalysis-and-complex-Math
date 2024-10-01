@@ -24,10 +24,10 @@ class Vec2D : public CoordinateSystem2D {
 
   public: // Basic operrator overloading:
     
-    Vec2D operator*(const double scalarValue);
-    Vec2D operator/(const double scalarValue);                    //divides all components of the Vector with the scalar value and returns it
-    Vec2D operator+(const Vec2D& Mathvector);                     //Basic Vector addition
-    Vec2D operator-(const Vec2D& Mathvector);                     //Basic Vector subtractions
+    Vec2D  operator*(const double scalarValue);
+    Vec2D  operator/(const double scalarValue);                    //divides all components of the Vector with the scalar value and returns it
+    Vec2D  operator+(const Vec2D& Mathvector);                     //Basic Vector addition
+    Vec2D  operator-(const Vec2D& Mathvector);                     //Basic Vector subtractions
     double operator*(const Vec2D& Mathvector);                    //Calculates the dotproduct of two vectors
 
 
