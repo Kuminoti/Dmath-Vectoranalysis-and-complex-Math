@@ -8,9 +8,15 @@
 NAMESPACESTART
 class VectorSurface : public VectorAnalysis3D{
   private:
-    std::function<double(double, double)> xFunc;
-    std::function<double(double, double)> yFunc;
-    std::function<double(double, double)> zFunc;
+
+    /* Doublevarfunction is a typedef for std::function<double(double,double)>
+       it's defined in datatypes.hpp and is used to define mathmatical functions
+      example: f(x,y) = x + y
+      => singleVarFunction test = [](double x, double y) ->double { return x+y; }
+    */
+    Dmath::doubleVarFunction xFunc;
+    Dmath::doubleVarFunction yFunc;
+    Dmath::doubleVarFunction zFunc;
 
     std::vector<Dmath::Vec3D> mainSurface;
     std::vector<Dmath::Vec3D> surfaceNormals;
@@ -22,15 +28,15 @@ class VectorSurface : public VectorAnalysis3D{
 
     void createVectorSurface();
 
-    VectorSurface(std::function<double(double, double)> xFunc, std::function<double(double, double)> yFunc, std::function<double(double, double)> zFunc, double systemStart, double systemStopp, double resolution);
+    VectorSurface(doubleVarFunction xFunc, doubleVarFunction yFunc, doubleVarFunction zFunc, double systemStart, double systemStopp, double resolution);
 
 
     double integrateSurfaceArea();
 
   public:
-    static VectorSurface createStandardSurface(std::function<double(double, double)> xFunc, std::function<double(double, double)> yFunc, std::function<double(double, double)> zFunc);
+    static VectorSurface createStandardSurface(doubleVarFunction xFunc, doubleVarFunction yFunc, doubleVarFunction zFunc);
 
-    static VectorSurface createCustomSurface(std::function<double(double, double)> xFunc, std::function<double(double, double)> yFunc,  std::function<double(double, double)> zFunc, double systemStart, double systemStopp, double resolution);
+    static VectorSurface createCustomSurface(doubleVarFunction xFunc, doubleVarFunction yFunc,  doubleVarFunction zFunc, double systemStart, double systemStopp, double resolution);
 
     void calculateSurfaceNormals();
 

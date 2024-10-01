@@ -2,7 +2,7 @@
 
 
 
-Dmath::VectorSurface::VectorSurface(std::function<double(double, double)> xFunc, std::function<double(double, double)> yFunc, std::function<double(double, double)> zFunc, double systemStart, double systemStopp, double resolution) :
+Dmath::VectorSurface::VectorSurface(doubleVarFunction xFunc, doubleVarFunction yFunc, doubleVarFunction zFunc, double systemStart, double systemStopp, double resolution) :
     VectorAnalysis3D(systemStart,systemStopp,resolution){
     this->xFunc = xFunc;
     this->yFunc = yFunc;
@@ -24,13 +24,12 @@ double Dmath::VectorSurface::integrateSurfaceArea() {
 }
 
 
-Dmath::VectorSurface Dmath::VectorSurface::createCustomSurface(std::function<double(double, double)> xFunc, std::function<double(double, double)> yFunc,
-    std::function<double(double, double)> zFunc, double systemStart, double systemStopp, double resolution){
+Dmath::VectorSurface Dmath::VectorSurface::createCustomSurface(doubleVarFunction xFunc, doubleVarFunction yFunc,
+    doubleVarFunction zFunc, double systemStart, double systemStopp, double resolution){
     return VectorSurface(xFunc,yFunc,zFunc,systemStart,systemStopp,resolution);
 }
 
-Dmath::VectorSurface Dmath::VectorSurface::createStandardSurface(std::function<double(double, double)> xFunc, std::function<double(double, double)> yFunc,
-    std::function<double(double, double)> zFunc){
+Dmath::VectorSurface Dmath::VectorSurface::createStandardSurface(doubleVarFunction xFunc, doubleVarFunction yFunc, doubleVarFunction zFunc){
     return VectorSurface(xFunc,yFunc,zFunc,ZERO,TWOPI,STDRES);
 }
 
