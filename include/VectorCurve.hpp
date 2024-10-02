@@ -81,6 +81,7 @@ class VectorCurve2D : public VectorAnalysis2D{
     //operator overloading:
     inline VectorCurve2D operator+ (VectorCurve2D curve){ return addCurve(curve);      }
     inline VectorCurve2D operator- (VectorCurve2D curve){ return subtractCurve(curve); }
+    inline Dmath::Vec2D operator[](size_t index)        { return this->mainCurve[index]; }
     
     double curveLenght();
     double calculateSlopeOnPoint(double t);
