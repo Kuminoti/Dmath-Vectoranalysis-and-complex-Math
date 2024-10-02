@@ -28,7 +28,27 @@ private: //Private members
     
     
 
-private: //Private methods
+private: //Private methods and helper functions
+
+
+    Matrix<mat> getSubMatrix(uint8_t excludingRow, uint8_t excludingCol) const {
+        Matrix<mat> subMatrix(this->elementsRow - 1, this->elementsColumn - 1);
+        uint8_t subMatrixRow = 0;
+        uint8_t subMatrixCol = 0;
+
+        for (uint8_t row = 0; row < this->elementsRow; row++) {
+            if (row == excludingRow) continue;
+            subMatrixCol = 0;
+            for (uint8_t col = 0; col < this->elementsColumn; col++) {
+                if (col == excludingCol) continue;
+                subMatrix.setElement(subMatrixRow + 1, subMatrixCol + 1, this->getElement(row + 1, col + 1));
+                subMatrixCol++;
+            }
+            subMatrixRow++;
+        }
+
+        return subMatrix;
+    }
 
 
     bool checkMatrixSizes(Matrix matrixOne, Matrix matrixTwo){
@@ -187,6 +207,34 @@ public: //Macro dependend code
     }
     
 
+public:
+
+    mat determinant() const {
+        if (!this->squaredMatrix) {
+            std::cerr << "Determinant is undefined for non-square matrices. Returning 0." << std::endl;
+            return 0; 
+        }
+
+        if (this->elementsRow == 1) {
+            return this->mainMatrix[0][0]; // 1x1-Matrix
+        }
+
+        if (this->elementsRow == 2) {
+            return this->mainMatrix[0][0] * this->mainMatrix[1][1] - this->mainMatrix[0][1] * this->mainMatrix[1][0];
+        }
+
+        mat det = 0;
+        for (uint8_t col = 0; col < this->elementsColumn; col++) {
+            Matrix<mat> subMatrix = this->getSubMatrix(0, col); // Untermatrix erstellen
+            det += (col % 2 == 0 ? 1 : -1) * this->mainMatrix[0][col] * subMatrix.determinant();
+        }
+
+        return det;
+    }
+
+
+
+    
 
 };
 
