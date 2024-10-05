@@ -3,8 +3,8 @@
 #ifndef SYSTEMS_H
 #define SYSTEMS_H
 
-#include"macros.hpp"
-#include"dataTypes.hpp"
+#include"macros.hpp"   //Contains macros and constants for this project
+#include"dataTypes.hpp" //Contains library specific datatypes
 
 /* 
  * This file is used to create a base and an abstraction for the other classes and systems.
@@ -98,6 +98,7 @@ class CoordinateSystem2D {
     CoordinateSystem2D(Dmath::sVec2f vec);
     CoordinateSystem2D(Dmath::sVec2i vec);
 
+    CoordinateSystem2D() = default;
     CoordinateSystem2D(double XY);
     CoordinateSystem2D(double x, double y);
     CoordinateSystem2D(double x, double y, double originX, double originY);

@@ -41,7 +41,45 @@ double Vec2D::operator*(const Vec2D &Mathvector) {
   return this->dotProduct(Mathvector);
 }
 
+bool Vec2D::operator==(Vec2D& Mathvector) {
+  return (this->getX() == Mathvector.getX()) && (this->getY() == Mathvector.getY());
+}
 
+bool Vec2D::operator!=(Vec2D& Mathvector){
+  if(this->getX() != Mathvector.getX() || this->getY() != Mathvector.getY()){
+    return true;
+  }
+  return false;
+}
+
+
+bool Vec2D::operator>=(Vec2D& Mathvector){
+  if(this->getAbs() >= Mathvector.getAbs()){
+    return true;
+  }
+  return false;
+}
+
+bool Vec2D::operator<=(Vec2D& Mathvector){
+  if(this->getAbs() <= Mathvector.getAbs()){
+    return true;
+  }
+  return false;
+}
+
+bool Vec2D::operator<(Vec2D& Mathvector){
+  if(this->getAbs() < Mathvector.getAbs() ){
+    return true;
+  }
+  return false;
+}
+
+bool Vec2D::operator>(Vec2D& Mathvector){
+  if(this->getAbs() > Mathvector.getAbs() ){
+    return true;
+  }
+  return false;
+}
 
 // Calculate cosine of the angle between two vectors
 double cosAngle(double dotProduct, double absProduct) {
@@ -379,6 +417,52 @@ double Vec3D::operator*(Vec3D &Mathvector) {
 }
 
 
+bool Vec3D::operator==(Vec3D& Mathvector) {
+  return (this->getX() == Mathvector.getX()) && (this->getY() == Mathvector.getY()
+          && this->getZ() == Mathvector.getZ() );
+}
+
+bool Vec3D::operator!=(Vec3D& Mathvector){
+  if(this->getX() != Mathvector.getX() || this->getY() != Mathvector.getY() || this->getZ() != Mathvector.getZ()){
+    return true;
+  }
+  return false;
+}
+
+
+bool Vec3D::operator>=(Vec3D& Mathvector){
+  if(this->getAbs() >= Mathvector.getAbs()){
+    return true;
+  }
+  return false;
+}
+
+bool Vec3D::operator<=(Vec3D& Mathvector){
+  if(this->getAbs() <= Mathvector.getAbs()){
+    return true;
+  }
+  return false;
+}
+
+bool Vec3D::operator<(Vec3D& Mathvector){
+  if(this->getAbs() < Mathvector.getAbs() ){
+    return true;
+  }
+  return false;
+}
+
+bool Vec3D::operator>(Vec3D& Mathvector){
+  if(this->getAbs() > Mathvector.getAbs() ){
+    return true;
+  }
+  return false;
+}
+
+
+
+
+
+
 //Macro dependent code:
 
 #ifdef SYSTEM_READY
@@ -418,9 +502,6 @@ Vec3D::Vec3D(double radius, double phi, double height)
 }
 #endif
 
-Vec3D::Vec3D() : CoordinateSystem3D() {
-    
-}
 
 
 #ifdef CARTESIAN_IS_3D_STANDARD

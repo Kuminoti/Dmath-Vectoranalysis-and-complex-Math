@@ -231,6 +231,7 @@ double Dmath::VectorCurve3D::calculateSlopeOnPoint(double t) {
 }
 
 Dmath::Vec2D Dmath::VectorCurve2D::tangentVector(double t){
+    
     if(t > this->systemStopp || t < this->systemStart){
 
 #ifdef WORKING
@@ -241,6 +242,10 @@ Dmath::Vec2D Dmath::VectorCurve2D::tangentVector(double t){
 
         return Dmath::Vec2D::zeroVector();
     }
+
+    const double originX = this->xFunc(t - this->resolution);
+    const double originY = this->yFunc(t - this->resolution);
+
     double h = 0.000001; 
     double x_t_plus_h = this->xFunc(t + h);
     double x_t_minus_h = this->xFunc(t - h);
@@ -250,7 +255,7 @@ Dmath::Vec2D Dmath::VectorCurve2D::tangentVector(double t){
     double dx = (x_t_plus_h - x_t_minus_h) / (2 * h); 
     double dy = (y_t_plus_h - y_t_minus_h) / (2 * h); 
 
-    return Dmath::Vec2D(dx, dy); 
+    return Dmath::Vec2D(dx, dy, originX,originY); 
 }
 
 Dmath::Vec2D Dmath::VectorCurve2D::tangetUnitVector(double t){
