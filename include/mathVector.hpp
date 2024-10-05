@@ -1,14 +1,21 @@
 #pragma once
 
 #ifndef VECTORMATH_H
-#define VECTORMATH_H
-#include "systems.hpp"
+#define VECTORMATH_H //include guard
 
-#ifdef SYSTEM_READY
+/*
+ * File: include/mathVector.hpp
+ * This File contains the classes for 2D and 3D Vectors and all importent mathmatical
+ * and geometric operations
+ * 
+ */
 
-#ifdef MATRIX_HPP
-  #define DMATRIX
-#endif
+
+#include "systems.hpp" //Vec2D and Vec3D inherit form Coordinatesystem2D and ...3D
+
+#ifdef SYSTEM_READY //Checks if all the right coordinatesystem is selected
+
+
 
 #include"systemGeometry.hpp"
 NAMESPACESTART
@@ -24,24 +31,32 @@ class Vec2D : public CoordinateSystem2D {                     //CoordinateSystem
 
   public: // Basic operrator overloading:
     
+    //Mathmatical operators
     Vec2D  operator*(const double scalarValue);
     Vec2D  operator/(const double scalarValue);                    //divides all components of the Vector with the scalar value and returns it
     Vec2D  operator+(const Vec2D& Mathvector);                     //Basic Vector addition
     Vec2D  operator-(const Vec2D& Mathvector);                     //Basic Vector subtractions
     double operator*(const Vec2D& Mathvector);                    //Calculates the dotproduct of two vectors
 
+    //Logic operators
+    inline bool operator==(Vec2D& Mathvector);   // == checks if the x and y coordinates are the same
+    inline bool operator!=(Vec2D& Mathvector);   // != checks if the x and y coordinates are diffrent
+    inline bool operator>=(Vec2D& Mathvector);   // >= checks if the lenght of the vector is greater or equal
+    inline bool operator<=(Vec2D& Mathvector);   // <= checks lenght ...
+    inline bool operator<(Vec2D& Mathvector);    // lenght1 < lenght2 ... 
+    inline bool operator>(Vec2D& Mathvector);    // ""
 
 
   public: //Public Constructors
 #ifdef CARTESIAN_IS_2D_STANDARD
     Vec2D() = default;
-    Vec2D(double XY);                                        // creates a Vector with the same x and y value
-    Vec2D(double X, double Y);                                // basic x and y vector
+    Vec2D(double XY);                                           // creates a Vector with the same x and y value
+    Vec2D(double X, double Y);                                  // basic x and y vector
     Vec2D(double X, double Y, double originX, double originY);  // crates a vector with a specific non zero startpoint
 #endif // CARTESIAN_IS_2D_STANDARD
 
 #ifdef POLAR_IS_STANDARD
-    Vec2D(double radius, double phi);                          // Creates a Vector in a polar coordinatesystem
+    Vec2D(double radius, double phi);                           // Creates a Vector in a polar coordinatesystem
 #endif // POLAR_IS_STANDARD
 
    virtual ~Vec2D() = default;
@@ -70,6 +85,7 @@ class Vec2D : public CoordinateSystem2D {                     //CoordinateSystem
     double calcAngle(Vec2D Mathvector);                   // Calculates the angle between 2 vectors
     double distance(Vec2D Mathvector);                    // Calculates the distance between vectors
     void normalize();                                     // Divides the vectors components though its length
+
     // You can use methods instead of overloaded operators
     Vec2D add(Vec2D Mathvector);                          // Adding 2 vectors
     Vec2D subtract(Vec2D Mathvector);                     // Subtract 2 vectors
@@ -123,10 +139,16 @@ class Vec3D : public CoordinateSystem3D {
     double operator*(Vec3D& Mathvector);
 
 
+    inline bool operator==(Vec3D& Mathvector);   // == checks if the x and y coordinates are the same
+    inline bool operator!=(Vec3D& Mathvector);   // != checks if the x and y coordinates are diffrent
+    inline bool operator>=(Vec3D& Mathvector);   // >= checks if the lenght of the vector is greater or equal
+    inline bool operator<=(Vec3D& Mathvector);   // <= checks lenght ...
+    inline bool operator<(Vec3D& Mathvector);    // lenght1 < lenght2 ... 
+    inline bool operator>(Vec3D& Mathvector);
+
   public: // Public Constructors
 
-    //NULL vector
-    Vec3D();
+   Vec3D() = default;
 
 #ifdef CARTESIAN_IS_3D_STANDARD
     Vec3D(double XYZ);
@@ -145,21 +167,6 @@ class Vec3D : public CoordinateSystem3D {
 
 
 
-//Code for vectorfields
-#ifdef VECTORFIELDS_HPP
-  private:
-    std::function<double(double)> xVectorFieldLineOne;
-    std::function<double(double)> yVectorFieldLineOne;
-
-    std::function<Dmath::Duo(double, double)> xVectorFieldLineTwo;
-    std::function<Dmath::Duo(double, double)> yVectorFieldLineTwo;
-
-    Vec2D(std::function<double(double)> funcX, std::function<double(double)> funcY);
-
-    Vec2D(std::function<Dmath::Duo<double,double>(double,double)> funcX, std::function<Dmath::Duo<double,double>(double,double)> funcY);
-
-
-#endif //VECTORFIELDS_HPP
 
 
 
