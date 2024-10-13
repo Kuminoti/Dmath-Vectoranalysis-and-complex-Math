@@ -348,6 +348,21 @@ double Dmath::VectorCurve2D::MaximumX(){
     return maxX;
 }
 
+
+bool Dmath::VectorCurve2D::existsIn(Dmath::Vec2D vec){
+    bool exsitance = false;
+    size_t lenght = this->numberOfElements;
+    for(size_t i = 0; i<lenght; i++){
+        if(this->mainCurve[i].getX() == vec.getX() &&
+           this->mainCurve[i].getY() == vec.getY() &&
+           this->mainCurve[i].getOriginX() == vec.getOriginX() &&
+           this->mainCurve[i].getOriginY() == vec.getOriginY()){
+            exsitance = true;
+        }
+    }
+    return exsitance;
+}
+
 double Dmath::VectorCurve2D::calculateSlopeOnPoint(double t){
     Dmath::Vec2D vec = this->tangentVector(t);
     double result = 0;
@@ -508,7 +523,11 @@ void Dmath::VectorCurve2D::rotateThisCurve(double radiants){
 }
 
 
-
+// void Dmath::VectorCurve2D::addToAllX(double xPlusN){
+//     for(size_t i = 0; i<this->numberOfElements; i++){
+//         this->mainCurve[i].add
+//     }
+// }
 
 
 

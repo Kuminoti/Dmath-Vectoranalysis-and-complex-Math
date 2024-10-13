@@ -5,9 +5,48 @@
 using namespace Dmath;
 // Helper functions:
 
+// Calculate cosine of the angle between two vectors
+double cosAngle(double dotProduct, double absProduct) {
+  double result = 0;
+  if (absProduct == 0) {
+#ifdef WORKING
+    std::cerr << "Vector abs is Zero" << std::endl;
+#endif //Working
+    result = 0;
+  } else {
+    result = dotProduct / absProduct;
+  }
+  return result;
+}
+
+double angleFromCos(double cosTheta) {
+  double result = 0;
+  if (cosTheta > 1 || cosTheta < -1) {
+#ifdef WORKING
+    std::cerr << "Error: cos(theta) wrong value" << std::endl;
+#endif
+    result = 0;
+  } else {
+
+#ifdef STANDARD_ANGLE_UNIT_DEG
+    result = std::acos(cosTheta) * 180 / PI;
+#endif
+
+#ifdef STANDARD_ANGLE_UNIT_RAD
+    result = std::acos(cosTheta);
+#endif
+  }
+  return result;
+}
+
+
 //Operator overloading
 
-Vec2D Vec2D::operator/( const double scalarValue){
+#pragma region 2D-OPERATORS
+
+
+//Division by a scalar divides all components of the vector by a given Value
+Vec2D Vec2D::operator/( const double scalarValue){ 
   if(scalarValue == 0){
     // Division by 0 is undefined
     return Dmath::Vec2D::zeroVector();
@@ -17,6 +56,8 @@ Vec2D Vec2D::operator/( const double scalarValue){
   return Vec2D(valueX, valueY);
 }
 
+
+//Basic vector addition
 Vec2D Vec2D::operator+(const Vec2D &Mathvector) {
   double resultX = this->X + Mathvector.X;
   double resultY = this->Y + Mathvector.Y;
@@ -24,6 +65,8 @@ Vec2D Vec2D::operator+(const Vec2D &Mathvector) {
   return Vec2D(resultX, resultY);
 }
 
+
+//Basic vector subtraction
 Vec2D Vec2D::operator-(const Vec2D &Mathvector) {
   double resultX = this->X - Mathvector.X;
   double resultY = this->Y - Mathvector.Y;
@@ -37,8 +80,144 @@ Vec2D Vec2D::operator*(const double scalarValue){
   return newVec;
 }
 
+
+//Multiplikation of two vectos via the operator will return the dotproduct of the vectors
 double Vec2D::operator*(const Vec2D &Mathvector) {
   return this->dotProduct(Mathvector);
+}
+
+
+//Adds one to every component
+void Vec2D::operator++(){
+  this->X += 1;
+  this->X += 1;
+  this->ValidManipulation();
+}
+
+//subtracts one to every component
+void Vec2D::operator--(){
+  this->X -= 1;
+  this->X -= 1;
+  this->ValidManipulation();
+}
+
+
+
+/* Mathmatical operations with Dmath::Duo's:
+ * The first element of the duo (.one) is used to calculate 
+ * the new X value of the vector.
+ * 
+ * The second element is used to calculate the new Y of the vector 
+ */
+
+
+void Vec2D::operator+=(Dmath::Duo<double, double> data){
+  this->X += data.one;
+  this->Y += data.two;
+  this->ValidManipulation();
+}
+
+
+void Vec2D::operator-=(Dmath::Duo<double, double> data){
+  this->X -= data.one;
+  this->Y -= data.two;
+  this->ValidManipulation();
+}
+
+void Vec2D::operator*=(Dmath::Duo<double, double> data){
+  this->X *= data.one;
+  this->Y *= data.two;
+  this->ValidManipulation();
+}
+
+void Vec2D::operator/=(Dmath::Duo<double, double> data){
+  this->X /= data.one;
+  this->Y /= data.two;
+  this->ValidManipulation();
+}
+
+
+
+//almost the same as the Duo example
+void Vec2D::operator+=(Dmath::sVec2f vec){
+  this->X += vec.X;
+  this->Y += vec.Y;
+  this->ValidManipulation();
+}
+
+void Vec2D::operator-=(Dmath::sVec2f vec){
+  this->X -= vec.X;
+  this->Y -= vec.Y;
+  this->ValidManipulation();
+}
+
+void Vec2D::operator*=(Dmath::sVec2f vec){
+  this->X *= vec.X;
+  this->Y *= vec.Y;
+  this->ValidManipulation();
+}
+
+
+//Be carefull not to divide by 0
+void Vec2D::operator/=(Dmath::sVec2f vec){
+  if(vec.X == 0  || vec.Y == 0){
+    std::cerr << "error division by zero " << __FILE__ << __LINE__ <<std::endl;
+    return;
+  }
+  this->X /= vec.X;
+  this->Y /= vec.Y;
+  this->ValidManipulation();
+}
+
+void Vec2D::operator+=(Vec2D vec){
+  this->X += vec.X;
+  this->Y += vec.Y;
+  this->ValidManipulation();
+}
+
+void Vec2D::operator-=(Vec2D vec){
+  this->X -= vec.X;
+  this->Y -= vec.Y;
+  this->ValidManipulation();
+}
+
+void Vec2D::operator*=(Vec2D vec){
+  this->X *= vec.X;
+  this->Y *= vec.Y;
+  this->ValidManipulation();
+}
+
+void Vec2D::operator/=(Vec2D vec){
+  this->X /= vec.X;
+  this->Y /= vec.Y;
+  this->ValidManipulation();
+}
+
+
+
+
+void Vec2D::operator+=(double scalar){
+  this->X += scalar;
+  this->Y += scalar;
+  this->ValidManipulation();
+}
+
+void Vec2D::operator-=(double scalar){
+  this->X -= scalar;
+  this->Y -= scalar;
+  this->ValidManipulation();
+}
+
+void Vec2D::operator*=(double scalar){
+  this->X *= scalar;
+  this->Y *= scalar;
+  this->ValidManipulation();
+}
+
+void Vec2D::operator/=(double scalar){
+  this->X /= scalar;
+  this->Y /= scalar;
+  this->ValidManipulation();
 }
 
 bool Vec2D::operator==(Vec2D& Mathvector) {
@@ -81,39 +260,9 @@ bool Vec2D::operator>(Vec2D& Mathvector){
   return false;
 }
 
-// Calculate cosine of the angle between two vectors
-double cosAngle(double dotProduct, double absProduct) {
-  double result = 0;
-  if (absProduct == 0) {
-#ifdef WORKING
-    std::cerr << "Vector abs is Zero" << std::endl;
-#endif //Working
-    result = 0;
-  } else {
-    result = dotProduct / absProduct;
-  }
-  return result;
-}
+#pragma endregion
 
-double angleFromCos(double cosTheta) {
-  double result = 0;
-  if (cosTheta > 1 || cosTheta < -1) {
-#ifdef WORKING
-    std::cerr << "Error: cos(theta) wrong value" << std::endl;
-#endif
-    result = 0;
-  } else {
 
-#ifdef STANDARD_ANGLE_UNIT_DEG
-    result = std::acos(cosTheta) * 180 / PI;
-#endif
-
-#ifdef STANDARD_ANGLE_UNIT_RAD
-    result = std::acos(cosTheta);
-#endif
-  }
-  return result;
-}
 
 
 // void Vec2D::calcAbsXY(){
@@ -132,11 +281,11 @@ double angleFromCos(double cosTheta) {
 
 
 double Vec2D::distance(Vec2D Mathvector){
-  
-    double dx = std::abs(Mathvector.aX - this->aX);
-    double dy = std::abs(Mathvector.aY - this->aY);
-    double result =  std::sqrt(dx * dx + dy * dy);
-    return result;
+  //Calculates the euclidian distace with the Pythagorean theorem
+  double dx = std::abs(Mathvector.aX - this->aX);
+  double dy = std::abs(Mathvector.aY - this->aY);
+  double result =  std::sqrt(dx * dx + dy * dy);
+  return result;
 }
 
 double Vec2D::calcAngle(Vec2D Mathvector) {
@@ -173,10 +322,112 @@ void Vec2D::setPhi(double value) {
   this->polarToCartesian();
 }
 
+void Vec2D::setAll(double value){
+  this->X = value;
+  this->Y = value;
+  this->calcAbs();
+  this->cartesianToPolar();
+}
+
 void Vec2D::setRadius(double value) {
   this->radius = value;
   this->polarToCartesian();
 }
+
+void Vec2D::addToThis(double add){
+  this->X += add;
+  this->Y += add;
+  this->ValidManipulation();
+}
+
+void Vec2D::substractThis(double subtract){
+  this->X -= subtract;
+  this->Y -= subtract; 
+  this->ValidManipulation();
+}
+
+void Dmath::Vec2D::multipyThisBy(double factor){
+  this->X *= factor;
+  this->Y *= factor;
+  this->ValidManipulation();
+}
+
+
+
+void Vec2D::addToX(double add){
+  this->X+=add;
+  this->ValidManipulation();
+}
+
+void Vec2D::addToY(double add){
+  this->Y+=add;
+  this->ValidManipulation();
+}
+
+void Vec2D::subtractFromX(double subtract){
+  this->X-=subtract;
+  this->ValidManipulation();
+}
+
+void Vec2D::subtractFromY(double subtract){
+  this->Y-=subtract;
+  this->ValidManipulation();
+}
+
+void Vec2D::multiplyXBy(double factor){
+  this->X *= factor;
+  this->ValidManipulation();
+}
+
+void Vec2D::multiplyYBy(double factor){
+  this->Y *= factor;
+  this->ValidManipulation();
+}
+
+void Vec2D::divideXBy(double divBy){
+  this->X /= divBy;
+  this->ValidManipulation();
+}
+
+void Vec2D::divideYBy(double divBy){
+  this->Y /= divBy;
+  this->ValidManipulation();
+}
+
+void Vec2D::addXYEach(double xPlus, double yPlus){
+  this->X += xPlus;
+  this->X += yPlus;
+  this->ValidManipulation();
+}
+
+void Vec2D::multilpyXY(double xTimes, double yTimes){
+  this->X *= xTimes;
+  this->Y *= yTimes;
+  this->ValidManipulation();
+}
+
+void Vec2D::subtractXY(double xMinus, double yMinus){
+  this->X -= xMinus;
+  this->Y -= yMinus;
+  this->ValidManipulation();
+}
+
+
+void Vec2D::divideXYBy(double xDiv, double yDiv){
+  if(xDiv == 0 || yDiv == 0 ){
+    std::cerr << "error division by zero" << __FILE__ << __LINE__ <<std::endl;
+  }
+
+  this->X /= xDiv;
+  this->Y /= yDiv;
+  this->ValidManipulation();
+}
+
+
+
+
+
+
 
 
 
@@ -203,6 +454,16 @@ void Vec2D::moveVector(double moveX, double moveY){
 void Vec2D::calcAbs() {
   double result = this->mathHelper.pyth(this->X,this->Y);
   this->abs = result;
+}
+
+
+void Vec2D::ValidManipulation( ){
+
+  if(this->originX != 0 || this->originY != 0){
+    this->calcAbsXY();
+    this->calcDZ();
+  }
+  this->calcAbs();
 }
 
 void Vec2D::normalize(){

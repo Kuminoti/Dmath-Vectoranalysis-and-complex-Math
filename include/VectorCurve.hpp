@@ -50,7 +50,7 @@ class VectorCurve2D : public VectorAnalysis2D{
     static VectorCurve2D createStandardCurve(singleVarFunction funcX, singleVarFunction funcY );
     static VectorCurve2D createCustomCurve(singleVarFunction funcX,   singleVarFunction funcY, double start, double stopp, double res );
     
-    //Getters (tested)
+  public: //Getters (tested)
     Dmath::Vec2D getVectorFromFunction(double vecX, double vecY);   //Returns a vector calculated from the two functions
     Dmath::Vec2D getVectorFromPoint(double point);                  //Returns a vector on the point t
     Dmath::Vec2D getVectorFromStdVec(size_t index);                 //Returns a specific index of the std::vector
@@ -59,6 +59,7 @@ class VectorCurve2D : public VectorAnalysis2D{
      *The tangential vector at a point of a parameterized curve points in the direction of the tangent
      * to the curve at that point and represents the direction of local change of the curve at that point.
     */ 
+  public: //Getters spetialVectors
     Dmath::Vec2D tangentVector(double t);
 
     /*
@@ -76,9 +77,9 @@ class VectorCurve2D : public VectorAnalysis2D{
     Dmath::Vec2D principalNormalUnitVector(double t);
 
 
-    inline std::vector<Dmath::Vec2D> getMainCurve(){ return this->mainCurve;}
+    
 
-    //operator overloading:
+  public: //operator overloading:
     inline VectorCurve2D operator+ (VectorCurve2D curve){ return addCurve(curve);      }
     inline VectorCurve2D operator- (VectorCurve2D curve){ return subtractCurve(curve); }
     
@@ -103,15 +104,27 @@ class VectorCurve2D : public VectorAnalysis2D{
 
     void moveX(double moveX);
     void moveY(double moveY);
+    // void addToAllX(double xPlusN);
+    // void addToAllY(double yPlusN);
+    // void allXDividedBy(double dividedBy);
+    // void allYDividedBy(double dividedBy);
+    // void multiplyAllX(double xTimesN);
+    // void multiplyAllY(double xTimesN);
     void moveCurve(double moveX, double moveY);
-
+    
     void rotateThisCurve(double radiants);
     
 
-    size_t numberOfYZeroPoints();
-    size_t numberOfXZeroPoints();
+    size_t numberOfYZeroPoints(); //Calculates all points were the curve touches the y-achsis
+    size_t numberOfXZeroPoints(); //Calculates all points were the curve touches the x-achsis
 
     inline std::vector<Dmath::Vec2D> getCurve(){ return this->mainCurve; }
+    
+    bool existsIn(Dmath::Vec2D vec); //Checks if a specific Vector is inside the curve
+
+
+
+  public:
 }; //end of VectorCurve2D
     
 

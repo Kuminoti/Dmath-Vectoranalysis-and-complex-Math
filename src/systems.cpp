@@ -95,7 +95,10 @@ void CoordinateSystem2D::setOriginY(double move){
   this->calcDZ();
 }
 
-
+void CoordinateSystem2D::operator++(){
+    this->X += 1;
+    this->Y += 1;
+}
 
 
 void CoordinateSystem3D::cartesianToSphere() {
@@ -217,14 +220,25 @@ CoordinateSystem2D::CoordinateSystem2D(double XY){
 CoordinateSystem2D::CoordinateSystem2D(double x, double y) {
     this->X = x;
     this->Y = y;
+    this->t = 0;
     this->originX = 0;
     this->originY = 0;
+}
+
+CoordinateSystem2D::CoordinateSystem2D(double x, double y, double t) {
+    this->X = x;
+    this->Y = y;
+    this->t = 0;
+    this->originX = 0;
+    this->originY = 0;
+
 }
 
 CoordinateSystem2D::CoordinateSystem2D(double x, double y, double originX,
                                        double originY) {
     this->X = x;
     this->Y = y;
+    this->t = 0;
     this->originX = originX;
     this->originY = originY;
     this->calcAbsXY();
@@ -238,6 +252,7 @@ CoordinateSystem2D::CoordinateSystem2D(double radius, double phi, double originX
                                        double originY) {
     this->radius = radius;
     this->phi = phi;
+    this->t = 0;
     this->originX = originX;
     this->originY = originY;
     this->calcAbsXY();

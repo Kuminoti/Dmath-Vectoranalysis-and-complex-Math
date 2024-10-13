@@ -26,12 +26,14 @@
 class MathHelper{
   private:
   
-    double h  = 0.0001;           //Resolution for Derivative
-    double dx = 0.000000001;      //Stepps for Antiderivative
+    double h  = 0.0001;               //Resolution for Derivative
+    double dx = 0.000000001;          //Stepps for Antiderivative
     uint16_t numSteps = 1000;         //Stepps for the integral
     
 
   public:
+
+    
 
     inline double hyperbolicCotangent(double X){ return this->hyperbolicCosine(X)/this->hyperbolicSine(X); }
     inline double hyperbolicTangent(double X)  { return this->hyperbolicSine(X)/this->hyperbolicCosine(X); }
@@ -67,23 +69,33 @@ class MathHelper{
 #pragma region 2D-Coordinates
 // Coordinatesystem2D is used as an abstraction for other classes like the 2 main Vector classes
 class CoordinateSystem2D { 
-  protected:
-    void* NULLVECX = 0;
-    void* NULLVECY = 0;
 
-    double X;
-    double Y;
+  protected: // Protected members
 
-    double radius;   //Randius and angle for polar-coordinates 
-    double phi;      //Angle phi
+    void* NULLVECX = 0; //NULL vector x
+    void* NULLVECY = 0; //NULL vector y
 
-    double originX;  //
-    double originY;
+    double X = 0;
+    double Y = 0;
+    double t = 0;     //A parameter t can be used to represent time or can be used for parametriccurves
 
-    double aX;
-    double aY;
 
-    double distanceToZero;
+
+    //For vectors wich doesnt start at zero
+    double originX = 0;       //the "x-Start" of the vector, if the vector it self doesent start at zero  
+    double originY = 0;       //the "x-Start" of the vector, if the vector it self doesent start at zero
+
+    double aX;                //The absoulute xvalue, or the distence between 0 and the X value
+    double aY;                //The absoulute yvalue, or the distence between 0 and the Y value
+
+    double distanceToZero; 
+
+    double radius = 0;        //Randius and angle for polar-coordinates 
+    double phi = 0;           //Angle phi
+
+
+
+  
 
     void polarToCartesian();
     void cartesianToPolar();
@@ -101,6 +113,7 @@ class CoordinateSystem2D {
     CoordinateSystem2D() = default;
     CoordinateSystem2D(double XY);
     CoordinateSystem2D(double x, double y);
+    CoordinateSystem2D(double x, double y, double t); //Need Implementation
     CoordinateSystem2D(double x, double y, double originX, double originY);
 #endif
 
@@ -109,13 +122,15 @@ class CoordinateSystem2D {
     CoordinateSystem2D(double radius, double phi, double originX, double originY);
 #endif
 
-    virtual ~CoordinateSystem2D() = default;
+  virtual ~CoordinateSystem2D() = default;
 
 
 
   public:
-    MathHelper mathHelper;
 
+  void operator++();
+    MathHelper mathHelper;
+    inline double getT()       { return this->t;       }
     inline double getX()       { return this->X;       }
     inline double getY()       { return this->Y;       }
     inline double getAX()      { return this->aX;      }
@@ -124,17 +139,15 @@ class CoordinateSystem2D {
     inline double getRadius()  { return this->radius;  }    
     inline double getOriginX() { return this->originX; }
     inline double getOriginY() { return this->originY; }
-   
+
+    inline void setT(double t) { this->t = t; }
+
     void setOriginX(double newOriginX);
     void setOriginY(double newOriginY);
 
     inline double getDistanceZero(){ return this->distanceToZero; } 
 
-    CoordinateSystem2D(){
-      this->NULLVECX = CNULL;
-      
-      this->NULLVECY = CNULL;
-    }
+    
 
 
 }; // CoordinateSystem2D
