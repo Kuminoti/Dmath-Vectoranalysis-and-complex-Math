@@ -2,6 +2,7 @@
 
 #ifndef DMATH_H
 #define DMATH_H
+
 #include"dataTypes.hpp"
 #include"mathVector.hpp"
 #include"basicFunction.hpp"
