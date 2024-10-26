@@ -115,9 +115,16 @@ public: //Getters and setters
     }
 
 
-    Matrix transpose(){
-        
-        
+    Matrix transpose() {
+        Matrix transposedMatrix(this->elementsColumn, this->elementsRow);
+
+        for (uint8_t row = 0; row < this->elementsRow; row++) {
+            for (uint8_t col = 0; col < this->elementsColumn; col++) {
+                transposedMatrix.setElement(col + 1, row + 1, this->getElement(row + 1, col + 1));
+            }
+        }
+
+        return transposedMatrix;
     }
 
 public: 
