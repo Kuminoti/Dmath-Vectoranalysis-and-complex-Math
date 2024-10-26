@@ -561,6 +561,22 @@ Vec3D Vec3D::subtract(Vec3D Mathvector) {
 }
 
 
+bool Dmath::Vec2D::isEqual(Dmath::Vec2D vec){
+  bool result = false;
+  //Declaring a bunch of constants to make if conditions clearer to read
+  const double vecX = vec.getX();
+  const double vecY = vec.getY();
+
+  const double vecOx = vec.getOriginX();
+  const double vecOy = vec.getOriginY();
+
+  if(this->X == vecX && vecX  &&  this->getY() == vecY &&
+     this->originX == vecOx   &&  this->originY == vecOy){
+    result = true;
+  }
+  return result;
+}
+
 Vec3D Vec3D::sphereVector(double radius, double angleOne, double angleTwo) {
   double Xvalue = radius * std::sin(angleTwo) * std::cos(angleOne);
   double Yvalue = radius * std::sin(angleTwo) * std::sin(angleOne);

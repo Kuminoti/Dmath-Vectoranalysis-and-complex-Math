@@ -151,6 +151,10 @@ struct sVec3{
   math Z;
   sVec3(math X, math Y, math Z) : X(X), Y(Y), Z(Z){}
 };
+
+
+typedef Dmath::Trio<double, double, double> Parameters;
+
 NAMESPACEEND //DMATH_DATA_TYPES_HPP
 
 

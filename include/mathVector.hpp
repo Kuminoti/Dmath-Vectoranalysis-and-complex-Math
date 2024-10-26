@@ -74,6 +74,8 @@ class Vec2D : public CoordinateSystem2D {                          //CoordinateS
     inline bool operator<(Vec2D& Mathvector);    // lenght1 < lenght2 ... 
     inline bool operator>(Vec2D& Mathvector);    // ""
 
+    
+    bool isEqual(Dmath::Vec2D);                  //Checks if ALL values of two vectors are the same
 
   public: //Public Constructors
 #ifdef CARTESIAN_IS_2D_STANDARD
@@ -261,6 +263,8 @@ class Vec3D : public CoordinateSystem3D {
     Vec3D vecProduct(Vec3D Mathvector);                          //The vector product of two vectors
     Vec3D add(Vec3D Mathvector);                                 //Vector addition
     Vec3D subtract(Vec3D Mathvector);                            //Vector subtraction
+
+    bool isEqual(Dmath::Vec3D);
 
     // Return a spezial vector
     static Vec3D zeroVector();                                   // Returns a Vector with lenght 0
