@@ -115,9 +115,12 @@ public: //Getters and setters
     }
 
 
-    
+    Matrix transpose(){
+        
+        
+    }
 
-public: //Operator overloading
+public: 
     mat getElement(uint8_t row, uint8_t Column){
         if(row < 0 || row > this->elementsRow || Column < 0 || Column > this->elementsColumn){
 #ifdef WORKING
