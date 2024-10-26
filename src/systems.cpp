@@ -228,7 +228,7 @@ CoordinateSystem2D::CoordinateSystem2D(double x, double y) {
 CoordinateSystem2D::CoordinateSystem2D(double x, double y, double t) {
     this->X = x;
     this->Y = y;
-    this->t = 0;
+    this->t = t;
     this->originX = 0;
     this->originY = 0;
 
