@@ -189,6 +189,8 @@ class VectorCurve3D : public VectorAnalysis3D{
     void rotateThisCurve(double phi, double theta);
 
     inline std::vector<Dmath::Vec3D> getStdVec(){ return this->mainCurve; }
+
+    bool exsitsIn(Dmath::Vec3D vec);
 }; //end of VectorCurve3D
 
 
