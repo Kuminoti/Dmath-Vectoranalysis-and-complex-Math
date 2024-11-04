@@ -82,6 +82,12 @@ class VectorCurve2D : public VectorAnalysis2D{
   public: //operator overloading:
     inline VectorCurve2D operator+ (VectorCurve2D curve){ return addCurve(curve);      }
     inline VectorCurve2D operator- (VectorCurve2D curve){ return subtractCurve(curve); }
+
+    void operator+(Dmath::Vec2D vec);
+    
+    void operator++();
+    void operator--();
+
     
     double curveLenght();
     double calculateSlopeOnPoint(double t);
@@ -104,12 +110,22 @@ class VectorCurve2D : public VectorAnalysis2D{
 
     void moveX(double moveX);
     void moveY(double moveY);
-    // void addToAllX(double xPlusN);
-    // void addToAllY(double yPlusN);
-    // void allXDividedBy(double dividedBy);
-    // void allYDividedBy(double dividedBy);
-    // void multiplyAllX(double xTimesN);
-    // void multiplyAllY(double xTimesN);
+    void addToAll(double plusN);
+    void addToAllX(double xPlusN);
+    void addToAllY(double yPlusN);
+
+    void allXDividedBy(double dividedBy);
+    void allYDividedBy(double dividedBy);
+    void divideAllBy(double quotient);
+
+    void multiplyAllX(double xTimesN);
+    void multiplyAllY(double xTimesN);
+    void multiplyAll(double faktor);
+
+    void subtractFromX(double minus);
+    void subtractFromY(double minus);
+    void subtractFromXY(double minus);
+
     void moveCurve(double moveX, double moveY);
     
     void rotateThisCurve(double radiants);
@@ -122,7 +138,7 @@ class VectorCurve2D : public VectorAnalysis2D{
     
     bool existsIn(Dmath::Vec2D vec); //Checks if a specific Vector is inside the curve
 
-
+  	
 
   public:
 }; //end of VectorCurve2D
@@ -140,14 +156,14 @@ class VectorCurve3D : public VectorAnalysis3D{
     std::vector<Dmath::Vec3D> createVectorialCurve();
 
     
-    VectorCurve3D(std::function<double(double)> xFunc,std::function<double(double)> yFunc, std::function<double(double)> zFunc, double start, double stopp, double res, std::vector<Dmath::Vec3D> mainCurve, double rotationPhi, double rotationTheta);
-    VectorCurve3D(std::function<double(double)> xFunc,std::function<double(double)> yFunc, std::function<double(double)> zFunc, double start, double stopp, double res, std::vector<Dmath::Vec3D> mainCurve);
-    VectorCurve3D(std::function<double(double)> xFunc,std::function<double(double)> yFunc, std::function<double(double)> zFunc);
-    VectorCurve3D(std::function<double(double)> xFunc,std::function<double(double)> yFunc, std::function<double(double)> zFunc, double start, double stopp, double res);
+    VectorCurve3D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc, Dmath::singleVarFunction zFunc, double start, double stopp, double res, std::vector<Dmath::Vec3D> mainCurve, double rotationPhi, double rotationTheta);
+    VectorCurve3D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc, Dmath::singleVarFunction zFunc, double start, double stopp, double res, std::vector<Dmath::Vec3D> mainCurve);
+    VectorCurve3D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc, Dmath::singleVarFunction zFunc);
+    VectorCurve3D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc, Dmath::singleVarFunction zFunc, double start, double stopp, double res);
 
   public:
-    static VectorCurve3D createStandardCurve(std::function<double(double)> funcX,std::function<double(double)> funcY, std::function<double(double)> funcZ );
-    static VectorCurve3D createCustomCurve  (std::function<double(double)> funcX,std::function<double(double)> funcY, std::function<double(double)> funcZ,double start,double stopp,double res);
+    static VectorCurve3D createStandardCurve(Dmath::singleVarFunction funcX, Dmath::singleVarFunction funcY, Dmath::singleVarFunction funcZ );
+    static VectorCurve3D createCustomCurve  (Dmath::singleVarFunction funcX, Dmath::singleVarFunction funcY, Dmath::singleVarFunction funcZ,double start,double stopp,double res);
 
     Dmath::Vec3D getVectorFromFunction(double xValue, double yValue, double zValue);
     Dmath::Vec3D getVectorFromPoint(double point);

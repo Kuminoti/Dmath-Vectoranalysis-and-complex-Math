@@ -61,6 +61,8 @@ class MathHelper{
     double sigmaAdd(std::function<double(double)> mainFunc,size_t start, size_t end);
     double piMultiply(std::function<double(double)> mainFunc,size_t start, size_t end);
 
+   
+
 };
 
 #pragma endregion
@@ -261,10 +263,11 @@ class VectorAnalysis2D{
 
     VectorAnalysis2D(std::function<Dmath::Duo<double,double>(double,double)> paramOne, std::function<Dmath::Duo<double,double>(double,double)> paramTwo);
     VectorAnalysis2D(double systemStart, double systemStopp, double resolution);
-    VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc);
+    VectorAnalysis2D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc);
     VectorAnalysis2D(std::function<double(double,double)> mainFunc, double systemStart, double systemStopp, double resolution);
-    VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, double systemStart, double systemStopp, double resolution);
-    VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, double systemStart, double systemStopp, double resolution, double rotation);
+
+    VectorAnalysis2D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc, double systemStart, double systemStopp, double resolution);
+    VectorAnalysis2D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc, double systemStart, double systemStopp, double resolution, double rotation);
 
   public:
 
@@ -274,8 +277,8 @@ class VectorAnalysis2D{
     inline double getEnd()                             { return this->systemStopp;     }
     inline double getDataAtX(double data)              { return this->xFunc(data);     }
     inline double getDataAtY(double data)              { return this->yFunc(data);     }
-    inline std::function<double(double)> getXFunction(){ return this->xFunc;           }
-    inline std::function<double(double)> getYFunction(){ return this->yFunc;           }
+    inline Dmath::singleVarFunction getXFunction(){ return this->xFunc;           }
+    inline Dmath::singleVarFunction getYFunction(){ return this->yFunc;           }
 
     virtual ~VectorAnalysis2D() = default;
 
@@ -293,16 +296,16 @@ class VectorAnalysis3D: public VectorAnalysis2D{
     std::function<Dmath::Trio<double, double, double>(double, double, double)> functionY;
     std::function<Dmath::Trio<double, double, double>(double, double, double)> functionZ;
     
-    std::function<double(double)> zFunc;
+    Dmath::singleVarFunction zFunc;
     
     VectorAnalysis3D(double systemStart, double systemStopp, double resolution);
-    VectorAnalysis3D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, std::function<double(double)> zFunc);
-    VectorAnalysis3D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, std::function<double(double)> zFunc,
+    VectorAnalysis3D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc,Dmath::singleVarFunction zFunc);
+    VectorAnalysis3D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc,Dmath::singleVarFunction zFunc,
                                     double systemStart, double systemStopp, double resolution);
 
   public:
 
-    inline std::function<double(double)> getZfunction(){ return this->zFunc;           }
+    inline Dmath::singleVarFunction getZfunction(){ return this->zFunc;           }
     inline double getDataAtZ(double data)              { return this->zFunc(data);     }
 
    

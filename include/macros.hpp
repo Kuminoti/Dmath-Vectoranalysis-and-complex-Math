@@ -97,6 +97,7 @@
 
     #ifdef WORKING
         #warning "DEBUGMODE"
+        #warning "Vers. 0.03"
         #ifdef RELEASE
             #undef RELEASE
         #endif

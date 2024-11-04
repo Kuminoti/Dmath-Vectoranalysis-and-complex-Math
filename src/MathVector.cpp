@@ -352,6 +352,14 @@ void Dmath::Vec2D::multipyThisBy(double factor){
   this->ValidManipulation();
 }
 
+void Dmath::Vec2D::divideThisBy(double quotient){
+  if(quotient == 0){
+    std::cerr << "Error Division By Zero! Idiot" << std::endl;
+  }
+  this->X /= quotient;
+  this->Y /= quotient;
+  this->ValidManipulation();
+}
 
 
 void Vec2D::addToX(double add){
@@ -591,6 +599,15 @@ Vec3D Vec3D::cylinderVector(double radius, double angle, double height) {
   return Vec3D(Xvalue, Yvalue, Zvalue);
 }
 
+bool Dmath::Vec3D::isEqual(Dmath::Vec3D vec){
+  if(this->X == vec.getX() && this->Y == vec.getY() &&
+     this->Z == vec.getZ() && this->originX == vec.getOriginX() &&
+     this->originY == vec.getOriginY() && this->originZ == vec.getOriginZ()){
+      return true;
+
+  }
+  return true;
+}
 
 Vec3D Vec3D::zeroVector() { 
   return Vec3D(); 

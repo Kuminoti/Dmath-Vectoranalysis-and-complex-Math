@@ -377,7 +377,7 @@ VectorAnalysis2D::VectorAnalysis2D(double systemStart, double systemStopp, doubl
     this->numberOfElements = this->mathHelper.numOfElements(systemStart,systemStopp,resolution);
 }
 
-VectorAnalysis2D::VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc){
+VectorAnalysis2D::VectorAnalysis2D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc){
     this->xFunc = xFunc;
     this->yFunc = yFunc;
     this->rotation    = ZERO;
@@ -395,7 +395,7 @@ VectorAnalysis2D::VectorAnalysis2D(std::function<double(double,double)> mainFunc
     this->numberOfElements = this->mathHelper.numOfElements(start,stopp,resolution);
 }
 
-VectorAnalysis2D::VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, double systemStart, double systemStopp, double resolution){
+VectorAnalysis2D::VectorAnalysis2D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc, double systemStart, double systemStopp, double resolution){
     this->xFunc = xFunc;
     this->yFunc = yFunc;
 
@@ -406,7 +406,7 @@ VectorAnalysis2D::VectorAnalysis2D(std::function<double(double)> xFunc, std::fun
     this->numberOfElements = this->mathHelper.numOfElements(systemStart,systemStopp,resolution);
 }
 
-VectorAnalysis2D::VectorAnalysis2D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, double systemStart, double systemStopp, double resolution, double rotation){
+VectorAnalysis2D::VectorAnalysis2D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc, double systemStart, double systemStopp, double resolution, double rotation){
     this->xFunc = xFunc;
     this->yFunc = yFunc;
 
@@ -423,14 +423,14 @@ VectorAnalysis3D::VectorAnalysis3D(double systemStart, double systemStopp, doubl
  VectorAnalysis2D(systemStart,systemStopp,resolution){}
                                 
 
-VectorAnalysis3D::VectorAnalysis3D(std::function<double(double)> xFunc, std::function<double(double)> yFunc, std::function<double(double)> zFunc)
+VectorAnalysis3D::VectorAnalysis3D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc, Dmath::singleVarFunction zFunc)
 : VectorAnalysis2D(xFunc, yFunc){
 
     this->zFunc = zFunc;
    
 }
 
-VectorAnalysis3D::VectorAnalysis3D(std::function<double(double)> xFunc, std::function<double(double)> yFunc,std::function<double(double)> zFunc , double systemStart, double systemStopp, double resolution)
+VectorAnalysis3D::VectorAnalysis3D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc,Dmath::singleVarFunction zFunc , double systemStart, double systemStopp, double resolution)
 : VectorAnalysis2D(xFunc,yFunc,systemStart,systemStopp,resolution){
     this->zFunc = zFunc;
 }

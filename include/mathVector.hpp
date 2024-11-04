@@ -144,6 +144,7 @@ class Vec2D : public CoordinateSystem2D {                          //CoordinateS
     void addToThis(double add);                           //* X + add       ||  Y + add
     void substractThis(double subtract);                  //* X - subtract  ||  Y - subtract
     void multipyThisBy(double factor);                    //* X * factor    ||  Y * factor
+    void divideThisBy(double quotient);
 
     void subtractFromX(double subtract);                  //* X - subtract  ||  
     void subtractFromY(double subtract);                  //* Y - subtract  ||
