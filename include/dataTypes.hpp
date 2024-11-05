@@ -42,6 +42,25 @@ struct FunctionalParameters
 };
 
 
+template <class T, class typeOne>
+struct contains_type_one {
+    static constexpr bool value = std::is_same<T, typeOne>::value;
+};
+
+template <class T, class typeOne, class typeTwo>
+struct contains_type_two {
+    static constexpr bool value = std::is_same<T, typeOne>::value || std::is_same<T, typeTwo>::value;
+};
+
+template <typename T>
+struct is_numeric {
+    static constexpr bool value = std::is_arithmetic<T>::value; // Überprüft, ob T arithmetisch ist
+};
+
+template <typename T>
+struct is_floating_point_type {
+    static constexpr bool value = std::is_floating_point<T>::value; // Überprüft, ob T ein Gleitkomma-Typ ist
+};
 
 //Since some mathmatical operations needs to claculate or return 2 values
 //I made a Duo and trio struct the Duo behaves lake a std::pair<>
