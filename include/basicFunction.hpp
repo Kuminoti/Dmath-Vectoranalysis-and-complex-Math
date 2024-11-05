@@ -13,46 +13,40 @@ class BasicFunction {
     double systemStopp = TWOPI;
     double resolution = STDRES;
 
-    size_t numberOfElements;
+    size_t numberOfElements = 0;
+
+    MathHelper mathHelper;
 
   private: // private methods:
+
     virtual void createCurve();
-    singleVarFunction mainFunc;
+    Dmath::singleVarFunction mainFunc;
     std::vector<double> fX;
 
-    BasicFunction(singleVarFunction mainFunc);
-    BasicFunction(singleVarFunction, double resolution); // Constructor for polarfunctions
-    BasicFunction(singleVarFunction, double systemStart, double systemStopp, double resolution);
+public:
+
+    BasicFunction(Dmath::singleVarFunction mainFunc);
+    //BasicFunction(Dmath::singleVarFunction mainFunc, double resolution); // Constructor for polarfunctions
+    BasicFunction(Dmath::singleVarFunction mainFunc, double systemStart, double systemStopp, double resolution);
 
   public:
-    static BasicFunction createBasicFunctionGraph(singleVarFunction mainFunc) { return BasicFunction(mainFunc); }
+    double operator[](size_t index);
 
-    static BasicFunction createCustomFunctionGraph(singleVarFunction mainFunc, double systemStart, double systemStopp,
-                                                   double resolution) {
+    static BasicFunction createBasicFunctionGraph(Dmath::singleVarFunction mainFunc) { return BasicFunction(mainFunc); }
+    static BasicFunction createCustomFunctionGraph(Dmath::singleVarFunction mainFunc, double systemStart, double systemStopp, double resolution) {
+     
         return BasicFunction(mainFunc, systemStart, systemStopp, resolution);
     }
 
     // r(phi) =
-    static BasicFunction PolarFunction(singleVarFunction mainFunc, double resolution) { return BasicFunction(mainFunc, resolution); }
+    //static BasicFunction PolarFunction(Dmath::singleVarFunction mainFunc, double resolution) { return BasicFunction(mainFunc, resolution); }
 
     // Returns the number of zero points
     size_t numberOfZeroPoints();
 
     // Returns the area between the X-achsis and the graph
     double areaXachsis(double start, double stopp);
-    double getSlopeAt(double Value) {
-        double result = 0;
-        double pointXZero = Value - 0.000001;
-        
-        double xOneValue = this->mainFunc(Value);
-        double xZeroValue = this->mainFunc(pointXZero);
-
-        double resultOne = xOneValue - xZeroValue;
-        double resultTwo = Value - pointXZero;
-
-        result = (resultOne / resultTwo);
-        return result;
-    }
+    double getSlopeAt(double Value);
 
     // Getters:
     inline double getResolution() { return this->resolution; }
@@ -65,6 +59,9 @@ class BasicFunction {
     double getMinimum();
 
     double getLength(); // NEEDS DEFINITION
+
+
+    bool exsitsIn(double Value);
 };
 
 // f(x,y) = ...
