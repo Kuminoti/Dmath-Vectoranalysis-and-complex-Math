@@ -70,6 +70,11 @@ public: // condtructor and destructor
         this->elementsColumn = elements;
         this->elementsRow = elements;
         this->totalElements = elements * elements;
+
+        this->mainMatrix = new mat*[this->elementsRow];
+        for(uint8_t i = 0; i<this->elementsRow; i++){
+            this->mainMatrix[i] = new mat[this->elementsColumn];
+        }
     }
 
     Matrix(uint8_t elementsRow, uint8_t elementsColumn){
@@ -82,7 +87,7 @@ public: // condtructor and destructor
         }
 
 
-        this->mainMatrix = new uint8_t*[this->elementsRow];
+        this->mainMatrix = new mat*[this->elementsRow];
         for(uint8_t i = 0; i<this->elementsRow; i++){
             this->mainMatrix[i] = new mat[this->elementsColumn];
         }
@@ -130,10 +135,10 @@ public: //Getters and setters
 public: 
     mat getElement(uint8_t row, uint8_t Column){
         if(row < 0 || row > this->elementsRow || Column < 0 || Column > this->elementsColumn){
-#ifdef WORKING
+
             std::cerr << "Error out of range" <<std::endl;
-#endif //Working
-            return CNULL; // NULL ((void *)0)
+
+            // NULL ((void *)0)
         }
         mat Result;
         Result = this->mainMatrix[row-1][Column-1]; //Since an array is 0 indexed
@@ -141,13 +146,17 @@ public:
     }
 
     void setElement(uint8_t row, uint8_t Column, mat data){
-        if(row < 0 || row > this->elementsRow || Column < 0 || Column > this->elementsColumn){
-#ifdef WORKING
+        std::cout << "in Setter" << std::endl;
+        if(row < 1 || row > this->elementsRow || Column < 1 || Column > this->elementsColumn){
+
             std::cerr << "Error out of range" <<std::endl;
-#endif //WORKING
+
             return; 
         }
+        std::cout << "PUUUUSHING" << std::endl;
         this->mainMatrix[row-1][Column-1] = data;
+
+        std::cout << "Puuuhh..." << std::endl;
     }
 
 
