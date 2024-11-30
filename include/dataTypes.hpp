@@ -12,9 +12,11 @@
 
 NAMESPACESTART
 
+typedef std::function<void (void)>                    voidFunction;
 typedef std::function<double(double)>                 singleVarFunction;
 typedef std::function<double(double, double)>         doubleVarFunction;
 typedef std::function<double(double, double, double)> tripleVarFunction;
+
 
 typedef std::vector<double> doubleVector;
 
@@ -27,20 +29,15 @@ typedef std::vector<double> doubleVector;
   wich are typedefs for specific std::function-objects.
   (defined in this file starting at line 11)
   */
-template<typename Func, typename = typename std::enable_if<
-    std::is_same<Func, singleVarFunction>::value ||
-    std::is_same<Func, doubleVarFunction>::value ||
-    std::is_same<Func, tripleVarFunction>::value
-    >::type>
-struct FunctionalParameters
-{
-    double functionStart;
-    double functionEnd;
-    double resolution;
 
-    Func mainFunction;
+enum ERROR_CODE{
+  DIVISION_BY_ZERO = 1001,
+  UNDEFINED        = 1002,
+  INVALID_ARGUMENT = 2001,
+  OUT_OF_RANGE     = 2002,
+  TYPE_ERROR       = 3001
+
 };
-
 
 template <class T, class typeOne>
 struct contains_type_one {
