@@ -460,7 +460,7 @@ void Vec2D::moveVector(double moveX, double moveY){
 }
 
 void Vec2D::calcAbs() {
-  double result = this->mathHelper.pyth(this->X,this->Y);
+  double result = PYTH(this->X,this->Y);
   this->abs = result;
 }
 
@@ -527,7 +527,7 @@ double Vec2D::getRotationAngle()     { return this->vectorRotation; }
 
 
 void Vec3D::calcAbs() {
-  double result = this->mathHelper.pyth3D(this->X,this->Y,this->Z);
+  double result = PYTH3(this->X,this->Y,this->Z);
   this->abs = result;
 }
 
@@ -610,17 +610,17 @@ bool Dmath::Vec3D::isEqual(Dmath::Vec3D vec){
 }
 
 Vec3D Vec3D::zeroVector() { 
-  return Vec3D(); 
+  return Vec3D(0); 
   }
 
 
 double Vec3D::getCylinderRadius(){
-    double  result = this->mathHelper.pyth(this->X, this->Y);
+    double  result = PYTH(this->X, this->Y);
     return result;
 }
 
 double Vec3D::getSphereRadius(){
-    double  result = this->mathHelper.pyth3D(this->X,this->Y,this->Z);
+    double  result = PYTH3(this->X,this->Y,this->Z);
     return result;
 }
 

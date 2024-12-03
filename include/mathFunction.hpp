@@ -273,6 +273,9 @@ public:
     std::vector<double> getAntiDerivativeX(double start, double stopp, double stepps);
     std::vector<double> getAntiDerivativeY(double start, double stopp, double stepps);
 
+
+    
+
 };
 
 #pragma endregion //double

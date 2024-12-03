@@ -17,6 +17,7 @@
     #include <algorithm>
     #include <thread>
     #include <type_traits>
+    
 
     //Physical and mathmatical constants, and constants
     #define ZERO_KELVINK -273.17   //0Kelvin in celsius degrees
@@ -54,7 +55,11 @@
     #define CUBED(data) ((data) * (data) * (data))
     //Satz des pytagoras
     #define PYTH(inputA, inputB) (std::sqrt((inputA * inputA) + (inputB * inputB)))
-    #define PYTH3(inputX, inputY, inputZ) (std::sqrt((inputX * inputX)+(inputY*inputY)+(inpuzZ*inputZ)))
+    #define PYTH3(inputX, inputY, inputZ) (std::sqrt((inputX * inputX)+(inputY*inputY)+(inputZ*inputZ)))
+
+
+    #define THIS_FILE __FILE__
+    #define THIS_LINE __LINE__
 
     #define  byte uint8_t
     #define CARTESIAN_IS_3D_STANDARD
@@ -77,6 +82,18 @@
 
     #endif
 
+#if (defined(_WIN32) || defined(_WIN64))
+    #include"Windows.h"
+    #ifdef BUILD_DLL
+        #define SHARED_LIB __declspec(dllexport)
+    #else
+        #define SHARED_LIB __declspec(dllimport)
+    #endif
+
+#else
+    // Für andere Plattformen: möglicherweise SHARED_LIB leer lassen oder anders definieren
+    #define SHARED_LIB
+#endif
 
 
     #if (defined(CARTESIAN_IS_2D_STANDARD) && defined(POLAR_IS_STANDARD))
@@ -105,9 +122,7 @@
         #include <iostream>
         #include <fstream>
 
-        #ifdef DEBUG_TOOLS
-            #define LOGGER(info){ std::cout<< __FILE__ << " " << __LINE__ << " " << info <<std::endl;}
-        #endif //DEBUG_TOOLS
+        
 
       
      

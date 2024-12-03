@@ -2,63 +2,12 @@
 #include "../include/macros.hpp"
 #ifdef SYSTEM_IS_SET
 
-//MathHelper methods:
-
-double  MathHelper::calculateDerivativeAt(std::function<double(double)> f, double x) {
-    double fx_plus_h = f(x + this->h);
-    double fx_minus_h = f(x - this->h);
-    double derivative = (fx_plus_h - fx_minus_h) / (2 * this->h);
-    return derivative;
-}
-
-double MathHelper::calculateDefiniteIntegral(std::function<double(double)> f, double a, double b) {
-    double sum = 0.0;
-    double dx = (b - a) / this->numSteps;
-    for (int i = 0; i < this->numSteps; ++i) {
-        double x = a + i * dx;
-        sum += f(x) * dx;
-    }
-    return sum;
-}
-
-std::function<double(double)> MathHelper::calculateAntiderivative(std::function<double(double)> f, double x0) {
-    double integral = 0.0;
-    std::function<double(double)> antiderivative = [f, x0, this, integral](double x) mutable {
-        integral += f(x) * this->dx;
-        return integral;
-    };
-    return antiderivative;
-}
-
-std::function<double(double)> MathHelper::calculateDerivative(std::function<double(double)> f) {
-    double dx = this->dx; // Hier wird dx explizit kopiert, um Rundungsfehler zu vermeiden
-    return [f, dx](double x) {
-        return (f(x + dx) - f(x)) / dx;
-    };
-}
-
-double MathHelper::piMultiply(std::function<double(double)> mainFunc,size_t start, size_t end){
-    double result = 0;
-    if(start >= end){
-    return 0;
-    }
-    for(int i = start; i<end; i++){
-    result+= mainFunc(i);
-    }
-    return result;
-}
 
 
-double MathHelper::sigmaAdd(std::function<double(double)> mainFunc,size_t start, size_t end){
-    double result = 0;
-    if(start >= end){
-    return 0;
-    }
-    for(int i = start; i<end; i++){
-    result += mainFunc(i);
-    }
-    return result;
-}
+
+
+
+
 
 
 
@@ -68,7 +17,7 @@ void CoordinateSystem2D::polarToCartesian() {
 }
 
 void CoordinateSystem2D::cartesianToPolar() {
-    this->radius = this->mathHelper.pyth(this->X, this->Y);
+    this->radius = std::sqrt(this->X*X + this->Y*Y);
     this->phi = std::atan2(this->Y, this->X);
     
 }
@@ -102,13 +51,13 @@ void CoordinateSystem2D::operator++(){
 
 
 void CoordinateSystem3D::cartesianToSphere() {
-    this->radius = this->mathHelper.pyth3D(this->X, this->Y, this->Z);
+    this->radius = PYTH3(this->X, this->Y, this->Z);
     this->phi =  std::atan2(this->Y, this->X);
     this->theta = std::acos((this->Z / radius));
 }
 
 void CoordinateSystem3D::cartesianToCylinder() {
-    this->radius = this->mathHelper.pyth(this->X, this->Y);
+    this->radius = PYTH(this->X, this->Y);
     this->phi = std::atan2(this->Y, this->X);
     this->height = this->Z;
 }
@@ -132,7 +81,7 @@ void CoordinateSystem3D::cylinderToCartesian() {
 }
 
 void CoordinateSystem3D::cylinderToSphere() {
-    this->radius = this->mathHelper.pyth(this->radius, this->height);
+    this->radius = PYTH(this->radius, this->height);
     // this->phi = this->phi;
     this->theta = std::atan2(this->radius, this->height);
 }
@@ -181,7 +130,7 @@ void CoordinateSystem3D::calcDTZ(){
 void CoordinateSystem2D::calcDZ(){
     float result = 0;
     if(this->originX != 0 || this->originY != 0){
-        result = this->mathHelper.pyth(this->aX,this->aY);
+        result = PYTH(this->aX,this->aY);
     }
     else { result = 0;}
   this->distanceToZero = result;
@@ -362,7 +311,7 @@ VectorAnalysis2D::VectorAnalysis2D(std::function<Dmath::Duo<double,double>(doubl
     this->resolution = STDRES;
     this->systemStart = 0;
     this->systemStopp = TWOPI;
-    this->numberOfElements = this->mathHelper.numOfElements(this->systemStart,this->systemStopp,this->resolution);
+    this->numberOfElements = static_cast<size_t>((systemStopp-systemStart)/resolution);  
 
     this->funcOne = paramOne;
     this->funcTwo = paramTwo;
@@ -374,7 +323,7 @@ VectorAnalysis2D::VectorAnalysis2D(double systemStart, double systemStopp, doubl
     this->systemStopp = systemStopp;
     this->resolution  = resolution;
     
-    this->numberOfElements = this->mathHelper.numOfElements(systemStart,systemStopp,resolution);
+    this->numberOfElements = static_cast<size_t>((systemStopp-systemStart)/resolution);  
 }
 
 VectorAnalysis2D::VectorAnalysis2D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc){
@@ -384,7 +333,7 @@ VectorAnalysis2D::VectorAnalysis2D(Dmath::singleVarFunction xFunc, Dmath::single
     this->systemStart = ZERO;
     this->systemStopp = TWOPI;
     this->resolution  = STDRES;
-    this->numberOfElements = this->mathHelper.numOfElements(ZERO,TWOPI,STDRES);
+    this->numberOfElements = static_cast<size_t>((systemStopp-systemStart)/resolution);  
 }
 
 VectorAnalysis2D::VectorAnalysis2D(std::function<double(double,double)> mainFunc, double start, double stopp, double resolution){
@@ -392,7 +341,7 @@ VectorAnalysis2D::VectorAnalysis2D(std::function<double(double,double)> mainFunc
     this->systemStart = start;
     this->systemStopp = stopp;
     this->resolution  = resolution;
-    this->numberOfElements = this->mathHelper.numOfElements(start,stopp,resolution);
+    this->numberOfElements = static_cast<size_t>((systemStopp-systemStart)/resolution);  
 }
 
 VectorAnalysis2D::VectorAnalysis2D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc, double systemStart, double systemStopp, double resolution){
@@ -403,7 +352,7 @@ VectorAnalysis2D::VectorAnalysis2D(Dmath::singleVarFunction xFunc, Dmath::single
     this->systemStart = systemStart;
     this->systemStopp = systemStopp;
     this->rotation    = ZERO;
-    this->numberOfElements = this->mathHelper.numOfElements(systemStart,systemStopp,resolution);
+    this->numberOfElements = static_cast<size_t>((systemStopp-systemStart)/resolution);  
 }
 
 VectorAnalysis2D::VectorAnalysis2D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc, double systemStart, double systemStopp, double resolution, double rotation){
@@ -415,7 +364,7 @@ VectorAnalysis2D::VectorAnalysis2D(Dmath::singleVarFunction xFunc, Dmath::single
     this->systemStopp = systemStopp;
     this->rotation    = rotation;
 
-    this->numberOfElements = this->mathHelper.numOfElements(systemStart,systemStopp,resolution);  
+    this->numberOfElements = static_cast<size_t>((systemStopp-systemStart)/resolution);  
 }
 
 
@@ -436,10 +385,10 @@ VectorAnalysis3D::VectorAnalysis3D(Dmath::singleVarFunction xFunc, Dmath::single
 }
 
 double CoordinateSystem3D::getRadiusSphere() {
-    return this->mathHelper.pyth3D(this->X, this->Y, this->Z);
+    return PYTH3(this->X, this->Y, this->Z);
 }
 double CoordinateSystem3D::getRadiusCylinder() {
-    return this->mathHelper.pyth(this->X, this->Y);
+    return PYTH(this->X, this->Y);
 }
 
 

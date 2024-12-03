@@ -23,47 +23,7 @@
 
 #pragma region MathHelper
 // A helper class with some pre defined functions
-class MathHelper{
-  private:
-  
-    double h  = 0.0001;               //Resolution for Derivative
-    double dx = 0.000000001;          //Stepps for Antiderivative
-    uint16_t numSteps = 1000;         //Stepps for the integral
-    
 
-  public:
-
-    
-
-    inline double hyperbolicCotangent(double X){ return this->hyperbolicCosine(X)/this->hyperbolicSine(X); }
-    inline double hyperbolicTangent(double X)  { return this->hyperbolicSine(X)/this->hyperbolicCosine(X); }
-    inline double hyperbolicCosine(double X)   { return (0.5*(std::pow(EULER,X) + std::pow(EULER,-X)));    }
-    inline double hyperbolicSine(double X)     { return (0.5*(std::pow(EULER,X) - std::pow(EULER,-X)));    }
-
-    inline double pyth(double x, double y){return std::sqrt((x*x) + (y*y) );}
-    inline double pyth3D(double x, double y, double z){return std::sqrt((x*x) + (y*y) +(z*z) );}
-
-    inline double radiansToDegrees(double radians) {return radians * RAD_TO_DEG;}
-    inline double degreesToRadians(double degrees) {return degrees * DEG_TO_RAD;}
-
-    inline double sinFunc (double x) { return std::sin(x); }
-    inline double cosFunc (double x) { return std::cos(x); }
-    inline double tanFunc (double x) { return std::cos(x); }
-    inline double numOfElements(double start, double stopp, double res){ return static_cast<int> ((stopp-start)/res);}
-
-    double calculateDerivativeAt(std::function<double(double)> f, double x);
-    double calculateDefiniteIntegral(std::function<double(double)> f, double a, double b);
-
-    std::function<double(double)> calculateAntiderivative(std::function<double(double)> f, double x0);
-    std::function<double(double)> calculateDerivative(std::function<double(double)> f);
-
-
-    double sigmaAdd(std::function<double(double)> mainFunc,size_t start, size_t end);
-    double piMultiply(std::function<double(double)> mainFunc,size_t start, size_t end);
-
-   
-
-};
 
 #pragma endregion
 
@@ -131,7 +91,7 @@ class CoordinateSystem2D {
   public:
 
   void operator++();
-    MathHelper mathHelper;
+   
     inline double getT()       { return this->t;       }
     inline double getX()       { return this->X;       }
     inline double getY()       { return this->Y;       }
@@ -282,7 +242,7 @@ class VectorAnalysis2D{
 
     virtual ~VectorAnalysis2D() = default;
 
-    MathHelper mathHelper;
+    
 
 };
 

@@ -1,11 +1,11 @@
 #folders
 bin/
 .vscode/
-bin/
-lib/
 build/
-include/test/
-experimental/
+debug/
+#later
+Documentation/ 
+
 
 #cmake stuff
 CMakeLists.txt.user
@@ -22,14 +22,6 @@ _deps
 
 #testing, working and todo
 vectorFields.hpp
-
-test
-test.cpp
-todo
-Documentation/
-test.exe
-testing.exe
-
 main.cpp
-combef.txt
-experiments.cpp
+todo
+include/Logger.hpp

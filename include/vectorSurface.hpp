@@ -4,6 +4,7 @@
 #define VECTOR_SURFACE_HPP
 
 #include"VectorCurve.hpp"
+#include"Matrix.hpp"
 
 NAMESPACESTART
 class VectorSurface : public VectorAnalysis3D{
@@ -60,6 +61,52 @@ class VectorSurface : public VectorAnalysis3D{
     double minZ();
 
     double calculatePerimeter();
+
+    
+
+    Dmath::Matrix<std::vector<double>> getMetric(){
+
+      std::vector<Dmath::Vec3D> derivativeU;
+      std::vector<Dmath::Vec3D> derivativeV;
+
+      for(size_t u = 0; u < numberOfElements; u++){
+        for(size_t v = 0; v < numberOfElements; v++){
+
+          double currentU = this->systemStart + u * this->resolution;
+          double currentV = this->systemStart + v * this->resolution;
+
+          Dmath::Vec3D currentVecU = this->calculatePartialDerivativeU(currentU, currentV);
+          Dmath::Vec3D currentVecV = this->calculatePartialDerivativeV(currentU, currentV);
+
+          derivativeU.push_back(currentVecU);
+          derivativeV.push_back(currentVecV);
+        }
+      }
+
+
+      Dmath::Matrix<std::vector<double>> mainMetric(2);
+      std::vector<double> uU;
+      std::vector<double> uV;
+      std::vector<double> vU;
+      std::vector<double> vV;
+
+
+      for(size_t i = 0; i < numberOfElements; i++){
+        uU.push_back(derivativeU[i].dotProduct(derivativeU[i]));
+        uV.push_back(derivativeU[i].dotProduct(derivativeV[i]));
+        vU.push_back(derivativeV[i].dotProduct(derivativeU[i]));
+        vV.push_back(derivativeV[i].dotProduct(derivativeV[i]));
+      }
+
+
+      mainMetric.setElement(1,1,uU);
+      mainMetric.setElement(1,2,uV);
+      mainMetric.setElement(2,1,uV);
+      mainMetric.setElement(2,2,vV);
+
+      return mainMetric;
+
+    }
 
 };
 

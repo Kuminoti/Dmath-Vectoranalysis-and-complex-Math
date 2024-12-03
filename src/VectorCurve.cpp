@@ -1,5 +1,4 @@
 #include "../include/VectorCurve.hpp"
-
 // 2D curves
 
 std::vector<Dmath::Vec2D> Dmath::VectorCurve2D::createVectorialCurve() {
@@ -25,6 +24,7 @@ std::vector<Dmath::Vec2D> Dmath::VectorCurve2D::createVectorialCurve() {
 // Constructors
 
 Dmath::VectorCurve2D::VectorCurve2D(singleVarFunction xFunc, singleVarFunction yFunc) : VectorAnalysis2D(xFunc, yFunc) {
+    std::cout << "Constructor" << std::endl;
     this->mainCurve = this->createVectorialCurve();
 }
 
@@ -46,6 +46,7 @@ Dmath::VectorCurve2D::VectorCurve2D(singleVarFunction xFunc, singleVarFunction y
 }
 
 Dmath::VectorCurve2D Dmath::VectorCurve2D::createStandardCurve(singleVarFunction funcX, singleVarFunction funcY) {
+    std::cout << "One" << std::endl;
     return Dmath::VectorCurve2D(funcX, funcY);
 }
 
