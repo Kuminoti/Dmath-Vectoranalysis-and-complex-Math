@@ -3,13 +3,6 @@
 #define MATRIX_HPP
 
 #include"macros.hpp"
-#include"mathVector.hpp"
-
-#ifdef SYSTEM_READY
-    #ifdef VECTORMATH_H
-        #define _VEC
-    #endif//VECTORMATH_H
-#endif // SYSTEM_READY
 
 NAMESPACESTART
 
@@ -146,85 +139,19 @@ public:
     }
 
     void setElement(uint8_t row, uint8_t Column, mat data){
-        std::cout << "in Setter" << std::endl;
         if(row < 1 || row > this->elementsRow || Column < 1 || Column > this->elementsColumn){
 
             std::cerr << "Error out of range" <<std::endl;
 
             return; 
         }
-        std::cout << "PUUUUSHING" << std::endl;
         this->mainMatrix[row-1][Column-1] = data;
 
-        std::cout << "Puuuhh..." << std::endl;
     }
-
 
     Matrix getSquaredMatrix(uint8_t elements){
         return Matrix(elements);
-    }
-
-
-public: //Macro dependend code
-
-
-    /*
-     * Mathmatical operations with Vectos and Matrix
-     */
-
-    template<typename t = mat, typename T, typename d_type_two = double ,typename std::enable_if<std::is_same<T, d_type_two>::value, int>::type = 0>
-    Matrix vectorMultiplication(Dmath::Vec2D &vec){
-        if(this->elementsColumn < 2){
-            //Daten stimmen nicht überein 
-            //Vektormultiplikation nicht möglich
-            return Matrix(1,1);
-        }
-        Matrix<double> endMatrix(1,this->elementsColumn);
-
-        double resultOne = 0;
-        double resultTwo = 0;
-
-        for(size_t i = 0; i < this->elementsRow; i++){
-            resultOne += vec.getX() * this->mainMatrix[i][0] ;
-            resultTwo += vec.getY() * this->mainMatrix[i][1] ;
-        }
-
-      
-
-        
-
-        /* The endmatrix will be 1x2 vector-like matrix
-         * A = ([resultOne]
-        *      [resultTwo] )
-        */
-        endMatrix.setElement(1,1,resultOne);
-        endMatrix.setElement(2,1,resultTwo);
-
-        return endMatrix;
-
-    }
-
-   
-    template<typename t = mat, typename T, typename d_type_two = double, typename std::enable_if<std::is_same<T, d_type_two>::value, int>::type = 0>
-    Matrix vectorMultiplication(Dmath::Vec3D &vec){
-        if(this->elementsColumn < 3){
-            //Daten stimmen nicht überein 
-            //Vektormultiplikation nicht möglich
-            return Matrix(1,1);
-        }
-
-        double resultOne = 0;
-        double resultTwo = 0;
-        double resultTri = 0;
-
-        for(size_t i = 0; i < this->elementsColumn; i++){
-            resultOne += this->mainMatrix[i][0] ;
-            resultTwo += this->mainMatrix[i][1] ;
-            resultTri += this->mainMatrix[i][2]
-        }
-
-    }
-    
+    }   
 
 public:
 
