@@ -101,7 +101,18 @@ void Vec2D::operator--(){
   this->ValidManipulation();
 }
 
+void Vec2D::operator=(Dmath::sVec2f vec){
+  this->X = vec.X;
+  this->Y = vec.Y;
+  this->ValidManipulation();
 
+}
+
+void Vec2D::operator=(Dmath::Duo<double, double> duo){
+  this->X = duo.one;
+  this->Y = duo.two;
+  this->ValidManipulation();
+}
 
 /* Mathmatical operations with Dmath::Duo's:
  * The first element of the duo (.one) is used to calculate 
@@ -264,19 +275,7 @@ bool Vec2D::operator>(Vec2D& Mathvector){
 
 
 
-
-// void Vec2D::calcAbsXY(){
-//   if(this->originX != 0 || this->originY != 0){
-//     this->aX = this->X + this->originX;
-//     this->aY = this->Y + this->originY;
-//   }
-// }
-
-
-
-
-
-// Vec2D functions:
+#pragma region Vec2D
 
 
 
@@ -432,12 +431,21 @@ void Vec2D::divideXYBy(double xDiv, double yDiv){
 }
 
 
+bool Dmath::Vec2D::isEqual(Dmath::Vec2D vec){
+  bool result = false;
+  //Declaring a bunch of constants to make if conditions clearer to read
+  const double vecX = vec.getX();
+  const double vecY = vec.getY();
 
+  const double vecOx = vec.getOriginX();
+  const double vecOy = vec.getOriginY();
 
-
-
-
-
+  if(this->X == vecX && vecX  &&  this->getY() == vecY &&
+     this->originX == vecOx   &&  this->originY == vecOy){
+    result = true;
+  }
+  return result;
+}
 
 
 void Vec2D::moveVectorX(double move){
@@ -520,10 +528,169 @@ double Vec2D::rectangleCircumfrance(Vec2D MathVector) {
 }
 
 double Vec2D::getAbs()               { return this->abs;      }
-double Vec2D::getLenght()               { return this->getAbs(); }
-
+double Vec2D::getLenght()            { return this->getAbs(); }
 double Vec2D::getRotationAngle()     { return this->vectorRotation; }
 
+Vec2D Vec2D::linearTranformation(Dmath::Matrix<double> mainMatrix){
+  Dmath::Vec2D newVec = mainMatrix.vectorProduct2D(this);
+  return newVec;
+}
+
+void Vec2D::transformLinear(Dmath::Matrix<double> mainMatrix){
+  
+
+  Dmath::Vec2D currentVec = mainMatrix.vectorProduct2D(this);
+  this->X = currentVec.getX();
+  this->Y = currentVec.getY();
+}
+
+#pragma endregion //Vec2D/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#pragma region Vec3D
+
+
+
+void Vec3D::operator+=(Vec3D mathvector){
+  this->X += mathvector.getX();
+  this->Y += mathvector.getY();
+  this->Z += mathvector.getZ();
+  this->calcAbs();
+}
+
+void Vec3D::operator-=(Vec3D mathvector){
+  this->X -= mathvector.getX();
+  this->Y -= mathvector.getY();
+  this->Z -= mathvector.getZ();
+  this->calcAbs();
+}
+
+void Vec3D::operator*=(Vec3D mathvector){
+  this->X *= mathvector.getX();
+  this->Y *= mathvector.getY();
+  this->Z *= mathvector.getZ();
+  this->calcAbs();
+}
+
+void Vec3D::operator/=(Vec3D mathvector){
+  this->X /= mathvector.getX();
+  this->Y /= mathvector.getY();
+  this->Z /= mathvector.getZ();
+  this->calcAbs();
+}
+
+
+
+
+
+void Vec3D::operator+=(Dmath::sVec3f vec){
+  this->X += vec.X;
+  this->Y += vec.Y;
+  this->Z += vec.Z;
+  this->calcAbs();
+}
+
+void Vec3D::operator-=(Dmath::sVec3f vec){
+  this->X -= vec.X;
+  this->Y -= vec.Y;
+  this->Z -= vec.Z;
+  this->calcAbs();
+}
+
+void Vec3D::operator*=(Dmath::sVec3f vec){
+  this->X -= vec.X;
+  this->Y -= vec.Y;
+  this->Z -= vec.Z;
+  this->calcAbs();
+}
+
+void Vec3D::operator/=(Dmath::sVec3f vec){
+  this->X -= vec.X;
+  this->Y -= vec.Y;
+  this->Z -= vec.Z;
+  this->calcAbs();
+}
+
+
+
+
+void Vec3D::operator+=(double scalar){
+  this->X += scalar;
+  this->Y += scalar;
+  this->Z += scalar;
+  this->calcAbs();
+}
+
+void Vec3D::operator-=(double scalar){
+  this->X -= scalar;
+  this->Y -= scalar;
+  this->Z -= scalar;
+  this->calcAbs();
+}
+void Vec3D::operator*=(double scalar){
+  this->X *= scalar;
+  this->Y *= scalar;
+  this->Z *= scalar;
+  this->calcAbs();
+}
+void Vec3D::operator/=(double scalar){
+  this->X /= scalar;
+  this->Y /= scalar;
+  this->Z /= scalar;
+  this->calcAbs();
+}
+
+
+
+
+void Vec3D::operator+=(Dmath::Trio<double,double,double> trio){
+  this->X += trio.one;
+  this->Y += trio.two;
+  this->Z += trio.three;
+  this->calcAbs();
+}
+
+void Vec3D::operator-=(Dmath::Trio<double,double,double> trio){
+  this->X -= trio.one;
+  this->Y -= trio.two;
+  this->Z -= trio.three;
+  this->calcAbs();
+}
+
+
+
+void Vec3D::operator*=(Dmath::Trio<double,double,double> trio){
+  this->X *= trio.one;
+  this->Y *= trio.two;
+  this->Z *= trio.three;
+  this->calcAbs();
+}
+
+
+
+void Vec3D::operator/=(Dmath::Trio<double,double,double> trio){
+  this->X /= trio.one;
+  this->Y /= trio.two;
+  this->Z /= trio.three;
+  this->calcAbs();
+}
+
+
+
+void Vec3D::operator=(Dmath::sVec3f vec){
+  this->X = vec.X;
+  this->Y = vec.Y;
+  this->Z = vec.Z;
+  this->calcAbs();
+}
+
+
+
+void Vec3D::operator=(Dmath::Trio<double,double,double> trio){
+  this->X = trio.one;
+  this->Y = trio.two;
+  this->Z = trio.three;
+  this->calcAbs();
+}
 
 
 void Vec3D::calcAbs() {
@@ -569,21 +736,7 @@ Vec3D Vec3D::subtract(Vec3D Mathvector) {
 }
 
 
-bool Dmath::Vec2D::isEqual(Dmath::Vec2D vec){
-  bool result = false;
-  //Declaring a bunch of constants to make if conditions clearer to read
-  const double vecX = vec.getX();
-  const double vecY = vec.getY();
 
-  const double vecOx = vec.getOriginX();
-  const double vecOy = vec.getOriginY();
-
-  if(this->X == vecX && vecX  &&  this->getY() == vecY &&
-     this->originX == vecOx   &&  this->originY == vecOy){
-    result = true;
-  }
-  return result;
-}
 
 Vec3D Vec3D::sphereVector(double radius, double angleOne, double angleTwo) {
   double Xvalue = radius * std::sin(angleTwo) * std::cos(angleOne);
@@ -676,6 +829,32 @@ void Vec3D::setPhi(double phi)       { this->phi = phi; }
 void Vec3D::setTheta(double theta)   { this->theta = theta; }
 
 
+
+
+
+
+
+
+
+
+
+
+
+void Vec3D::addToX(double add){
+  this->X += add;
+  this->calcAbs();
+}
+
+void Vec3D::addToY(double add){
+  this->Y += add;
+  this->calcAbs();
+}
+void Vec3D::addToZ(double add){
+  this->Z += add;
+  this->calcAbs();
+}
+
+
 Vec3D Vec3D::operator+(Vec3D &Mathvector) {
   double resultX = this->X + Mathvector.X;
   double resultY = this->Y + Mathvector.Y;
@@ -752,10 +931,39 @@ bool Vec3D::operator>(Vec3D& Mathvector){
   return false;
 }
 
+void Vec3D::operator++(){
+  this->X +=1;
+  this->Y +=1;
+  this->Z +=1;
+  this->calcAbs();
+}
+
+void Vec3D::operator--(){
+  this->X -=1;
+  this->Y -=1;
+  this->Z -=1;
+  this->calcAbs();
+}
+
+Vec3D Vec3D::linearTranformation(Dmath::Matrix<double> mainMatrix){
+  Dmath::Vec3D newVec = mainMatrix.vectorProduct2D(this);
+  return newVec;
+}
+
+void Vec3D::transformLinear(Dmath::Matrix<double> mainMatrix){
+  
+
+  Dmath::Vec3D currentVec = mainMatrix.vectorProduct3D(this);
+  this->X = currentVec.getX();
+  this->Y = currentVec.getY();
+  this->Z = currentVec.getZ();
+}
 
 
+#pragma endregion // Vec3D
 
 
+#pragma region Macro_code:
 
 //Macro dependent code:
 
@@ -944,3 +1152,5 @@ void Vec2D::rotateThisVector(double value){
 
 
 #endif
+
+#pragma endregion

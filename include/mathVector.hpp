@@ -15,6 +15,7 @@
 
 #ifdef SYSTEM_READY //Checks if all the right coordinatesystem is selected
 #include<iostream>
+#include"Matrix.hpp"
 
 
 #include"systemGeometry.hpp"
@@ -65,6 +66,9 @@ class Vec2D : public CoordinateSystem2D {                          //CoordinateS
 
     void operator++();                            //Adds 1 to the x and y coordinate
     void operator--();                            //Adds 1 to the x and y coordinate
+
+    void operator=(Dmath::sVec2f vec);
+    void operator=(Dmath::Duo<double, double> duo);
 
     //Logic operators
     inline bool operator==(Vec2D& Mathvector);   // == checks if the x and y coordinates are the same
@@ -122,6 +126,9 @@ class Vec2D : public CoordinateSystem2D {                          //CoordinateS
     Vec2D add(Vec2D Mathvector);                          // Adding 2 vectors
     Vec2D subtract(Vec2D Mathvector);                     // Subtract 2 vectors
     Vec2D rotateVector(double radians);                   // Rotates a vector dependent op the angle
+    Vec2D linearTranformation(Dmath::Matrix<double> mainMatrix);                          // Returns a transformed vector
+
+    void transformLinear(Dmath::Matrix<double> mainMatrix);                               // Performs a linear transformation to this vector
 
   public: //Geometric operations                 
     double polarSystemArea();                             // Calculates the circle of a polar system
@@ -189,13 +196,43 @@ class Vec3D : public CoordinateSystem3D {
 
   public: // Operator overloading
 
-    Dmath::SystemGeometry *systemGeometry;
+    void addToX(double add); // X + add
+    void addToY(double add); // Y + add
+    void addToZ(double add); // Z + add
+
+    void addXYEach(double xPlus, double yPlus,    double zPlus);        //* X + xPlus     || Y + yPlus
+    void divideXYBy(double xDivBy, double yDivBy, double zPlus);        //* X / xDivBy    || Y / yDivBy
+    void multilpyXY(double xTimes, double yTimes, double zPlus);        //* X * xTimes    || Y * yTimes
+    void subtractXY(double xMinus, double yMinus, double zPlus);        //* X - xMinus    || Y - yMinus
+    
 
     Vec3D operator+(Vec3D& Mathvector);          //Vector addition
     Vec3D operator-(Vec3D& Mathvector);          //Vectors subraction
     Vec3D operator/(double scalarValue);         //Divides the coordinates by a given value
     double operator*(Vec3D& Mathvector);         //Scalarproduct
 
+    void operator+=(Vec3D mathvector);
+    void operator-=(Vec3D mathvector);
+    void operator*=(Vec3D mathvector);
+    void operator/=(Vec3D mathvector);
+
+    void operator+=(Dmath::sVec3f vec);
+    void operator-=(Dmath::sVec3f vec);
+    void operator*=(Dmath::sVec3f vec);
+    void operator/=(Dmath::sVec3f vec);
+
+    void operator+=(double scalar);
+    void operator-=(double scalar);
+    void operator*=(double scalar);
+    void operator/=(double scalar);
+
+    void operator+=(Dmath::Trio<double,double,double> trio);
+    void operator-=(Dmath::Trio<double,double,double> trio);
+    void operator*=(Dmath::Trio<double,double,double> trio);
+    void operator/=(Dmath::Trio<double,double,double> trio);
+
+    void operator=(Dmath::sVec3f vec);
+    void operator=(Dmath::Trio<double,double,double> trio);
 
     inline bool operator==(Vec3D& Mathvector);   // == checks if the x and y coordinates are the same
     inline bool operator!=(Vec3D& Mathvector);   // != checks if the x and y coordinates are diffrent
@@ -207,6 +244,7 @@ class Vec3D : public CoordinateSystem3D {
     void operator++();
     void operator--();
 
+Dmath::SystemGeometry *systemGeometry;
   public: // Public Constructors
 
    Vec3D() = default; //default constructor
@@ -253,6 +291,10 @@ class Vec3D : public CoordinateSystem3D {
 
     void rotateThisVector(double phi, double Theta);
 
+    Vec3D linearTranformation(Dmath::Matrix<double> mainMatrix);                          // Returns a transformed vector
+
+    void transformLinear(Dmath::Matrix<double> mainMatrix);       
+
     // The rotateVector method will return a new Vector based on the original and the given rotation
     Vec3D rotateVector(double radiansPhi, double radiansTheta);  //Gives back a rotated vector based of this vectors coordinats
 
@@ -267,7 +309,7 @@ class Vec3D : public CoordinateSystem3D {
 
     bool isEqual(Dmath::Vec3D);
 
-    // Return a spezial vector
+    
     static Vec3D zeroVector();                                   // Returns a Vector with lenght 0
 
     static Vec3D sphereVector(double radius, double angleOne, double angleTwo); //gives a vector in a sphere  system
