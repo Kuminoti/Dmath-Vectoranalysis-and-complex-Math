@@ -268,7 +268,7 @@ class VectorAnalysis3D: public VectorAnalysis2D{
     inline Dmath::singleVarFunction getZfunction(){ return this->zFunc;           }
     inline double getDataAtZ(double data)              { return this->zFunc(data);     }
 
-   
+   virtual ~VectorAnalysis3D(){}
 };
 #pragma endregion
 #endif 

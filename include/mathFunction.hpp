@@ -30,6 +30,7 @@
 
 #include"macros.hpp"
 #include"dataTypes.hpp"
+#include"mathVector.hpp"
 #include<memory>
 #include<windows.h>
 
@@ -315,6 +316,7 @@ public:
     std::vector<double> getAntiDerivativeY(double start, double stopp, double stepps);
     std::vector<double> getAntiDerivativeZ(double start, double stopp, double stepps);
 
+    
 
 };
 

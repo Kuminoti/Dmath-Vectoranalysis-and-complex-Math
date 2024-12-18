@@ -9,6 +9,10 @@
 
 NAMESPACESTART
 
+auto circleArea    = [](double radius){ return PI * radius * radius;            };
+auto sphereSurface = [](double radius){ return 4 * PI * radius * radius;        };
+auto sphereVolume  = [](double radius){ return (4/3) * PI * std::pow(radius,3); };
+
 
 
 class Vec2D;
@@ -37,6 +41,8 @@ public:
   double cuboidVolume(Dmath::Vec3D mainVector, Dmath::Vec3D MathVector, Dmath::Vec3D MathVectorTwo);
   double cuboidSurface(Dmath::Vec3D mainVector, Dmath::Vec3D MathVector, Dmath::Vec3D MathVectorTwo);
 };
+
+
 NAMESPACEEND
 
 #endif//SYSTEM_READY
