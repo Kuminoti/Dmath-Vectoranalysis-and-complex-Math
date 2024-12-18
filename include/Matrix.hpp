@@ -4,6 +4,8 @@
 
 #include"macros.hpp"
 
+#include"mathVector.hpp"
+
 NAMESPACESTART
 
 
@@ -180,46 +182,46 @@ public:
 
 
 
-    Dmath::Vec2D vectorProduct2D(Dmath::Vec2D mainVec){
-        if(!this->squaredMatrix || this->elementsRow != 2 || this->elementsColumn != 2){
-            return Dmath::Vec2D::zeroVector();
-        }
+    // Dmath::Vec2D vectorProduct2D(Dmath::Vec2D mainVec){
+    //     if(!this->squaredMatrix || this->elementsRow != 2 || this->elementsColumn != 2){
+    //         return Dmath::Vec2D::zeroVector();
+    //     }
 
-        double xOne = this->getElement(1,1) * mainVec.getX();
-        double xTwo = this->getElement(1,2) * mainVec.getX();
+    //     double xOne = this->getElement(1,1) * mainVec.getX();
+    //     double xTwo = this->getElement(1,2) * mainVec.getX();
 
-        double yOne = this->getElement(2,1) * mainVec.getY();
-        double yTwo = this->getElement(2,2) * mainVec.getY();
+    //     double yOne = this->getElement(2,1) * mainVec.getY();
+    //     double yTwo = this->getElement(2,2) * mainVec.getY();
 
-        double currentX = xOne + xTwo;
-        double currentY = yOne + yTwo;
+    //     double currentX = xOne + xTwo;
+    //     double currentY = yOne + yTwo;
 
-        return Dmath::Vec2D(currentX, currentY);
-    }
+    //     return Dmath::Vec2D(currentX, currentY);
+    // }
 
-    Dmath::Vec3D vectorProduct3D(Dmath::Vec3D mainVec){
-        if(!this->squaredMatrix || this->elementsRow != 3 || this->elementsColumn != 3){
-            return Dmath::Vec3D::zeroVector();
-        }
+    // Dmath::Vec3D vectorProduct3D(Dmath::Vec3D mainVec){
+    //     if(!this->squaredMatrix || this->elementsRow != 3 || this->elementsColumn != 3){
+    //         return Dmath::Vec3D::zeroVector();
+    //     }
 
-        double xOne   = this->getElement(1,1) * mainVec.getX();
-        double xTwo   = this->getElement(1,2) * mainVec.getX();
-        double xThree = this->getElement(1,3) * mainVec.getX();
+    //     double xOne   = this->getElement(1,1) * mainVec.getX();
+    //     double xTwo   = this->getElement(1,2) * mainVec.getX();
+    //     double xThree = this->getElement(1,3) * mainVec.getX();
 
-        double yOne   = this->getElement(2,1) * mainVec.getY();
-        double yTwo   = this->getElement(2,2) * mainVec.getY();
-        double yThree = this->getElement(2,3) * mainVec.getY();
+    //     double yOne   = this->getElement(2,1) * mainVec.getY();
+    //     double yTwo   = this->getElement(2,2) * mainVec.getY();
+    //     double yThree = this->getElement(2,3) * mainVec.getY();
 
-        double zOne   = this->getElement(3,1) * mainVec.getZ();
-        double zTwo   = this->getElement(3,2) * mainVec.getZ();
-        double zThree = this->getElement(3,3) * mainVec.getZ();
+    //     double zOne   = this->getElement(3,1) * mainVec.getZ();
+    //     double zTwo   = this->getElement(3,2) * mainVec.getZ();
+    //     double zThree = this->getElement(3,3) * mainVec.getZ();
 
-        double currentX = xOne + xTwo + xThree;
-        double currentY = yOne + yTwo + yThree;
-        double currentZ = zOne + zTwo + zThree;
+    //     double currentX = xOne + xTwo + xThree;
+    //     double currentY = yOne + yTwo + yThree;
+    //     double currentZ = zOne + zTwo + zThree;
 
-        return Dmath::Vec3D(currentX, currentY, currentZ);
-    }
+    //     return Dmath::Vec3D(currentX, currentY, currentZ);
+    // }
 
 };
 
