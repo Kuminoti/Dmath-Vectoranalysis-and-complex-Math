@@ -170,6 +170,32 @@ double Dmath::gammaFunction(double x) {
     return sum;
 }
 
+double average(std::vector<double> input){
+    double result = 0;
+
+    const size_t num = input.size();
+    for(size_t i = 0; i < num; i++){
+        result += input[i];
+    }
+    result = result/num;
+    return num;
+}
+
+
+int digitSum(int number) {
+    // Take the absolute value to handle negative numbers
+    number = std::abs(number);
+    int sum = 0;
+
+    // Calculate the sum of the digits
+    while (number > 0) {
+        sum += number % 10; // Add the last digit to the sum
+        number /= 10;       // Remove the last digit
+    }
+
+    return sum;
+}
+
 // Numerical approximation of the Psi (Digamma) function
 double Dmath::psiFunction(double x) {
     if (x <= 0 && std::floor(x) == x) {

@@ -31,7 +31,11 @@ auto smallerThan = [](double smaller, double than)->bool {
     return false;
 };
 
+
+
 auto sleep = [](size_t millis) ->void { std::this_thread::sleep_for(std::chrono::milliseconds(millis));};
+
+auto sleepMicros = [](size_t micros) -> void { std::this_thread::sleep_for(std::chrono::microseconds(micros)); };
 
 SHARED_LIB double pyth2(double a, double b);
 
@@ -75,6 +79,11 @@ SHARED_LIB size_t binomialCoefficient(size_t n, size_t k);
 SHARED_LIB double gammaFunction(double x);
 
 SHARED_LIB double psiFunction(double x);
+
+SHARED_LIB double average(std::vector<double> input);
+
+SHARED_LIB int digitSum(int number);
+
 NAMESPACEEND
 
 #endif 
