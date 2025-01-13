@@ -196,6 +196,20 @@ int digitSum(int number) {
     return sum;
 }
 
+
+size_t randomNumber(size_t min, size_t max) {
+    if (min > max) {
+        throw std::invalid_argument("min cannot be greater than max");
+    }
+    
+    // Zufallszahlengenerator initialisieren (mit Zufalls-Seed)
+    std::random_device rd;                         // Hardware-Seed
+    std::mt19937 gen(rd());                        // Mersenne-Twister-Generator
+    std::uniform_int_distribution<size_t> dist(min, max); // Gleichverteilte Zahlen im Bereich [min, max]
+
+    return dist(gen); // Zufallswert zurückgeben
+}
+
 // Numerical approximation of the Psi (Digamma) function
 double Dmath::psiFunction(double x) {
     if (x <= 0 && std::floor(x) == x) {

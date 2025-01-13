@@ -4,6 +4,8 @@
 #define D_FUNCTIONS_HPP
 
 #include"dataTypes.hpp" 
+#include<random>
+#include<limits>
 
 
 NAMESPACESTART
@@ -83,6 +85,9 @@ SHARED_LIB double psiFunction(double x);
 SHARED_LIB double average(std::vector<double> input);
 
 SHARED_LIB int digitSum(int number);
+
+// Function: Random Number Generator
+SHARED_LIB size_t randomNumber(size_t min, size_t max);
 
 NAMESPACEEND
 
