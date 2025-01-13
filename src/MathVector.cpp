@@ -531,18 +531,18 @@ double Vec2D::getAbs()               { return this->abs;      }
 double Vec2D::getLenght()            { return this->getAbs(); }
 double Vec2D::getRotationAngle()     { return this->vectorRotation; }
 
-Vec2D Vec2D::linearTranformation(Dmath::Matrix<double> mainMatrix){
-  Dmath::Vec2D newVec = mainMatrix.vectorProduct2D(this);
-  return newVec;
-}
+// Vec2D Vec2D::linearTranformation(Dmath::Matrix<double> mainMatrix){
+//   Dmath::Vec2D newVec = mainMatrix.vectorProduct2D(this);
+//   return newVec;
+// }
 
-void Vec2D::transformLinear(Dmath::Matrix<double> mainMatrix){
+// void Vec2D::transformLinear(Dmath::Matrix<double> mainMatrix){
   
 
-  Dmath::Vec2D currentVec = mainMatrix.vectorProduct2D(this);
-  this->X = currentVec.getX();
-  this->Y = currentVec.getY();
-}
+//   Dmath::Vec2D currentVec = mainMatrix.vectorProduct2D(this);
+//   this->X = currentVec.getX();
+//   this->Y = currentVec.getY();
+// }
 
 #pragma endregion //Vec2D/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -945,19 +945,19 @@ void Vec3D::operator--(){
   this->calcAbs();
 }
 
-Vec3D Vec3D::linearTranformation(Dmath::Matrix<double> mainMatrix){
-  Dmath::Vec3D newVec = mainMatrix.vectorProduct2D(this);
-  return newVec;
-}
+// Vec3D Vec3D::linearTranformation(Dmath::Matrix<double> mainMatrix){
+//   Dmath::Vec3D newVec = mainMatrix.vectorProduct2D(this);
+//   return newVec;
+// }
 
-void Vec3D::transformLinear(Dmath::Matrix<double> mainMatrix){
+// void Vec3D::transformLinear(Dmath::Matrix<double> mainMatrix){
   
 
-  Dmath::Vec3D currentVec = mainMatrix.vectorProduct3D(this);
-  this->X = currentVec.getX();
-  this->Y = currentVec.getY();
-  this->Z = currentVec.getZ();
-}
+//   Dmath::Vec3D currentVec = mainMatrix.vectorProduct3D(this);
+//   this->X = currentVec.getX();
+//   this->Y = currentVec.getY();
+//   this->Z = currentVec.getZ();
+// }
 
 
 #pragma endregion // Vec3D
