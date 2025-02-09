@@ -20,6 +20,8 @@ typedef std::function<double(double, double, double)> tripleVarFunction;
 
 typedef std::vector<double> doubleVector;
 
+typedef std::vector<std::string> Text;
+
 
 /*Calculating a mathmatical function is this library works by defining start and an end point 
   and calculating the value of a given function in specific small intervalls (resolution)

@@ -17,6 +17,7 @@
     #include <algorithm>
     #include <thread>
     #include <type_traits>
+    #include <string>
     
 
     //Physical and mathmatical constants, and constants

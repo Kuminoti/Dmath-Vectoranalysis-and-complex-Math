@@ -182,7 +182,7 @@ double average(std::vector<double> input){
 }
 
 
-int digitSum(int number) {
+int Dmath::digitSum(int number) {
     // Take the absolute value to handle negative numbers
     number = std::abs(number);
     int sum = 0;
@@ -197,7 +197,7 @@ int digitSum(int number) {
 }
 
 
-size_t randomNumber(size_t min, size_t max) {
+size_t Dmath::randomNumber(size_t min, size_t max) {
     if (min > max) {
         throw std::invalid_argument("min cannot be greater than max");
     }
