@@ -53,6 +53,8 @@ public:
     virtual double Callx(double x) = 0;             // For f(x)
     virtual double CallXY(double x, double y) = 0;  // For f(x, y)
     virtual double CallXYZ(double x, double y, double z) = 0; //For f(x,y,z)
+
+    virtual std::unique_ptr<FunctionBase> clone() = 0;
 };
 
 #pragma endregion
@@ -81,6 +83,10 @@ public:
         throw std::runtime_error("Single variable function does not support CallXY."); // Not implemented for single variable function
     }
 
+    std::unique_ptr<FunctionBase> clone()  override {
+        return std::make_unique<FunctionWrapper<FuncX>>(singleFunction);
+    }
+
 };
 
 template<typename FuncXY>
@@ -102,6 +108,11 @@ public:
     double CallXYZ(double x, double y, double z) override {
         throw std::runtime_error("Single variable function does not support CallXY."); // Not implemented for single variable function
     }
+
+
+    std::unique_ptr<FunctionBase> clone()  override {
+        return std::make_unique<FunctionWrapperXY<FuncXY>>(doubleFunction);
+    }
 };
 
 template<typename FuncXYZ>
@@ -122,6 +133,10 @@ public:
     double CallXYZ(double x, double y, double z) override {
         return tripleFunc(x,y,z);
     }
+    std::unique_ptr<FunctionBase> clone()  override {
+        return std::make_unique<FunctionWrapperXYZ<FuncXYZ>>(tripleFunc);
+    }
+    
 };
 
 #pragma endregion
@@ -149,6 +164,28 @@ public: //public getters
 public: //operator overloading
 
 
+    SingleVarFunction& operator=(const SingleVarFunction& other) {
+        if (this != &other) {
+            this->funcBase = other.funcBase ? other.funcBase->clone() : nullptr;
+        }
+        return *this;
+    }
+
+    // Lambda-Zuweisung
+    template<typename Callable>
+    SingleVarFunction& operator=(Callable func) {
+        this->funcBase = std::make_unique<FunctionWrapper<Callable>>(func);
+        return *this;
+    }
+
+    // Move-Zuweisung
+    SingleVarFunction& operator=(SingleVarFunction&& other) noexcept {
+        if (this != &other) {
+            this->funcBase = std::move(other.funcBase);
+        }
+        return *this;
+    }
+
     /* Calculates the number of elements for exapmle if you want
      * to create the derivative 
      * Parameters is a datatype wich holds 3 values:
@@ -169,6 +206,9 @@ public: //operator overloading
 public:
     template<typename Callable>
     SingleVarFunction(Callable func) : funcBase(std::make_unique<FunctionWrapper<Callable>>(func)) {}
+
+    SingleVarFunction(const SingleVarFunction& other)
+    : funcBase(other.funcBase ? other.funcBase->clone() : nullptr) {}
 
     SingleVarFunction() = default;
 
@@ -257,6 +297,11 @@ public:
     template<typename FuncXY>
     DoubleVarFunction(FuncXY func) : funcBase(std::make_unique<FunctionWrapperXY<FuncXY>>(func)) {} // Wrapper for f(x, y)
 
+    DoubleVarFunction(const DoubleVarFunction& other)
+    : funcBase(other.funcBase ? other.funcBase->clone() : nullptr) {}
+
+    DoubleVarFunction() = default;
+
     double operator()(double x, double y) {
         if (funcBase) {
             return funcBase->CallXY(x, y); // Delegate call to stored function
@@ -266,6 +311,30 @@ public:
 
 
     size_t numOfElements(Dmath::Parameters params);
+
+
+    DoubleVarFunction& operator=(const DoubleVarFunction& other) {
+        if (this != &other) {
+            this->funcBase = other.funcBase ? other.funcBase->clone() : nullptr;
+        }
+        return *this;
+    }
+
+    // Lambda-Zuweisung
+    template<typename Callable>
+    DoubleVarFunction& operator=(Callable func) {
+        this->funcBase = std::make_unique<FunctionWrapperXY<Callable>>(func);
+        return *this;
+    }
+
+    // Move-Zuweisung
+    DoubleVarFunction& operator=(DoubleVarFunction&& other) noexcept {
+        if (this != &other) {
+            this->funcBase = std::move(other.funcBase);
+        }
+        return *this;
+    }
+
 
 
 
@@ -299,6 +368,12 @@ public:
     template<typename FuncXYZ>
     TripleVarFunction(FuncXYZ func) : funcBase(std::make_unique<FunctionWrapperXYZ<FuncXYZ>>(func)){};
 
+    TripleVarFunction(const TripleVarFunction& other)
+    : funcBase(other.funcBase ? other.funcBase->clone() : nullptr) {}
+
+    TripleVarFunction() = default;
+
+
     double operator()(double x, double y, double z) {
         if (funcBase) {
             return funcBase->CallXYZ(x, y, z); // Delegate call to stored function
@@ -306,6 +381,27 @@ public:
         return 0.0; // Default value
     }
 
+    TripleVarFunction& operator=(const TripleVarFunction& other) {
+        if (this != &other) {
+            this->funcBase = other.funcBase ? other.funcBase->clone() : nullptr;
+        }
+        return *this;
+    }
+
+    // Lambda-Zuweisung
+    template<typename Callable>
+    TripleVarFunction& operator=(Callable func) {
+        this->funcBase = std::make_unique<FunctionWrapperXYZ<Callable>>(func);
+        return *this;
+    }
+
+    // Move-Zuweisung
+    TripleVarFunction& operator=(TripleVarFunction&& other) noexcept {
+        if (this != &other) {
+            this->funcBase = std::move(other.funcBase);
+        }
+        return *this;
+    }
 
 
     std::vector<double> getFunctionVector (double start, double stopp, double stepps);
