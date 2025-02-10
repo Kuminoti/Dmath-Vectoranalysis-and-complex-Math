@@ -60,6 +60,26 @@ std::vector<double> Dmath::SingleVarFunction::getDerivativeVector(double start, 
     return mainVector;
 }
 
+std::vector<double> Dmath::SingleVarFunction::getSecondDerivative(double start, double stopp, double stepps){
+    const Dmath::Parameters params(start,stopp,stepps);
+    if(!this->checkParams(params)){
+        return std::vector<double>(0);
+    }
+    const size_t num = this->numOfElements(params);
+    std::vector<double> mainVector;
+    for(size_t i = 0; i < num; i++){
+        const double x = start + i * stepps;
+        const double TwofOfX = 2 * this->funcBase->Callx(x);
+        const double plusDX  = this->funcBase->Callx(x+this->dx);
+        const double minusDX = this->funcBase->Callx(x-this->dx);
+
+        const double currentResult = (plusDX - TwofOfX + minusDX)/(dx*dx);
+        mainVector.push_back(currentResult);
+
+    }
+    return mainVector;
+}
+
 
 std::vector<double> Dmath::SingleVarFunction::getAntiDerivativeVector(double start, double stopp, double stepps) {
     Dmath::Parameters param(start, stopp, stepps);

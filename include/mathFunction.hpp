@@ -235,6 +235,9 @@ public:
  * multiplying it by the differential element 'dx'.
  */
 
+std::vector<double> getSecondDerivative(double start, double stopp, double stepps);
+
+
 std::vector<double> getAntiDerivativeVector(double start, double stopp, double stepps);
 
 };
