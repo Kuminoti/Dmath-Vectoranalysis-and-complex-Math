@@ -40,41 +40,47 @@ auto smallerThan = [](double smaller, double than)->bool {
  * Line: 16
 */
 
-double derivative(Dmath::singleVarFunction func, double point){
-    const Scalar limit = 0.00001;
-    Scalar value = func(point + limit) - func(point) / (point + limit) - func(point);
-    return value;
 
-}
+//Calculates the derivative an a given point
+SHARED_LIB double derivativeAt(Dmath::singleVarFunction func, double point);
+
+//Calculates all the derivatives in a given range in between given intervalls 
+SHARED_LIB std::vector<Dmath::Scalar> derivativeVector(Dmath::singleVarFunction, double start, double end, double res);
 
 
 auto sleep = [](size_t millis) ->void { std::this_thread::sleep_for(std::chrono::milliseconds(millis));};
 
+
 auto sleepMicros = [](size_t micros) -> void { std::this_thread::sleep_for(std::chrono::microseconds(micros)); };
 
+
 SHARED_LIB double pyth2(double a, double b);
+
 
 SHARED_LIB double pyth3(double x, double y, double z);
 
 
-    //simples summenzeichen
+//Summation Σ
 SHARED_LIB double SigmaAdd(size_t start, size_t end);
 
-    //Summenzeichen mit term. singleVarFunction = lambda (quasi)
+
 SHARED_LIB double sigmaAddFunc(size_t start, size_t end, Dmath::singleVarFunction mainFunc);
 
-
+//Helper function to calculate the number of total elements 
 SHARED_LIB size_t numberOfElements(Dmath::Parameters params);
 
-
+//Checks if parameters are correkt
 SHARED_LIB bool checkParams(Dmath::Parameters params);
 
-
+//Converts Kelvin to °F
 SHARED_LIB double kelvinToCelsius(double Kelvin);
 
+//converts °C to K
 SHARED_LIB double CelsiusToKelvin(double celsius);
 
+//Converts °F to °C
 SHARED_LIB double fahrenheitToCelsius(double fahrenheit);
+
 
 SHARED_LIB double celsiusToFahrenheit(double celsius);
 
@@ -83,11 +89,15 @@ SHARED_LIB double radiansToDegrees(double radiants);
 
 SHARED_LIB double degreesToRadians(double degrees);
 
+
+
+
 SHARED_LIB double fDotPruduct(Dmath::sVec2f vecOne, Dmath::sVec2f);
 
 SHARED_LIB size_t iDotPruduct(Dmath::sVec2i vecOne, Dmath::sVec2i vecTwo);
 
 SHARED_LIB double fDotPruduct(Dmath::sVec3f vecOne, Dmath::sVec3f vecTwo);
+
 
 SHARED_LIB size_t binomialCoefficient(size_t n, size_t k);
 
@@ -97,6 +107,8 @@ SHARED_LIB double psiFunction(double x);
 
 SHARED_LIB double average(std::vector<double> input);
 
+
+//The digit Sum of a number is the sum of the individual digits of the number
 SHARED_LIB int digitSum(int number);
 
 // Function: Random Number Generator
