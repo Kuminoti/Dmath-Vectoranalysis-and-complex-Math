@@ -1,5 +1,5 @@
 #include"../include/complex.hpp"
-#include "complex.hpp"
+
 
 Dmath::Complex::Complex(){
     this->real = 0;
@@ -108,6 +108,7 @@ Dmath::Vec2D Dmath::Complex::getVector(){
     Dmath::Scalar vecY = this->img;
 
     Dmath::Vec2D complexVector(vecX,vecY);
+    return complexVector;
 }
 
 
