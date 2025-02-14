@@ -34,6 +34,19 @@ auto smallerThan = [](double smaller, double than)->bool {
 };
 
 
+/* Functions for calculating derivarives and defined integrals, for the Dmath::singleVarFunction a typedef
+ * for: std::function<double(double)> 
+ * defined: datatypes.hpp 
+ * Line: 16
+*/
+
+double derivative(Dmath::singleVarFunction func, double point){
+    const Scalar limit = 0.00001;
+    Scalar value = func(point + limit) - func(point) / (point + limit) - func(point);
+    return value;
+
+}
+
 
 auto sleep = [](size_t millis) ->void { std::this_thread::sleep_for(std::chrono::milliseconds(millis));};
 

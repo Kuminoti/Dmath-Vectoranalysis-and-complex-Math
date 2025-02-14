@@ -54,6 +54,8 @@ public:
     virtual double CallXY(double x, double y) = 0;  // For f(x, y)
     virtual double CallXYZ(double x, double y, double z) = 0; //For f(x,y,z)
 
+    
+
     virtual std::unique_ptr<FunctionBase> clone() = 0;
 };
 
@@ -415,7 +417,23 @@ public:
     std::vector<double> getAntiDerivativeY(double start, double stopp, double stepps);
     std::vector<double> getAntiDerivativeZ(double start, double stopp, double stepps);
 
-    
+    std::vector<Dmath::Vec3D> getGradient(double start, double stopp, double stepps){
+        std::vector<double>dx =  this->getPartialDerivteX( start,  stopp,  stepps);
+        std::vector<double>dy =  this->getPartialDerivteY( start,  stopp,  stepps);
+        std::vector<double>dz =  this->getPartialDerivteZ( start,  stopp,  stepps);
+        const size_t num = dx.size();
+
+        std::vector<Dmath::Vec3D> gradient;
+        for(size_t i = 0; i < num; i++){
+            const double currentX = dx[i];
+            const double currentY = dy[i];
+            const double currentZ = dz[i];
+
+            const Dmath::Vec3D currentVec(currentX,currentY,currentZ);
+            gradient.push_back(currentVec);
+        }
+        return gradient;
+    }
 
 };
 
