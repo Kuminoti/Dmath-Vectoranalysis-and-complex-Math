@@ -1,25 +1,30 @@
+#pragma once
+
 #ifndef DMATH_COMPLEX_HPP
 #define DMATH_COMPLEX_HPP
 
-#include"mathVector.hpp"
-#include"dFunctions.hpp"
+#include"mathVector.hpp" //To convert the data from the complex plane to a vector in cartesian coordinates
+#include"dFunctions.hpp" //Helper function
 
 /* File include/Complex.hpp 
- * This File contains a class for Complex Numbers
+ * This File contains a class for Complex Numbers und fitting mathmaticals operations
+ *
+ * Z = aX + ib => ∀( a,b ) ∈ R; i ∈ Q ; i² = -1
 */
 
 
 
-NAMESPACESTART
+NAMESPACESTART //Dmath:: - namespace
 
 class Complex{
 
 private:
+    //real and imaginary parts
     double real;
     double img;
 
-    double absolute;
-
+    
+    double absolute; //The "distance" from the coordinate origin
     double phaseAngle = 0;
 
     //Calculates the angle and abs after a manipulations
