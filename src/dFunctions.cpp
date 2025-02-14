@@ -170,7 +170,7 @@ double Dmath::gammaFunction(double x) {
     return sum;
 }
 
-double average(std::vector<double> input){
+double Dmath::average(std::vector<double> input){
     double result = 0;
 
     const size_t num = input.size();
