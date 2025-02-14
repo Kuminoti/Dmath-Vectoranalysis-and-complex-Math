@@ -415,5 +415,21 @@ std::vector<double> Dmath::TripleVarFunction::getPartialDerivteZ(double start, d
     return funcVector;
 }
 
+// std::vector<Dmath::Vec3D> Dmath::TripleVarFunction::getGradient(double start, double stopp, double stepps){
+//     std::vector<double>dx =  this->getPartialDerivteX( start,  stopp,  stepps);
+//     std::vector<double>dy =  this->getPartialDerivteY( start,  stopp,  stepps);
+//     std::vector<double>dz =  this->getPartialDerivteZ( start,  stopp,  stepps);
+//     const size_t num = dx.size();
+
+//     std::vector<Dmath::Vec3D> gradient;
+//     for(size_t i = 0; i < num; i++){
+//         const double currentX = dx[i];
+//         const double currentY = dy[i];
+//         const double currentZ = dz[i];
+
+//         gradient.push_back( Dmath::Vec3D(currentX,currentY,currentZ));
+//     }
+//     return gradient;
+// }
 
 #pragma endregion

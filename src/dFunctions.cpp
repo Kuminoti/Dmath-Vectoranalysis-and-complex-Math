@@ -16,6 +16,34 @@ double Dmath::pyth3(double x, double y, double z){
         return result;
     }
 
+double Dmath::derivativeAt(Dmath::singleVarFunction func, double point){
+    const Scalar limit = 0.00001;
+    Scalar value = func(point + limit) - func(point) / (point + limit) - func(point);
+    return value;
+
+}
+
+std::vector<Dmath::Scalar> Dmath::derivativeVector(Dmath::singleVarFunction func, double start, double end, double res){
+    const Dmath::Parameters param(start,end,res);
+
+    if(!Dmath::checkParams(param)){
+        return std::vector<double>(0);
+    }
+    const size_t num = Dmath::numberOfElements(param);
+    const Dmath::Scalar limit = 0.00000001;
+    std::vector<Dmath::Scalar> mainVector;
+
+    for(size_t i = 0; i < num; i++ ){
+        Dmath::Scalar currentVar = start + i * res;
+        Dmath::Scalar plsDX = func(currentVar + limit);
+        Dmath::Scalar minDX = func(currentVar - limit);
+        Dmath::Scalar result = (plsDX - minDX) / (2*limit);
+        mainVector.push_back(result);
+    }
+
+    return mainVector;
+}
+
 
 double Dmath::SigmaAdd(size_t start, size_t end){
     double result = 0;
@@ -45,6 +73,10 @@ double Dmath::sigmaAddFunc(size_t start, size_t end, Dmath::singleVarFunction ma
     return result;
 }
 
+size_t Dmath::numberOfElements(Dmath::Parameters params){
+    size_t num = static_cast<size_t>((params.two - params.one)/params.three);
+    return num;
+}
 
 bool Dmath::checkParams(Dmath::Parameters params){
     if(params.one >= params.two || params.three <= 0){
