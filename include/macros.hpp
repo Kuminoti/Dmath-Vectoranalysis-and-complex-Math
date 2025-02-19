@@ -34,6 +34,9 @@
     #define DEG_TO_RAD (PI/180.f)              //Degres to Radiants
     #define DEGTORAD(ANGLE) ((ANGLE)*DEG_TO_RAD)
     #define RADTODEG(RADIANT) ((RADIANT)*RAD_TO_DEG)
+    #define MILES_TO_KM  1.60934;
+    #define POUNDS_TO_KG  0.453592;
+    #define BAR_TO_PSI  14.5038;
 
 
     #define STDRES     0.05f                 //The standard resolution for more dimensional vector systems
