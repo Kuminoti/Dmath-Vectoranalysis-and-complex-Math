@@ -1,5 +1,6 @@
 #include"../include/mathFunction.hpp"
 
+
 #pragma region SingleVar
 
 bool Dmath::SingleVarFunction::checkParams(Dmath::Parameters params){
@@ -107,6 +108,9 @@ std::vector<double> Dmath::SingleVarFunction::getAntiDerivativeVector(double sta
     return mainVec;
 }
 
+Dmath::Scalar Dmath::SingleVarFunction::getDerivativeAt(double x) {
+    return (this->funcBase->Callx(x + 0.001) - this->funcBase->Callx(x)) / 0.001;
+}
 
 #pragma endregion 
 
