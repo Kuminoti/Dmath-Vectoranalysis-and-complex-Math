@@ -22,6 +22,8 @@ NAMESPACESTART
  * funktionen und dementsprechent über zusätzliche funktionalitäten verfügen. 
 */
 
+#pragma region Single
+
 class SingleVectorFunction{
 
 private:
@@ -37,27 +39,61 @@ public:
 
     SingleVectorFunction(Dmath::SingleVarFunction xOfT, Dmath::SingleVarFunction yOfT, Dmath::SingleVarFunction zOfT);
    
-    Dmath::Vec2D call2D(double t);
+    Dmath::Vec2D call2D(Dmath::Scalar t);
     
-    Dmath::Vec3D operator ()(double t);
+    Dmath::Vec3D operator ()(Dmath::Scalar t);
 
-    Dmath::SingleVarFunction getXFunc(){
-        return this->xOfT;
-    }
-    Dmath::SingleVarFunction getYFunc(){
-        return this->yOfT;
-    }
-    Dmath::SingleVarFunction getZFunc(){
-        return this->zOfT;
-    }
+    //Getters:
 
-    inline Dmath::Scalar callX(double t){ return xOfT(t); }
-    inline Dmath::Scalar callY(double t){ return yOfT(t); }
-    inline Dmath::Scalar callZ(double t){ return zOfT(t); }
+    Dmath::SingleVarFunction getXFunc(){ return this->xOfT;    }
+    Dmath::SingleVarFunction getYFunc(){ return this->yOfT;    }
+    Dmath::SingleVarFunction getZFunc(){ return this->zOfT;    }
 
+
+    //Call the functions
+    inline Dmath::Scalar callX(Dmath::Scalar t){ return xOfT(t); }
+    inline Dmath::Scalar callY(Dmath::Scalar t){ return yOfT(t); }
+    inline Dmath::Scalar callZ(Dmath::Scalar t){ return zOfT(t); }
+
+    
+    Dmath::Vec3D getTangentialVectorAt(Dmath::Scalar t);
+};
+
+#pragma endregion //single 
+
+#pragma region Double
+class DoubleVectorFunction{
+private:
+    Dmath::DoubleVarFunction xOfUV;
+    Dmath::DoubleVarFunction yOfUV;
+    Dmath::DoubleVarFunction zOfUV;
+
+public:
+
+    DoubleVectorFunction() = default;
+
+    DoubleVectorFunction(Dmath::DoubleVarFunction xOfUV, Dmath::DoubleVarFunction yOfUV, Dmath::DoubleVarFunction zOfUV);
+
+    Dmath::Vec3D operator ()(Dmath::Scalar U, Dmath::Scalar V);
+
+    inline Dmath::Scalar callX(Dmath::Scalar u, Dmath::Scalar v){ return xOfUV(u,v); }
+    inline Dmath::Scalar callY(Dmath::Scalar u, Dmath::Scalar v){ return yOfUV(u,v); }
+    inline Dmath::Scalar callZ(Dmath::Scalar u, Dmath::Scalar v){ return zOfUV(u,v); }
+
+
+    Dmath::DoubleVarFunction getXFunc(){ return this->xOfUV;  }
+    Dmath::DoubleVarFunction getYFunc(){ return this->yOfUV;  }
+    Dmath::DoubleVarFunction getZFunc(){ return this->zOfUV;  }
+
+
+    Dmath::Vec3D getPartialUAt(Dmath::Scalar u, Dmath::Scalar v);
+    Dmath::Vec3D getPartialVAt(Dmath::Scalar u, Dmath::Scalar v);
+
+    Dmath::Vec3D normVectorAt (Dmath::Scalar u, Dmath::Scalar v);
 
 };
 
+#pragma endregion
 
 
 NAMESPACEEND
