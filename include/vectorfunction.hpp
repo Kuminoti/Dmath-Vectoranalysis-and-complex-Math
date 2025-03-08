@@ -33,7 +33,7 @@ private:
     Dmath::SingleVarFunction zOfT; 
 
 public:
-
+    SingleVectorFunction() = default;
     //constructor for 2D vectorFunction
     SingleVectorFunction(Dmath::SingleVarFunction xOfT, Dmath::SingleVarFunction yOfT);
 
@@ -91,13 +91,43 @@ public:
 
     Dmath::Vec3D normVectorAt (Dmath::Scalar u, Dmath::Scalar v);
 
+    
+
 };
+
+
+
 
 #pragma endregion
 
 
+#pragma region Triple
+
+class TripleVectorFunction{
+  private:
+    Dmath::TripleVarFunction xOfUVW;
+    Dmath::TripleVarFunction yOfUVW;
+    Dmath::TripleVarFunction zOfUVW;
+
+
+
+  public:
+    TripleVectorFunction(Dmath::TripleVarFunction xOfUVW, Dmath::TripleVarFunction yOfUVW, Dmath::TripleVarFunction zOfUVW);
+
+    Dmath::Vec3D operator()(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
+
+
+
+    Dmath::Vec3D getPartialUAt(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
+    Dmath::Vec3D getPartialVAt(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
+    Dmath::Vec3D getPartialWAt(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
+
+    Dmath::Scalar callX(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
+    Dmath::Scalar callY(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
+    Dmath::Scalar callZ(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
+
+};
+
+
 NAMESPACEEND
-
-
-
 #endif

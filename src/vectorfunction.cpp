@@ -1,5 +1,5 @@
 #include "../include/vectorfunction.hpp"
-
+#pragma region single
 
 Dmath::SingleVectorFunction::SingleVectorFunction(Dmath::SingleVarFunction xOfT, Dmath::SingleVarFunction yOfT){
     this->xOfT = xOfT;
@@ -36,9 +36,10 @@ Dmath::Vec3D Dmath::SingleVectorFunction::getTangentialVectorAt(Dmath::Scalar t)
     return Dmath::Vec3D(dx,dy,dz);
 }
 
+#pragma endregion
 
 
-
+#pragma region Double 
 Dmath::Vec3D Dmath::DoubleVectorFunction::operator ()(Dmath::Scalar U, Dmath::Scalar V){
     const Dmath::Scalar currentX = this->xOfUV(U,V);
     const Dmath::Scalar currentY = this->yOfUV(U,V);
@@ -79,3 +80,60 @@ Dmath::Vec3D Dmath::DoubleVectorFunction::normVectorAt(Dmath::Scalar u, Dmath::S
 
     return normVec;
 }
+
+#pragma endregion
+
+#pragma region Triple
+
+Dmath::TripleVectorFunction::TripleVectorFunction(Dmath::TripleVarFunction xOfUVW, Dmath::TripleVarFunction yOfUVW, Dmath::TripleVarFunction zOfUVW){
+    this->xOfUVW = xOfUVW;
+    this->yOfUVW = yOfUVW;
+    this->zOfUVW = zOfUVW;
+}
+
+Dmath::Vec3D Dmath::TripleVectorFunction::operator()(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w){
+    const Dmath::Scalar currentX = this->xOfUVW(u,v,w);
+    const Dmath::Scalar currentY = this->yOfUVW(u,v,w);
+    const Dmath::Scalar currentz = this->zOfUVW(u,v,w);
+
+    return Dmath::Vec3D(currentX, currentY, currentz);
+}
+
+
+Dmath::Vec3D Dmath::TripleVectorFunction::getPartialUAt(Dmath::Scalar u,Dmath::Scalar v, Dmath::Scalar w){
+    const Dmath::Scalar du_x = (this->xOfUVW(u + 0.0001, v, w) - this->xOfUVW(u - 0.0001, v, w)) / (2 * 0.0001);
+    const Dmath::Scalar du_y = (this->yOfUVW(u + 0.0001, v, w) - this->yOfUVW(u - 0.0001, v, w)) / (2 * 0.0001);
+    const Dmath::Scalar du_z = (this->zOfUVW(u + 0.0001, v, w) - this->zOfUVW(u - 0.0001, v, w)) / (2 * 0.0001);
+
+    return Dmath::Vec3D(du_x, du_y,du_z);
+}
+
+Dmath::Vec3D Dmath::TripleVectorFunction::getPartialVAt(Dmath::Scalar u,Dmath::Scalar v, Dmath::Scalar w){
+    const Dmath::Scalar du_x = (this->xOfUVW(u, v + 0.0001, w) - this->xOfUVW(u, v - 0.0001, w)) / (2 * 0.0001);
+    const Dmath::Scalar du_y = (this->yOfUVW(u, v + 0.0001, w) - this->yOfUVW(u, v - 0.0001, w)) / (2 * 0.0001);
+    const Dmath::Scalar du_z = (this->zOfUVW(u, v + 0.0001, w) - this->zOfUVW(u, v - 0.0001, w)) / (2 * 0.0001);
+
+    return Dmath::Vec3D(du_x, du_y,du_z);
+}
+
+Dmath::Vec3D Dmath::TripleVectorFunction::getPartialWAt(Dmath::Scalar u,Dmath::Scalar v, Dmath::Scalar w){
+    const Dmath::Scalar du_x = (this->xOfUVW(u, v, w + 0.0001) - this->xOfUVW(u, v, w - 0.0001)) / (2 * 0.0001);
+    const Dmath::Scalar du_y = (this->yOfUVW(u, v, w + 0.0001) - this->yOfUVW(u, v, w + 0.0001)) / (2 * 0.0001);
+    const Dmath::Scalar du_z = (this->zOfUVW(u, v, w + 0.0001) - this->zOfUVW(u, v, w + 0.0001)) / (2 * 0.0001);
+
+    return Dmath::Vec3D(du_x, du_y,du_z);
+}
+
+Dmath::Scalar Dmath::TripleVectorFunction::callX(Dmath::Scalar u,Dmath::Scalar v, Dmath::Scalar w){
+    return this->xOfUVW(u,v,w);
+}
+
+Dmath::Scalar Dmath::TripleVectorFunction::callY(Dmath::Scalar u,Dmath::Scalar v, Dmath::Scalar w){
+    return this->yOfUVW(u,v,w);
+}
+
+Dmath::Scalar Dmath::TripleVectorFunction::callZ(Dmath::Scalar u,Dmath::Scalar v, Dmath::Scalar w){
+    return this->zOfUVW(u,v,w);
+}
+
+#pragma endregion
