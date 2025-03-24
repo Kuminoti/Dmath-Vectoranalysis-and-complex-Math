@@ -4,24 +4,32 @@
 
 #define VEC_S
 
-#include"mathVector.hpp"
-#include"mathFunction.hpp"
+#include"vectorfunction.hpp"
+#include"dFunctions.hpp"
 
 NAMESPACESTART
 
 class VectorSurfaceTest{
   private:
-    Dmath::DoubleVarFunction xOfUV;
-    Dmath::DoubleVarFunction yOfUV;
-    Dmath::DoubleVarFunction zOfUV;
+    Dmath::DoubleVectorFunction mainFunc;
+    std::vector<Dmath::Vec3D> numerics;
+
+    size_t numOfElements = 0;
+    Dmath::Parameters params;
+
+    
 
   public:
-    VectorSurfaceTest(Dmath::DoubleVarFunction xOfUV,Dmath::DoubleVarFunction yOfUV,Dmath::DoubleVarFunction zOfUV){
-        this->xOfUV = xOfUV;
-        this->yOfUV = yOfUV;
-        this->zOfUV = zOfUV;
-        
+
+    VectorSurfaceTest(Dmath::DoubleVectorFunction mainFunc, double start, double end, double stepp){
+      this->mainFunc = mainFunc;
+      this->params = Dmath::Parameters(start,end,stepp);
+      if(!Dmath::checkParams(this->params)){
+        this->params = Dmath::Parameters(0,TWOPI,0.1);
+      }
+      this->numOfElements = Dmath::numberOfElements(params);
     }
+  
 };
 
 NAMESPACEEND

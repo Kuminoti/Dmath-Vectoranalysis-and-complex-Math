@@ -72,6 +72,8 @@ public:
 
     DoubleVectorFunction() = default;
 
+    
+
     DoubleVectorFunction(Dmath::DoubleVarFunction xOfUV, Dmath::DoubleVarFunction yOfUV, Dmath::DoubleVarFunction zOfUV);
 
     Dmath::Vec3D operator ()(Dmath::Scalar U, Dmath::Scalar V);
@@ -117,7 +119,7 @@ class TripleVectorFunction{
     Dmath::Vec3D operator()(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
 
 
-
+    //Tangential vektoren
     Dmath::Vec3D getPartialUAt(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
     Dmath::Vec3D getPartialVAt(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
     Dmath::Vec3D getPartialWAt(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
@@ -125,6 +127,17 @@ class TripleVectorFunction{
     Dmath::Scalar callX(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
     Dmath::Scalar callY(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
     Dmath::Scalar callZ(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
+
+
+    //Patielle ableitungen aller funktionen
+    Dmath::Scalar callXPartial(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
+    Dmath::Scalar callYPartial(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
+    Dmath::Scalar callZPartial(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
+
+    // Dmath::Scalar JacobiDeterminant(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w){
+        
+
+    // }
 
 };
 

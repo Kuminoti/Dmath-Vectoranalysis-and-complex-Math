@@ -228,6 +228,16 @@ std::vector<double> Dmath::DoubleVarFunction::getAntiDerivativeX(double start, d
     return mainVec;
 }
 
+Dmath::Scalar Dmath::DoubleVarFunction::derivativeXAT(Dmath::Scalar x, Dmath::Scalar y){
+    const Dmath::Scalar dx = this->funcBase->CallXY(x + 0.0001, y) - this->funcBase->CallXY(x - 0.0001, y) / (2* 0.0001);
+    return dx;
+}
+
+Dmath::Scalar Dmath::DoubleVarFunction::derivativeYAT(Dmath::Scalar x, Dmath::Scalar y){
+    const Dmath::Scalar dy = this->funcBase->CallXY(x, y + 0.0001) - this->funcBase->CallXY(x, y - 0.0001) / (2* 0.0001);
+    return dy;
+}
+
 std::vector<double> Dmath::DoubleVarFunction::getAntiDerivativeY(double start, double stopp, double stepps) {
     Dmath::Parameters params(start, stopp, stepps);
     if (!this->checkParams(params)) {
@@ -417,6 +427,35 @@ std::vector<double> Dmath::TripleVarFunction::getPartialDerivteZ(double start, d
     }
 
     return funcVector;
+}
+
+
+Dmath::Scalar Dmath::TripleVarFunction::derivativeXAt(Dmath::Scalar x, Dmath::Scalar y, Dmath::Scalar z){
+    const Dmath::Scalar dx = this->funcBase->CallXYZ(x + 0.0001, y, z);
+    const Dmath::Scalar DX = this->funcBase->CallXYZ(x - 0.0001, y, z);
+
+    const Dmath::Scalar derivative = (dx - DX) / (2 * 0.0001);
+
+    return derivative;
+}
+
+Dmath::Scalar Dmath::TripleVarFunction::derivativeYAt(Dmath::Scalar x, Dmath::Scalar y, Dmath::Scalar z){
+    const Dmath::Scalar dy = this->funcBase->CallXYZ(x, y + 0.0001, z);
+    const Dmath::Scalar DY = this->funcBase->CallXYZ(x, y - 0.0001, z);
+
+    const Dmath::Scalar derivative = (dy - DY) / (2 * 0.0001);
+
+    return derivative;
+}
+
+
+Dmath::Scalar Dmath::TripleVarFunction::derivativeZAt(Dmath::Scalar x, Dmath::Scalar y, Dmath::Scalar z){
+    const Dmath::Scalar dz = this->funcBase->CallXYZ(x, y, z + 0.0001);
+    const Dmath::Scalar DZ = this->funcBase->CallXYZ(x, y, z - 0.0001);
+
+    const Dmath::Scalar derivative = (dz - DZ) / (2 * 0.0001);
+
+    return derivative;
 }
 
 // std::vector<Dmath::Vec3D> Dmath::TripleVarFunction::getGradient(double start, double stopp, double stepps){

@@ -350,8 +350,8 @@ public:
     std::vector<double> getAntiDerivativeX(double start, double stopp, double stepps);
     std::vector<double> getAntiDerivativeY(double start, double stopp, double stepps);
 
-
-    
+    Dmath::Scalar derivativeXAT(Dmath::Scalar x, Dmath::Scalar y);
+    Dmath::Scalar derivativeYAT(Dmath::Scalar x, Dmath::Scalar y);
 
 };
 
@@ -420,6 +420,10 @@ public:
     std::vector<double> getAntiDerivativeZ(double start, double stopp, double stepps);
 
    // std::vector<Dmath::Vec3D> getGradient(double start, double stopp, double stepps);
+
+   Dmath::Scalar derivativeXAt(Dmath::Scalar x, Dmath::Scalar y, Dmath::Scalar z);
+   Dmath::Scalar derivativeYAt(Dmath::Scalar x, Dmath::Scalar y, Dmath::Scalar z);
+   Dmath::Scalar derivativeZAt(Dmath::Scalar x, Dmath::Scalar y, Dmath::Scalar z);
 
 };
 

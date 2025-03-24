@@ -136,4 +136,15 @@ Dmath::Scalar Dmath::TripleVectorFunction::callZ(Dmath::Scalar u,Dmath::Scalar v
     return this->zOfUVW(u,v,w);
 }
 
+Dmath::Scalar Dmath::TripleVectorFunction::callXPartial(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w){
+    const Dmath::Scalar dx = this->callX(u + 0.0001, v, w) - this->callX(u - 0.0001, v, w) / (2 * 0.0001);
+    return dx;
+}
+
+
+Dmath::Scalar Dmath::TripleVectorFunction::callYPartial(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w){
+    const Dmath::Scalar dx = this->callX(u + 0.0001, v, w) - this->callX(u - 0.0001, v, w) / (2 * 0.0001);
+    return dx;
+}
+
 #pragma endregion
