@@ -60,6 +60,21 @@ public:
     bool operator==(Complex num);
     bool operator!=(Complex num);
 
+    bool operator==(Dmath::Scalar num);
+    bool operator!=(Dmath::Scalar num);
+    
+
+    bool operator< (Complex num);
+    bool operator> (Complex num);
+    bool operator<=(Complex num);
+    bool operator>=(Complex num);
+
+
+    bool operator< (Dmath::Scalar num);
+    bool operator> (Dmath::Scalar num);
+    bool operator<=(Dmath::Scalar num);
+    bool operator>=(Dmath::Scalar num);
+
     //Mathmatical operators
     Complex operator+(Complex num);
     Complex operator-(Complex num);

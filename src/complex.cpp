@@ -1,6 +1,8 @@
 #include"../include/complex.hpp"
 
 
+#pragma region Class basics
+
 Dmath::Complex::Complex(){
     this->real = 0;
     this->img  = 0;
@@ -53,6 +55,11 @@ void Dmath::Complex::conjugate(){
     this->update();
 }
 
+#pragma endregion
+
+
+#pragma region Logic Operators
+
 bool Dmath::Complex::operator==(Dmath::Complex num){
     if(this->img == num.getImaginaryPart() && this->real == num.getRealPart()){
         return true;
@@ -66,6 +73,55 @@ bool Dmath::Complex::operator!=(Dmath::Complex num){
     }
     return false;
 }
+
+bool Dmath::Complex::operator!=(Dmath::Scalar num){
+    return this->absolute != num;
+}
+
+bool Dmath::Complex::operator==(Dmath::Scalar num){
+    return this->absolute == num;
+}
+
+bool Dmath::Complex::operator<(Dmath::Complex num){
+    return this->absolute < num.getAbsolute();
+}
+
+bool Dmath::Complex::operator>(Dmath::Complex num){
+    return this->absolute > num.getAbsolute();
+}
+
+bool Dmath::Complex::operator>=(Dmath::Complex num){
+    return this->absolute >= num.getAbsolute();
+}
+
+bool Dmath::Complex::operator<=(Dmath::Complex num){
+    return this->absolute <= num.getAbsolute();
+}
+
+
+
+
+bool Dmath::Complex::operator<(Dmath::Scalar num){
+    return this->absolute < num;
+}
+
+bool Dmath::Complex::operator>(Dmath::Scalar num){
+    return this->absolute > num;
+}
+
+bool Dmath::Complex::operator>=(Dmath::Scalar num){
+    return this->absolute >= num;
+}
+
+bool Dmath::Complex::operator<=(Dmath::Scalar num){
+    return this->absolute <= num;
+}
+
+#pragma endregion //Logic operators
+
+
+
+#pragma region Mathmatical operators
 
 Dmath::Complex Dmath::Complex::operator+(Dmath::Complex num){
     double newReal = this->real + num.getRealPart();
@@ -129,6 +185,10 @@ Dmath::Complex Dmath::Complex::exp() {
     return result;
 }
 
+
+
+
+
 Dmath::Vec2D Dmath::Complex::getVector(){
     Dmath::Scalar vecX = this->real;
     Dmath::Scalar vecY = this->img;
@@ -144,6 +204,10 @@ CoordinateSystem2D Dmath::Complex::polarForm(){
 double Dmath::Complex::getRealPart()     { return this->real;     }
 double Dmath::Complex::getImaginaryPart(){ return this->img;      }
 double Dmath::Complex::getAbsolute()     { return this->absolute; }
+
+
+
+#pragma region Extern functions
 
 
 Dmath::Scalar Dmath::logarithm(Dmath::Scalar logBase, Dmath::Scalar power) {
@@ -315,3 +379,6 @@ Dmath::Complex Dmath::complexCosecant(Dmath::Complex complexNum) {
     Dmath::Complex result = Dmath::Complex(1.0, 0.0) / complexS;
     return result;
 }
+
+
+#pragma endregion //Extern functions
