@@ -18,6 +18,7 @@ NAMESPACESTART
  auto cec  = [](double x) ->double {return 1/std::sin(x); };
  auto cot  = [](double x) ->double {return 1/std::tan(x); };
  auto cosh = [](double x) ->double { return (std::exp(x) + std::exp(-x)) / 2; };    
+ auto sinh = [](double x) ->double { return (std::exp(x) - std::exp(-x)) / 2; };   
 
 auto greaterThan = [](double greater,double than)->bool {
     if(greater > than){
