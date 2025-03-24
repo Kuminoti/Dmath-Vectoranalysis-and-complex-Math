@@ -48,9 +48,13 @@ public:
     void addImaginary(double img);
     void addReal(double real);
 
+    void setNumber(double real, double img);
+
     //Setters for the real and imaginary part
     void setImaginaryPart(double img);
     void setRealPart(double real);
+
+    void conjugate();
 
     //Logic operators
     bool operator==(Complex num);
@@ -65,11 +69,38 @@ public:
 
     Complex& operator+=(const Complex& num);
     Complex& operator-=(const Complex& num);
+
+    Complex exp(); //e^this
+
     //Returns a vector in Cartesian coordinats with the real and imaginary parts on the complex plane as x and y coordinates
     Dmath::Vec2D getVector();
 
+    CoordinateSystem2D polarForm();
+
 };
 
+//Complex logs
+Dmath::Scalar logarithm(Dmath::Scalar logBase, Dmath::Scalar power);
+Dmath::Complex complexLn(Dmath::Scalar power);
+Dmath::Complex complexBaseLog(Dmath::Scalar logBase, Dmath::Scalar power);
+
+//Exponents
+Dmath::Complex complexExponent(Dmath::Scalar base, Dmath::Complex complexNum);
+
+
+//Complex Trigonemetry
+
+//basic trigfunctions
+Dmath::Complex complexSine   (Dmath::Complex complexNum);
+Dmath::Complex complexCosine (Dmath::Complex complexNum);
+Dmath::Complex complexTangent(Dmath::Complex complexNum);
+
+
+//the "other" tric functions
+
+Dmath::Complex complexSecant(Dmath::Complex complexNum);
+Dmath::Complex complexCosecant(Dmath::Complex complexNum);
+Dmath::Complex complexCotangent(Dmath::Complex complexNum);
 
 NAMESPACEEND
 
