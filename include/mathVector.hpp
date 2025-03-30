@@ -24,9 +24,9 @@ NAMESPACESTART
 #pragma region Vec2D
 class Vec2D : public CoordinateSystem2D {                          //CoordinateSystem2D contains the actual coordinates for cartesian and polar systems
   private: //Private members
-    double abs;                                                    // The absolute value or lenght of a vector
-    double distanceToZero;   
-    double vectorRotation; 
+  Dmath::Scalar abs;                                                    // The absolute value or lenght of a vector
+  Dmath::Scalar distanceToZero;   
+  Dmath::Scalar vectorRotation; 
 
     void calcAbs();                                                // Calculates the absolute value
     void ValidManipulation();
@@ -34,17 +34,17 @@ class Vec2D : public CoordinateSystem2D {                          //CoordinateS
   public: // Basic operrator overloading:
     
     //Mathmatical operators
-    Vec2D  operator*(const double scalarValue);                    //Multiplys x and y by scalarValue   
-    Vec2D  operator/(const double scalarValue);                    //divides all components of the Vector with the scalar value and returns it
+    Vec2D  operator*(const Dmath::Scalar scalarValue);                    //Multiplys x and y by scalarValue   
+    Vec2D  operator/(const Dmath::Scalar scalarValue);                    //divides all components of the Vector with the scalar value and returns it
     Vec2D  operator+(const Vec2D& Mathvector);                     //Basic Vector addition
     Vec2D  operator-(const Vec2D& Mathvector);                     //Basic Vector subtractions
-    double operator*(const Vec2D& Mathvector);                     //Calculates the dotproduct of two vectors
+    Dmath::Scalar operator*(const Vec2D& Mathvector);                     //Calculates the dotproduct of two vectors
 
 
-    void operator+=(Dmath::Duo<double, double> data);              // this x-value + Duo.one ; this y-value + Duo.two
-    void operator-=(Dmath::Duo<double, double> data);              // this x-value - Duo.one ; this y-value - Duo.two
-    void operator*=(Dmath::Duo<double, double> data);              // this x-value * Duo.one ; this y-value * Duo.two
-    void operator/=(Dmath::Duo<double, double> data);              // this x-value / Duo.one ; this y-value / Duo.two
+    void operator+=(Dmath::Duo<Dmath::Scalar, Dmath::Scalar> data);              // this x-value + Duo.one ; this y-value + Duo.two
+    void operator-=(Dmath::Duo<Dmath::Scalar, Dmath::Scalar> data);              // this x-value - Duo.one ; this y-value - Duo.two
+    void operator*=(Dmath::Duo<Dmath::Scalar, Dmath::Scalar> data);              // this x-value * Duo.one ; this y-value * Duo.two
+    void operator/=(Dmath::Duo<Dmath::Scalar, Dmath::Scalar> data);              // this x-value / Duo.one ; this y-value / Duo.two
     
 
     void operator+=(Dmath::sVec2f vec);                            // this x-value + sVec.x; this y-value + sVec.y 
@@ -52,10 +52,10 @@ class Vec2D : public CoordinateSystem2D {                          //CoordinateS
     void operator*=(Dmath::sVec2f vec);                            // this x-value * sVec.x; this y-value * sVec.y
     void operator/=(Dmath::sVec2f vec);                            // this x-value / sVec.x; this y-value / sVec.y
 
-    void operator+=(double scalar);                                // this y-value + scalar; this y-value + scalar
-    void operator-=(double scalar);                                // this y-value - scalar; this y-value - scalar
-    void operator*=(double scalar);                                // this y-value * scalar; this y-value * scalar
-    void operator/=(double scalar);                                // this y-value / scalar; this y-value / scalar
+    void operator+=(Dmath::Scalar scalar);                                // this y-value + scalar; this y-value + scalar
+    void operator-=(Dmath::Scalar scalar);                                // this y-value - scalar; this y-value - scalar
+    void operator*=(Dmath::Scalar scalar);                                // this y-value * scalar; this y-value * scalar
+    void operator/=(Dmath::Scalar scalar);                                // this y-value / scalar; this y-value / scalar
 
 
     void operator+=(Vec2D vec);                                    // this x-value + vec.X  ; this y-value + vec.x
@@ -84,9 +84,9 @@ class Vec2D : public CoordinateSystem2D {                          //CoordinateS
   public: //Public Constructors
 #ifdef CARTESIAN_IS_2D_STANDARD
     Vec2D() = default;                                          //Default constructor (duh...)
-    Vec2D(double XY);                                           // creates a Vector with the same x and y value
-    Vec2D(double X, double Y);                                  // basic x and y vector
-    Vec2D(double X, double Y, double originX, double originY);  // crates a vector with a specific non zero startpoint
+    Vec2D(Dmath::Scalar XY);                                           // creates a Vector with the same x and y value
+    Vec2D(Dmath::Scalar X, Dmath::Scalar Y);                                  // basic x and y vector
+    Vec2D(Dmath::Scalar X, Dmath::Scalar Y, Dmath::Scalar originX, Dmath::Scalar originY);  // crates a vector with a specific non zero startpoint
 #endif // CARTESIAN_IS_2D_STANDARD
 
 #ifdef POLAR_IS_STANDARD
@@ -102,79 +102,79 @@ class Vec2D : public CoordinateSystem2D {                          //CoordinateS
      * coordinate types as well.
      */
 
-    double getRotationAngle();                            // Gets the rotation angle for rotated vectors
-    double getAbs();                                      // Calculates the absolutvalue
-    double getLenght();                                   // Calculates the length of a vector
+     Dmath::Scalar getRotationAngle();                            // Gets the rotation angle for rotated vectors
+     Dmath::Scalar getAbs();                                      // Calculates the absolutvalue
+     Dmath::Scalar getLenght();                                   // Calculates the length of a vector
 
     
-    void setX(const double value);                        // Basic x setter
-    void setY(const double value);                        // Basic y setter
-    void setPhi(const double value);                      // Setter for the angle in a polar system
-    void setAll(const double value);                      // Sets ALL values to...
-    void setRadius(const double radius);                  // Setter for the radius in a polar system
+    void setX(const Dmath::Scalar value);                        // Basic x setter
+    void setY(const Dmath::Scalar value);                        // Basic y setter
+    void setPhi(const Dmath::Scalar value);                      // Setter for the angle in a polar system
+    void setAll(const Dmath::Scalar value);                      // Sets ALL values to...
+    void setRadius(const Dmath::Scalar radius);                  // Setter for the radius in a polar system
     
 
 
   public: //Mathmatical operations
-
-    double dotProduct(Vec2D Mathvector);                  // Calculates Scalar product
-    double calcAngle(Vec2D Mathvector);                   // Calculates the angle between 2 vectors
-    double distance(Vec2D Mathvector);                    // Calculates the distance between vectors
+    Dmath::Scalar wedgeProduct(Vec2D MathVector);
+    Dmath::Scalar dotProduct(Vec2D Mathvector);                  // Calculates Scalar product
+    Dmath::Scalar calcAngle(Vec2D Mathvector);                   // Calculates the angle between 2 vectors
+    Dmath::Scalar distance(Vec2D Mathvector);                    // Calculates the distance between vectors
     void normalize();                                     // Divides the vectors components though its length
 
     // You can use methods instead of overloaded operators
     Vec2D add(Vec2D Mathvector);                          // Adding 2 vectors
     Vec2D subtract(Vec2D Mathvector);                     // Subtract 2 vectors
-    Vec2D rotateVector(double radians);                   // Rotates a vector dependent op the angle
-    Vec2D linearTranformation(Dmath::Matrix<double> mainMatrix);                          // Returns a transformed vector
+    Vec2D rotateVector(Dmath::Scalar radians);                   // Rotates a vector dependent op the angle
+    Vec2D linearTranformation(Dmath::Matrix<Dmath::Scalar> mainMatrix);                          // Returns a transformed vector
 
     void transformLinear(Dmath::Matrix<double> mainMatrix);                               // Performs a linear transformation to this vector
 
   public: //Geometric operations                 
-    double polarSystemArea();                             // Calculates the circle of a polar system
-    double polarSystemCircumfrance();                     // Calculates the circumfrance of a polar system
-    double rectangleArea(Vec2D MathVector);               // Calculates the area of a rectangle
-    double rectangleCircumfrance(Vec2D MathVector);       // Calculates the circumfrance of the rectangle
+  Dmath::Scalar polarSystemArea();                             // Calculates the circle of a polar system
+  Dmath::Scalar polarSystemCircumfrance();                     // Calculates the circumfrance of a polar system
+  Dmath::Scalar rectangleArea(Vec2D MathVector);               // Calculates the area of a rectangle
+  Dmath::Scalar rectangleCircumfrance(Vec2D MathVector);       // Calculates the circumfrance of the rectangle
 
   public: //vector manipulation
    
  
-    void addToX(double add); // X + add
-    void addToY(double add); // Y + add
+    void addToX(Dmath::Scalar add); // X + add
+    void addToY(Dmath::Scalar add); // Y + add
 
 
-    void addXYEach(double xPlus, double yPlus);           //* X + xPlus     || Y + yPlus
-    void divideXYBy(double xDivBy, double yDivBy);        //* X / xDivBy    || Y / yDivBy
-    void multilpyXY(double xTimes, double yTimes);        //* X * xTimes    || Y * yTimes
-    void subtractXY(double xMinus, double yMinus);        //* X - xMinus    || Y - yMinus
+    void addXYEach(Dmath::Scalar xPlus, Dmath::Scalar yPlus);           //* X + xPlus     || Y + yPlus
+    void divideXYBy(Dmath::Scalar xDivBy, Dmath::Scalar yDivBy);        //* X / xDivBy    || Y / yDivBy
+    void multilpyXY(Dmath::Scalar xTimes, Dmath::Scalar yTimes);        //* X * xTimes    || Y * yTimes
+    void subtractXY(Dmath::Scalar xMinus, Dmath::Scalar yMinus);        //* X - xMinus    || Y - yMinus
 
-    void addToThis(double add);                           //* X + add       ||  Y + add
-    void substractThis(double subtract);                  //* X - subtract  ||  Y - subtract
-    void multipyThisBy(double factor);                    //* X * factor    ||  Y * factor
-    void divideThisBy(double quotient);
+    void addToThis(Dmath::Scalar add);                           //* X + add       ||  Y + add
+    void substractThis(Dmath::Scalar subtract);                  //* X - subtract  ||  Y - subtract
+    void multipyThisBy(Dmath::Scalar factor);                    //* X * factor    ||  Y * factor
+    void divideThisBy(Dmath::Scalar quotient);
 
-    void subtractFromX(double subtract);                  //* X - subtract  ||  
-    void subtractFromY(double subtract);                  //* Y - subtract  ||
+    void subtractFromX(Dmath::Scalar subtract);                  //* X - subtract  ||  
+    void subtractFromY(Dmath::Scalar subtract);                  //* Y - subtract  ||
     
-    void multiplyXBy(double factor);                      //* X * factor    ||
-    void multiplyYBy(double factor);                      //* Y * factor    ||
+    void multiplyXBy(Dmath::Scalar factor);                      //* X * factor    ||
+    void multiplyYBy(Dmath::Scalar factor);                      //* Y * factor    ||
      
-    void divideXBy(double divBy);                         //* X / divBy     ||
-    void divideYBy(double divBy);                         //* Y / divBy     ||
+    void divideXBy(Dmath::Scalar divBy);                         //* X / divBy     ||
+    void divideYBy(Dmath::Scalar divBy);                         //* Y / divBy     ||
 
 
 
 
 
-    void moveVectorX(double move);                        // Moves the vector in a specific x-direction
-    void moveVectorY(double move);                        // Moves the vector in a specific y-direction
-    void moveVector(double moveX, double moveY);          // Moves the vector in a specific x and y direction 
-    void rotateThisVector(double value);
+    void moveVectorX(Dmath::Scalar move);                        // Moves the vector in a specific x-direction
+    void moveVectorY(Dmath::Scalar move);                        // Moves the vector in a specific y-direction
+    void moveVector(Dmath::Scalar moveX, Dmath::Scalar moveY);          // Moves the vector in a specific x and y direction 
+    void rotateThisVector(Dmath::Scalar value);
 
  
 
     // spezial Vectors
-    static Vec2D polarVector(double radius, double angle); // Creates a Vector in a polar system
+    static Vec2D polarVector(Dmath::Scalar radius, Dmath::Scalar angle); // Creates a Vector in a polar system
     static Vec2D zeroVector();                             // Creates a vector with lenght 0
 };
 
