@@ -22,7 +22,8 @@ typedef std::vector<double> doubleVector;
 
 typedef std::vector<std::string> Text;
 
-typedef double Scalar;
+typedef double Scalar;  //
+typedef size_t Natural; //Natural number: an evern and positive number >= 0
 
 /*Calculating a mathmatical function is this library works by defining start and an end point 
   and calculating the value of a given function in specific small intervalls (resolution)
