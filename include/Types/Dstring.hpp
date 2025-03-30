@@ -39,6 +39,53 @@ public:
         });
         return result;
     }
+
+
+    bool isNumeric(const std::string& str) {
+        std::string cleaned;
+        
+        // Entferne Leerzeichen
+        for (char c : str) {
+            if (!std::isspace(c)) {
+                cleaned += c;
+            }
+        }
+    
+        if (cleaned.empty()) return false;
+    
+        bool hasDecimal = false;
+        bool hasDigit = false;
+        size_t start = 0;
+    
+        // Prüft negatives Vorzeichen am Anfang
+        if (cleaned[0] == '-') {
+            if (cleaned.length() == 1) return false; // Nur "-" ist ungültig
+            start = 1;
+        }
+    
+        for (size_t i = start; i < cleaned.length(); ++i) {
+            if (std::isdigit(cleaned[i])) {
+                hasDigit = true;
+            } else if (cleaned[i] == '.') {
+                if (hasDecimal) return false; // Mehr als ein Punkt ist ungültig
+                hasDecimal = true;
+            } else {
+                return false; // Ungültiges Zeichen gefunden
+            }
+        }
+    
+        return hasDigit; // Mindestens eine Ziffer muss enthalten sein
+    }
+    std::string extractFirstWord(const std::string& str) {
+        std::string result;
+    
+        for (char c : str) {
+            if (c == ' ' || c == '.') break; // Stoppe bei Leerzeichen oder Punkt
+            result += c;
+        }
+    
+        return result;
+    }
     
 };
 
