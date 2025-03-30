@@ -29,4 +29,5 @@ functionbuilder.hpp
 test/
 Tensor/
 bivector.hpp
+bivector.cpp
 analyser/
