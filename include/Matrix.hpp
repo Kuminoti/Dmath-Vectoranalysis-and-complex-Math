@@ -3,7 +3,6 @@
 #define MATRIX_HPP
 
 #include"macros.hpp"
-
 #include"mathVector.hpp"
 
 NAMESPACESTART

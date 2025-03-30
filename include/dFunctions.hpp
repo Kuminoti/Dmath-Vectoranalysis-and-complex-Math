@@ -85,31 +85,18 @@ SHARED_LIB double fahrenheitToCelsius(double fahrenheit);
 
 SHARED_LIB double celsiusToFahrenheit(double celsius);
 
-double milesToKm(double miles) {
-    return miles * MILES_TO_KM;
-}
-
-double kmToMiles(double km) {
-    return km / MILES_TO_KM;
-}
+SHARED_LIB double milesToKm(double miles);
+SHARED_LIB double kmToMiles(double km);
 
 // Pfund <-> Kilogramm
-double poundsToKg(double pounds) {
-    return pounds * POUNDS_TO_KG;
-}
+SHARED_LIB double poundsToKg(double pounds);
 
-double kgToPounds(double kg) {
-    return kg / POUNDS_TO_KG;
-}
+SHARED_LIB double kgToPounds(double kg);
 
 // Bar <-> PSI
-double barToPsi(double bar) {
-    return bar * BAR_TO_PSI;
-}
+SHARED_LIB double barToPsi(double bar);
 
-double psiToBar(double psi) {
-    return psi / BAR_TO_PSI;
-}
+SHARED_LIB double psiToBar(double psi);
 
 
 

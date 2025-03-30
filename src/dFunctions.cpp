@@ -272,3 +272,32 @@ double Dmath::psiFunction(double x) {
 
     return result;
 }
+
+
+double Dmath::psiToBar(double psi) {
+    return psi / BAR_TO_PSI;
+}
+
+
+
+ double Dmath::milesToKm(double miles) {
+    return miles * MILES_TO_KM;
+}
+
+ double Dmath::kmToMiles(double km) {
+    return km / MILES_TO_KM;
+}
+
+// Pfund <-> Kilogramm
+ double Dmath::poundsToKg(double pounds) {
+    return pounds * POUNDS_TO_KG;
+}
+
+ double Dmath::kgToPounds(double kg) {
+    return kg / POUNDS_TO_KG;
+}
+
+// Bar <-> PSI
+ double Dmath::barToPsi(double bar) {
+    return bar * BAR_TO_PSI;
+}
