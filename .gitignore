@@ -27,3 +27,6 @@ todo
 include/Logger.hpp
 functionbuilder.hpp
 test/
+Tensor/
+bivector.hpp
+analyser/
