@@ -48,6 +48,18 @@ Dmath::Vec3D Dmath::DoubleVectorFunction::operator ()(Dmath::Scalar U, Dmath::Sc
     return Dmath::Vec3D(currentX,currentY, currentZ);
 }
 
+Dmath::Vec3D Dmath::DoubleVectorFunction::operator ()(Dmath::Vec2D vec){
+    Dmath::Scalar U = vec.getX();
+    Dmath::Scalar V = vec.getY();
+    const Dmath::Scalar currentX = this->xOfUV(U,V);
+    const Dmath::Scalar currentY = this->yOfUV(U,V);
+    const Dmath::Scalar currentZ = this->zOfUV(U,V);
+
+    return Dmath::Vec3D(currentX,currentY,currentZ);
+
+}
+
+
 Dmath::DoubleVectorFunction::DoubleVectorFunction(Dmath::DoubleVarFunction xOfUV, Dmath::DoubleVarFunction yOfUV, Dmath::DoubleVarFunction zOfUV){
     this->xOfUV = xOfUV;
     this->yOfUV = yOfUV;
@@ -147,4 +159,9 @@ Dmath::Scalar Dmath::TripleVectorFunction::callYPartial(Dmath::Scalar u, Dmath::
     return dx;
 }
 
+
+Dmath::Scalar Dmath::TripleVectorFunction::callZPartial(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w){
+    const Dmath::Scalar dx = this->callZ(u + 0.0001, v, w) - this->callZ(u - 0.0001, v, w) / (2 * 0.0001);
+    return dx;
+}
 #pragma endregion

@@ -77,6 +77,7 @@ public:
     DoubleVectorFunction(Dmath::DoubleVarFunction xOfUV, Dmath::DoubleVarFunction yOfUV, Dmath::DoubleVarFunction zOfUV);
 
     Dmath::Vec3D operator ()(Dmath::Scalar U, Dmath::Scalar V);
+    Dmath::Vec3D operator ()(Dmath::Vec2D vec);
 
     inline Dmath::Scalar callX(Dmath::Scalar u, Dmath::Scalar v){ return xOfUV(u,v); }
     inline Dmath::Scalar callY(Dmath::Scalar u, Dmath::Scalar v){ return yOfUV(u,v); }
@@ -87,6 +88,7 @@ public:
     Dmath::DoubleVarFunction getYFunc(){ return this->yOfUV;  }
     Dmath::DoubleVarFunction getZFunc(){ return this->zOfUV;  }
 
+   
 
     Dmath::Vec3D getPartialUAt(Dmath::Scalar u, Dmath::Scalar v);
     Dmath::Vec3D getPartialVAt(Dmath::Scalar u, Dmath::Scalar v);
@@ -94,7 +96,34 @@ public:
     Dmath::Vec3D normVectorAt (Dmath::Scalar u, Dmath::Scalar v);
 
     
+    Dmath::Matrix<Dmath::Scalar> getMetricAt(Dmath::Scalar u, Dmath::Scalar v){
+        const Dmath::Scalar dxDu = this->xOfUV.derivativeXAT(u,v);
+        const Dmath::Scalar dyDu = this->yOfUV.derivativeXAT(u,v);
+        const Dmath::Scalar dzDU = this->zOfUV.derivativeXAT(u,v);
 
+        Dmath::Vec3D basisVecU(dxDu,dyDu,dzDU);
+
+        const Dmath::Scalar dxDV = this->xOfUV.derivativeYAT(u,v);
+        const Dmath::Scalar dyDV = this->yOfUV.derivativeYAT(u,v);
+        const Dmath::Scalar dzDV = this->zOfUV.derivativeYAT(u,v);
+         Dmath::Vec3D basisVecV(dxDV,dyDV,dzDV);
+        
+        
+        const Dmath::Scalar metricOne = basisVecU * basisVecU;
+        const Dmath::Scalar metricTwo = basisVecU * basisVecV;
+        // metric2 = metric 3
+        const Dmath::Scalar metricfour = basisVecV * basisVecV;
+
+        Dmath::Matrix<Dmath::Scalar> metric(2);
+        metric.setElement(1,1,metricOne);
+        metric.setElement(1,2,metricTwo);
+        metric.setElement(2,1,metricTwo);
+        metric.setElement(2,2,metricfour);
+
+
+
+        return metric;
+    }
 };
 
 

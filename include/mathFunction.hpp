@@ -50,6 +50,7 @@ NAMESPACESTART
 class FunctionBase {
 public:
     virtual ~FunctionBase() = default;
+    virtual double Call() = 0;
     virtual double Callx(double x) = 0;             // For f(x)
     virtual double CallXY(double x, double y) = 0;  // For f(x, y)
     virtual double CallXYZ(double x, double y, double z) = 0; //For f(x,y,z)
@@ -63,6 +64,38 @@ public:
 
 #pragma region FUNCWRAPPER
 
+template<typename Func>
+class FunctionWrapperConst : public FunctionBase {
+private:
+    Func func;
+
+public:
+    FunctionWrapperConst(Func function) : func(function){}
+
+    double Call() override {
+        return func();
+    }
+
+    double Callx(double x) override {
+        throw std::runtime_error("This function does not support Callx."); // Not implemented for double variable function
+    }
+
+    double CallXY(double x, double y) override {
+        throw std::runtime_error("This function does not support Callxy."); // Not implemented for double variable function
+    }
+    double CallXYZ(double x, double y, double z) override {
+        throw std::runtime_error("This function does not support Callxy."); // Not implemented for double variable function
+
+    }
+
+    std::unique_ptr<FunctionBase> clone()  override {
+        return std::make_unique<FunctionWrapperConst<Func>>(func);
+    }
+    
+
+    
+};
+
 // Template class for function functionality
 template<typename FuncX>
 class FunctionWrapper : public FunctionBase {
@@ -72,6 +105,11 @@ private:
 public:
     // Constructor for single variable function
     FunctionWrapper(FuncX funX) : singleFunction(funX) {}
+
+
+    double Call() override {
+        throw std::runtime_error("Error0");
+    }
 
     double Callx(double x) override {
         return singleFunction(x); // Call for f(x)
@@ -100,6 +138,10 @@ public:
     // Constructor for double variable function
     FunctionWrapperXY(FuncXY funXY) : doubleFunction(funXY) {}
 
+    double Call() override {
+        throw std::runtime_error("Error0");
+    }
+
     double Callx(double x) override {
         throw std::runtime_error("This function does not support Callx."); // Not implemented for double variable function
     }
@@ -125,7 +167,11 @@ private:
 public:
     FunctionWrapperXYZ(FuncXYZ funXYZ) : tripleFunc(funXYZ) {}
 
-        double Callx(double x) override {
+    double Call() override {
+        throw std::runtime_error("Error0");
+    }
+
+    double Callx(double x) override {
         throw std::runtime_error("This function does not support Callx."); // Not implemented for double variable function
     }
 
@@ -142,6 +188,65 @@ public:
 };
 
 #pragma endregion
+
+#pragma region Function
+
+
+class SHARED_LIB Function{
+
+    std::unique_ptr<FunctionBase> funcBase;
+
+
+    public: 
+    Function& operator=(const Function other){
+        if (this != &other) {
+            this->funcBase = other.funcBase ? other.funcBase->clone() : nullptr;
+        }
+        return *this;
+    }
+
+
+    template<typename Callable>
+    Function& operator=(Callable func) {
+        this->funcBase = std::make_unique<FunctionWrapperConst<Callable>>(func);
+        return *this;
+    }
+
+    // Move-Zuweisung
+    Function& operator=(Function&& other) noexcept {
+        if (this != &other) {
+            this->funcBase = std::move(other.funcBase);
+        }
+        return *this;
+    }
+
+
+
+
+    template<typename Callable>
+    Function(Callable func) : funcBase(std::make_unique<FunctionWrapperConst<Callable>>(func)) {}
+
+    Function(const Function& other)
+    : funcBase(other.funcBase ? other.funcBase->clone() : nullptr) {}
+
+    Function() = default;
+
+
+    double operator()() {
+        if (funcBase) {
+            return funcBase->Call(); // Delegate the call to the stored function
+        }
+        return 0.0; // Return a default value if no function is stored
+    }
+
+};
+
+
+
+#pragma endregion
+
+
+
 
 #pragma region SINGLE
 
@@ -424,6 +529,8 @@ public:
    Dmath::Scalar derivativeXAt(Dmath::Scalar x, Dmath::Scalar y, Dmath::Scalar z);
    Dmath::Scalar derivativeYAt(Dmath::Scalar x, Dmath::Scalar y, Dmath::Scalar z);
    Dmath::Scalar derivativeZAt(Dmath::Scalar x, Dmath::Scalar y, Dmath::Scalar z);
+
+   
 
 };
 
