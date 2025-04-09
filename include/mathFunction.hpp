@@ -388,6 +388,7 @@ std::vector<double> getSecondDerivative(double start, double stopp, double stepp
 std::vector<double> getAntiDerivativeVector(double start, double stopp, double stepps);
 
 Dmath::Scalar getDerivativeAt(double x);
+Dmath::Scalar getSecondDerivativeAt(double x);
 
 };
 

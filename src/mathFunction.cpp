@@ -108,8 +108,20 @@ std::vector<double> Dmath::SingleVarFunction::getAntiDerivativeVector(double sta
     return mainVec;
 }
 
-Dmath::Scalar Dmath::SingleVarFunction::getDerivativeAt(double x) {
+Dmath::Scalar Dmath::SingleVarFunction::getDerivativeAt(Dmath::Scalar x) {
     return ((this->funcBase->Callx(x + 0.001) - this->funcBase->Callx(x)) / 0.001);
+}
+
+
+Dmath::Scalar Dmath::SingleVarFunction::getSecondDerivativeAt(Dmath::Scalar x){
+    
+    const Dmath::Scalar TwofOfX = 2 * this->funcBase->Callx(x);
+    const Dmath::Scalar plusDX  = this->funcBase->Callx(x+this->dx);
+    const Dmath::Scalar minusDX = this->funcBase->Callx(x-this->dx);
+
+    const Dmath::Scalar currentResult = (plusDX - TwofOfX + minusDX)/(dx*dx);
+
+    return currentResult;
 }
 
 #pragma endregion 
