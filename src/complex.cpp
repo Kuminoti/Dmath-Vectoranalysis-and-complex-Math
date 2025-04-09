@@ -155,6 +155,14 @@ Dmath::Complex Dmath::Complex::operator/(Complex num) {
 }
 
 
+Dmath::Complex Dmath::Complex::operator/(Dmath::Scalar num){
+    this->real/num;
+    this->img /num;
+
+    this->update();
+}
+
+
 Dmath::Complex& Dmath::Complex::operator+=(const Complex& num) {
     real += num.real;
     img += num.img;
