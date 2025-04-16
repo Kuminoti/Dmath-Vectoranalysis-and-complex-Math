@@ -81,9 +81,13 @@ public:
 
     Complex operator*(Complex num);
     Complex operator/(Complex num);
+    Complex operator/(Dmath::Scalar num);
 
     Complex& operator+=(const Complex& num);
     Complex& operator-=(const Complex& num);
+
+
+    
 
     Complex exp(); //e^this
 
@@ -93,6 +97,8 @@ public:
     CoordinateSystem2D polarForm();
 
 };
+
+std::ostream& operator<<(std::ostream& os, const MyClass& obj);
 
 NAMESPACEEND
 

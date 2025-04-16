@@ -178,6 +178,16 @@ Dmath::Complex& Dmath::Complex::operator-=(const Complex& num) {
     return *this;
 }
 
+std::ostream& operator<<(std::ostream& os, Complex num) {
+    std::string str_real = std::to_string( this->real );
+    std::string str_img  = std::to_string( this->img );
+
+
+    std::string str_complex = str_real + " + " + str_img " *i ";
+    os <<  str_complex;
+    return os;
+}
+
 Dmath::Complex Dmath::Complex::exp() {
     
     double expReal = std::exp(real);
