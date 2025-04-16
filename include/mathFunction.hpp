@@ -6,7 +6,7 @@
 
 
 /*
- * mathFunction.h
+ * mathFunction.hpp
  *
  * This file defines a custom function wrapper that mimics the behavior 
  * of std::function, specifically optimized for handling mathematical 
@@ -322,10 +322,19 @@ public:
 //Operator overloading
 
 
-    SingleVarFunction operator+ (SingleVarFunction funcOne, SingleVarFunction funcTwo);
-    SingleVarFunction operator- (SingleVarFunction funcOne, SingleVarFunction funcTwo);
-    SingleVarFunction operator* (SingleVarFunction funcOne, SingleVarFunction funcTwo);
-    SingleVarFunction operator/ (SingleVarFunction funcOne, SingleVarFunction funcTwo);
+    SingleVarFunction operator+ (SingleVarFunction funcOne);
+    SingleVarFunction operator- (SingleVarFunction funcOne);
+    SingleVarFunction operator* (SingleVarFunction funcOne);
+    SingleVarFunction operator/ (SingleVarFunction funcOne);
+
+    SingleVarFunction operator+ (Dmath::Scalar num);
+
+    /* Nests one function in an other, for example:
+     * (f * g)(x) := f(g(x))
+    */
+    SingleVarFunction composition(SingleVarFunction fOfX, SingleVarFunction gOfX);
+
+
 
     double operator()(double x) {
         if (funcBase) {
@@ -413,8 +422,7 @@ public:
     template<typename FuncXY>
     DoubleVarFunction(FuncXY func) : funcBase(std::make_unique<FunctionWrapperXY<FuncXY>>(func)) {} // Wrapper for f(x, y)
 
-    DoubleVarFunction(const DoubleVarFunction& other)
-    : funcBase(other.funcBase ? other.funcBase->clone() : nullptr) {}
+    DoubleVarFunction(const DoubleVarFunction& other) : funcBase(other.funcBase ? other.funcBase->clone() : nullptr) {}
 
     DoubleVarFunction() = default;
 
@@ -435,6 +443,19 @@ public:
         }
         return *this;
     }
+
+
+    DoubleVarFunction operator+(DoubleVarFunction funcOne);
+    DoubleVarFunction operator-(DoubleVarFunction funcOne);
+    DoubleVarFunction operator*(DoubleVarFunction funcOne);
+    DoubleVarFunction operator/(DoubleVarFunction funcOne);
+
+
+    /* this type of functionComposition will result in two functions with one argument
+     * nestet inside a functiontion with 2 variables: 
+     * (f * g * h)(x,y) := f(g(x), h(y));
+    */
+    DoubleVarFunction composition(Dmath::DoubleVarFunction mainFunc ,SingleVarFunction fOfX, SingleVarFunction gOfX);
 
     // Lambda-Zuweisung
     template<typename Callable>

@@ -20,7 +20,7 @@ Dmath::Matrix<Dmath::Scalar> getHesseMatrixAt(Dmath::DoubleVarFunction func, Dma
 
 //Links functionOne inside functionOne
 Dmath::SingleVarFunction functionalComposition(Dmath::SingleVarFunction funcOne, Dmath::SingleVarFunction funcTwo);
-Dmath::SingleVarFunction functionAddition     (Dmath::SingleVarFunction funcOne, Dmath::SingleVarFunction funcTwo)
+Dmath::SingleVarFunction functionAddition     (Dmath::SingleVarFunction funcOne, Dmath::SingleVarFunction funcTwo);
 
 NAMESPACEEND
 

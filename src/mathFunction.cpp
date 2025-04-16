@@ -4,54 +4,80 @@
 #pragma region SingleVar
 
 bool Dmath::SingleVarFunction::checkParams(Dmath::Parameters params){
+
         if(params.one >= params.two || params.three == 0){
             return 0;
         }
+
     return true;
-    }
-
-
-Dmath::SingleVarFunction Dmath::SingleVarFunction::operator+(Dmath::SingleVarFunction funcOne, Dmath::SingleVarFunction funcTwo){
-        
-        auto addFunc = [funcOne,funcTwo](double x) mutable ->double {
-            return (funcOne(x) + funcTwo(x));
-        };
-
-        SingleVarFunction func = addFunc;
-        return func;
 }
 
 
-Dmath::SingleVarFunction Dmath::SingleVarFunction::operator-(Dmath::SingleVarFunction funcOne, Dmath::SingleVarFunction funcTwo){
-        
-    auto addFunc = [funcOne,funcTwo](double x) mutable ->double {
-        return (funcOne(x) - funcTwo(x));
+Dmath::SingleVarFunction Dmath::SingleVarFunction::operator+(Dmath::SingleVarFunction funcOne){
+    auto addFunc = [this, funcOne](double x) mutable -> double {
+        return this->funcBase->Callx(x) + funcOne(x);
     };
 
-    SingleVarFunction func = addFunc;
+    Dmath::SingleVarFunction func = addFunc;
     return func;
 }
 
 
-Dmath::SingleVarFunction Dmath::SingleVarFunction::operator*(Dmath::SingleVarFunction funcOne, Dmath::SingleVarFunction funcTwo){
+Dmath::SingleVarFunction Dmath::SingleVarFunction::operator-(Dmath::SingleVarFunction funcOne){
         
-    auto addFunc = [funcOne,funcTwo](double x) mutable ->double {
-        return (funcOne(x) * funcTwo(x));
+    auto sub = [this,funcOne](double x) mutable ->double {
+        return ( this->funcBase->Callx(x) - funcOne(x));
     };
 
-    SingleVarFunction func = addFunc;
+    SingleVarFunction func = sub;
+    return func;
+}
+
+
+Dmath::SingleVarFunction Dmath::SingleVarFunction::operator*(Dmath::SingleVarFunction funcOne){
+        
+    auto mul = [this,funcOne](double x) mutable ->double {
+        return ( this->funcBase->Callx(x) * funcOne(x));
+    };
+
+    SingleVarFunction func = mul;
     return func;
 }
 
 
 
-Dmath::SingleVarFunction Dmath::SingleVarFunction::operator/(Dmath::SingleVarFunction funcOne, Dmath::SingleVarFunction funcTwo){
+Dmath::SingleVarFunction Dmath::SingleVarFunction::operator/(Dmath::SingleVarFunction funcOne){
         
-    auto addFunc = [funcOne,funcTwo](double x) mutable ->double {
-        return (funcOne(x) / funcTwo(x));
+    auto div = [this,funcOne](double x) mutable ->double {
+        return ( this->funcBase->Callx(x) / funcOne(x));
     };
 
-    SingleVarFunction func = addFunc;
+    Dmath::SingleVarFunction func = div;
+    return func;
+}
+
+Dmath::SingleVarFunction Dmath::SingleVarFunction::composition(Dmath::SingleVarFunction fOfX, Dmath::SingleVarFunction gOfX){
+
+    auto comp = [fOfX, gOfX](double x) mutable ->double {
+
+        double innerResult = gOfX(x);
+        double outerResult = fOfX(innerResult);
+
+        return outerResult;
+    };
+
+    Dmath::SingleVarFunction func = comp;
+
+    return func;
+}
+
+
+Dmath::SingleVarFunction Dmath::SingleVarFunction::operator+(Dmath::Scalar num){
+    auto add = [this, num](double x) mutable ->double { 
+        return (this->funcBase->Callx(x) + num);
+    };
+
+    Dmath::SingleVarFunction func = add;
     return func;
 }
 
@@ -178,6 +204,58 @@ bool Dmath::DoubleVarFunction::checkParams(Dmath::Parameters params){
     }
     return true;
 }
+
+
+Dmath::DoubleVarFunction Dmath::DoubleVarFunction::operator+(Dmath::DoubleVarFunction funcOne){
+    auto add = [this,funcOne](double x, double y) mutable ->double {
+        return (this->funcBase->CallXY(x,y) + funcOne(x,y));
+    };
+
+    Dmath::DoubleVarFunction func = add;
+    return func;
+}
+
+Dmath::DoubleVarFunction Dmath::DoubleVarFunction::operator-(Dmath::DoubleVarFunction funcOne){
+    auto sub = [this,funcOne](double x, double y) mutable ->double {
+        return (this->funcBase->CallXY(x,y) - funcOne(x,y));
+    };
+
+    Dmath::DoubleVarFunction func = sub;
+    return func;
+}
+
+Dmath::DoubleVarFunction Dmath::DoubleVarFunction::operator*(Dmath::DoubleVarFunction funcOne){
+    auto mul = [this,funcOne](double x, double y) mutable ->double {
+        return (this->funcBase->CallXY(x,y) * funcOne(x,y));
+    };
+
+    Dmath::DoubleVarFunction func = mul;
+    return func;
+}
+
+Dmath::DoubleVarFunction Dmath::DoubleVarFunction::operator/(Dmath::DoubleVarFunction funcOne){
+    auto div = [this,funcOne](double x, double y) mutable ->double {
+        return (this->funcBase->CallXY(x,y) / funcOne(x,y));
+    };
+
+    Dmath::DoubleVarFunction func = div;
+    return func;
+}
+//(f(g(x),h(x)))
+Dmath::DoubleVarFunction Dmath::DoubleVarFunction::composition( Dmath::DoubleVarFunction mainFunc, Dmath::SingleVarFunction funcOne, Dmath::SingleVarFunction funcTwo){
+
+    auto comp = [mainFunc,funcOne,funcTwo](double x, double y) mutable ->double {
+        double innerResultX = funcOne(x);
+        double innerResultY = funcTwo(y);
+
+        double outerResult = mainFunc(x,y);
+
+        return outerResult;
+    };
+
+    return Dmath::DoubleVarFunction(comp);
+}
+
 
 std::vector<double> Dmath::DoubleVarFunction::getFunctionVector(double start, double stopp, double stepps){
     Dmath::Parameters params(start,stopp,stepps);

@@ -98,7 +98,7 @@ public:
 
 };
 
-std::ostream& operator<<(std::ostream& os, const MyClass& obj);
+std::ostream& operator<<(std::ostream& os, Dmath::Complex num);
 
 NAMESPACEEND
 
