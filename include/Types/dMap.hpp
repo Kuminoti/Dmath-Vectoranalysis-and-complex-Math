@@ -4,6 +4,7 @@
 #define D_MAP_HPP
 
 #include "../macros.hpp"
+#include<optional>
 
 
 NAMESPACESTART

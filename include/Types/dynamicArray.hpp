@@ -19,6 +19,9 @@ class DArray{
 
 
 public:
+    DArray() = default;
+
+
     DArray(){
         this->arr = new math[capacity] ;
     }
