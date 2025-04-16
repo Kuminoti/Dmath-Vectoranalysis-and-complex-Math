@@ -31,3 +31,5 @@ Tensor/
 bivector.hpp
 bivector.cpp
 analyser/
+experimental/
+equation/
