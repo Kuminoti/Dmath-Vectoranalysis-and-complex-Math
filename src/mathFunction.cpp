@@ -11,7 +11,49 @@ bool Dmath::SingleVarFunction::checkParams(Dmath::Parameters params){
     }
 
 
+Dmath::SingleVarFunction Dmath::SingleVarFunction::operator+(Dmath::SingleVarFunction funcOne, Dmath::SingleVarFunction funcTwo){
+        
+        auto addFunc = [funcOne,funcTwo](double x) mutable ->double {
+            return (funcOne(x) + funcTwo(x));
+        };
 
+        SingleVarFunction func = addFunc;
+        return func;
+}
+
+
+Dmath::SingleVarFunction Dmath::SingleVarFunction::operator-(Dmath::SingleVarFunction funcOne, Dmath::SingleVarFunction funcTwo){
+        
+    auto addFunc = [funcOne,funcTwo](double x) mutable ->double {
+        return (funcOne(x) - funcTwo(x));
+    };
+
+    SingleVarFunction func = addFunc;
+    return func;
+}
+
+
+Dmath::SingleVarFunction Dmath::SingleVarFunction::operator*(Dmath::SingleVarFunction funcOne, Dmath::SingleVarFunction funcTwo){
+        
+    auto addFunc = [funcOne,funcTwo](double x) mutable ->double {
+        return (funcOne(x) * funcTwo(x));
+    };
+
+    SingleVarFunction func = addFunc;
+    return func;
+}
+
+
+
+Dmath::SingleVarFunction Dmath::SingleVarFunction::operator/(Dmath::SingleVarFunction funcOne, Dmath::SingleVarFunction funcTwo){
+        
+    auto addFunc = [funcOne,funcTwo](double x) mutable ->double {
+        return (funcOne(x) / funcTwo(x));
+    };
+
+    SingleVarFunction func = addFunc;
+    return func;
+}
 
 
 std::vector<double>  Dmath::SingleVarFunction::getFunctionVector(double start, double stopp, double stepps){
@@ -249,6 +291,32 @@ Dmath::Scalar Dmath::DoubleVarFunction::derivativeYAT(Dmath::Scalar x, Dmath::Sc
     const Dmath::Scalar dy = ((this->funcBase->CallXY(x, y + 0.0001) - this->funcBase->CallXY(x, y - 0.0001)) / (2* 0.0001));
     return dy;
 }
+
+///////////////////////
+//Second derivatives://
+///////////////////////
+
+Dmath::Scalar Dmath::DoubleVarFunction::secondDerivativeXX(Dmath::Scalar x, Dmath::Scalar y) {
+    const Dmath::Scalar h = 0.0001;
+    return (this->funcBase->CallXY(x + h, y) - 2 * this->funcBase->CallXY(x, y) + this->funcBase->CallXY(x - h, y)) / (h * h);
+}
+
+Dmath::Scalar Dmath::DoubleVarFunction::secondDerivativeYY(Dmath::Scalar x, Dmath::Scalar y) {
+    const Dmath::Scalar h = 0.0001;
+    return (this->funcBase->CallXY(x, y + h) - 2 * this->funcBase->CallXY(x, y) + this->funcBase->CallXY(x, y - h)) / (h * h);
+}
+
+
+Dmath::Scalar Dmath::DoubleVarFunction::secondDerivativeXY(Dmath::Scalar x, Dmath::Scalar y) {
+    const Dmath::Scalar h = 0.0001;
+    return ( this->funcBase->CallXY(x + h, y + h) - this->funcBase->CallXY(x + h, y - h) - this->funcBase->CallXY(x - h, y + h) + this->funcBase->CallXY(x - h, y - h)    ) / (4 * h * h);
+}
+
+//d/dx d/dy = d/dy d/dx
+Dmath::Scalar Dmath::DoubleVarFunction::secondDerivativeYX(Dmath::Scalar x, Dmath::Scalar y){
+    return this->secondDerivativeXY(x,y);
+}
+
 
 std::vector<double> Dmath::DoubleVarFunction::getAntiDerivativeY(double start, double stopp, double stepps) {
     Dmath::Parameters params(start, stopp, stepps);

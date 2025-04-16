@@ -319,7 +319,13 @@ public:
 
     SingleVarFunction() = default;
 
- 
+//Operator overloading
+
+
+    SingleVarFunction operator+ (SingleVarFunction funcOne, SingleVarFunction funcTwo);
+    SingleVarFunction operator- (SingleVarFunction funcOne, SingleVarFunction funcTwo);
+    SingleVarFunction operator* (SingleVarFunction funcOne, SingleVarFunction funcTwo);
+    SingleVarFunction operator/ (SingleVarFunction funcOne, SingleVarFunction funcTwo);
 
     double operator()(double x) {
         if (funcBase) {
@@ -459,6 +465,10 @@ public:
     Dmath::Scalar derivativeXAT(Dmath::Scalar x, Dmath::Scalar y);
     Dmath::Scalar derivativeYAT(Dmath::Scalar x, Dmath::Scalar y);
 
+    Dmath::Scalar secondDerivativeXX(Dmath::Scalar x, Dmath::Scalar y);
+    Dmath::Scalar secondDerivativeXY(Dmath::Scalar x, Dmath::Scalar y);
+    Dmath::Scalar secondDerivativeYY(Dmath::Scalar x, Dmath::Scalar y);
+    Dmath::Scalar secondDerivativeYX(Dmath::Scalar x, Dmath::Scalar y);
 };
 
 #pragma endregion //double
