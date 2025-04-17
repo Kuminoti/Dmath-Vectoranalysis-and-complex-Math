@@ -32,20 +32,20 @@ Dmath::Complex complexCotangent(Dmath::Complex complexNum);
 
 
 //Hyperbolic functions
-Dmath::Complex complexHyperbolicSine(Dmath::Complex complexNum){
+// Dmath::Complex complexHyperbolicSine(Dmath::Complex complexNum){
 
-    Dmath::Complex componentOne = Dmath::complexExponent(EULER,complexNum);
+//     Dmath::Complex componentOne = Dmath::complexExponent(EULER,complexNum);
 
 
-    const Dmath::Complex NegativeComplex(-complexNum.getRealPart(),-complexNum.getImaginaryPart());
+//     const Dmath::Complex NegativeComplex(-complexNum.getRealPart(),-complexNum.getImaginaryPart());
 
-    Dmath::Complex componentTwo = Dmath::complexExponent(EULER,NegativeComplex);
+//     Dmath::Complex componentTwo = Dmath::complexExponent(EULER,NegativeComplex);
 
-    Dmath::Complex result = (componentOne - componentTwo)/2;
+//     Dmath::Complex result = (componentOne - componentTwo)/2;
 
-    return result;
+//     return result;
 
-}
+// }
 
 
 
