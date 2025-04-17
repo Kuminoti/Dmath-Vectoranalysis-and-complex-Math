@@ -23,6 +23,6 @@ Dmath::SingleVarFunction functionalComposition(Dmath::SingleVarFunction funcOne,
 Dmath::SingleVarFunction functionAddition     (Dmath::SingleVarFunction funcOne, Dmath::SingleVarFunction funcTwo);
 
 NAMESPACEEND
-
+ 
 
 #endif
