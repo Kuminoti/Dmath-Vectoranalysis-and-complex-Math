@@ -11,6 +11,8 @@
 #include"dFunctions.hpp"        //Helperfunctions and functional math
 #include"mathFunction.hpp"      //Mathmatic funktion objects
 #include"complex.hpp"           //complex numbers
+#include"complexFunctions.hpp"
+#include"vectorfunction.hpp"
 
 
 

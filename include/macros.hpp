@@ -45,9 +45,10 @@
     #define ROOT_THREE 1.7320                //The squareroot of 3
     #define CNULL      ((void *)0)
     //Main Namespaces
-    #define NAMESPACETEST       namespace Testing {
-    #define NAMESPACEWORKING    namespace Working{
-    #define NAMESPACESTART      namespace Dmath {
+    #define NAMESPACETEST         namespace Testing {
+    #define NAMESPACEWORKING      namespace Working{
+    #define NAMESPACESTART        namespace Dmath {
+    #define NAMESPACEEXPERIMENTAL namespace Experimental{
     #define NAMESPACEEND        }
 
     //For functional math later:
