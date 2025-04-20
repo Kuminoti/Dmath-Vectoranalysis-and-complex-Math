@@ -169,3 +169,20 @@ Dmath::Complex Dmath::complexCosecant(Dmath::Complex complexNum) {
     Dmath::Complex result = Dmath::Complex(1.0, 0.0) / complexS;
     return result;
 }
+
+
+
+Dmath::Complex Dmath::complexHyperbolicSine(Dmath::Complex complexNum){
+
+    Dmath::Complex componentOne = Dmath::complexExponent(EULER,complexNum);
+
+
+    const Dmath::Complex NegativeComplex(-complexNum.getRealPart(),-complexNum.getImaginaryPart());
+
+    Dmath::Complex componentTwo = Dmath::complexExponent(EULER,NegativeComplex);
+
+    Dmath::Complex result = (componentOne - componentTwo)/2;
+
+    return result;
+
+}
