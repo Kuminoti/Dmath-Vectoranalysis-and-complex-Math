@@ -14,7 +14,20 @@
 
 
 
+
 NAMESPACESTART //Dmath:: - namespace
+
+
+typedef struct Imaginary{
+    Dmath::Scalar i;
+
+    Imaginary(Dmath::Scalar bi) : i(bi){}
+
+    Imaginary operator+(Imaginary i_two){
+        return this->i + i_two;
+    }
+
+};
 
 class Complex{
 
@@ -54,7 +67,11 @@ public:
     void setImaginaryPart(double img);
     void setRealPart(double real);
 
+
     void conjugate();
+
+
+    void operator=(Complex num);
 
     //Logic operators
     bool operator==(Complex num);
@@ -85,7 +102,6 @@ public:
 
     Complex& operator+=(const Complex& num);
     Complex& operator-=(const Complex& num);
-
 
     
 

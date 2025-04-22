@@ -57,6 +57,13 @@ void Dmath::Complex::conjugate(){
 
 #pragma endregion
 
+void Dmath::Complex::operator=(Dmath::Complex num){
+    this->img  = num.getImaginaryPart();
+    this->real = num.getRealPart();
+
+    this->update();
+}
+
 
 #pragma region Logic Operators
 
