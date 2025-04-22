@@ -18,7 +18,7 @@ double Dmath::pyth3(double x, double y, double z){
 
 double Dmath::derivativeAt(Dmath::singleVarFunction func, double point){
     const Scalar limit = 0.00001;
-    Scalar value = func(point + limit) - func(point) / (point + limit) - func(point);
+    Scalar value = func(point + limit) - func(point) / limit,
     return value;
 
 }
@@ -124,18 +124,18 @@ double Dmath::degreesToRadians(double degrees) {
 }
 
 
-double Dmath::fDotPruduct(Dmath::sVec2f vecOne, Dmath::sVec2f vecTwo){
+double Dmath::fDotProduct(Dmath::sVec2f vecOne, Dmath::sVec2f vecTwo){
     double result = vecOne.X * vecTwo.X + vecOne.Y * vecTwo.Y;
     return result;
 }
 
-size_t Dmath::iDotPruduct(Dmath::sVec2i vecOne, Dmath::sVec2i vecTwo){
+size_t Dmath::iDotProduct(Dmath::sVec2i vecOne, Dmath::sVec2i vecTwo){
     size_t result = vecOne.X * vecTwo.X + vecOne.Y * vecTwo.Y;
     return result;
 }
 
 
-double Dmath::fDotPruduct(Dmath::sVec3f vecOne, Dmath::sVec3f vecTwo){
+double Dmath::fDotProduct(Dmath::sVec3f vecOne, Dmath::sVec3f vecTwo){
     double result = vecOne.X * vecTwo.X + vecOne.Y * vecTwo.Y + vecOne.Z * vecTwo.Z;
     return result;
 }
@@ -210,7 +210,7 @@ double Dmath::average(std::vector<double> input){
         result += input[i];
     }
     result = result/num;
-    return num;
+    return result;
 }
 
 

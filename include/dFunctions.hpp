@@ -107,13 +107,13 @@ SHARED_LIB double degreesToRadians(double degrees);
 
 
 
-SHARED_LIB double fDotPruduct(Dmath::sVec2f vecOne, Dmath::sVec2f);
+SHARED_LIB double fDotProduct(Dmath::sVec2f vecOne, Dmath::sVec2f);
 
-SHARED_LIB size_t iDotPruduct(Dmath::sVec2i vecOne, Dmath::sVec2i vecTwo);
+SHARED_LIB size_t iDotProduct(Dmath::sVec2i vecOne, Dmath::sVec2i vecTwo);
 
-SHARED_LIB double fDotPruduct(Dmath::sVec3f vecOne, Dmath::sVec3f vecTwo);
+SHARED_LIB double fDotProduct(Dmath::sVec3f vecOne, Dmath::sVec3f vecTwo);
 
-
+//Warning can lead to overflow!
 SHARED_LIB size_t binomialCoefficient(size_t n, size_t k);
 
 SHARED_LIB double gammaFunction(double x);
