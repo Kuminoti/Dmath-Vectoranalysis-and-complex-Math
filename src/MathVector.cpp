@@ -557,6 +557,8 @@ void Vec3D::operator+=(Vec3D mathvector){
   this->X += mathvector.getX();
   this->Y += mathvector.getY();
   this->Z += mathvector.getZ();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
   this->calcAbs();
 }
 
@@ -564,6 +566,8 @@ void Vec3D::operator-=(Vec3D mathvector){
   this->X -= mathvector.getX();
   this->Y -= mathvector.getY();
   this->Z -= mathvector.getZ();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
   this->calcAbs();
 }
 
@@ -571,6 +575,8 @@ void Vec3D::operator*=(Vec3D mathvector){
   this->X *= mathvector.getX();
   this->Y *= mathvector.getY();
   this->Z *= mathvector.getZ();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
   this->calcAbs();
 }
 
@@ -578,6 +584,8 @@ void Vec3D::operator/=(Vec3D mathvector){
   this->X /= mathvector.getX();
   this->Y /= mathvector.getY();
   this->Z /= mathvector.getZ();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
   this->calcAbs();
 }
 
@@ -589,6 +597,8 @@ void Vec3D::operator+=(Dmath::sVec3f vec){
   this->X += vec.X;
   this->Y += vec.Y;
   this->Z += vec.Z;
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
   this->calcAbs();
 }
 
@@ -597,20 +607,26 @@ void Vec3D::operator-=(Dmath::sVec3f vec){
   this->Y -= vec.Y;
   this->Z -= vec.Z;
   this->calcAbs();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
 }
 
 void Vec3D::operator*=(Dmath::sVec3f vec){
-  this->X -= vec.X;
-  this->Y -= vec.Y;
-  this->Z -= vec.Z;
+  this->X *= vec.X;
+  this->Y *= vec.Y;
+  this->Z *= vec.Z;
   this->calcAbs();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
 }
 
 void Vec3D::operator/=(Dmath::sVec3f vec){
-  this->X -= vec.X;
-  this->Y -= vec.Y;
-  this->Z -= vec.Z;
+  this->X /= vec.X;
+  this->Y /= vec.Y;
+  this->Z /= vec.Z;
   this->calcAbs();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
 }
 
 
@@ -621,6 +637,8 @@ void Vec3D::operator+=(double scalar){
   this->Y += scalar;
   this->Z += scalar;
   this->calcAbs();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
 }
 
 void Vec3D::operator-=(double scalar){
@@ -628,18 +646,24 @@ void Vec3D::operator-=(double scalar){
   this->Y -= scalar;
   this->Z -= scalar;
   this->calcAbs();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
 }
 void Vec3D::operator*=(double scalar){
   this->X *= scalar;
   this->Y *= scalar;
   this->Z *= scalar;
   this->calcAbs();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
 }
 void Vec3D::operator/=(double scalar){
   this->X /= scalar;
   this->Y /= scalar;
   this->Z /= scalar;
   this->calcAbs();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
 }
 
 
@@ -650,6 +674,8 @@ void Vec3D::operator+=(Dmath::Trio<double,double,double> trio){
   this->Y += trio.two;
   this->Z += trio.three;
   this->calcAbs();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
 }
 
 void Vec3D::operator-=(Dmath::Trio<double,double,double> trio){
@@ -657,6 +683,8 @@ void Vec3D::operator-=(Dmath::Trio<double,double,double> trio){
   this->Y -= trio.two;
   this->Z -= trio.three;
   this->calcAbs();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
 }
 
 
@@ -666,6 +694,8 @@ void Vec3D::operator*=(Dmath::Trio<double,double,double> trio){
   this->Y *= trio.two;
   this->Z *= trio.three;
   this->calcAbs();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
 }
 
 
@@ -675,6 +705,8 @@ void Vec3D::operator/=(Dmath::Trio<double,double,double> trio){
   this->Y /= trio.two;
   this->Z /= trio.three;
   this->calcAbs();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
 }
 
 
@@ -684,6 +716,8 @@ void Vec3D::operator=(Dmath::sVec3f vec){
   this->Y = vec.Y;
   this->Z = vec.Z;
   this->calcAbs();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
 }
 
 
@@ -693,8 +727,24 @@ void Vec3D::operator=(Dmath::Trio<double,double,double> trio){
   this->Y = trio.two;
   this->Z = trio.three;
   this->calcAbs();
+  this->cartesianToPolar();
 }
 
+void Vec3D::operator=(Dmath::Vec3D vec){
+  this->originX = vec.getOriginX();
+  this->originY = vec.getOriginY();
+  this->originZ = vec.getOriginZ();
+
+  this->X = vec.getX();
+  this->Y = vec.getY();
+  this->Z = vec.getZ();
+
+  this->calcDTZ();
+  this->calcAbs();
+
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
+}
 
 void Vec3D::calcAbs() {
   double result = PYTH3(this->X,this->Y,this->Z);

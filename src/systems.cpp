@@ -5,12 +5,6 @@
 
 
 
-
-
-
-
-
-
 void CoordinateSystem2D::polarToCartesian() {
     this->X = radius * std::cos(this->phi);
     this->Y = radius * std::sin(this->phi);

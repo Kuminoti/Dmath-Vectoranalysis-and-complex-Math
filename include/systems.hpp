@@ -140,8 +140,8 @@ class CoordinateSystem3D : public CoordinateSystem2D {
 
     void cylinderToCartesian();
     void cylinderToSphere();
-    void calcDTZ();
-    void calcAXYZ();
+    void calcDTZ();   //Calculates the  from an origin point to zero
+    void calcAXYZ();  //Calculates the Absolude magnitude from zero to the end of a vector even for non zero vectors
     
   public: //Public constructors
 

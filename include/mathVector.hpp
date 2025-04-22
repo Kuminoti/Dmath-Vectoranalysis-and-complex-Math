@@ -233,6 +233,7 @@ class Vec3D : public CoordinateSystem3D {
 
     void operator=(Dmath::sVec3f vec);
     void operator=(Dmath::Trio<double,double,double> trio);
+    void operator=(Dmath::Vec3D vec);
 
     inline bool operator==(Vec3D& Mathvector);   // == checks if the x and y coordinates are the same
     inline bool operator!=(Vec3D& Mathvector);   // != checks if the x and y coordinates are diffrent
