@@ -178,6 +178,10 @@ class Vec2D : public CoordinateSystem2D {                          //CoordinateS
     static Vec2D zeroVector();                             // Creates a vector with lenght 0
 };
 
+
+std::ostream& operator<<(std::ostream& os, Vec2D num);
+
+
 #pragma endregion
 
 #ifdef SYSTEMGEOMETRY_HPP //aus systemGeometry.hpp
@@ -317,6 +321,9 @@ Dmath::SystemGeometry *systemGeometry;
     static Vec3D cylinderVector(double radius, double angle, double height);    //gives a vector in a cylinder system
 
 };
+
+
+std::ostream& operator<<(std::ostream& os, Vec3D num);
 #endif
 
 #pragma endregion
