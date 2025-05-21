@@ -18,6 +18,12 @@ Dmath::Complex::Complex(double real, double img){
     
 }
 
+Dmath::Complex::Complex(double real, Dmath::Imaginary img){
+    this->real = real;
+    this->img  = img.i;
+    this->update();
+}
+
 void Dmath::Complex::update(){
     this->absolute   = Dmath::pyth2(real,img);
     this->phaseAngle = std::atan2(img, real);

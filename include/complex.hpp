@@ -18,16 +18,19 @@
 NAMESPACESTART //Dmath:: - namespace
 
 
-typedef struct Imaginary{
+typedef struct {
     Dmath::Scalar i;
 
-    Imaginary(Dmath::Scalar bi) : i(bi){}
+    // Imaginary(Dmath::Scalar bi) : i(bi){}
 
-    Imaginary operator+(Imaginary i_two){
-        return this->i + i_two;
-    }
+    // Imaginary operator+(Imaginary i_two){
+    //     return this->i + i_two.i;
+    // }
+    // Imaginary operator-(Imaginary i_two){
+    //     return this->i - i_two.i;
+    // }
 
-};
+} Imaginary ;
 
 class Complex{
 
@@ -46,7 +49,8 @@ private:
 public:
 
     Complex();                          //default Constructor
-    Complex(double real, double img);   
+    Complex(double real, double img);
+    Complex(double real, Imaginary img);   
 
 
     //getters

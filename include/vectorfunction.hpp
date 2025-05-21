@@ -8,7 +8,7 @@
 NAMESPACESTART
 
 /* Diese Datei beinhaltet klassen zur beschreibung von vektoriell dargestellten funktionen z.B:
- * zur darstellung von parametrisierten oder oberflächen
+ * zur darstellung von Parametrisierungen von kurven oder oberflächen
  * => k(t) = [ x(t); y(t); z(t) ]
  * 
  * Die klasse SingleVectorFunction unterstützt sowohl zweidimensionale wie auch 3d funktionen
@@ -42,6 +42,37 @@ public:
     Dmath::Vec2D call2D(Dmath::Scalar t);
     
     Dmath::Vec3D operator ()(Dmath::Scalar t);
+
+    SingleVectorFunction operator+(SingleVectorFunction funcTwo){
+        Dmath::SingleVarFunction newX = this->getXFunc() + funcTwo.getXFunc();
+        Dmath::SingleVarFunction newY = this->getYFunc() + funcTwo.getYFunc();
+        Dmath::SingleVarFunction newZ = this->getZFunc() + funcTwo.getZFunc();
+
+        SingleVectorFunction newFunc(newX,newY,newZ);
+        return newFunc;
+    }
+
+    Dmath::SingleVarFunction operator*(SingleVectorFunction funcTwo){
+
+        Dmath::SingleVarFunction xTwo = funcTwo.getXFunc();
+        Dmath::SingleVarFunction yTwo = funcTwo.getYFunc();
+        Dmath::SingleVarFunction zTwo = funcTwo.getZFunc();
+
+        Dmath::SingleVarFunction xFunc = this->getXFunc();
+        Dmath::SingleVarFunction yFunc = this->getYFunc();
+        Dmath::SingleVarFunction zFunc = this->getZFunc();
+
+        Dmath::SingleVarFunction XX = xFunc * xTwo;
+        Dmath::SingleVarFunction YY = yFunc * yTwo;
+        Dmath::SingleVarFunction ZZ = zFunc * zFunc;
+        
+        Dmath::SingleVarFunction scalarFunc = XX + YY + ZZ;
+        
+        std::cout << scalarFunc(1) << std::endl;
+
+        
+        return Dmath::SingleVarFunction(scalarFunc);
+    }
 
     //Getters:
 
@@ -169,7 +200,6 @@ class TripleVectorFunction{
     // }
 
 };
-
 
 NAMESPACEEND
 #endif

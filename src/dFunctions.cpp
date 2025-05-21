@@ -18,7 +18,7 @@ double Dmath::pyth3(double x, double y, double z){
 
 double Dmath::derivativeAt(Dmath::singleVarFunction func, double point){
     const Scalar limit = 0.00001;
-    Scalar value = func(point + limit) - func(point) / limit,
+    Scalar value = func(point + limit) - func(point) / limit;
     return value;
 
 }
