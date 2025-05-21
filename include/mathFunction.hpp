@@ -198,7 +198,7 @@ class SHARED_LIB Function{
 
 
     public: 
-    Function& operator=(const Function other){
+    Function& operator=(const Function& other){
         if (this != &other) {
             this->funcBase = other.funcBase ? other.funcBase->clone() : nullptr;
         }
@@ -271,7 +271,7 @@ public: //public getters
 public: //operator overloading
 
 
-    SingleVarFunction& operator=(const SingleVarFunction& other) {
+    SingleVarFunction& operator=(SingleVarFunction& other) {
         if (this != &other) {
             this->funcBase = other.funcBase ? other.funcBase->clone() : nullptr;
         }
@@ -336,7 +336,7 @@ public:
 
 
 
-    double operator()(double x) {
+    double operator()(double x) const {
         if (funcBase) {
             return funcBase->Callx(x); // Delegate the call to the stored function
         }

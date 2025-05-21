@@ -14,11 +14,14 @@ bool Dmath::SingleVarFunction::checkParams(Dmath::Parameters params){
 
 
 Dmath::SingleVarFunction Dmath::SingleVarFunction::operator+(Dmath::SingleVarFunction funcOne){
-    auto addFunc = [this, funcOne](double x) mutable -> double {
-        return this->funcBase->Callx(x) + funcOne(x);
+    Dmath::SingleVarFunction lhs = *this;
+    Dmath::SingleVarFunction rhs = funcOne;
+
+    auto addFunc = [lhs, rhs](double x) mutable -> double {
+        return lhs(x) + rhs(x);
     };
 
-    Dmath::SingleVarFunction func = addFunc;
+    Dmath::SingleVarFunction func(addFunc);
     return func;
 }
 
@@ -34,14 +37,15 @@ Dmath::SingleVarFunction Dmath::SingleVarFunction::operator-(Dmath::SingleVarFun
 }
 
 
-Dmath::SingleVarFunction Dmath::SingleVarFunction::operator*(Dmath::SingleVarFunction funcOne){
-        
-    auto mul = [this,funcOne](double x) mutable ->double {
-        return ( this->funcBase->Callx(x) * funcOne(x));
+Dmath::SingleVarFunction Dmath::SingleVarFunction::operator*(Dmath::SingleVarFunction funcOne) {
+    Dmath::SingleVarFunction lhs = *this;
+    Dmath::SingleVarFunction rhs = funcOne;
+
+    auto mul = [lhs, rhs](double x) {
+        return lhs(x) * rhs(x);
     };
 
-    SingleVarFunction func = mul;
-    return func;
+    return SingleVarFunction(mul);
 }
 
 
