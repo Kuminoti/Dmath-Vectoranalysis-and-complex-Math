@@ -28,6 +28,71 @@ Dmath::Vec3D Dmath::SingleVectorFunction::operator ()(Dmath::Scalar t){
 }
 
 
+
+
+
+Dmath::SingleVectorFunction Dmath::SingleVectorFunction::operator+(Dmath::SingleVectorFunction funcTwo){
+    Dmath::SingleVarFunction newX = this->getXFunc() + funcTwo.getXFunc();
+    Dmath::SingleVarFunction newY = this->getYFunc() + funcTwo.getYFunc();
+    Dmath::SingleVarFunction newZ = this->getZFunc() + funcTwo.getZFunc();
+
+    Dmath::SingleVectorFunction newFunc(newX,newY,newZ);
+    return newFunc;
+}
+
+Dmath::SingleVectorFunction Dmath::SingleVectorFunction::operator-(Dmath::SingleVectorFunction funcTwo){
+    Dmath::SingleVarFunction newX = this->getXFunc() - funcTwo.getXFunc();
+    Dmath::SingleVarFunction newY = this->getYFunc() - funcTwo.getYFunc();
+    Dmath::SingleVarFunction newZ = this->getZFunc() - funcTwo.getZFunc();
+
+    Dmath::SingleVectorFunction newFunc(newX,newY,newZ);
+    return newFunc;
+}
+
+Dmath::SingleVarFunction Dmath::SingleVectorFunction::operator*(Dmath::SingleVectorFunction funcTwo){
+
+
+    //Copying all functions to avoid bugs caused by missing refrences
+
+    Dmath::SingleVarFunction xTwo = funcTwo.getXFunc();
+    Dmath::SingleVarFunction yTwo = funcTwo.getYFunc();
+    Dmath::SingleVarFunction zTwo = funcTwo.getZFunc();
+
+    Dmath::SingleVarFunction xFunc = this->getXFunc();
+    Dmath::SingleVarFunction yFunc = this->getYFunc();
+    Dmath::SingleVarFunction zFunc = this->getZFunc();
+
+    Dmath::SingleVarFunction XX = xFunc * xTwo;
+    Dmath::SingleVarFunction YY = yFunc * yTwo;
+    Dmath::SingleVarFunction ZZ = zFunc * zFunc;
+    
+    Dmath::SingleVarFunction scalarFunc = XX + YY + ZZ;
+    
+    return Dmath::SingleVarFunction(scalarFunc);
+}
+
+//operator for crossproducts
+Dmath::SingleVectorFunction Dmath::SingleVectorFunction::crossProduct(Dmath::SingleVectorFunction func){
+
+    //Copying all functions to avoid bugs caused by missing refrences
+
+    Dmath::SingleVarFunction thisX = this->getXFunc();
+    Dmath::SingleVarFunction thisY = this->getYFunc();
+    Dmath::SingleVarFunction thisZ = this->getZFunc();
+
+    Dmath::SingleVarFunction funcX = func.getXFunc();
+    Dmath::SingleVarFunction funcY = func.getYFunc();
+    Dmath::SingleVarFunction funcZ = func.getZFunc();
+
+    // Berechnung der Komponenten des Kreuzprodukts
+    Dmath::SingleVarFunction crossX = thisY * funcZ - thisZ * funcY;
+    Dmath::SingleVarFunction crossY = thisZ * funcX - thisX * funcZ;
+    Dmath::SingleVarFunction crossZ = thisX * funcY - thisY * funcX;
+
+    // Rückgabe einer neuen Vektorfunktion mit den berechneten Komponenten
+    return Dmath::SingleVectorFunction(crossX, crossY, crossZ);
+}
+
 Dmath::Vec3D Dmath::SingleVectorFunction::getTangentialVectorAt(Dmath::Scalar t){
     const Dmath::Scalar dx = this->xOfT.getDerivativeAt(t);
     const Dmath::Scalar dy = this->yOfT.getDerivativeAt(t);
@@ -65,6 +130,44 @@ Dmath::DoubleVectorFunction::DoubleVectorFunction(Dmath::DoubleVarFunction xOfUV
     this->yOfUV = yOfUV;
     this->zOfUV = zOfUV;
 
+}
+Dmath::DoubleVectorFunction Dmath::DoubleVectorFunction::operator+(Dmath::DoubleVectorFunction funcTwo){
+    Dmath::DoubleVarFunction thisX = this->getXFunc();
+    Dmath::DoubleVarFunction thisY = this->getYFunc();
+    Dmath::DoubleVarFunction thisZ = this->getZFunc();
+
+    Dmath::DoubleVarFunction funcX = funcTwo.getXFunc();
+    Dmath::DoubleVarFunction funcY = funcTwo.getYFunc();
+    Dmath::DoubleVarFunction funcZ = funcTwo.getZFunc();
+
+    //Calculation of the components of the scalarproduct
+    Dmath::DoubleVarFunction sumX = thisX + funcX;
+    Dmath::DoubleVarFunction sumY = thisY + funcY;   
+    Dmath::DoubleVarFunction sumZ = thisZ + funcZ;
+
+    //Return a new function
+    return DoubleVectorFunction(sumX, sumY, sumZ);
+}
+
+
+Dmath::DoubleVectorFunction Dmath::DoubleVectorFunction::crossPruduct(Dmath::DoubleVectorFunction funcTwo){
+    //Copy the functions to avoid bugs caused by missing refrences
+
+    Dmath::DoubleVarFunction thisX = this->getXFunc();
+    Dmath::DoubleVarFunction thisY = this->getYFunc();
+    Dmath::DoubleVarFunction thisZ = this->getZFunc();
+
+    Dmath::DoubleVarFunction funcX = funcTwo.getXFunc();
+    Dmath::DoubleVarFunction funcY = funcTwo.getYFunc();
+    Dmath::DoubleVarFunction funcZ = funcTwo.getZFunc();
+
+    //Calculation of the components of the scalarproduct
+    Dmath::DoubleVarFunction crossX = thisY * funcZ - thisZ * funcY;
+    Dmath::DoubleVarFunction crossY = thisZ * funcX - thisX * funcZ;
+    Dmath::DoubleVarFunction crossZ = thisX * funcY - thisY * funcX;
+
+    //Return a new function
+    return DoubleVectorFunction(crossX, crossY, crossZ);
 }
 
 Dmath::Vec3D Dmath::DoubleVectorFunction::getPartialUAt(Dmath::Scalar u, Dmath::Scalar v){

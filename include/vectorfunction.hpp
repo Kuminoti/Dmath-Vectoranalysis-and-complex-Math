@@ -43,37 +43,14 @@ public:
     
     Dmath::Vec3D operator ()(Dmath::Scalar t);
 
-    SingleVectorFunction operator+(SingleVectorFunction funcTwo){
-        Dmath::SingleVarFunction newX = this->getXFunc() + funcTwo.getXFunc();
-        Dmath::SingleVarFunction newY = this->getYFunc() + funcTwo.getYFunc();
-        Dmath::SingleVarFunction newZ = this->getZFunc() + funcTwo.getZFunc();
+    SingleVectorFunction operator+(SingleVectorFunction funcTwo);
+    SingleVectorFunction operator-(SingleVectorFunction funcTwo);
 
-        SingleVectorFunction newFunc(newX,newY,newZ);
-        return newFunc;
-    }
+    //Operator for scalar multiplikation
+    Dmath::SingleVarFunction operator*(SingleVectorFunction funcTwo);
 
-    Dmath::SingleVarFunction operator*(SingleVectorFunction funcTwo){
-
-        Dmath::SingleVarFunction xTwo = funcTwo.getXFunc();
-        Dmath::SingleVarFunction yTwo = funcTwo.getYFunc();
-        Dmath::SingleVarFunction zTwo = funcTwo.getZFunc();
-
-        Dmath::SingleVarFunction xFunc = this->getXFunc();
-        Dmath::SingleVarFunction yFunc = this->getYFunc();
-        Dmath::SingleVarFunction zFunc = this->getZFunc();
-
-        Dmath::SingleVarFunction XX = xFunc * xTwo;
-        Dmath::SingleVarFunction YY = yFunc * yTwo;
-        Dmath::SingleVarFunction ZZ = zFunc * zFunc;
-        
-        Dmath::SingleVarFunction scalarFunc = XX + YY + ZZ;
-        
-        std::cout << scalarFunc(1) << std::endl;
-
-        
-        return Dmath::SingleVarFunction(scalarFunc);
-    }
-
+    //operator for crossproducts
+    SingleVectorFunction crossProduct(SingleVectorFunction funcTwo);
     //Getters:
 
     Dmath::SingleVarFunction getXFunc(){ return this->xOfT;    }
@@ -114,6 +91,36 @@ public:
     inline Dmath::Scalar callY(Dmath::Scalar u, Dmath::Scalar v){ return yOfUV(u,v); }
     inline Dmath::Scalar callZ(Dmath::Scalar u, Dmath::Scalar v){ return zOfUV(u,v); }
 
+    Dmath::DoubleVarFunction operator*(DoubleVectorFunction func){
+        //Scalarproduct operator
+        
+        //Copy the functions to avoid bugs caused by missing refrences
+
+        Dmath::DoubleVarFunction thisX = this->getXFunc();
+        Dmath::DoubleVarFunction thisY = this->getYFunc();
+        Dmath::DoubleVarFunction thisZ = this->getZFunc();
+
+        Dmath::DoubleVarFunction funcX = func.getXFunc();
+        Dmath::DoubleVarFunction funcY = func.getYFunc();
+        Dmath::DoubleVarFunction funcZ = func.getZFunc();
+
+        //Calculation of the components of the scalarproduct
+        Dmath::DoubleVarFunction scalarX = thisX * funcX;
+        Dmath::DoubleVarFunction scalarY = thisY * funcY;   
+        Dmath::DoubleVarFunction scalarZ = thisZ * funcZ;
+        //Return a new function
+
+        Dmath::DoubleVarFunction scalarProduct = scalarX + scalarY + scalarZ;
+        return scalarProduct;
+
+
+    }
+
+
+    Dmath::DoubleVectorFunction operator+(DoubleVectorFunction funcTwo);
+
+
+    Dmath::DoubleVectorFunction crossPruduct(DoubleVectorFunction funcTwo);
 
     Dmath::DoubleVarFunction getXFunc(){ return this->xOfUV;  }
     Dmath::DoubleVarFunction getYFunc(){ return this->yOfUV;  }

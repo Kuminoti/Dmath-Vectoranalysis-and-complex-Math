@@ -525,8 +525,6 @@ std::vector<double> Dmath::TripleVarFunction::getPartialDerivteX(double start, d
 
 
 
-
-
 std::vector<double> Dmath::TripleVarFunction::getPartialDerivteY(double start, double stopp, double stepps) {
     Dmath::Parameters params(start, stopp, stepps);
     if (!this->checkParams(params)) {
@@ -544,12 +542,12 @@ std::vector<double> Dmath::TripleVarFunction::getPartialDerivteY(double start, d
             double currentY = (start + y * stepps);
 
             for (size_t z = 0; z < num; z++) {
-                double currentZ = (start + z * stepps);  // Korrigiert auf z
+                double currentZ = (start + z * stepps); // Z bleibt unverändert
 
                 double yDY = this->funcBase->CallXYZ(currentX, currentY + this->dx, currentZ);
                 double Ydy = this->funcBase->CallXYZ(currentX, currentY - this->dx, currentZ);
 
-                double result = (yDY - Ydy) / (2 * this->dx);  // Klammern hinzugefügt
+                double result = (yDY - Ydy) / (2 * this->dx); // Berechnung der Ableitung in Y-Richtung
                 funcVector.push_back(result);
             }
         }
