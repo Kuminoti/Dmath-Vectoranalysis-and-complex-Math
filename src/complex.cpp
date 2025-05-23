@@ -18,7 +18,7 @@ Dmath::Complex::Complex(double real, double img){
     
 }
 
-Dmath::Complex::Complex(double real, Dmath::Imaginary img){
+Dmath::Complex::Complex(double real, Dmath::ImaginaryNumber img){
     this->real = real;
     this->img  = img.i;
     this->update();

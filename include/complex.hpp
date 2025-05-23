@@ -18,24 +18,55 @@
 NAMESPACESTART //Dmath:: - namespace
 
 
-typedef struct {
+struct ImaginaryNumber{
     Dmath::Scalar i;
 
-    // Imaginary(Dmath::Scalar bi) : i(bi){}
+    // Konstruktor
+    ImaginaryNumber(Dmath::Scalar bi) : i(bi) {}
 
-    // Imaginary operator+(Imaginary i_two){
-    //     return this->i + i_two.i;
-    // }
-    // Imaginary operator-(Imaginary i_two){
-    //     return this->i - i_two.i;
-    // }
+    // Addition
+    ImaginaryNumber operator+(ImaginaryNumber i_two) const {
+        return ImaginaryNumber(this->i + i_two.i);
+    }
 
-} Imaginary ;
+    // Subtraktion
+    ImaginaryNumber operator-(ImaginaryNumber i_two) const {
+        return ImaginaryNumber(this->i - i_two.i);
+    }
 
+    // Multiplikation
+    ImaginaryNumber operator*(Dmath::Scalar scalar) const {
+        return ImaginaryNumber(this->i * scalar);
+    }
+
+    // Division
+    ImaginaryNumber operator/(Dmath::Scalar scalar) const {
+        if (scalar == 0) {
+            throw std::invalid_argument("Division by zero");
+        }
+        return ImaginaryNumber(this->i / scalar);
+    }
+
+    // Vergleichsoperatoren
+    bool operator==(ImaginaryNumber i_two) const {
+        return this->i == i_two.i;
+    }
+
+    bool operator!=(ImaginaryNumber i_two) const {
+        return this->i != i_two.i;
+    }
+
+    // Ausgabeoperator
+    friend std::ostream& operator<<(std::ostream& os, const ImaginaryNumber& num) {
+        os << num.i << "i";
+        return os;
+    }
+
+} ;
 class Complex{
 
 private:
-    //real and imaginary parts
+    //real and ImaginaryNumber parts
     double real;
     double img;
 
@@ -50,7 +81,7 @@ public:
 
     Complex();                          //default Constructor
     Complex(double real, double img);
-    Complex(double real, Imaginary img);   
+    Complex(double real, ImaginaryNumber img);   
 
 
     //getters
@@ -61,13 +92,13 @@ public:
 
     //Adders
 
-    //Adds img to the imaginary part : x + (iy + iimg)
+    //Adds img to the ImaginaryNumber part : x + (iy + iimg)
     void addImaginary(double img);
     void addReal(double real);
 
     void setNumber(double real, double img);
 
-    //Setters for the real and imaginary part
+    //Setters for the real and ImaginaryNumber part
     void setImaginaryPart(double img);
     void setRealPart(double real);
 
@@ -111,7 +142,7 @@ public:
 
     Complex exp(); //e^this
 
-    //Returns a vector in Cartesian coordinats with the real and imaginary parts on the complex plane as x and y coordinates
+    //Returns a vector in Cartesian coordinats with the real and ImaginaryNumber parts on the complex plane as x and y coordinates
     Dmath::Vec2D getVector();
 
     CoordinateSystem2D polarForm();
