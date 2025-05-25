@@ -90,14 +90,14 @@ Dmath::Scalar Vec2D::operator*(const Vec2D &Mathvector) {
 //Adds one to every component
 void Vec2D::operator++(){
   this->X += 1;
-  this->X += 1;
+  this->Y += 1;
   this->ValidManipulation();
 }
 
 //subtracts one to every component
 void Vec2D::operator--(){
   this->X -= 1;
-  this->X -= 1;
+  this->Y -= 1;
   this->ValidManipulation();
 }
 
@@ -403,7 +403,7 @@ void Vec2D::divideYBy(Dmath::Scalar divBy){
 
 void Vec2D::addXYEach(Dmath::Scalar xPlus, Dmath::Scalar yPlus){
   this->X += xPlus;
-  this->X += yPlus;
+  this->Y += yPlus;
   this->ValidManipulation();
 }
 
@@ -423,6 +423,7 @@ void Vec2D::subtractXY(Dmath::Scalar xMinus, Dmath::Scalar yMinus){
 void Vec2D::divideXYBy(Dmath::Scalar xDiv, Dmath::Scalar yDiv){
   if(xDiv == 0 || yDiv == 0 ){
     std::cerr << "error division by zero" << __FILE__ << __LINE__ <<std::endl;
+    return;
   }
 
   this->X /= xDiv;
@@ -440,7 +441,7 @@ bool Dmath::Vec2D::isEqual(Dmath::Vec2D vec){
   const double vecOx = vec.getOriginX();
   const double vecOy = vec.getOriginY();
 
-  if(this->X == vecX && vecX  &&  this->getY() == vecY &&
+  if(this->X == vecX &&  this->getY() == vecY &&
      this->originX == vecOx   &&  this->originY == vecOy){
     result = true;
   }
@@ -805,14 +806,10 @@ Vec3D Vec3D::cylinderVector(double radius, double angle, double height) {
   return Vec3D(Xvalue, Yvalue, Zvalue);
 }
 
-bool Dmath::Vec3D::isEqual(Dmath::Vec3D vec){
-  if(this->X == vec.getX() && this->Y == vec.getY() &&
-     this->Z == vec.getZ() && this->originX == vec.getOriginX() &&
-     this->originY == vec.getOriginY() && this->originZ == vec.getOriginZ()){
-      return true;
-
-  }
-  return true;
+bool Dmath::Vec3D::isEqual(Dmath::Vec3D vec) {
+  return (this->X == vec.getX() && this->Y == vec.getY() &&
+          this->Z == vec.getZ() && this->originX == vec.getOriginX() &&
+          this->originY == vec.getOriginY() && this->originZ == vec.getOriginZ());
 }
 
 Vec3D Vec3D::zeroVector() { 

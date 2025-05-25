@@ -11,7 +11,7 @@ void CoordinateSystem2D::polarToCartesian() {
 }
 
 void CoordinateSystem2D::cartesianToPolar() {
-    this->radius = std::sqrt(this->X*X + this->Y*Y);
+    this->radius = std::sqrt(this->X* this->X + this->Y*this->Y);
     this->phi = std::atan2(this->Y, this->X);
     
 }
@@ -63,9 +63,9 @@ void CoordinateSystem3D::sphereToCatesian() {
 }
 
 void CoordinateSystem3D::sphereToCylinder() {
-    this->radius = this->radius * std::sin(this->theta);
-    // this->phi = this->phi;
-    this->height = this->radius * std::cos(this->theta);
+    Dmath::Scalar oradius = this->radius;
+    this->radius = oradius * std::sin(this->theta);
+    this->height = oradius * std::cos(this->theta);
 }
 
 void CoordinateSystem3D::cylinderToCartesian() {
@@ -77,7 +77,7 @@ void CoordinateSystem3D::cylinderToCartesian() {
 void CoordinateSystem3D::cylinderToSphere() {
     this->radius = PYTH(this->radius, this->height);
     // this->phi = this->phi;
-    this->theta = std::atan2(this->radius, this->height);
+    this->theta = std::atan2( this->height,this->radius);
 }
 
 void CoordinateSystem3D::setOriginX(double Value){
@@ -117,7 +117,7 @@ void CoordinateSystem3D::calcDTZ(){
   double AXS = this->aX * this->aX;
   double AYS = this->aY * this->aY;
   double AZS = this->aZ * this->aZ;
-  result = std::sqrt(AYS + AYS);
+  result = std::sqrt(AXS + AYS + AZS);
   this->distanceToZero = result;  
 }
 
