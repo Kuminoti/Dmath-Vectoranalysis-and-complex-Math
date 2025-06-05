@@ -112,13 +112,11 @@ public:
 
         Dmath::DoubleVarFunction scalarProduct = scalarX + scalarY + scalarZ;
         return scalarProduct;
-
-
+        
     }
 
 
     Dmath::DoubleVectorFunction operator+(DoubleVectorFunction funcTwo);
-
 
     Dmath::DoubleVectorFunction crossPruduct(DoubleVectorFunction funcTwo);
 
@@ -127,7 +125,6 @@ public:
     Dmath::DoubleVarFunction getZFunc(){ return this->zOfUV;  }
 
    
-
     Dmath::Vec3D getPartialUAt(Dmath::Scalar u, Dmath::Scalar v);
     Dmath::Vec3D getPartialVAt(Dmath::Scalar u, Dmath::Scalar v);
 
@@ -144,7 +141,7 @@ public:
         const Dmath::Scalar dxDV = this->xOfUV.derivativeYAT(u,v);
         const Dmath::Scalar dyDV = this->yOfUV.derivativeYAT(u,v);
         const Dmath::Scalar dzDV = this->zOfUV.derivativeYAT(u,v);
-         Dmath::Vec3D basisVecV(dxDV,dyDV,dzDV);
+        Dmath::Vec3D basisVecV(dxDV,dyDV,dzDV);
         
         
         const Dmath::Scalar metricOne = basisVecU * basisVecU;
@@ -158,16 +155,13 @@ public:
         metric.setElement(2,1,metricTwo);
         metric.setElement(2,2,metricfour);
 
-
-
         return metric;
     }
 };
 
 
-
-
 #pragma endregion
+
 
 
 #pragma region Triple
@@ -178,13 +172,10 @@ class TripleVectorFunction{
     Dmath::TripleVarFunction yOfUVW;
     Dmath::TripleVarFunction zOfUVW;
 
-
-
   public:
+
     TripleVectorFunction(Dmath::TripleVarFunction xOfUVW, Dmath::TripleVarFunction yOfUVW, Dmath::TripleVarFunction zOfUVW);
-
     Dmath::Vec3D operator()(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
-
 
     //Tangential vektoren
     Dmath::Vec3D getPartialUAt(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
@@ -195,16 +186,10 @@ class TripleVectorFunction{
     Dmath::Scalar callY(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
     Dmath::Scalar callZ(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
 
-
     //Patielle ableitungen aller funktionen
     Dmath::Scalar callXPartial(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
     Dmath::Scalar callYPartial(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
     Dmath::Scalar callZPartial(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w);
-
-    // Dmath::Scalar JacobiDeterminant(Dmath::Scalar u, Dmath::Scalar v, Dmath::Scalar w){
-        
-
-    // }
 
 };
 

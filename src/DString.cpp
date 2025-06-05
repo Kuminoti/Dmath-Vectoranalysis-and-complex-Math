@@ -1,7 +1,6 @@
 #include"../include/Types/Dstring.hpp"
 
 
-
 bool Dmath::StringHelper::exsitsIn(const std::string& mainString, const std::string& find){
     bool exsits = false;
 
@@ -85,10 +84,6 @@ std::string Dmath::StringHelper::extractFromTo(const std::string& mainString, ch
 }
 
 
-
-
-
-
 Dmath::Text Dmath::StringHelper::extractSentences(const std::string& mainString) {
     Dmath::Text sentences;
     std::string sentence;
@@ -162,13 +157,6 @@ std::string Dmath::StringHelper::replaceWordExact(const std::string& input, cons
     return output;
 }
 
-
-
-
-
-
-
-
 std::string Dmath::StringHelper::toUpper(const std::string& mainString) {
 
     std::string result = mainString;
@@ -177,6 +165,7 @@ std::string Dmath::StringHelper::toUpper(const std::string& mainString) {
     });
     return result;
 }
+
 std::string Dmath::StringHelper::toLower(const std::string& mainString) {
     std::string result = mainString;
     std::transform(result.begin(), result.end(), result.begin(), [](unsigned char c) {
@@ -184,9 +173,6 @@ std::string Dmath::StringHelper::toLower(const std::string& mainString) {
     });
     return result;
 }
-
-
-
 
 size_t Dmath::StringHelper::howOften(const std::string& mainString, const std::string& find) {
     size_t count = 0;
@@ -215,16 +201,6 @@ Dmath::Duo<std::string, std::string> Dmath::StringHelper::splitString(std::strin
 
     return mainDuo;
 }
-
-
-
-
-
-
-
-
-
-
 
 
 std::string  Dmath::StringHelper::getFileExtension(const std::string& filename) {

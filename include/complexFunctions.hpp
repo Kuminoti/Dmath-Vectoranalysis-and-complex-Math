@@ -18,7 +18,6 @@ Dmath::Complex complexBaseLog(Dmath::Scalar logBase, Dmath::Scalar power);
 //Exponents
 Dmath::Complex complexExponent(Dmath::Scalar base, Dmath::Complex complexNum);
 
-
 //Complex Trigonemetry
 
 //basic trigfunctions
@@ -33,8 +32,6 @@ Dmath::Complex complexSecant(Dmath::Complex complexNum);
 Dmath::Complex complexCosecant(Dmath::Complex complexNum);
 Dmath::Complex complexCotangent(Dmath::Complex complexNum);
 
-
-
 //Hyperbolic functions
 Dmath::Complex complexHyperbolicSine(Dmath::Complex complexNum);
 
@@ -46,7 +43,6 @@ class ComplexFunctionBase{
     
         virtual std::unique_ptr<ComplexFunctionBase> clone() = 0;
     };
-    
     
     template<class CFunc>
     class ComplexFunctionWrapper : public Dmath::ComplexFunctionBase{
@@ -81,20 +77,11 @@ class ComplexFunctionBase{
             return *this;
         }
     
-    
-    
         template<typename Callable>
         ComplexFunction& operator=(Callable func) {
             this->funcBase = std::make_unique<ComplexFunctionWrapper<Callable>>(func);
             return *this;
         }
-    
-    
-    
-    
-    
-    
-    
     
         ComplexFunction& operator=(ComplexFunction&& other) noexcept {
             if (this != &other) {
@@ -102,9 +89,6 @@ class ComplexFunctionBase{
             }
             return *this;
         }
-    
-    
-    
     
         template<typename Callable>
         ComplexFunction(Callable func) : funcBase(std::make_unique<ComplexFunctionWrapper<Callable>>(func)) {}

@@ -4,7 +4,6 @@
 #define DMATH_FUNCTIONAL_HPP
 
 
-
 /*
  * mathFunction.hpp
  *
@@ -25,9 +24,6 @@
  */
 
 
-
-
-
 #include"macros.hpp"
 #include"dataTypes.hpp"
 #include"mathVector.hpp"
@@ -35,10 +31,7 @@
 #include<windows.h>
 
 
-
 NAMESPACESTART
-
-
 
 #pragma region BASECLASS
 
@@ -55,12 +48,12 @@ public:
     virtual double CallXY(double x, double y) = 0;  // For f(x, y)
     virtual double CallXYZ(double x, double y, double z) = 0; //For f(x,y,z)
 
-    
-
     virtual std::unique_ptr<FunctionBase> clone() = 0;
 };
 
 #pragma endregion
+
+
 
 #pragma region FUNCWRAPPER
 
@@ -72,9 +65,7 @@ private:
 public:
     FunctionWrapperConst(Func function) : func(function){}
 
-    double Call() override {
-        return func();
-    }
+    double Call() override {  return func(); }
 
     double Callx(double x) override {
         throw std::runtime_error("This function does not support Callx."); // Not implemented for double variable function
@@ -91,9 +82,7 @@ public:
     std::unique_ptr<FunctionBase> clone()  override {
         return std::make_unique<FunctionWrapperConst<Func>>(func);
     }
-    
 
-    
 };
 
 // Template class for function functionality
@@ -106,14 +95,11 @@ public:
     // Constructor for single variable function
     FunctionWrapper(FuncX funX) : singleFunction(funX) {}
 
-
     double Call() override {
         throw std::runtime_error("Error0");
     }
 
-    double Callx(double x) override {
-        return singleFunction(x); // Call for f(x)
-    }
+    double Callx(double x) override { return singleFunction(x); }
 
     double CallXY(double x, double y) override {
         throw std::runtime_error("Single variable function does not support CallXY."); // Not implemented for single variable function
@@ -152,7 +138,6 @@ public:
     double CallXYZ(double x, double y, double z) override {
         throw std::runtime_error("Single variable function does not support CallXY."); // Not implemented for single variable function
     }
-
 
     std::unique_ptr<FunctionBase> clone()  override {
         return std::make_unique<FunctionWrapperXY<FuncXY>>(doubleFunction);
@@ -194,17 +179,17 @@ public:
 
 class SHARED_LIB Function{
 
+private: // Private members:
     std::unique_ptr<FunctionBase> funcBase;
 
+public: 
 
-    public: 
     Function& operator=(const Function& other){
         if (this != &other) {
             this->funcBase = other.funcBase ? other.funcBase->clone() : nullptr;
         }
         return *this;
     }
-
 
     template<typename Callable>
     Function& operator=(Callable func) {
@@ -275,7 +260,6 @@ public: //operator overloading
 
     // Lambda-Zuweisung
     template<typename Callable>
-
     SingleVarFunction& operator=(Callable func) {
         this->funcBase = std::make_unique<FunctionWrapper<Callable>>(func);
         return *this;
@@ -329,69 +313,62 @@ public:
     SingleVarFunction composition(SingleVarFunction fOfX, SingleVarFunction gOfX);
 
 
-
-
-  
-
-/**
- * This method, getFunctionVector, returns a vector filled with all function values
- * from a given start point (argument one) to an end point (argument two) in specified steps
- * (argument three).
- *
- * @param start The starting point for the function evaluations.
- * @param stopp The end point for the function evaluations.
- * @param stepps The step size between evaluations.
- * @return A vector containing the function values. Returns an empty vector if 
- *         the start point is greater than or equal to the stop point or if
- *         the step size is non-positive.
- */
+    /*
+        * This method, getFunctionVector, returns a vector filled with all function values
+        * from a given start point (argument one) to an end point (argument two) in specified steps
+        * (argument three).
+        *
+        * @param start The starting point for the function evaluations.
+        * @param stopp The end point for the function evaluations.
+        * @param stepps The step size between evaluations.
+        * @return A vector containing the function values. Returns an empty vector if 
+        *         the start point is greater than or equal to the stop point or if
+        *         the step size is non-positive.
+    */
 
     std::vector<double> getFunctionVector(double start, double stopp, double stepps);
 
-
-
     /*
- * This method, getDerivativeVector, computes the derivative of a mathematical function 
- * represented by a callable object stored in funcBase. The derivative is calculated using 
- * the central difference method, which approximates the derivative by evaluating the 
- * function at points slightly above and below a given x-value (using a small delta, dx).
- * 
- * Parameters:
- * - start: The starting point for the derivative calculation.
- * - stopp: The endpoint for the derivative calculation.
- * - stepps: The step size between successive x-values.
- *
- * Returns:
- * A vector containing the computed derivative values at each step from 'start' to 'stopp'.
- * If the input parameters are invalid (start >= stopp or stepps <= 0), an empty vector is returned.
- */
+        * This method, getDerivativeVector, computes the derivative of a mathematical function 
+        * represented by a callable object stored in funcBase. The derivative is calculated using 
+        * the central difference method, which approximates the derivative by evaluating the 
+        * function at points slightly above and below a given x-value (using a small delta, dx).
+        * 
+        * Parameters:
+        * - start: The starting point for the derivative calculation.
+        * - stopp: The endpoint for the derivative calculation.
+        * - stepps: The step size between successive x-values.
+        *
+        * Returns:
+        * A vector containing the computed derivative values at each step from 'start' to 'stopp'.
+        * If the input parameters are invalid (start >= stopp or stepps <= 0), an empty vector is returned.
+    */
 
     std::vector<double> getDerivativeVector(double start, double stopp, double stepps);
 
-/*
- * This method calculates the approximate anti-derivative (integral) values of a mathematical function
- * over a specified range defined by 'start' and 'stopp' with specified step sizes 'stepps'.
- * 
- * @param start   The starting point of the integration range.
- * @param stopp   The endpoint of the integration range.
- * @param stepps  The step size for discretizing the range into intervals.
- * 
- * @return       A vector of double values representing the accumulated integral values at each step.
- * 
- * The method checks the validity of the input parameters and returns an empty vector if they are invalid.
- * It utilizes the trapezoidal rule for numerical integration, accumulating the area under the curve
- * of the function defined by the stored function pointer (funcBase).
- * Each integral value is calculated by evaluating the function at the current x value and
- * multiplying it by the differential element 'dx'.
- */
+    /*
+        * This method calculates the approximate anti-derivative (integral) values of a mathematical function
+        * over a specified range defined by 'start' and 'stopp' with specified step sizes 'stepps'.
+        * 
+        * @param start   The starting point of the integration range.
+        * @param stopp   The endpoint of the integration range.
+        * @param stepps  The step size for discretizing the range into intervals.
+        * 
+        * @return       A vector of double values representing the accumulated integral values at each step.
+        * 
+        * The method checks the validity of the input parameters and returns an empty vector if they are invalid.
+        * It utilizes the trapezoidal rule for numerical integration, accumulating the area under the curve
+        * of the function defined by the stored function pointer (funcBase).
+        * Each integral value is calculated by evaluating the function at the current x value and
+        * multiplying it by the differential element 'dx'.
+    */
 
-std::vector<double> getSecondDerivative(double start, double stopp, double stepps);
+    std::vector<double> getSecondDerivative(double start, double stopp, double stepps);
 
+    std::vector<double> getAntiDerivativeVector(double start, double stopp, double stepps);
 
-std::vector<double> getAntiDerivativeVector(double start, double stopp, double stepps);
-
-Dmath::Scalar getDerivativeAt(double x);
-Dmath::Scalar getSecondDerivativeAt(double x);
+    Dmath::Scalar getDerivativeAt(double x);
+    Dmath::Scalar getSecondDerivativeAt(double x);
 
 };
 
@@ -452,8 +429,6 @@ public: //public getters
     std::vector<double> getAntiDerivativeY(double start, double stopp, double stepps);
 
 
-
-
 public: //mathmatical operations
 
     //First derivative at a specific point
@@ -469,17 +444,17 @@ public: //mathmatical operations
     //for f(g(x),h(x))
     DoubleVarFunction composition(Dmath::DoubleVarFunction mainFunc ,SingleVarFunction fOfX, SingleVarFunction gOfX);
 
-
-
-
 public: //helper methods
     size_t numOfElements(Dmath::Parameters params);
 };
 
+
 #pragma endregion //double
 
 
+
 #pragma region TRIPPLE
+
 class SHARED_LIB TripleVarFunction{
 private:
     std::unique_ptr<FunctionBase> funcBase;
@@ -502,7 +477,6 @@ public: // Public constructors:
     TripleVarFunction(const TripleVarFunction& other) : funcBase(other.funcBase ? other.funcBase->clone() : nullptr) {}
 
     
-
     // Operator to call the function with three arguments (x, y, z)
     double operator()(double x, double y, double z);
 
@@ -511,15 +485,13 @@ public: // Public constructors:
 
     // Lambda-Zuweisung
     template<typename Callable>
-
-    TripleVarFunction& operator=(Callable func);
+    TripleVarFunction& operator=(Callable func){
+        this->funcBase = std::make_unique<FunctionWrapperXYZ<Callable>>(func);
+        return *this;
+    }
 
     // Move-Zuweisung
     TripleVarFunction& operator=(TripleVarFunction&& other) noexcept;
-
-
-
-
 
 public: //public mathmatical operations
 
@@ -540,15 +512,10 @@ public: //public mathmatical operations
    Dmath::Scalar derivativeYAt(Dmath::Scalar x, Dmath::Scalar y, Dmath::Scalar z);
    Dmath::Scalar derivativeZAt(Dmath::Scalar x, Dmath::Scalar y, Dmath::Scalar z);
 
-   
-
 };
-
 
 #pragma endregion //Tripple
 
 NAMESPACEEND
-
-
 
 #endif //DMATH_FUNCTIONAL_HPP

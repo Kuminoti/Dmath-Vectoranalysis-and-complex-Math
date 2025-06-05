@@ -747,7 +747,6 @@ Dmath::Scalar Dmath::TripleVarFunction::derivativeYAt(Dmath::Scalar x, Dmath::Sc
     return derivative;
 }
 
-
 Dmath::Scalar Dmath::TripleVarFunction::derivativeZAt(Dmath::Scalar x, Dmath::Scalar y, Dmath::Scalar z){
     const Dmath::Scalar dz = this->funcBase->CallXYZ(x, y, z + 0.0001);
     const Dmath::Scalar DZ = this->funcBase->CallXYZ(x, y, z - 0.0001);
@@ -756,7 +755,5 @@ Dmath::Scalar Dmath::TripleVarFunction::derivativeZAt(Dmath::Scalar x, Dmath::Sc
 
     return derivative;
 }
-
-
 
 #pragma endregion

@@ -45,137 +45,73 @@ struct SI_Units {
     }
 };
 
+
+#pragma region PhysicalUnit
+
 class PhysicalUnit {
 private:
     SI_Units siUnits;       // SI-Basiseinheiten
     Dmath::Scalar factor;   // Umrechnungsfaktor zu einer Basisgröße
 
 public:
-    PhysicalUnit(SI_Units units, Dmath::Scalar faktor)
-        : siUnits(units), factor(faktor) {}
+
+    PhysicalUnit(SI_Units units, Dmath::Scalar faktor) : siUnits(units), factor(faktor) {}
+
 
     PhysicalUnit(Dmath::Scalar faktor, int length = 0, int mass = 0, int time = 0,
                  int electricCurrent = 0, int thermodynamicTemperature = 0,
                  int luminousIntensity = 0, int amountOfSubstance = 0)
-        : PhysicalUnit(SI_Units(length, mass, time, electricCurrent, thermodynamicTemperature, luminousIntensity, amountOfSubstance), faktor) {}
+                : PhysicalUnit(SI_Units(length, mass, time, electricCurrent, thermodynamicTemperature, luminousIntensity, amountOfSubstance), faktor) {}
 
     // Operator Overloading
-    PhysicalUnit operator+(const PhysicalUnit& other) const {
-        if (this->siUnits == other.siUnits) {
-            return PhysicalUnit(this->siUnits, this->factor + other.factor);
-        }
-        throw std::invalid_argument("Cannot add units with different SI units.");
-    }
+    PhysicalUnit operator+(const PhysicalUnit& other) const;
 
-    PhysicalUnit operator-(const PhysicalUnit& other) const {
-        if (this->siUnits == other.siUnits) {
-            return PhysicalUnit(this->siUnits, this->factor - other.factor);
-        }
-        throw std::invalid_argument("Cannot subtract units with different SI units.");
-    }
+    PhysicalUnit operator-(const PhysicalUnit& other) const;
 
-    PhysicalUnit operator*(const PhysicalUnit& other) const {
-        SI_Units newUnits = this->siUnits;
-        newUnits.length += other.siUnits.length;
-        newUnits.mass += other.siUnits.mass;
-        newUnits.time += other.siUnits.time;
-        newUnits.electricCurrent += other.siUnits.electricCurrent;
-        newUnits.thermodynamicTemperature += other.siUnits.thermodynamicTemperature;
-        newUnits.luminousIntensity += other.siUnits.luminousIntensity;
-        newUnits.amountOfSubstance += other.siUnits.amountOfSubstance;
+    PhysicalUnit operator*(const PhysicalUnit& other) const;
 
-        return PhysicalUnit(newUnits, this->factor * other.factor);
-    }
-
-    PhysicalUnit operator/(const PhysicalUnit& other) const {
-        if (other.factor == 0) {
-            throw std::invalid_argument("Division by zero is not allowed.");
-        }
-
-        SI_Units newUnits = this->siUnits;
-        newUnits.length -= other.siUnits.length;
-        newUnits.mass -= other.siUnits.mass;
-        newUnits.time -= other.siUnits.time;
-        newUnits.electricCurrent -= other.siUnits.electricCurrent;
-        newUnits.thermodynamicTemperature -= other.siUnits.thermodynamicTemperature;
-        newUnits.luminousIntensity -= other.siUnits.luminousIntensity;
-        newUnits.amountOfSubstance -= other.siUnits.amountOfSubstance;
-
-        return PhysicalUnit(newUnits, this->factor / other.factor);
-    }
+    PhysicalUnit operator/(const PhysicalUnit& other) const;
 
     // Vergleichsoperatoren
-    bool operator==(const PhysicalUnit& other) const {
-        return (this->siUnits == other.siUnits && this->factor == other.factor);
-    }
+    bool operator==(const PhysicalUnit& other) const { return (this->siUnits == other.siUnits && this->factor == other.factor); }
 
-    bool operator!=(const PhysicalUnit& other) const {
-        return !(*this == other);
-    }
+    bool operator!=(const PhysicalUnit& other) const {  return !(*this == other); }
 
-    bool operator<(const PhysicalUnit& other) const {
-        if (this->siUnits == other.siUnits) {
-            return this->factor < other.factor;
-        }
-        throw std::invalid_argument("Cannot compare units with different SI units.");
-    }
+    // operators 
+    bool operator<(const PhysicalUnit& other) const;
 
-    bool operator<=(const PhysicalUnit& other) const {
-        return (*this < other || *this == other);
-    }
+    bool operator<=(const PhysicalUnit& other) const { return (*this < other || *this == other); }
 
-    bool operator>(const PhysicalUnit& other) const {
-        return !(*this <= other);
-    }
+    bool operator>(const PhysicalUnit& other) const  {  return !(*this <= other);}
 
-    bool operator>=(const PhysicalUnit& other) const {
-        return !(*this < other);
-    }
+    bool operator>=(const PhysicalUnit& other) const {  return !(*this < other);}
+
 
     // Getter und Setter
-    void setSIUnits(const SI_Units& units) {
-        this->siUnits = units;
-    }
+    void setSIUnits(const SI_Units& units) { this->siUnits = units; }
+    void setFactor(Dmath::Scalar faktor)   { this->factor = faktor; }
 
-    void setFactor(Dmath::Scalar faktor) {
-        this->factor = faktor;
-    }
 
-    void setMeter(int length) {
-        this->siUnits.length = length;
-    }
+    //Setters to set individual SI units
+    void setMeter(int length)  { this->siUnits.length = length; }
 
-    void setKilogram(int mass) {
-        this->siUnits.mass = mass;
-    }
+    void setKilogram(int mass) { this->siUnits.mass = mass;     }
 
-    void setSecond(int time) {
-        this->siUnits.time = time;
-    }
+    void setSecond(int time)   { this->siUnits.time = time;     }
 
-    void setAmpere(int electricCurrent) {
-        this->siUnits.electricCurrent = electricCurrent;
-    }
 
-    void setKelvin(int thermodynamicTemperature) {
-        this->siUnits.thermodynamicTemperature = thermodynamicTemperature;
-    }
 
-    void setCandela(int luminousIntensity) {
-        this->siUnits.luminousIntensity = luminousIntensity;
-    }
+    void setAmpere(int electricCurrent) { this->siUnits.electricCurrent = electricCurrent; }
 
-    void setMole(int amountOfSubstance) {
-        this->siUnits.amountOfSubstance = amountOfSubstance;
-    }
+    void setKelvin(int thermodynamicTemperature) { this->siUnits.thermodynamicTemperature = thermodynamicTemperature; }
 
-    const SI_Units& getSIUnits() const {
-        return this->siUnits;
-    }
+    void setCandela(int luminousIntensity) { this->siUnits.luminousIntensity = luminousIntensity; }
 
-    Dmath::Scalar getFactor() const {
-        return this->factor;
-    }
+    void setMole(int amountOfSubstance) { this->siUnits.amountOfSubstance = amountOfSubstance; }
+
+
+    const SI_Units& getSIUnits() const  { return this->siUnits; }
+    Dmath::Scalar getFactor()    const  { return this->factor;  }
 
     // Oft verwendete Einheiten - statische Helferfunktionen
     static PhysicalUnit GetNewtons(Dmath::Scalar faktor) {
@@ -239,8 +175,6 @@ public:
     }
 };
 
-
-
 inline std::ostream& operator<<(std::ostream& os, const SI_Units& units) {
     os << "m^" << units.length << " "
        << "kg^" << units.mass << " "
@@ -252,10 +186,13 @@ inline std::ostream& operator<<(std::ostream& os, const SI_Units& units) {
     return os;
 }
 
+
 inline std::ostream& operator<<(std::ostream& os, const PhysicalUnit& unit) {
     os << unit.getSIUnits() << " (Faktor: " << unit.getFactor() << ")";
     return os;
 }
+
+#pragma endregion 
 
 NAMESPACEEND
 

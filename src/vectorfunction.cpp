@@ -28,9 +28,6 @@ Dmath::Vec3D Dmath::SingleVectorFunction::operator ()(Dmath::Scalar t){
 }
 
 
-
-
-
 Dmath::SingleVectorFunction Dmath::SingleVectorFunction::operator+(Dmath::SingleVectorFunction funcTwo){
     Dmath::SingleVarFunction newX = this->getXFunc() + funcTwo.getXFunc();
     Dmath::SingleVarFunction newY = this->getYFunc() + funcTwo.getYFunc();

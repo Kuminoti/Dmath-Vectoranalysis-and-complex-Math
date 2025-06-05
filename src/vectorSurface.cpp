@@ -70,9 +70,6 @@ void Dmath::VectorSurface::createVectorSurface() {
     }
 }
 
-
-
-
 void Dmath::VectorSurface::calculateSurfaceNormals() {
     size_t iterations = 0;
     for (double i = this->systemStart; i <= this->systemStopp; i += this->resolution) {
@@ -135,8 +132,6 @@ double Dmath::VectorSurface::maxZ(){
     }
     return max;
 }
-
-
 
 double Dmath::VectorSurface::minX(){
     double min = this->mainSurface[0].getX();

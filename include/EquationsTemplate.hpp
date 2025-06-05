@@ -32,7 +32,6 @@ Dmath::SingleVarFunction quadraticEquation(Dmath::Scalar a, Dmath::Scalar b, Dma
     };
 }
 
-
 //cubic equation builder
 // y = ax³ + bx² + cx + d
 Dmath::SingleVarFunction cubicEquation(Dmath::Scalar a, Dmath::Scalar b, Dmath::Scalar c, Dmath::Scalar d) {
@@ -60,8 +59,6 @@ Dmath::SingleVarFunction logarithmicEquation(Dmath::Scalar a, Dmath::Scalar b) {
         }
         return logValue;
     };
-
-
 }
 
 //jacobiDeterminantSpherecoordinates
@@ -82,14 +79,6 @@ Dmath::DoubleVarFunction jacobiDeterminantCylindrical() {
 }
 
 #pragma endregion //MathFunctionBuilders
-
-
-#pragma region ComplexFunctionBuilders
-
-
-
-#pragma endregion //ComplexFunctionBuilders 
-
 
 
 #pragma region VectorFunctionBuilders
@@ -144,21 +133,6 @@ Dmath::SingleVectorFunction parabolicTrajectory(Dmath::Scalar v, Dmath::Scalar a
     };
     return Dmath::SingleVectorFunction(xOfT, yOfT);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 Dmath::DoubleVectorFunction sphereEquation(Dmath::Scalar radius) {
     return Dmath::DoubleVectorFunction(
