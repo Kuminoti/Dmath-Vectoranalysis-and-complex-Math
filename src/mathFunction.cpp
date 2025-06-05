@@ -13,6 +13,95 @@ bool Dmath::SingleVarFunction::checkParams(Dmath::Parameters params){
 }
 
 
+
+Dmath::SingleVarFunction&  Dmath::SingleVarFunction::operator=(SingleVarFunction& other) {
+    if (this != &other) {
+        this->funcBase = other.funcBase ? other.funcBase->clone() : nullptr;
+    }
+    return *this;
+}
+
+Dmath::SingleVarFunction& Dmath::SingleVarFunction::operator=(SingleVarFunction&& other) noexcept {
+    if (this != &other) {
+        this->funcBase = std::move(other.funcBase);
+    }
+    return *this;
+}
+
+
+size_t Dmath::SingleVarFunction::numOfElements(Dmath::Parameters param){
+
+
+    double result = 0;
+
+    result = static_cast<size_t>((param.two - param.one)/param.three);
+    
+    return result;
+}
+
+
+Dmath::SingleVarFunction  Dmath::SingleVarFunction::operator+ ( Function funcOne){
+    Dmath::SingleVarFunction lhs = *this;
+    Dmath::Function rhs = funcOne;
+
+    auto addFunc = [lhs, rhs](double x) mutable -> double {
+        return lhs(x) + rhs();
+    };
+
+
+    Dmath::SingleVarFunction func(addFunc);
+    return func;
+}
+
+
+
+Dmath::SingleVarFunction  Dmath::SingleVarFunction::operator- ( Function funcOne){
+    Dmath::SingleVarFunction lhs = *this;
+    Dmath::Function rhs = funcOne;
+
+    auto difFunc = [lhs, rhs](double x) mutable -> double {
+        return lhs(x) - rhs();
+    };
+
+
+    Dmath::SingleVarFunction func(difFunc);
+    return func;
+}
+
+
+
+Dmath::SingleVarFunction  Dmath::SingleVarFunction::operator* ( Function funcOne){
+    Dmath::SingleVarFunction lhs = *this;
+    Dmath::Function rhs = funcOne;
+
+    auto mulFunc = [lhs, rhs](double x) mutable -> double {
+        return lhs(x) * rhs();
+    };
+
+
+    Dmath::SingleVarFunction func(mulFunc);
+    return func;
+}
+
+Dmath::SingleVarFunction  Dmath::SingleVarFunction::operator/ ( Function funcOne){
+    Dmath::SingleVarFunction lhs = *this;
+    Dmath::Function rhs = funcOne;
+
+    if(funcOne() == 0){
+        throw std::runtime_error("Error: Division by zero in multiplication with function.");
+    }
+
+    auto divFunc = [lhs, rhs](double x) mutable -> double {
+        return lhs(x) / rhs();
+    };
+
+
+    Dmath::SingleVarFunction func(divFunc);
+    return func;
+}
+
+
+
 Dmath::SingleVarFunction Dmath::SingleVarFunction::operator+(Dmath::SingleVarFunction funcOne){
     Dmath::SingleVarFunction lhs = *this;
     Dmath::SingleVarFunction rhs = funcOne;
@@ -74,6 +163,13 @@ Dmath::SingleVarFunction Dmath::SingleVarFunction::composition(Dmath::SingleVarF
 
     return func;
 }
+double Dmath::SingleVarFunction::operator()(double x)  const{
+    if (funcBase) {
+        return funcBase->Callx(x); // Delegate the call to the stored function
+    }
+    return 0.0; // Return a default value if no function is stored
+}
+
 
 
 Dmath::SingleVarFunction Dmath::SingleVarFunction::operator+(Dmath::Scalar num){
@@ -207,6 +303,28 @@ bool Dmath::DoubleVarFunction::checkParams(Dmath::Parameters params){
         return false;
     }
     return true;
+}
+
+Dmath::Scalar Dmath::DoubleVarFunction::operator()(Dmath::Scalar x, Dmath::Scalar y) {
+    if (funcBase) {
+        return funcBase->CallXY(x, y); // Delegate call to stored function
+    }
+    return 0.0; // Default value
+}
+
+
+Dmath::DoubleVarFunction& Dmath::DoubleVarFunction::operator=(DoubleVarFunction&& other) noexcept {
+    if (this != &other) {
+        this->funcBase = std::move(other.funcBase);
+    }
+    return *this;
+}
+
+Dmath::DoubleVarFunction& Dmath::DoubleVarFunction::operator=(const DoubleVarFunction& other) {
+    if (this != &other) {
+        this->funcBase = other.funcBase ? other.funcBase->clone() : nullptr;
+    }
+    return *this;
 }
 
 
@@ -446,6 +564,29 @@ size_t Dmath::DoubleVarFunction::numOfElements(Dmath::Parameters params){
 
 #pragma region TrippleVar
 
+double Dmath::TripleVarFunction::operator()(double x, double y, double z) {
+    if (funcBase) {
+        return funcBase->CallXYZ(x, y, z); // Delegate call to stored function
+    }
+    return 0.0; // Default value
+}
+
+Dmath::TripleVarFunction& Dmath::TripleVarFunction::operator=(const TripleVarFunction& other) {
+    if (this != &other) {
+        this->funcBase = other.funcBase ? other.funcBase->clone() : nullptr;
+    }
+    return *this;
+}
+
+
+Dmath::TripleVarFunction& Dmath::TripleVarFunction::operator=(TripleVarFunction&& other) noexcept {
+    if (this != &other) {
+        this->funcBase = std::move(other.funcBase);
+    }
+    return *this;
+}
+
+
 
 bool Dmath::TripleVarFunction::checkParams(Dmath::Parameters params){
     if(params.one >= params.two || params.three == 0 ){
@@ -454,12 +595,14 @@ bool Dmath::TripleVarFunction::checkParams(Dmath::Parameters params){
     return true;
 }
 
+
 size_t Dmath::TripleVarFunction::numberOfElements(Dmath::Parameters params){
     if(!this->checkParams(params)){ return 0; }
 
     size_t num = static_cast<size_t>((params.two - params.one)/params.three);
     return num;
 }
+
 
 std::vector<double> Dmath::TripleVarFunction::getFunctionVector(double start, double stopp, double stepps){
     Dmath::Parameters params(start,stopp,stepps);
@@ -522,9 +665,6 @@ std::vector<double> Dmath::TripleVarFunction::getPartialDerivteX(double start, d
 }
 
 
-
-
-
 std::vector<double> Dmath::TripleVarFunction::getPartialDerivteY(double start, double stopp, double stepps) {
     Dmath::Parameters params(start, stopp, stepps);
     if (!this->checkParams(params)) {
@@ -555,7 +695,6 @@ std::vector<double> Dmath::TripleVarFunction::getPartialDerivteY(double start, d
 
     return funcVector;
 }
-
 
 
 std::vector<double> Dmath::TripleVarFunction::getPartialDerivteZ(double start, double stopp, double stepps) {
@@ -619,21 +758,5 @@ Dmath::Scalar Dmath::TripleVarFunction::derivativeZAt(Dmath::Scalar x, Dmath::Sc
 }
 
 
-// std::vector<Dmath::Vec3D> Dmath::TripleVarFunction::getGradient(double start, double stopp, double stepps){
-//     std::vector<double>dx =  this->getPartialDerivteX( start,  stopp,  stepps);
-//     std::vector<double>dy =  this->getPartialDerivteY( start,  stopp,  stepps);
-//     std::vector<double>dz =  this->getPartialDerivteZ( start,  stopp,  stepps);
-//     const size_t num = dx.size();
-
-//     std::vector<Dmath::Vec3D> gradient;
-//     for(size_t i = 0; i < num; i++){
-//         const double currentX = dx[i];
-//         const double currentY = dy[i];
-//         const double currentZ = dz[i];
-
-//         gradient.push_back( Dmath::Vec3D(currentX,currentY,currentZ));
-//     }
-//     return gradient;
-// }
 
 #pragma endregion

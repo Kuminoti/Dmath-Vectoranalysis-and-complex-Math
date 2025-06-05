@@ -271,27 +271,20 @@ public: //public getters
 public: //operator overloading
 
 
-    SingleVarFunction& operator=(SingleVarFunction& other) {
-        if (this != &other) {
-            this->funcBase = other.funcBase ? other.funcBase->clone() : nullptr;
-        }
-        return *this;
-    }
+    SingleVarFunction& operator=(SingleVarFunction& other);
 
     // Lambda-Zuweisung
     template<typename Callable>
+
     SingleVarFunction& operator=(Callable func) {
         this->funcBase = std::make_unique<FunctionWrapper<Callable>>(func);
         return *this;
     }
 
     // Move-Zuweisung
-    SingleVarFunction& operator=(SingleVarFunction&& other) noexcept {
-        if (this != &other) {
-            this->funcBase = std::move(other.funcBase);
-        }
-        return *this;
-    }
+    SingleVarFunction& operator=(SingleVarFunction&& other) noexcept;
+
+
 
     /* Calculates the number of elements for exapmle if you want
      * to create the derivative 
@@ -300,37 +293,28 @@ public: //operator overloading
      * @param 2. param.two   = end
      * @param 3. param.three = stepps or resolution
      */
-    size_t numOfElements(Dmath::Parameters param){
-
-
-        double result = 0;
-
-        result = static_cast<size_t>((param.two - param.one)/param.three);
-        
-        return result;
-    }
+    size_t numOfElements(Dmath::Parameters param);
 
 public:
+
     template<typename Callable>
     SingleVarFunction(Callable func) : funcBase(std::make_unique<FunctionWrapper<Callable>>(func)) {}
 
-    SingleVarFunction(const SingleVarFunction& other)
-    : funcBase(other.funcBase ? other.funcBase->clone() : nullptr) {}
+    SingleVarFunction(const SingleVarFunction& other) : funcBase(other.funcBase ? other.funcBase->clone() : nullptr) {}
 
     SingleVarFunction() = default;
 
 //Operator overloading
-    SingleVarFunction operator+ ( Function funcOne){
-        Dmath::SingleVarFunction lhs = *this;
-        Dmath::Function rhs = funcOne;
 
-    auto addFunc = [lhs, rhs](double x) mutable -> double {
-        return lhs(x) + rhs();
-    };
+    double operator()(double x) const;
+    
 
-    Dmath::SingleVarFunction func(addFunc);
-    return func;
-    }
+    SingleVarFunction operator+ ( Function funcOne);
+    SingleVarFunction operator- ( Function funcOne);
+    SingleVarFunction operator* ( Function funcOne);
+    SingleVarFunction operator/ ( Function funcOne);
+    
+    
 
     SingleVarFunction operator+ (SingleVarFunction funcOne);
     SingleVarFunction operator- (SingleVarFunction funcOne);
@@ -346,12 +330,6 @@ public:
 
 
 
-    double operator()(double x) const {
-        if (funcBase) {
-            return funcBase->Callx(x); // Delegate the call to the stored function
-        }
-        return 0.0; // Return a default value if no function is stored
-    }
 
   
 
@@ -428,32 +406,24 @@ private:
 private:
     bool checkParams(Dmath::Parameters params);
 
-public:
+public: //Public construtors:
+
+    // Default constructor
+    DoubleVarFunction() = default; 
+
+    // Constructor that takes a callable object (e.g., lambda function) for f(x, y)
     template<typename FuncXY>
     DoubleVarFunction(FuncXY func) : funcBase(std::make_unique<FunctionWrapperXY<FuncXY>>(func)) {} // Wrapper for f(x, y)
 
+    // Copy constructor
     DoubleVarFunction(const DoubleVarFunction& other) : funcBase(other.funcBase ? other.funcBase->clone() : nullptr) {}
 
-    DoubleVarFunction() = default;
+public: //public operators
 
-    double operator()(double x, double y) {
-        if (funcBase) {
-            return funcBase->CallXY(x, y); // Delegate call to stored function
-        }
-        return 0.0; // Default value
-    }
+    // Operator to call the function with two arguments (x, y)
+    Dmath::Scalar operator()(Dmath::Scalar x, Dmath::Scalar y);
 
-
-    size_t numOfElements(Dmath::Parameters params);
-
-
-    DoubleVarFunction& operator=(const DoubleVarFunction& other) {
-        if (this != &other) {
-            this->funcBase = other.funcBase ? other.funcBase->clone() : nullptr;
-        }
-        return *this;
-    }
-
+    DoubleVarFunction& operator=(const DoubleVarFunction& other);
 
     DoubleVarFunction operator+(DoubleVarFunction funcOne);
     DoubleVarFunction operator-(DoubleVarFunction funcOne);
@@ -461,30 +431,18 @@ public:
     DoubleVarFunction operator/(DoubleVarFunction funcOne);
 
 
-    /* this type of functionComposition will result in two functions with one argument
-     * nestet inside a functiontion with 2 variables: 
-     * (f * g * h)(x,y) := f(g(x), h(y));
-    */
-    DoubleVarFunction composition(Dmath::DoubleVarFunction mainFunc ,SingleVarFunction fOfX, SingleVarFunction gOfX);
+    DoubleVarFunction& operator=(DoubleVarFunction&& other) noexcept;
 
     // Lambda-Zuweisung
     template<typename Callable>
+
     DoubleVarFunction& operator=(Callable func) {
         this->funcBase = std::make_unique<FunctionWrapperXY<Callable>>(func);
         return *this;
     }
 
-    // Move-Zuweisung
-    DoubleVarFunction& operator=(DoubleVarFunction&& other) noexcept {
-        if (this != &other) {
-            this->funcBase = std::move(other.funcBase);
-        }
-        return *this;
-    }
 
-
-
-
+public: //public getters
     std::vector<double> getFunctionVector (double start, double stopp, double stepps);
 
     std::vector<double> getPartialDerivteX(double start, double stopp, double stepps);
@@ -493,13 +451,29 @@ public:
     std::vector<double> getAntiDerivativeX(double start, double stopp, double stepps);
     std::vector<double> getAntiDerivativeY(double start, double stopp, double stepps);
 
+
+
+
+public: //mathmatical operations
+
+    //First derivative at a specific point
     Dmath::Scalar derivativeXAT(Dmath::Scalar x, Dmath::Scalar y);
     Dmath::Scalar derivativeYAT(Dmath::Scalar x, Dmath::Scalar y);
 
+    //Second derivative at a specific point 
     Dmath::Scalar secondDerivativeXX(Dmath::Scalar x, Dmath::Scalar y);
     Dmath::Scalar secondDerivativeXY(Dmath::Scalar x, Dmath::Scalar y);
     Dmath::Scalar secondDerivativeYY(Dmath::Scalar x, Dmath::Scalar y);
     Dmath::Scalar secondDerivativeYX(Dmath::Scalar x, Dmath::Scalar y);
+
+    //for f(g(x),h(x))
+    DoubleVarFunction composition(Dmath::DoubleVarFunction mainFunc ,SingleVarFunction fOfX, SingleVarFunction gOfX);
+
+
+
+
+public: //helper methods
+    size_t numOfElements(Dmath::Parameters params);
 };
 
 #pragma endregion //double
@@ -515,45 +489,39 @@ private:
     bool checkParams(Dmath::Parameters params);
     size_t numberOfElements(Dmath::Parameters params);
 
-public:
+public: // Public constructors:
+
+    //default constructor
+    TripleVarFunction() = default;
+
+    // Constructor that takes a callable object (e.g., lambda function) for f(x, y, z)
     template<typename FuncXYZ>
     TripleVarFunction(FuncXYZ func) : funcBase(std::make_unique<FunctionWrapperXYZ<FuncXYZ>>(func)){};
 
-    TripleVarFunction(const TripleVarFunction& other)
-    : funcBase(other.funcBase ? other.funcBase->clone() : nullptr) {}
+    // Copy constructor
+    TripleVarFunction(const TripleVarFunction& other) : funcBase(other.funcBase ? other.funcBase->clone() : nullptr) {}
 
-    TripleVarFunction() = default;
+    
 
+    // Operator to call the function with three arguments (x, y, z)
+    double operator()(double x, double y, double z);
 
-    double operator()(double x, double y, double z) {
-        if (funcBase) {
-            return funcBase->CallXYZ(x, y, z); // Delegate call to stored function
-        }
-        return 0.0; // Default value
-    }
-
-    TripleVarFunction& operator=(const TripleVarFunction& other) {
-        if (this != &other) {
-            this->funcBase = other.funcBase ? other.funcBase->clone() : nullptr;
-        }
-        return *this;
-    }
+    // Assignment operator for TripleVarFunction
+    TripleVarFunction& operator=(const TripleVarFunction& other);
 
     // Lambda-Zuweisung
     template<typename Callable>
-    TripleVarFunction& operator=(Callable func) {
-        this->funcBase = std::make_unique<FunctionWrapperXYZ<Callable>>(func);
-        return *this;
-    }
+
+    TripleVarFunction& operator=(Callable func);
 
     // Move-Zuweisung
-    TripleVarFunction& operator=(TripleVarFunction&& other) noexcept {
-        if (this != &other) {
-            this->funcBase = std::move(other.funcBase);
-        }
-        return *this;
-    }
+    TripleVarFunction& operator=(TripleVarFunction&& other) noexcept;
 
+
+
+
+
+public: //public mathmatical operations
 
     std::vector<double> getFunctionVector (double start, double stopp, double stepps);
 
