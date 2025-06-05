@@ -320,7 +320,17 @@ public:
     SingleVarFunction() = default;
 
 //Operator overloading
+    SingleVarFunction operator+ ( Function funcOne){
+        Dmath::SingleVarFunction lhs = *this;
+        Dmath::Function rhs = funcOne;
 
+    auto addFunc = [lhs, rhs](double x) mutable -> double {
+        return lhs(x) + rhs();
+    };
+
+    Dmath::SingleVarFunction func(addFunc);
+    return func;
+    }
 
     SingleVarFunction operator+ (SingleVarFunction funcOne);
     SingleVarFunction operator- (SingleVarFunction funcOne);
