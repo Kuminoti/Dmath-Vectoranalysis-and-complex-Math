@@ -1198,7 +1198,7 @@ void Vec2D::rotateThisVector(Dmath::Scalar value){
 }
 
 
-std::ostream& operator<<(std::ostream& os, Vec3D num){
+std::ostream& Dmath::operator<<(std::ostream& os, Dmath::Vec3D num){
   std::string baseString = "X: " + std::to_string(num.getX()) + " Y: " + std::to_string(num.getY()) + " Z: " + std::to_string(num.getZ());
   if(num.getOriginX() != 0 || num.getOriginY() != 0 ||  num.getOriginZ() != 0){
     baseString += " Origin-X: " + std::to_string(num.getOriginX()) + " Origin-Y: " + std::to_string(num.getOriginY()) + " Origin-Z: " + std::to_string(num.getOriginZ());
@@ -1208,7 +1208,7 @@ std::ostream& operator<<(std::ostream& os, Vec3D num){
   return os;
 }
 
-std::ostream& operator<<(std::ostream& os, Vec2D num){
+std::ostream& Dmath::operator<<(std::ostream& os, Dmath::Vec2D num){
   std::string baseString = "X: " + std::to_string(num.getX()) + " Y: " + std::to_string(num.getY());
   if(num.getOriginX() != 0 || num.getOriginY() != 0){
     baseString += " Origin-X: " + std::to_string(num.getOriginX()) + " Origin-Y: " + std::to_string(num.getOriginY());
