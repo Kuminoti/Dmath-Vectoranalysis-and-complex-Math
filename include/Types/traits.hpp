@@ -12,6 +12,12 @@ struct is_Complex{
     static constexpr bool value = std::is_same<Com,Dmath::Complex>::value
 };
 
+template<typename Num>
+struct is_Num{
+    static constexpr bool value = std::is_same<Num, Dmath::Scalar>::value || 
+                                  std::is_same<Num, Dmath::Natural>::value ||
+                                  std::is_same<Num, Dmath::Complex>::value;
+}
 
 template<typename Func>
 struct is_function_object{
