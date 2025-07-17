@@ -27,6 +27,7 @@
 #include"macros.hpp"
 #include"dataTypes.hpp"
 #include"mathVector.hpp"
+#include"mathmaticalCondition.hpp"
 #include<memory>
 #include<windows.h>
 
@@ -243,6 +244,9 @@ private: //Private members:
     const double dx = 0.0000001;
 
     
+    
+
+    bool conditionSet = false;
 
 private: //private methods: 
 

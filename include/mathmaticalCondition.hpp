@@ -117,6 +117,8 @@ public:
         funcBase = std::make_unique<ConditionWrapper<F>>(f);
     }
 
+    
+
     Condition(const Condition& other) : funcBase(other.funcBase->clone()) {}
     Condition& operator=(const Condition& other) {
         if (this != &other)
