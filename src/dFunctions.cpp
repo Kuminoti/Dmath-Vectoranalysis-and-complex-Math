@@ -214,6 +214,16 @@ double Dmath::average(std::vector<double> input){
 }
 
 
+double Dmath::lorenzFactor(double v){
+    if(v >= CAUSALITY){
+        return 0;
+    }
+    return (1/std::sqrt( (v/CAUSALITY) * (v/CAUSALITY) ) );
+}
+
+
+
+
 int Dmath::digitSum(int number) {
     // Take the absolute value to handle negative numbers
     number = std::abs(number);

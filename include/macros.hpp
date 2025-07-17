@@ -26,17 +26,20 @@
     #define TOLLERANCE  0.000001   //the standard resolution for clculating the area or slope aof a function
 
 
-    #define PI         3.14159265358979323846
-    #define EULER      2.718281828459045
+    #define PI              3.14159265358979323846
+    #define EULER           2.718281828459045
+    #define MILES_TO_KM     1.60934;
+    #define POUNDS_TO_KG    0.453592;
+    #define BAR_TO_PSI      14.5038;
+    #define CAUSALITY       299792458 //basicly the speed of light C
+
+
     #define TWOPI      (2 * PI)
     #define FOUR_PI    (4 * PI)
     #define RAD_TO_DEG (180.f/PI)              //Radiants to Degrees
     #define DEG_TO_RAD (PI/180.f)              //Degres to Radiants
     #define DEGTORAD(ANGLE) ((ANGLE)*DEG_TO_RAD)
     #define RADTODEG(RADIANT) ((RADIANT)*RAD_TO_DEG)
-    #define MILES_TO_KM  1.60934;
-    #define POUNDS_TO_KG  0.453592;
-    #define BAR_TO_PSI  14.5038;
 
 
     #define STDRES     0.05f                 //The standard resolution for more dimensional vector systems

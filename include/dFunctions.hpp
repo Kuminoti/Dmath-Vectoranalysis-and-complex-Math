@@ -122,6 +122,10 @@ SHARED_LIB double psiFunction(double x);
 
 SHARED_LIB double average(std::vector<double> input);
 
+// this functions will return a function object
+SHARED_LIB double lorenzFactor(double v);
+
+
 
 //The digit Sum of a number is the sum of the individual digits of the number
 SHARED_LIB int digitSum(int number);

@@ -61,6 +61,8 @@ Dmath::SingleVarFunction logarithmicEquation(Dmath::Scalar a, Dmath::Scalar b) {
     };
 }
 
+
+
 //jacobiDeterminantSpherecoordinates
 // This function returns a lambda that calculates the Jacobian determinant for spherical coordinates
 Dmath::DoubleVarFunction jacobiDeterminantSphere(){
