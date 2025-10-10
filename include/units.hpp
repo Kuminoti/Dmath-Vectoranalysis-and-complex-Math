@@ -44,6 +44,9 @@ struct SI_Units {
                luminousIntensity == other.luminousIntensity &&
                amountOfSubstance == other.amountOfSubstance;
     }
+    bool operator!=(const SI_Units& other) const {
+    return !(*this == other);
+}
 };
 
 
@@ -62,7 +65,7 @@ public:
     PhysicalUnit() = default;
 
     //Vektor units like velocity 
-    PhysicalUnit(SI_Units units, Dmath::Vec3D vec) : siUnits(units), vectorFactor(vec) { this->isVector = true }
+    PhysicalUnit(SI_Units units, Dmath::Vec3D vec) : siUnits(units), vectorFactor(vec) { this->isVector = true; }
 
     //Scalar Units like Tempature
     PhysicalUnit(SI_Units units, Dmath::Scalar faktor) : siUnits(units), factor(faktor) {}
@@ -74,13 +77,13 @@ public:
                 : PhysicalUnit(SI_Units(length, mass, time, electricCurrent, thermodynamicTemperature, luminousIntensity, amountOfSubstance), faktor) {}
 
     // Operator Overloading
-    PhysicalUnit operator+(const PhysicalUnit& other) const;
+    PhysicalUnit operator+( PhysicalUnit& other) ;
 
-    PhysicalUnit operator-(const PhysicalUnit& other) const;
+    PhysicalUnit operator-( PhysicalUnit& other) ;
 
-    PhysicalUnit operator*(const PhysicalUnit& other) const;
+    PhysicalUnit operator*( PhysicalUnit& other) ;
 
-    PhysicalUnit operator/(const PhysicalUnit& other) const;
+    PhysicalUnit operator/( PhysicalUnit& other) ;
 
 
     
@@ -88,24 +91,24 @@ public:
 
 
     // Vergleichsoperatoren
-    bool operator==(const PhysicalUnit& other) const { return (this->siUnits == other.siUnits && this->factor == other.factor); }
+    bool operator==( PhysicalUnit& other)  { return (this->siUnits == other.siUnits && this->factor == other.factor); }
 
-    bool operator!=(const PhysicalUnit& other) const {  return !(*this == other); }
+    bool operator!=( PhysicalUnit& other)  {  return !(*this == other); }
 
     // operators 
-    bool operator<(const PhysicalUnit& other) const;
+    bool operator<( PhysicalUnit& other) ;
 
-    bool operator<=(const PhysicalUnit& other) const { return (*this < other || *this == other); }
+    bool operator<=( PhysicalUnit& other)  { return (*this < other || *this == other); }
 
-    bool operator>(const PhysicalUnit& other) const  {  return !(*this <= other);}
+    bool operator>( PhysicalUnit& other)   {  return !(*this <= other);}
 
-    bool operator>=(const PhysicalUnit& other) const {  return !(*this < other);}
+    bool operator>=( PhysicalUnit& other)  {  return !(*this < other);}
 
 
     // Getter und Setter
-    void setSIUnits(const SI_Units& units) { this->siUnits = units; }
+    void setSIUnits( SI_Units& units) { this->siUnits = units; }
     void setFactor(Dmath::Scalar faktor)   { this->factor = faktor; }
-    void setVector(Dmath::Vec3D vecFaktor) { this->vectorFactor = vecFaktor }
+    void setVector(Dmath::Vec3D vecFaktor) { this->vectorFactor = vecFaktor; }
 
 
     //Setters to set individual SI units
@@ -126,8 +129,8 @@ public:
     void setMole(int amountOfSubstance) { this->siUnits.amountOfSubstance = amountOfSubstance; }
 
 
-    const SI_Units& getSIUnits() const  { return this->siUnits; }
-    Dmath::Scalar getFactor()    const  { return this->factor;  }
+    const SI_Units& getSIUnits()   { return this->siUnits; }
+    Dmath::Scalar getFactor()      { return this->factor;  }
 
 
 
@@ -215,7 +218,7 @@ inline std::ostream& operator<<(std::ostream& os, const SI_Units& units) {
 }
 
 
-inline std::ostream& operator<<(std::ostream& os, const PhysicalUnit& unit) {
+inline std::ostream& operator<<(std::ostream& os,  PhysicalUnit& unit) {
     os << unit.getSIUnits() << " (Faktor: " << unit.getFactor() << ")";
     return os;
 }
