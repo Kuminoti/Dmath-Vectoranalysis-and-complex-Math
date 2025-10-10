@@ -15,7 +15,7 @@ void Dmath::PhysicalUnit::changeFaktorType(){
     }
 }
 
-Dmath::PhysicalUnit Dmath::PhysicalUnit::operator+(const Dmath::PhysicalUnit& other) const {
+Dmath::PhysicalUnit Dmath::PhysicalUnit::operator+( Dmath::PhysicalUnit& other)  {
     Dmath::PhysicalUnit newUnit;
 
     if (this->siUnits != other.siUnits) {
@@ -40,7 +40,7 @@ Dmath::PhysicalUnit Dmath::PhysicalUnit::operator+(const Dmath::PhysicalUnit& ot
 
 
 
-Dmath::PhysicalUnit Dmath::PhysicalUnit::operator-(const Dmath::PhysicalUnit& other) const {
+Dmath::PhysicalUnit Dmath::PhysicalUnit::operator-( Dmath::PhysicalUnit& other)  {
     Dmath::PhysicalUnit newUnit;
 
     if (this->siUnits != other.siUnits) {
@@ -64,7 +64,7 @@ Dmath::PhysicalUnit Dmath::PhysicalUnit::operator-(const Dmath::PhysicalUnit& ot
 }
 
 
-Dmath::PhysicalUnit Dmath::PhysicalUnit::operator*(const Dmath::PhysicalUnit& other) const {
+Dmath::PhysicalUnit Dmath::PhysicalUnit::operator*( Dmath::PhysicalUnit& other)  {
 
     Dmath::PhysicalUnit newUnit;
 
@@ -92,7 +92,7 @@ Dmath::PhysicalUnit Dmath::PhysicalUnit::operator*(const Dmath::PhysicalUnit& ot
     return newUnit;
 }
 
-Dmath::PhysicalUnit Dmath::PhysicalUnit::operator/(const Dmath::PhysicalUnit& other) const {
+Dmath::PhysicalUnit Dmath::PhysicalUnit::operator/( Dmath::PhysicalUnit& other)  {
     if (other.factor == 0) {
         throw std::invalid_argument("Division by zero is not allowed.");
     }
@@ -109,7 +109,7 @@ Dmath::PhysicalUnit Dmath::PhysicalUnit::operator/(const Dmath::PhysicalUnit& ot
     return Dmath::PhysicalUnit(newUnits, this->factor / other.factor);
 }
 
-bool Dmath::PhysicalUnit::operator<(const Dmath::PhysicalUnit& other) const {
+bool Dmath::PhysicalUnit::operator<( Dmath::PhysicalUnit& other)  {
     if (this->siUnits == other.siUnits) {
         return this->factor < other.factor;
     }
