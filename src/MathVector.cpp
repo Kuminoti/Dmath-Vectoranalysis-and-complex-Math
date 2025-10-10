@@ -515,7 +515,7 @@ Vec2D Vec2D::subtract(Vec2D Mathvector) {
   return Vec2D(resultX, resultY);
 }
 
-Vec2D Vec2D::polarVector(double radius, double angle) {
+Vec2D Vec2D::polarVector(Dmath::Scalar radius, Dmath::Scalar angle) {
   double xValue = radius * std::cos(angle);
   double yValue = radius * std::sin(angle);
   return Vec2D(xValue, yValue);
@@ -535,24 +535,19 @@ double Vec2D::getAbs()               { return this->abs;      }
 double Vec2D::getLenght()            { return this->getAbs(); }
 double Vec2D::getRotationAngle()     { return this->vectorRotation; }
 
-// Vec2D Vec2D::linearTranformation(Dmath::Matrix<double> mainMatrix){
-//   Dmath::Vec2D newVec = mainMatrix.vectorProduct2D(this);
-//   return newVec;
-// }
-
-// void Vec2D::transformLinear(Dmath::Matrix<double> mainMatrix){
-  
-
-//   Dmath::Vec2D currentVec = mainMatrix.vectorProduct2D(this);
-//   this->X = currentVec.getX();
-//   this->Y = currentVec.getY();
-// }
 
 #pragma endregion //Vec2D/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma region Vec3D
 
 
+
+
+
+
+
+
+  #pragma region Vec3D_Numeric_Operations
 
 void Vec3D::operator+=(Vec3D mathvector){
   this->X += mathvector.getX();
@@ -710,70 +705,6 @@ void Vec3D::operator/=(Dmath::Trio<double,double,double> trio){
   this->cartesianToSphere();
 }
 
-
-
-void Vec3D::operator=(Dmath::sVec3f vec){
-  this->X = vec.X;
-  this->Y = vec.Y;
-  this->Z = vec.Z;
-  this->calcAbs();
-  this->cartesianToCylinder();
-  this->cartesianToSphere();
-}
-
-
-
-void Vec3D::operator=(Dmath::Trio<double,double,double> trio){
-  this->X = trio.one;
-  this->Y = trio.two;
-  this->Z = trio.three;
-  this->calcAbs();
-  this->cartesianToPolar();
-}
-
-void Vec3D::operator=(Dmath::Vec3D vec){
-  this->originX = vec.getOriginX();
-  this->originY = vec.getOriginY();
-  this->originZ = vec.getOriginZ();
-
-  this->X = vec.getX();
-  this->Y = vec.getY();
-  this->Z = vec.getZ();
-
-  this->calcDTZ();
-  this->calcAbs();
-
-  this->cartesianToCylinder();
-  this->cartesianToSphere();
-}
-
-void Vec3D::calcAbs() {
-  double result = PYTH3(this->X,this->Y,this->Z);
-  this->abs = result;
-}
-
-double Vec3D::calcAngle(Vec3D Mathvector) {
-  double product = this->dotProduct(Mathvector);
-  double absProduct = this->getAbs() * Mathvector.getAbs();
-  double cosTheta = cosAngle(product, absProduct);
-  return angleFromCos(cosTheta);
-}
-
-double Vec3D::dotProduct(Vec3D Mathvector) {
-  double result =
-      this->X * Mathvector.X + this->Y * Mathvector.Y + this->Z * Mathvector.Z;
-  return result;
-}
-
-
-Vec3D Vec3D::vecProduct(Vec3D Mathvector) {
-  double resultX = this->Y * Mathvector.Z - this->Z * Mathvector.Y;
-  double resultY = this->Z * Mathvector.X - this->X * Mathvector.Z;
-  double resultZ = this->X * Mathvector.Y - this->Y * Mathvector.X;
-  return Vec3D(resultX, resultY, resultZ);
-}
-
-
 Vec3D Vec3D::add(Vec3D Mathvector) {
   double resultX = this->X + Mathvector.X;
   double resultY = this->Y + Mathvector.Y;
@@ -789,106 +720,9 @@ Vec3D Vec3D::subtract(Vec3D Mathvector) {
   return Vec3D(resultX, resultY, resultZ);
 }
 
-
-
-
-Vec3D Vec3D::sphereVector(double radius, double angleOne, double angleTwo) {
-  double Xvalue = radius * std::sin(angleTwo) * std::cos(angleOne);
-  double Yvalue = radius * std::sin(angleTwo) * std::sin(angleOne);
-  double Zvalue = radius * std::cos(angleTwo);
-  return Vec3D(Xvalue, Yvalue, Zvalue);
+double Vec3D::operator*(Vec3D &Mathvector) {
+  return this->dotProduct(Mathvector);
 }
-
-Vec3D Vec3D::cylinderVector(double radius, double angle, double height) {
-  double Xvalue = radius * std::cos(angle);
-  double Yvalue = radius * std::sin(angle);
-  double Zvalue = height;
-  return Vec3D(Xvalue, Yvalue, Zvalue);
-}
-
-bool Dmath::Vec3D::isEqual(Dmath::Vec3D vec) {
-  return (this->X == vec.getX() && this->Y == vec.getY() &&
-          this->Z == vec.getZ() && this->originX == vec.getOriginX() &&
-          this->originY == vec.getOriginY() && this->originZ == vec.getOriginZ());
-}
-
-Vec3D Vec3D::zeroVector() { 
-  return Vec3D(0); 
-  }
-
-
-double Vec3D::getCylinderRadius(){
-    double  result = PYTH(this->X, this->Y);
-    return result;
-}
-
-double Vec3D::getSphereRadius(){
-    double  result = PYTH3(this->X,this->Y,this->Z);
-    return result;
-}
-
-
-void Vec3D::setX(double X){
-  this->X = X;
-  this->cartesianToCylinder();
-  this->cartesianToSphere();
-}
-
-void Vec3D::moveVectorZ(double moveZ){
-  this->originZ += moveZ;
-  this->calcAXYZ();
-  this->calcDTZ();
-}
-
-void Vec3D::moveVectorY(double moveY){
-  this->originY += moveY;
-  this->calcAXYZ();
-  this->calcDTZ();
-}
-
-
-void Vec3D::moveVectorX(double moveX){
-  this->originX += moveX;
-  this->calcAXYZ();
-  this->calcDTZ();
-}
-
-void Dmath::Vec3D::moveVector(double moveX, double moveY, double moveZ){
-  this->originX += moveX;
-  this->originY += moveY;
-  this->originZ += moveZ;
-
-  this->calcAXYZ();
-  this->calcDTZ();
-}
-
-void Vec3D::normalize(){
-  if(this->abs == 0){
-    // Division by zero is undefined
-    return;
-  }
-  this->X = this->X/this->abs;
-  this->Y = this->Y/this->abs;
-  this->Z = this->Z/this->abs;
-}
-
-void Vec3D::setY(double Y)           { this->Y = Y; }
-void Vec3D::setZ(double Z)           { this->Z = Z; }
-void Vec3D::setHeight(double height) { this->height = height; }
-void Vec3D::setPhi(double phi)       { this->phi = phi; }
-void Vec3D::setTheta(double theta)   { this->theta = theta; }
-
-
-
-
-
-
-
-
-
-
-
-
 
 void Vec3D::addToX(double add){
   this->X += add;
@@ -927,17 +761,72 @@ Vec3D Vec3D::operator/(double scalarValue){
   double newX = this->X / scalarValue;
   double newY = this->Y / scalarValue;
   double newZ = this->Z / scalarValue;
-
-  Vec3D newVector(newX,newY,newZ);
-  if(this->originX != 0 || this->originY != 0 || this->originZ != 0){
-    newVector.setOriginX(this->originX);
-  }
-  return newVector;
+  return Vec3D(newX, newY, newZ);
 }
 
-double Vec3D::operator*(Vec3D &Mathvector) {
-  return this->dotProduct(Mathvector);
+  void Vec3D::operator++(){
+  this->X +=1;
+  this->Y +=1;
+  this->Z +=1;
+  this->calcAbs();
 }
+
+void Vec3D::operator--(){
+  this->X -=1;
+  this->Y -=1;
+  this->Z -=1;
+  this->calcAbs();
+}
+
+#pragma endregion // Vec3D_Numeric_Operations
+
+
+
+
+
+#pragma region 3D_Logic_Operators
+
+bool Dmath::Vec3D::isEqual(Dmath::Vec3D vec) {
+  return (this->X == vec.getX() && this->Y == vec.getY() &&
+          this->Z == vec.getZ() && this->originX == vec.getOriginX() &&
+          this->originY == vec.getOriginY() && this->originZ == vec.getOriginZ());
+}
+
+void Vec3D::operator=(Dmath::sVec3f vec){
+  this->X = vec.X;
+  this->Y = vec.Y;
+  this->Z = vec.Z;
+  this->calcAbs();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
+}
+
+
+
+void Vec3D::operator=(Dmath::Trio<double,double,double> trio){
+  this->X = trio.one;
+  this->Y = trio.two;
+  this->Z = trio.three;
+  this->calcAbs();
+  this->cartesianToPolar();
+}
+
+void Vec3D::operator=(Dmath::Vec3D vec){
+  this->originX = vec.getOriginX();
+  this->originY = vec.getOriginY();
+  this->originZ = vec.getOriginZ();
+
+  this->X = vec.getX();
+  this->Y = vec.getY();
+  this->Z = vec.getZ();
+
+  this->calcDTZ();
+  this->calcAbs();
+
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
+}
+
 
 
 bool Vec3D::operator==(Vec3D& Mathvector) {
@@ -981,19 +870,270 @@ bool Vec3D::operator>(Vec3D& Mathvector){
   return false;
 }
 
-void Vec3D::operator++(){
-  this->X +=1;
-  this->Y +=1;
-  this->Z +=1;
-  this->calcAbs();
+#pragma endregion //3D_Logic_Operators
+
+
+
+
+double Vec3D::dotProduct(Vec3D Mathvector) {
+  double result =
+      this->X * Mathvector.X + this->Y * Mathvector.Y + this->Z * Mathvector.Z;
+  return result;
 }
 
-void Vec3D::operator--(){
-  this->X -=1;
-  this->Y -=1;
-  this->Z -=1;
-  this->calcAbs();
+
+Vec3D Vec3D::vecProduct(Vec3D Mathvector) {
+  double resultX = this->Y * Mathvector.Z - this->Z * Mathvector.Y;
+  double resultY = this->Z * Mathvector.X - this->X * Mathvector.Z;
+  double resultZ = this->X * Mathvector.Y - this->Y * Mathvector.X;
+  return Vec3D(resultX, resultY, resultZ);
 }
+
+
+
+
+
+
+
+Vec3D Vec3D::sphereVector(double radius, double angleOne, double angleTwo) {
+  double Xvalue = radius * std::sin(angleTwo) * std::cos(angleOne);
+  double Yvalue = radius * std::sin(angleTwo) * std::sin(angleOne);
+  double Zvalue = radius * std::cos(angleTwo);
+  return Vec3D(Xvalue, Yvalue, Zvalue);
+}
+
+Vec3D Vec3D::cylinderVector(double radius, double angle, double height) {
+  double Xvalue = radius * std::cos(angle);
+  double Yvalue = radius * std::sin(angle);
+  double Zvalue = height;
+  return Vec3D(Xvalue, Yvalue, Zvalue);
+}
+
+
+Vec3D Vec3D::zeroVector() { 
+  return Vec3D(0); 
+  }
+
+
+double Vec3D::getCylinderRadius(){
+    double  result = PYTH(this->X, this->Y);
+    return result;
+}
+
+double Vec3D::getSphereRadius(){
+    double  result = PYTH3(this->X,this->Y,this->Z);
+    return result;
+}
+
+
+  #pragma region 3DVector_Movement
+
+
+void Vec3D::moveVectorZ(double moveZ){
+  this->originZ += moveZ;
+  this->calcAXYZ();
+  this->calcDTZ();
+}
+
+void Vec3D::moveVectorY(double moveY){
+  this->originY += moveY;
+  this->calcAXYZ();
+  this->calcDTZ();
+}
+
+void Vec3D::moveVectorX(double moveX){
+  this->originX += moveX;
+  this->calcAXYZ();
+  this->calcDTZ();
+}
+
+void Dmath::Vec3D::moveVector(double moveX, double moveY, double moveZ){
+  this->originX += moveX;
+  this->originY += moveY;
+  this->originZ += moveZ;
+
+  this->calcAXYZ();
+  this->calcDTZ();
+}
+
+#pragma endregion //3DVector_Movement
+
+
+  #pragma region Geometric_Operations
+
+  void Vec3D::calcAbs() {
+  double result = PYTH3(this->X,this->Y,this->Z);
+  this->abs = result;
+}
+
+double Vec3D::calcAngle(Vec3D Mathvector) {
+  double product = this->dotProduct(Mathvector);
+  double absProduct = this->getAbs() * Mathvector.getAbs();
+  double cosTheta = cosAngle(product, absProduct);
+  return angleFromCos(cosTheta);
+}
+
+void Vec3D::normalize(){
+  if(this->abs == 0){
+    // Division by zero is undefined
+    return;
+  }
+  this->X = this->X/this->abs;
+  this->Y = this->Y/this->abs;
+  this->Z = this->Z/this->abs;
+}
+
+
+void Vec2D::rotateThisVector(Dmath::Scalar value){
+  this->X = this->getX() * std::cos(value) - this->getY() * std::sin(value);
+  this->Y = this->getX() * std::sin(value) + this->getY() * std::cos(value);
+  this->vectorRotation = value;
+}
+
+Dmath::Vec3D Vec3D::rotateVector(double Phi, double Theta) {
+    double r = this->radius;
+    double theta = this->theta;
+    double phi = this->phi;
+
+    double newTheta = theta + Theta;
+    double newPhi = phi + Phi;
+
+    double newX = (r * std::sin(newTheta) * std::cos(newPhi)) * RAD_TO_DEG;
+    double newY = (r * std::sin(newTheta) * std::sin(newPhi)) * RAD_TO_DEG ;
+    double newZ = (r * std::cos(newTheta))* RAD_TO_DEG;
+
+    return Dmath::Vec3D(newX, newY, newZ);
+}
+
+
+
+
+
+
+void Vec3D::rotateThisVector(double Phi, double Theta){
+    double r = this->radius;
+    double theta = this->theta;
+    double phi = this->phi;
+
+    double newTheta = theta + Theta;
+    double newPhi = phi + Phi;
+
+    this->X = (r * std::sin(newTheta) * std::cos(newPhi));
+    this->Y = (r * std::sin(newTheta) * std::sin(newPhi));
+    this->Z = r * std::cos(newTheta);
+}
+
+ 
+
+
+
+Vec2D Vec2D::rotateVector(Dmath::Scalar angle) {
+  double newX = this->getX() * std::cos(angle) - this->getY() * std::sin(angle);
+  double newY = this->getX() * std::sin(angle) + this->getY() * std::cos(angle);
+  newX = newX * RAD_TO_DEG;
+  newY = newY * RAD_TO_DEG;
+  return Vec2D(newX, newY);
+}
+
+
+
+  #pragma endregion //Geometric_Operations
+
+
+  #pragma region Vec3D_Setter
+
+void Vec3D::setX(double X){
+  this->X = X;
+  this->calcAbs();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
+}
+
+
+void Vec3D::setY(double Y){
+  this->Y = Y; 
+  this->calcAbs();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
+
+}
+
+void Vec3D::setZ(double Z){
+  this->Z = Z;
+  this->calcAbs();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
+}
+
+void Vec3D::setHeight(double height){
+  this->height = height; 
+  this->cylinderToCartesian();
+  this->cylinderToSphere();
+}
+
+void Vec3D::setPhi(double phi){
+  this->phi = phi; 
+  this->sphereToCatesian();
+  this->sphereToCylinder();
+}
+
+
+
+void Vec3D::setTheta(double theta)   { 
+  this->theta = theta;
+  this->sphereToCatesian();
+  this->sphereToCylinder();
+
+}
+
+
+
+
+void Vec3D::setAllCatesian(Dmath::Scalar value){
+  this->X = value;
+  this->Y = value;
+  this->Z = value;
+  this->calcAbs();
+  this->cartesianToCylinder();
+  this->cartesianToSphere();
+}
+
+void Vec3D::setAllSphere(Dmath::Scalar value){
+  this->radius = value;
+  this->phi    = value;
+  this->theta  = value;
+
+  this->calcAbs();
+  this->sphereToCatesian();
+  this->sphereToCylinder();
+}
+
+void Vec3D::setAllCylinder(Dmath::Scalar value){
+  this->radius = value;
+  this->phi    = value;
+  this->height = value;
+
+  this->calcAbs();
+  this->cylinderToCartesian();
+  this->cylinderToSphere();
+}
+
+
+
+  
+#pragma endregion
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Vec3D Vec3D::linearTranformation(Dmath::Matrix<double> mainMatrix){
 //   Dmath::Vec3D newVec = mainMatrix.vectorProduct2D(this);
@@ -1117,85 +1257,9 @@ Vec2D Vec2D::zeroVector() { return Vec2D(0, 0); }
 
 #endif
 
-#ifdef STANDARD_ANGLE_UNIT_RAD
-Dmath::Vec3D Vec3D::rotateVector(double Phi, double Theta) {
-    double r = this->radius;
-    double theta = this->theta;
-    double phi = this->phi;
-
-    double newTheta = theta + Theta;
-    double newPhi = phi + Phi;
-
-    double newX = (r * std::sin(newTheta) * std::cos(newPhi));
-    double newY = (r * std::sin(newTheta) * std::sin(newPhi));
-    double newZ = (r * std::cos(newTheta));
-
-    return Dmath::Vec3D(newX, newY, newZ);
-}
-
-#endif
-
-#ifdef STANDARD_ANGLE_UNIT_DEG
-Dmath::Vec3D Vec3D::rotateVector(double Phi, double Theta) {
-    double r = this->radius;
-    double theta = this->theta;
-    double phi = this->phi;
-
-    double newTheta = theta + Theta;
-    double newPhi = phi + Phi;
-
-    double newX = (r * std::sin(newTheta) * std::cos(newPhi)) * RAD_TO_DEG;
-    double newY = (r * std::sin(newTheta) * std::sin(newPhi)) * RAD_TO_DEG ;
-    double newZ = (r * std::cos(newTheta))* RAD_TO_DEG;
-
-    return Dmath::Vec3D(newX, newY, newZ);
-}
-
-#endif
 
 
 
-
-
-void Vec3D::rotateThisVector(double Phi, double Theta){
-    double r = this->radius;
-    double theta = this->theta;
-    double phi = this->phi;
-
-    double newTheta = theta + Theta;
-    double newPhi = phi + Phi;
-
-    this->X = (r * std::sin(newTheta) * std::cos(newPhi));
-    this->Y = (r * std::sin(newTheta) * std::sin(newPhi));
-    this->Z = r * std::cos(newTheta);
-}
-
- 
-
-#ifdef STANDARD_ANGLE_UNIT_RAD
-Vec2D Vec2D::rotateVector(Dmath::Scalar angle) {
-  double newX = this->getX() * std::cos(angle) - this->getY() * std::sin(angle);
-  double newY = this->getX() * std::sin(angle) + this->getY() * std::cos(angle);
-  return Vec2D(newX, newY);
-}
-#endif
-
-#ifdef STANDARD_ANGLE_UNIT_DEG
-Vec2D Vec2D::rotateVector(Dmath::Scalar angle) {
-  double newX = this->getX() * std::cos(angle) - this->getY() * std::sin(angle);
-  double newY = this->getX() * std::sin(angle) + this->getY() * std::cos(angle);
-  newX = newX * RAD_TO_DEG;
-  newY = newY * RAD_TO_DEG;
-  return Vec2D(newX, newY);
-}
-#endif
-
-
-void Vec2D::rotateThisVector(Dmath::Scalar value){
-  this->X = this->getX() * std::cos(value) - this->getY() * std::sin(value);
-  this->Y = this->getX() * std::sin(value) + this->getY() * std::cos(value);
-  this->vectorRotation = value;
-}
 
 
 std::ostream& Dmath::operator<<(std::ostream& os, Dmath::Vec3D num){
