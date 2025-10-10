@@ -8,6 +8,7 @@
 #include "dataTypes.hpp"
 #include <stdexcept>
 #include<ostream>
+#include"mathVector.hpp"
 
 NAMESPACESTART
 
@@ -50,11 +51,20 @@ struct SI_Units {
 
 class PhysicalUnit {
 private:
-    SI_Units siUnits;       // SI-Basiseinheiten
-    Dmath::Scalar factor;   // Umrechnungsfaktor zu einer Basisgröße
+    SI_Units siUnits;       // SI-Units
+    Dmath::Scalar factor;   // factor
+
+    Dmath::Vec3D vectorFactor;
+    bool isVector = false;
 
 public:
 
+    PhysicalUnit() = default;
+
+    //Vektor units like velocity 
+    PhysicalUnit(SI_Units units, Dmath::Vec3D vec) : siUnits(units), vectorFactor(vec) { this->isVector = true }
+
+    //Scalar Units like Tempature
     PhysicalUnit(SI_Units units, Dmath::Scalar faktor) : siUnits(units), factor(faktor) {}
 
 
@@ -71,6 +81,11 @@ public:
     PhysicalUnit operator*(const PhysicalUnit& other) const;
 
     PhysicalUnit operator/(const PhysicalUnit& other) const;
+
+
+    
+
+
 
     // Vergleichsoperatoren
     bool operator==(const PhysicalUnit& other) const { return (this->siUnits == other.siUnits && this->factor == other.factor); }
@@ -90,6 +105,7 @@ public:
     // Getter und Setter
     void setSIUnits(const SI_Units& units) { this->siUnits = units; }
     void setFactor(Dmath::Scalar faktor)   { this->factor = faktor; }
+    void setVector(Dmath::Vec3D vecFaktor) { this->vectorFactor = vecFaktor }
 
 
     //Setters to set individual SI units
@@ -113,7 +129,19 @@ public:
     const SI_Units& getSIUnits() const  { return this->siUnits; }
     Dmath::Scalar getFactor()    const  { return this->factor;  }
 
-    // Oft verwendete Einheiten - statische Helferfunktionen
+
+
+    private: //private methods
+    //This method changes a scalar unit into a scala or the other way around
+    void changeFaktorType();
+
+
+
+
+
+
+
+    public: //Public static methods
     static PhysicalUnit GetNewtons(Dmath::Scalar faktor) {
         return PhysicalUnit(SI_Units(1, 1, -2, 0, 0, 0, 0), faktor);
     }
