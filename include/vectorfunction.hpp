@@ -7,36 +7,43 @@
 
 NAMESPACESTART
 
-/* Diese Datei beinhaltet klassen zur beschreibung von vektoriell dargestellten funktionen z.B:
- * zur darstellung von Parametrisierungen von kurven oder oberflächen
+/*File: vectorFunction.hpp
+ * 
+ *Description:
+ * This file contains classes for describing vectorially represented functions, e.g.:
+ * for representing parameterizations of curves or surfaces
  * => k(t) = [ x(t); y(t); z(t) ]
  * 
- * Die klasse SingleVectorFunction unterstützt sowohl zweidimensionale wie auch 3d funktionen
- * Die Darstellung der einzelnen funktionen funktioniert mit hilfe der Datentypen: 
+ * The class SingleVectorFunction supports  two dimensional aswell as 3d function
+ * The representation of the indivitual functional komponents works with the  help of the Datatypes: 
  *      - Dmath::SingleVarFunction  
  *      - Dmath::DoubleVarFunction
  *        File: mathFunction.hpp 
  * 
- * Diese sind selbst geschriebene funktionsobjekte ähnlich dem std::function-objekt aus der
- * c++ STL mit dem unterschied, dass sie optimiert sind auf die beschreibung mathematischer
- * funktionen und dementsprechent über zusätzliche funktionalitäten verfügen. 
+* These are self-written function objects similar to the std::function object from the
+* C++ STL, with the difference that they are optimized for describing mathematical
+* functions and therefore have additional functionality.
 */
 
 #pragma region Single
 
 class SingleVectorFunction{
 
-private:
+private: //Private Members
 
     Dmath::SingleVarFunction xOfT;
     Dmath::SingleVarFunction yOfT;
     Dmath::SingleVarFunction zOfT; 
 
-public:
+public: //Public constructors
+
+    //default constructor
     SingleVectorFunction() = default;
-    //constructor for 2D vectorFunction
+
+    //constructor for a 2D vectorFunction
     SingleVectorFunction(Dmath::SingleVarFunction xOfT, Dmath::SingleVarFunction yOfT);
 
+    //constructor for a 3D vectorFunction
     SingleVectorFunction(Dmath::SingleVarFunction xOfT, Dmath::SingleVarFunction yOfT, Dmath::SingleVarFunction zOfT);
    
     Dmath::Vec2D call2D(Dmath::Scalar t);
