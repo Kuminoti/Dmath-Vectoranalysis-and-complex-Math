@@ -61,6 +61,7 @@
 
     #define SQUARED(data) ((data) * (data))
     #define CUBED(data) ((data) * (data) * (data))
+
     //Satz des pytagoras
     #define PYTH(inputA, inputB) (std::sqrt((inputA * inputA) + (inputB * inputB)))
     #define PYTH3(inputX, inputY, inputZ) (std::sqrt((inputX * inputX)+(inputY*inputY)+(inputZ*inputZ)))
@@ -70,6 +71,7 @@
     #define THIS_LINE __LINE__
 
     #define  byte uint8_t
+    
     #define CARTESIAN_IS_3D_STANDARD
     #define CARTESIAN_IS_2D_STANDARD
  #if (defined(SPHERE_IS_STANDARD) || defined(CYLINDER_IS_STANDARD)) &&                              \
