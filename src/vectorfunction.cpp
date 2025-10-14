@@ -167,6 +167,31 @@ Dmath::DoubleVectorFunction Dmath::DoubleVectorFunction::crossPruduct(Dmath::Dou
     return DoubleVectorFunction(crossX, crossY, crossZ);
 }
 
+Dmath::DoubleVarFunction Dmath::DoubleVectorFunction::operator*( DoubleVectorFunction other) {
+    // Scalar product operator
+
+    // Kopien der Einzelkomponenten (X, Y, Z)
+     auto thisX = this->getXFunc();
+     auto thisY = this->getYFunc();
+     auto thisZ = this->getZFunc();
+
+     auto otherX = other.getXFunc();
+     auto otherY = other.getYFunc();
+     auto otherZ = other.getZFunc();
+
+    // Lambda für das Skalarprodukt erstellen
+    auto scalarProductLambda = [thisX, thisY, thisZ, otherX, otherY, otherZ](double x, double y) -> double {
+        double valX = thisX(x, y) * otherX(x, y);
+        double valY = thisY(x, y) * otherY(x, y);
+        double valZ = thisZ(x, y) * otherZ(x, y);
+        return valX + valY + valZ;
+    };
+
+    // Neues DoubleVarFunction-Objekt aus dem Lambda erzeugen
+    return Dmath::DoubleVarFunction(scalarProductLambda);
+}
+
+
 Dmath::Vec3D Dmath::DoubleVectorFunction::getPartialUAt(Dmath::Scalar u, Dmath::Scalar v){
     const Dmath::Scalar du_x = (this->xOfUV(u + 0.0001, v) - this->xOfUV(u - 0.0001, v)) / (2 * 0.0001);
     const Dmath::Scalar du_y = (this->yOfUV(u + 0.0001, v) - this->yOfUV(u - 0.0001, v)) / (2 * 0.0001);

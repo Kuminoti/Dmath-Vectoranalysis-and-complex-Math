@@ -98,29 +98,7 @@ public:
     inline Dmath::Scalar callY(Dmath::Scalar u, Dmath::Scalar v){ return yOfUV(u,v); }
     inline Dmath::Scalar callZ(Dmath::Scalar u, Dmath::Scalar v){ return zOfUV(u,v); }
 
-    Dmath::DoubleVarFunction operator*(DoubleVectorFunction func){
-        //Scalarproduct operator
-        
-        //Copy the functions to avoid bugs caused by missing refrences
-
-        Dmath::DoubleVarFunction thisX = this->getXFunc();
-        Dmath::DoubleVarFunction thisY = this->getYFunc();
-        Dmath::DoubleVarFunction thisZ = this->getZFunc();
-
-        Dmath::DoubleVarFunction funcX = func.getXFunc();
-        Dmath::DoubleVarFunction funcY = func.getYFunc();
-        Dmath::DoubleVarFunction funcZ = func.getZFunc();
-
-        //Calculation of the components of the scalarproduct
-        Dmath::DoubleVarFunction scalarX = thisX * funcX;
-        Dmath::DoubleVarFunction scalarY = thisY * funcY;   
-        Dmath::DoubleVarFunction scalarZ = thisZ * funcZ;
-        //Return a new function
-
-        Dmath::DoubleVarFunction scalarProduct = scalarX + scalarY + scalarZ;
-        return scalarProduct;
-        
-    }
+    Dmath::DoubleVarFunction operator*(DoubleVectorFunction func);
 
 
     Dmath::DoubleVectorFunction operator+(DoubleVectorFunction funcTwo);
@@ -132,37 +110,19 @@ public:
     Dmath::DoubleVarFunction getZFunc(){ return this->zOfUV;  }
 
    
+    //Returns the partial derivative at a specific point as a vector-object
     Dmath::Vec3D getPartialUAt(Dmath::Scalar u, Dmath::Scalar v);
     Dmath::Vec3D getPartialVAt(Dmath::Scalar u, Dmath::Scalar v);
 
     Dmath::Vec3D normVectorAt (Dmath::Scalar u, Dmath::Scalar v);
 
     
-    Dmath::Matrix<Dmath::Scalar> getMetricAt(Dmath::Scalar u, Dmath::Scalar v){
-        const Dmath::Scalar dxDu = this->xOfUV.derivativeXAT(u,v);
-        const Dmath::Scalar dyDu = this->yOfUV.derivativeXAT(u,v);
-        const Dmath::Scalar dzDU = this->zOfUV.derivativeXAT(u,v);
+    Dmath::DoubleVectorFunction parialX(){
+        Dmath::DoubleVarFunction ddx = this->getXFunc().getPartialX();
+        Dmath::DoubleVarFunction ddy = this->getYFunc().getPartialX();
+        Dmath::DoubleVarFunction ddz = this->getZFunc().getPartialX();
 
-        Dmath::Vec3D basisVecU(dxDu,dyDu,dzDU);
-
-        const Dmath::Scalar dxDV = this->xOfUV.derivativeYAT(u,v);
-        const Dmath::Scalar dyDV = this->yOfUV.derivativeYAT(u,v);
-        const Dmath::Scalar dzDV = this->zOfUV.derivativeYAT(u,v);
-        Dmath::Vec3D basisVecV(dxDV,dyDV,dzDV);
-        
-        
-        const Dmath::Scalar metricOne = basisVecU * basisVecU;
-        const Dmath::Scalar metricTwo = basisVecU * basisVecV;
-        // metric2 = metric 3
-        const Dmath::Scalar metricfour = basisVecV * basisVecV;
-
-        Dmath::Matrix<Dmath::Scalar> metric(2);
-        metric.setElement(1,1,metricOne);
-        metric.setElement(1,2,metricTwo);
-        metric.setElement(2,1,metricTwo);
-        metric.setElement(2,2,metricfour);
-
-        return metric;
+        return DoubleVectorFunction(ddx,ddy,ddz);
     }
 };
 
