@@ -292,6 +292,28 @@ Dmath::Scalar Dmath::SingleVarFunction::getSecondDerivativeAt(Dmath::Scalar x){
     return currentResult;
 }
 
+
+
+Dmath::SingleVarFunction Dmath::SingleVarFunction::getDerivative(){
+    return Dmath::SingleVarFunction([=](double x) {
+            double plusDX  = funcBase->Callx(x + dx);
+            double minusDX = funcBase->Callx(x - dx);
+            return (plusDX - minusDX) / (2 * dx);
+        });
+
+}
+
+Dmath::SingleVarFunction Dmath::SingleVarFunction::getSecondDerivative(){
+    return Dmath::SingleVarFunction([=](double x){
+        const Dmath::Scalar TwofOfX = 2 * this->funcBase->Callx(x);
+        const Dmath::Scalar plusDX  = this->funcBase->Callx(x+this->dx);
+        const Dmath::Scalar minusDX = this->funcBase->Callx(x-this->dx);
+
+        const Dmath::Scalar currentResult = (plusDX - TwofOfX + minusDX)/(dx*dx);
+        return currentResult;
+    });
+}
+
 #pragma endregion 
 
 #pragma region DoubleVar
@@ -305,7 +327,7 @@ bool Dmath::DoubleVarFunction::checkParams(Dmath::Parameters params){
     return true;
 }
 
-Dmath::Scalar Dmath::DoubleVarFunction::operator()(Dmath::Scalar x, Dmath::Scalar y) {
+Dmath::Scalar Dmath::DoubleVarFunction::operator()(Dmath::Scalar x, Dmath::Scalar y) const {
     if (funcBase) {
         return funcBase->CallXY(x, y); // Delegate call to stored function
     }
@@ -346,13 +368,12 @@ Dmath::DoubleVarFunction Dmath::DoubleVarFunction::operator-(Dmath::DoubleVarFun
     return func;
 }
 
-Dmath::DoubleVarFunction Dmath::DoubleVarFunction::operator*(Dmath::DoubleVarFunction funcOne){
-    auto mul = [this,funcOne](double x, double y) mutable ->double {
-        return (this->funcBase->CallXY(x,y) * funcOne(x,y));
+Dmath::DoubleVarFunction Dmath::DoubleVarFunction::operator*(DoubleVarFunction funcOne){
+    auto mul = [this, fB = std::move(funcOne)](double x, double y) -> double {
+        return this->funcBase->CallXY(x, y) * fB(x, y);
     };
 
-    Dmath::DoubleVarFunction func = mul;
-    return func;
+    return Dmath::DoubleVarFunction(std::move(mul));
 }
 
 Dmath::DoubleVarFunction Dmath::DoubleVarFunction::operator/(Dmath::DoubleVarFunction funcOne){
@@ -424,6 +445,26 @@ std::vector<double> Dmath::DoubleVarFunction::getPartialDerivteX(double start, d
     } 
     return mainVec;
 }
+
+Dmath::DoubleVarFunction Dmath::DoubleVarFunction::getPartialY() {
+        // Entsprechend für die Ableitung nach y
+        Dmath::Scalar dy = this->dx; //to make the notation consistent
+        return DoubleVarFunction([=](double x, double y) {
+            double plusDY  = funcBase->CallXY(x, y + dy);
+            double minusDY = funcBase->CallXY(x, y - dy);
+            return (plusDY - minusDY) / (2 * dy);
+        });
+    }
+
+Dmath::DoubleVarFunction Dmath::DoubleVarFunction::getPartialX(){
+
+        return DoubleVarFunction([=](double x, double y) {
+            double plusDX  = funcBase->CallXY(x + dx, y);
+            double minusDX = funcBase->CallXY(x - dx, y);
+            return (plusDX - minusDX) / (2 * dx);
+        });
+        
+    }
 
 
 std::vector<double> Dmath::DoubleVarFunction::getPartialDerivteY(double start, double stopp, double stepps){

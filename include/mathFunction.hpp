@@ -241,7 +241,7 @@ class SHARED_LIB SingleVarFunction {
 private: //Private members:
     std::unique_ptr<FunctionBase> funcBase; // Smart pointer for memory management
    
-    const double dx = 0.0000001;
+    const double dx = 0.0000000001;
 
     
     
@@ -371,8 +371,14 @@ public:
 
     std::vector<double> getAntiDerivativeVector(double start, double stopp, double stepps);
 
-    Dmath::Scalar getDerivativeAt(double x);
-    Dmath::Scalar getSecondDerivativeAt(double x);
+
+    //returns the first and second derivative at a given point as a scalar value
+    Dmath::Scalar getDerivativeAt(Dmath::Scalar x);
+    Dmath::Scalar getSecondDerivativeAt(Dmath::Scalar x);
+
+    //returns the first and second derivative as a function object 
+    SingleVarFunction getDerivative();
+    SingleVarFunction getSecondDerivative();
 
 };
 
@@ -402,7 +408,7 @@ public: //Public construtors:
 public: //public operators
 
     // Operator to call the function with two arguments (x, y)
-    Dmath::Scalar operator()(Dmath::Scalar x, Dmath::Scalar y);
+    Dmath::Scalar operator()(Dmath::Scalar x, Dmath::Scalar y) const;
 
     DoubleVarFunction& operator=(const DoubleVarFunction& other);
 
@@ -426,8 +432,16 @@ public: //public operators
 public: //public getters
     std::vector<double> getFunctionVector (double start, double stopp, double stepps);
 
+    //Retuns a std::vector filled with parital derivatives
     std::vector<double> getPartialDerivteX(double start, double stopp, double stepps);
     std::vector<double> getPartialDerivteY(double start, double stopp, double stepps);
+
+    //Retuns the parital derivative as a function object
+    DoubleVarFunction getPartialX();
+    DoubleVarFunction getPartialY();
+
+
+    
 
     std::vector<double> getAntiDerivativeX(double start, double stopp, double stepps);
     std::vector<double> getAntiDerivativeY(double start, double stopp, double stepps);
