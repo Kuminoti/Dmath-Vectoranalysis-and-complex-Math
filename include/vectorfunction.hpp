@@ -110,20 +110,30 @@ public:
     Dmath::DoubleVarFunction getZFunc(){ return this->zOfUV;  }
 
    
-    //Returns the partial derivative at a specific point as a vector-object
+    //Returns the numeric partial derivative at a specific point as a vector-object
+
     Dmath::Vec3D getPartialUAt(Dmath::Scalar u, Dmath::Scalar v);
     Dmath::Vec3D getPartialVAt(Dmath::Scalar u, Dmath::Scalar v);
 
     Dmath::Vec3D normVectorAt (Dmath::Scalar u, Dmath::Scalar v);
 
+    /*returns the numeric partial derivatives with respect to U or V as a vectorfunction object
+     *  
+     *       F:=  [x(u,v),
+     *             y(u,v),
+     *             z(u,v)]
+     *
+     * => dF/du = [dx(u,v)/du,
+     *             dy(u,v)/du,
+     *             dz(u,v)/du]
+     * 
+     *    dF/dv = [dx(u,v)/dv,
+     *             dy(u,v)/dv
+     *             dz(u,v)/dv]
+     */
+    Dmath::DoubleVectorFunction partialU();
+    Dmath::DoubleVectorFunction partialV();
     
-    Dmath::DoubleVectorFunction parialX(){
-        Dmath::DoubleVarFunction ddx = this->getXFunc().getPartialX();
-        Dmath::DoubleVarFunction ddy = this->getYFunc().getPartialX();
-        Dmath::DoubleVarFunction ddz = this->getZFunc().getPartialX();
-
-        return DoubleVectorFunction(ddx,ddy,ddz);
-    }
 };
 
 

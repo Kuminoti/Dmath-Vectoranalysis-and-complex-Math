@@ -447,23 +447,24 @@ std::vector<double> Dmath::DoubleVarFunction::getPartialDerivteX(double start, d
 }
 
 Dmath::DoubleVarFunction Dmath::DoubleVarFunction::getPartialY() {
-        // Entsprechend für die Ableitung nach y
+        auto basePtr = funcBase.get();
         Dmath::Scalar dy = this->dx; //to make the notation consistent
-        return DoubleVarFunction([=](double x, double y) {
-            double plusDY  = funcBase->CallXY(x, y + dy);
-            double minusDY = funcBase->CallXY(x, y - dy);
+        return DoubleVarFunction([basePtr,this,dy](double x, double y) {
+            double plusDY  = basePtr->CallXY(x, y + dy);
+            double minusDY = basePtr->CallXY(x, y - dy);
             return (plusDY - minusDY) / (2 * dy);
         });
     }
 
 Dmath::DoubleVarFunction Dmath::DoubleVarFunction::getPartialX(){
 
-        return DoubleVarFunction([=](double x, double y) {
-            double plusDX  = funcBase->CallXY(x + dx, y);
-            double minusDX = funcBase->CallXY(x - dx, y);
-            return (plusDX - minusDX) / (2 * dx);
+    auto basePtr = funcBase.get();
+
+    return DoubleVarFunction([basePtr,this](double x, double y) {
+        double plusDX  = basePtr->CallXY(x + dx, y);
+        double minusDX = basePtr->CallXY(x - dx, y);
+        return (plusDX - minusDX) / (2 * dx);
         });
-        
     }
 
 

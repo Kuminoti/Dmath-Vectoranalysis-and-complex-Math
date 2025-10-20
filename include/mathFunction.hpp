@@ -241,7 +241,7 @@ class SHARED_LIB SingleVarFunction {
 private: //Private members:
     std::unique_ptr<FunctionBase> funcBase; // Smart pointer for memory management
    
-    const double dx = 0.0000000001;
+    const double dx = 0.000001;
 
     
     

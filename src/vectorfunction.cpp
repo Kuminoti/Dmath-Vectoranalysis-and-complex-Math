@@ -218,6 +218,24 @@ Dmath::Vec3D Dmath::DoubleVectorFunction::normVectorAt(Dmath::Scalar u, Dmath::S
     return normVec;
 }
 
+Dmath::DoubleVectorFunction Dmath::DoubleVectorFunction::partialU(){
+    
+    Dmath::DoubleVarFunction ddx = this->getXFunc().getPartialX();
+    Dmath::DoubleVarFunction ddy = this->getYFunc().getPartialX();
+    Dmath::DoubleVarFunction ddz = this->getZFunc().getPartialX();
+
+    return DoubleVectorFunction(ddx,ddy,ddz);
+}
+
+
+Dmath::DoubleVectorFunction Dmath::DoubleVectorFunction::partialV(){
+    Dmath::DoubleVarFunction ddx = this->getXFunc().getPartialY();
+    Dmath::DoubleVarFunction ddy = this->getYFunc().getPartialY();
+    Dmath::DoubleVarFunction ddz = this->getZFunc().getPartialY();
+
+    return DoubleVectorFunction(ddx,ddy,ddz);
+}
+
 #pragma endregion
 
 #pragma region Triple

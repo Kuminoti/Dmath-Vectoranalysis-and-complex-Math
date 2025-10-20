@@ -35,6 +35,7 @@ Dmath::Complex complexCotangent(Dmath::Complex complexNum);
 //Hyperbolic functions
 Dmath::Complex complexHyperbolicSine(Dmath::Complex complexNum);
 
+
 class ComplexFunctionBase{
     public:
     
