@@ -1,5 +1,19 @@
 #include"../include/units.hpp"
 
+Dmath::Scalar Dmath::PhysicalUnit::getFactor(){
+    if(this->isVector){
+        return 0;
+    } 
+    return this->factor;
+}
+
+Dmath::Vec3D Dmath::PhysicalUnit::getVector(){
+    if(!this->isVector){
+        return Dmath::Vec3D::zeroVector();
+    }
+    return this->vectorFactor;
+}
+
 void Dmath::PhysicalUnit::changeFaktorType(){
     // If the current unit is a vector it will be changed into a scalar
     if(this->isVector){
@@ -93,7 +107,7 @@ Dmath::PhysicalUnit Dmath::PhysicalUnit::operator*( Dmath::PhysicalUnit& other) 
 }
 
 Dmath::PhysicalUnit Dmath::PhysicalUnit::operator/( Dmath::PhysicalUnit& other)  {
-    if (other.factor == 0) {
+    if (other.factor == 0 || this->isVector && other.isVector) {
         throw std::invalid_argument("Division by zero is not allowed.");
     }
 
@@ -106,11 +120,20 @@ Dmath::PhysicalUnit Dmath::PhysicalUnit::operator/( Dmath::PhysicalUnit& other) 
     newUnits.luminousIntensity -= other.siUnits.luminousIntensity;
     newUnits.amountOfSubstance -= other.siUnits.amountOfSubstance;
 
+    if(this->isVector ){
+        Dmath::Vec3D unitVec = this->vectorFactor/other.getFactor();
+        return Dmath::PhysicalUnit(newUnits,unitVec);
+    }
+
     return Dmath::PhysicalUnit(newUnits, this->factor / other.factor);
 }
 
 bool Dmath::PhysicalUnit::operator<( Dmath::PhysicalUnit& other)  {
+    
     if (this->siUnits == other.siUnits) {
+        if(this->isVector){
+            return this->vectorFactor < other.getFactor();
+        }
         return this->factor < other.factor;
     }
     throw std::invalid_argument("Cannot compare units with different SI units.");

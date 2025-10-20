@@ -130,8 +130,9 @@ public:
 
 
     const SI_Units& getSIUnits()   { return this->siUnits; }
-    Dmath::Scalar getFactor()      { return this->factor;  }
-
+    
+    Dmath::Scalar getFactor();
+    Dmath::Vec3D  getVector();
 
 
     private: //private methods
