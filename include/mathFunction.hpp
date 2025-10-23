@@ -5,7 +5,7 @@
 
 
 /*
- * mathFunction.hpp
+ * File: mathFunction.hpp
  *
  * This file defines a custom function wrapper that mimics the behavior 
  * of std::function, specifically optimized for handling mathematical 
@@ -16,11 +16,17 @@
  * The primary  purpose of this class is to provide a flexible and type-safe
  * way to store and invoke mathematical functions that take a single double 
  * argument and return a double value.
+ * 
+ * Definition:
+ * a function describes a relationship between two sets that assigns exactly 
+ * one element of the other set (function value, dependent variable, y, y-value)
+ * to each element of one set   (function argument, independent variable, x, x-value).
  *
  * Key Features:
  * - Supports any callable that matches the signature `double(double)`.
  * - Provides an interface for invoking stored functions.
  * - Can be easily integrated into existing C++ codebases.
+ * 
  */
 
 
