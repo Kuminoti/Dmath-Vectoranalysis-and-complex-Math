@@ -128,13 +128,13 @@ Dmath::PhysicalUnit Dmath::PhysicalUnit::operator/( Dmath::PhysicalUnit& other) 
     return Dmath::PhysicalUnit(newUnits, this->factor / other.factor);
 }
 
-bool Dmath::PhysicalUnit::operator<( Dmath::PhysicalUnit& other)  {
+// bool Dmath::PhysicalUnit::operator<( Dmath::PhysicalUnit& other)  {
     
-    if (this->siUnits == other.siUnits) {
-        if(this->isVector){
-            return this->vectorFactor < other.getFactor();
-        }
-        return this->factor < other.factor;
-    }
-    throw std::invalid_argument("Cannot compare units with different SI units.");
-}
+//     if (this->siUnits == other.siUnits) {
+//         if(this->isVector){
+//             return this->vectorFactor < other.getVector();
+//         }
+//         return (this->factor < other.factor);
+//     }
+//     throw std::invalid_argument("Cannot compare units with different SI units.");
+// }
