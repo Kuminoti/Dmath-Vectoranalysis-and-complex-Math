@@ -21,16 +21,16 @@ CTestTestfile.cmake
 _deps
 
 #testing, working and todo
-vectorFields.hpp
+
 main.cpp
 todo
-include/Logger.hpp
-functionbuilder.hpp
-test/
+include/Tensor.hpp
+
+
+
 Tensor/
 bivector.hpp
 bivector.cpp
 analyser/
 experimental/
-equation/
-JS/
+
