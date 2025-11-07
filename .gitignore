@@ -33,4 +33,4 @@ bivector.hpp
 bivector.cpp
 analyser/
 experimental/
-
+3dArray.hpp
