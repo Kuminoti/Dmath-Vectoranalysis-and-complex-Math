@@ -29,6 +29,19 @@
 */ 
 
 
+//example usage 
+// Dmath::SingleVarFunction func = [](double x){
+//     return x;
+//   };
+//   Dmath::SingleVectorFunction vFunc(func, func, func);
+
+//  Dmath::Parameters stdparam(0,1,0.000001);
+
+
+//   Dmath::Functional mainFunctional(Dmath::IntegralOperator, stdparam);
+
+//   std::cout << mainFunctional(func) << std::endl;
+
 
 
 #ifndef DMATH_MATH_FUNCTIONAL_HPP
