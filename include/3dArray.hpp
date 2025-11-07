@@ -20,7 +20,8 @@ NAMESPACESTART // namespace Dmath{
 
 template<typename Cube>
 class ThreeArray{
-  private:
+  private: //Private members
+
     Cube*** arr;
     Dmath::Natural num;   
 
@@ -28,7 +29,7 @@ class ThreeArray{
     Dmath::Natural lenghtB;
     Dmath::Natural lenghtC; 
 
-  public:
+  public: //public constructors
 
     //Cube Constroctor: crates an 3D-array with e³ elements
     ThreeArray(Dmath::Natural elements){
@@ -65,7 +66,26 @@ class ThreeArray{
         }
     }
 
+    //Copy constructor
+    ThreeArray(const ThreeArray& other){
+        lenghtA = other.lenghtA;
+        lenghtB = other.lenghtB;
+        lenghtC = other.lenghtC;
+        num = other.num;
 
+        arr = new Cube**[lenghtA];
+        for(size_t i = 0; i < lenghtA; i++){
+            arr[i] = new Cube*[lenghtB];
+            for(size_t j = 0; j < lenghtB; j++){
+                arr[i][j] = new Cube[lenghtC];
+                for(size_t k = 0; k < lenghtC; k++){
+                    arr[i][j][k] = other.arr[i][j][k];
+                }
+            }
+        }
+    }
+
+    //Destructor
     ~ThreeArray(){
         for(size_t i = 0; i < lenghtA; i++){
             for(size_t j = 0; j < lenghtB; j++){
@@ -76,24 +96,58 @@ class ThreeArray{
         delete[] arr;
     }
 
+
+  public: //public setters
     //3D-arrays start at index 1
     void setElement(Dmath::Natural a, Dmath::Natural b, Dmath::Natural c, Cube data ){
-        if(a > lenghtA || a < 1 || b > lenghtB || b < 1 || c > lenghtC || c < 1 ){
+        if(!checkSize(a,b,c) ){
             std::cerr << "Error out of index\n Error-code: " << Dmath::ERROR_CODE::OUT_OF_RANGE << std::endl;
             return;
         }
         this->arr[a-1][b-1][c-1] = data;
     }
 
+    void setAll(Cube Data){
+        for(size_t a = 0; a < lenghtA; a++){
+            for(size_t b = 0; b < lenghtB; b++ ){
+                for(size_t c = 0; c < lenghtC; c++){
+                    this->arr[a][b][c] = Data;
+                }
+            }
+        }
+    }
+
+
+  public: //Public getters
+
     Cube getElement(Dmath::Natural a, Dmath::Natural b, Dmath::Natural c){
-        if(a > lenghtA || a < 1 || b > lenghtB || b < 1 || c > lenghtC || c < 1 ){
-            std::cerr << "Error out of index\n Error-code: " << Dmath::ERROR_CODE::OUT_OF_RANGE << std::endl;
-            return Cube{};
+        if(!checkSize(a,b,c)){
+            return Cube{}; //error
         }
         return this->arr[a-1][b-1][c-1];
     }
 
+    Cube operator()(Dmath::Natural a, Dmath::Natural b, Dmath::Natural c){
+        if(!checkSize()){
+            return Cube{}; //error
+        }
+        return arr[a-1][b-1][c-1];
+
+    }
+
     Dmath::Natural getNumberOfElements(){ return this->num; }
+
+
+  private: //Private Helper functions
+
+    bool checkSize(Dmath::Natural a, Dmath::Natural b, Dmath::Natural c){
+        if(a > lenghtA || a < 1 || b > lenghtB || b < 1 || c > lenghtC || c < 1 ){
+            std::cerr << "Error out of index\n Error-code: " << Dmath::ERROR_CODE::OUT_OF_RANGE << std::endl;
+            return false;
+        }
+        return true;
+    }
+
 
 };
 
