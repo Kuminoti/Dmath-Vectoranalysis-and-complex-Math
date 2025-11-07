@@ -1,10 +1,8 @@
 #pragma once 
 
-/* File: 
- * experimental/mathFunctional.hpp
+/* File: mathFunctional.hpp
  *
- * Project Start:
- * 23. October 2025
+ * Project Start: 23. October 2025
  * 
  * Purpose: 
  * This file creates Classes to mimic the behavior of so called
