@@ -81,6 +81,14 @@
     SHARED_LIB Dmath::Scalar IntegralOperator(Dmath::Parameters param, Dmath::SingleVarFunction func);
 
 
+    // The loop integral of the second kind is defined as followed:
+  //  ∫ V ds were V and the differential are given as vectors
+  // expanded the Integral can be defined as:
+  // ∫ V(K(t))  k'(t) dt 
+
+    SHARED_LIB Dmath::Scalar loopIntegralSecondKind(Dmath::Parameters params, Dmath::SingleVectorFunction curve, Dmath::DoubleVectorFunction Field);
+
+
     #pragma endregion //IntegralOperators
 
  
