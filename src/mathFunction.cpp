@@ -277,7 +277,7 @@ std::vector<double> Dmath::SingleVarFunction::getAntiDerivativeVector(double sta
 }
 
 Dmath::Scalar Dmath::SingleVarFunction::getDerivativeAt(Dmath::Scalar x) {
-    return ((this->funcBase->Callx(x + 0.001) - this->funcBase->Callx(x)) / 0.001);
+    return ((this->funcBase->Callx(x + 0.000001) - this->funcBase->Callx(x)) / 0.000001);
 }
 
 
