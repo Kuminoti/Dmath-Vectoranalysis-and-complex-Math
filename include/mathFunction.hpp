@@ -415,6 +415,7 @@ public: //public operators
 
     // Operator to call the function with two arguments (x, y)
     Dmath::Scalar operator()(Dmath::Scalar x, Dmath::Scalar y) const;
+    Dmath::Scalar operator()(Dmath::Vec2D vector) const;
 
     DoubleVarFunction& operator=(const DoubleVarFunction& other);
 
