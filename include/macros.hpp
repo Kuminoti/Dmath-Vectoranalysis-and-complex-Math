@@ -28,10 +28,11 @@
 
     #define PI              3.14159265358979323846
     #define EULER           2.718281828459045
-    #define MILES_TO_KM     1.60934;
-    #define POUNDS_TO_KG    0.453592;
-    #define BAR_TO_PSI      14.5038;
+    #define MILES_TO_KM     1.60934
+    #define POUNDS_TO_KG    0.453592
+    #define BAR_TO_PSI      14.5038
     #define CAUSALITY       299792458 //basicly the speed of light C
+    #define ROUNDING_VALUE  3 //rounding 3 digits after the decimal point/komma
 
 
     #define TWOPI      (2 * PI)
