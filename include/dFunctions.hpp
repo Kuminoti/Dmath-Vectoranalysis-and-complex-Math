@@ -60,6 +60,8 @@ SHARED_LIB double pyth2(double a, double b);
 
 SHARED_LIB double pyth3(double x, double y, double z);
 
+SHARED_LIB double roundTo(double value, int digits);
+
 
 //Summation Σ
 SHARED_LIB double SigmaAdd(size_t start, size_t end);

@@ -23,6 +23,12 @@ double Dmath::derivativeAt(Dmath::singleVarFunction func, double point){
 
 }
 
+
+double Dmath::roundTo(double value, int digits) {
+  double factor = std::pow(10.0, digits);
+  return std::round(value * factor) / factor;
+}
+
 std::vector<Dmath::Scalar> Dmath::derivativeVector(Dmath::singleVarFunction func, double start, double end, double res){
     const Dmath::Parameters param(start,end,res);
 
