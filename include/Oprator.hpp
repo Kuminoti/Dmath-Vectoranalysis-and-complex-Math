@@ -86,8 +86,63 @@
   // expanded the Integral can be defined as:
   // ∫ V(K(t))  k'(t) dt 
 
-    SHARED_LIB Dmath::Scalar loopIntegralSecondKind(Dmath::Parameters params, Dmath::SingleVectorFunction curve, Dmath::DoubleVectorFunction Field);
+    SHARED_LIB Dmath::Scalar loopIntegralSecondKind2D(Dmath::Parameters params, Dmath::SingleVectorFunction curve, Dmath::DoubleVectorFunction Field);
 
+    template<typename Field, typename Curve>
+    //Field Template to differentiate between vectorfield and scalarfields
+    //
+    Dmath::Scalar LoopIntegral2D(Dmath::Parameters params, Field field, Curve curve){
+
+        //error checking
+
+        if(!Dmath::checkParams(params)){ //Check for wrong parameters
+            std::cerr << "Error Wrong Parameters Error code: " << Dmath::ERROR_CODE::WRONG_PARAMETER << std::endl;
+        }
+
+        /* A simple Loop integral only uses simple parametric curves in this case in the form of a   
+         * Vector function (Dmath::SingleVectorFunction)
+         * 
+         * if the function type does not match the code will send an error message and return 0
+         */
+        if(!std::is_same<Curve, Dmath::SingleVectorFunction>::value){
+            std::cerr << "Wrong input type Needs Dmath::SingleVectorFunction! Error code: " << Dmath::ERROR_CODE::WRONG_TYPE << std::endl;
+        }
+
+        Dmath::Scalar result = 0; //The End result of the numeric integration
+        Dmath::Natural num = Dmath::numberOfElements(params);
+
+        for(size_t i = 0; i < num; i++){
+            Dmath::Scalar currentIndex = params.one + i * params.three;
+
+            //calculate the tangential vector
+            Dmath::Vec3D tangentialVec = curve.getTangentialVectorAt(currentIndex);
+
+            //Position vector
+            Dmath::Vec3D posVec = curve(currentIndex);
+
+            //Check for fist kind 2D loopintegral
+            if constexpr(std::is_same<Field, Dmath::DoubleVarFunction>::value  ){
+                Dmath::Scalar normVec = tangentialVec.getAbs();
+                result += field(posVec.getX(), posVec.getY()) * normVec * params.three;
+                continue;
+            }
+
+            //Check for second kind 2D loopintegral
+            if constexpr(std::is_same<Field, Dmath::DoubleVectorFunction>::value){
+                Dmath::Vec3D fieldPos = field(posVec.getX(), posVec.getY());
+                
+                result += (fieldPos * tangentialVec) * params.three;
+                
+                continue;
+            }
+
+
+        }
+        
+
+
+        return result;
+    }
 
     #pragma endregion //IntegralOperators
 
