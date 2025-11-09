@@ -22,7 +22,7 @@ Dmath::Scalar Dmath::IntegralOperator(Dmath::Parameters param, Dmath::SingleVarF
 } 
 
 
-Dmath::Scalar Dmath::loopIntegralSecondKind(Dmath::Parameters params, Dmath::SingleVectorFunction curve, Dmath::DoubleVectorFunction field){
+Dmath::Scalar Dmath::loopIntegralSecondKind2D(Dmath::Parameters params, Dmath::SingleVectorFunction curve, Dmath::DoubleVectorFunction field){
         if(!Dmath::checkParams(params)){
             std::cerr << "Error Wrong parameters! Error-code: " << Dmath::ERROR_CODE::WRONG_PARAMETER << std::endl;
             return 0;

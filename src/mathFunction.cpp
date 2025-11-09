@@ -335,6 +335,14 @@ Dmath::Scalar Dmath::DoubleVarFunction::operator()(Dmath::Scalar x, Dmath::Scala
 }
 
 
+Dmath::Scalar Dmath::DoubleVarFunction::operator()(Dmath::Vec2D vector) const{
+    if (funcBase) {
+        return funcBase->CallXY(vector.getX(), vector.getY()); // Delegate call to stored function
+    }
+    return 0.0; // Default value
+}
+
+
 Dmath::DoubleVarFunction& Dmath::DoubleVarFunction::operator=(DoubleVarFunction&& other) noexcept {
     if (this != &other) {
         this->funcBase = std::move(other.funcBase);
