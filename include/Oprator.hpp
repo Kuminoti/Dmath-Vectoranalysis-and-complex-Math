@@ -88,25 +88,20 @@
 
     SHARED_LIB Dmath::Scalar loopIntegralSecondKind2D(Dmath::Parameters params, Dmath::SingleVectorFunction curve, Dmath::DoubleVectorFunction Field);
 
-    template<typename Field, typename Curve>
+    template<typename Field>
     //Field Template to differentiate between vectorfield and scalarfields
     //
-    Dmath::Scalar LoopIntegral2D(Dmath::Parameters params, Field field, Curve curve){
+    Dmath::Scalar LoopIntegral2D(Dmath::Parameters params, Field field, Dmath::SingleVectorFunction curve){
 
         //error checking
 
         if(!Dmath::checkParams(params)){ //Check for wrong parameters
             std::cerr << "Error Wrong Parameters Error code: " << Dmath::ERROR_CODE::WRONG_PARAMETER << std::endl;
+            return 0;
         }
 
-        /* A simple Loop integral only uses simple parametric curves in this case in the form of a   
-         * Vector function (Dmath::SingleVectorFunction)
-         * 
-         * if the function type does not match the code will send an error message and return 0
-         */
-        if(!std::is_same<Curve, Dmath::SingleVectorFunction>::value){
-            std::cerr << "Wrong input type Needs Dmath::SingleVectorFunction! Error code: " << Dmath::ERROR_CODE::WRONG_TYPE << std::endl;
-        }
+        
+        
 
         Dmath::Scalar result = 0; //The End result of the numeric integration
         Dmath::Natural num = Dmath::numberOfElements(params);
@@ -138,13 +133,22 @@
 
 
         }
-        
-
-
-        return result;
+        return Dmath::roundTo(result,ROUNDING_VALUE);
     }
 
+
+    template<typename Field>
+
+    Dmath::Scalar LoopIntegral3D(Dmath::Parameters params, Field fiels){}
     #pragma endregion //IntegralOperators
+
+    #pragma region DifferentialOperators
+    
+    
+    
+
+
+
 
  
     
