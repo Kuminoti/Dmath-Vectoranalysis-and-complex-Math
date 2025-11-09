@@ -503,7 +503,8 @@ public: // Public constructors:
 
     
     // Operator to call the function with three arguments (x, y, z)
-    double operator()(double x, double y, double z);
+    Dmath::Scalar operator()(double x, double y, double z);
+    Dmath::Scalar operator()(Dmath::Vec3D vector);
 
     // Assignment operator for TripleVarFunction
     TripleVarFunction& operator=(const TripleVarFunction& other);

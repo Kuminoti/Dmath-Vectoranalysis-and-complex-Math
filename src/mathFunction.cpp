@@ -614,9 +614,16 @@ size_t Dmath::DoubleVarFunction::numOfElements(Dmath::Parameters params){
 
 #pragma region TrippleVar
 
-double Dmath::TripleVarFunction::operator()(double x, double y, double z) {
+Dmath::Scalar Dmath::TripleVarFunction::operator()(double x, double y, double z) {
     if (funcBase) {
         return funcBase->CallXYZ(x, y, z); // Delegate call to stored function
+    }
+    return 0.0; // Default value
+}
+
+Dmath::Scalar Dmath::TripleVarFunction::operator()(Dmath::Vec3D vector){
+    if (funcBase) {
+        return funcBase->CallXYZ(vector.getX(), vector.getY(), vector.getZ()); // Delegate call to stored function
     }
     return 0.0; // Default value
 }
