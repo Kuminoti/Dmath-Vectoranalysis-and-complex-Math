@@ -628,6 +628,54 @@ Dmath::Scalar Dmath::TripleVarFunction::operator()(Dmath::Vec3D vector){
     return 0.0; // Default value
 }
 
+Dmath::TripleVarFunction Dmath::TripleVarFunction::operator+(Dmath::TripleVarFunction funcOne){
+    Dmath::TripleVarFunction lhs = *this;
+    Dmath::TripleVarFunction rhs = funcOne;
+
+    auto addFunc = [lhs, rhs](double x, double y, double z) mutable -> double {
+        return lhs(x,y,z) + rhs(x,y,z);
+    };
+
+    Dmath::TripleVarFunction func(addFunc);
+    return func;
+}
+
+Dmath::TripleVarFunction Dmath::TripleVarFunction::operator-(Dmath::TripleVarFunction funcOne){
+    Dmath::TripleVarFunction lhs = *this;
+    Dmath::TripleVarFunction rhs = funcOne;
+
+    auto subFunc = [lhs, rhs](double x, double y, double z) mutable -> double {
+        return lhs(x,y,z) - rhs(x,y,z);
+    };
+
+    Dmath::TripleVarFunction func(subFunc);
+    return func;
+}
+
+Dmath::TripleVarFunction Dmath::TripleVarFunction::operator*(Dmath::TripleVarFunction funcOne){
+    Dmath::TripleVarFunction lhs = *this;
+    Dmath::TripleVarFunction rhs = funcOne;
+
+    auto multFunc = [lhs, rhs](double x, double y, double z) mutable -> double {
+        return lhs(x,y,z) * rhs(x,y,z);
+    };
+
+    Dmath::TripleVarFunction func(multFunc);
+    return func;
+}
+
+Dmath::TripleVarFunction Dmath::TripleVarFunction::operator/(Dmath::TripleVarFunction funcOne){
+    Dmath::TripleVarFunction lhs = *this;
+    Dmath::TripleVarFunction rhs = funcOne;
+
+    auto divFunc = [lhs, rhs](double x, double y, double z) mutable -> double {
+        return lhs(x,y,z) / rhs(x,y,z);
+    };
+
+    Dmath::TripleVarFunction func(divFunc);
+    return func;
+}
+
 Dmath::TripleVarFunction& Dmath::TripleVarFunction::operator=(const TripleVarFunction& other) {
     if (this != &other) {
         this->funcBase = other.funcBase ? other.funcBase->clone() : nullptr;

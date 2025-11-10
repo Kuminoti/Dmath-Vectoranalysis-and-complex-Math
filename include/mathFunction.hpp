@@ -501,10 +501,15 @@ public: // Public constructors:
     // Copy constructor
     TripleVarFunction(const TripleVarFunction& other) : funcBase(other.funcBase ? other.funcBase->clone() : nullptr) {}
 
-    
+public: //public operators
     // Operator to call the function with three arguments (x, y, z)
     Dmath::Scalar operator()(double x, double y, double z);
     Dmath::Scalar operator()(Dmath::Vec3D vector);
+
+    TripleVarFunction operator+(Dmath::TripleVarFunction funcOne);
+    TripleVarFunction operator-(Dmath::TripleVarFunction funcOne);
+    TripleVarFunction operator*(Dmath::TripleVarFunction funcOne);
+    TripleVarFunction operator/(Dmath::TripleVarFunction funcOne);
 
     // Assignment operator for TripleVarFunction
     TripleVarFunction& operator=(const TripleVarFunction& other);
