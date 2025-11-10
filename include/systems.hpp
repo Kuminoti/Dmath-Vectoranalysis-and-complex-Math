@@ -9,8 +9,7 @@
 /* 
  * This file is used to create a base and an abstraction for the other classes and systems.
  * The CoordinateSystem2D and CoordinateSystem3D classes will be inherited to the Vec2D and Vec3D
- * classes the classes for the basic vectors.
- * The VectorAnalysis2D and VectorAnalysis3D will be inherited to the VectorCurve and Vectorsurface classes
+
  * 
  * In this file you can choose the standard Coordinate system for you calculations and it contains important
  * mathmatical constants and data.
@@ -197,80 +196,6 @@ class CoordinateSystem3D : public CoordinateSystem2D {
 
 }; // CoordinateSystem3D
 
-#ifdef CARTESIAN_IS_2D_STANDARD
-class VectorAnalysis2D{
-  protected:
 
-    // One main function for implicid curves
-
-    std::function<double(double,double)> mainFunc;
-
-    std::function<Dmath::Duo<double,double>(double, double)> funcOne;
-    std::function<Dmath::Duo<double,double>(double, double)> funcTwo;
-
-    // X and Y-functions
-    std::function<double(double)> xFunc;
-    std::function<double(double)> yFunc;
-
-    std::function<void()> noFunc = []() {return CNULL;};
-
-    double resolution  = STDRES;
-    double systemStart = ZERO;
-    double systemStopp = TWOPI;
-    double rotation    = ZERO;
-    int numberOfElements;
-
-
-    VectorAnalysis2D(std::function<Dmath::Duo<double,double>(double,double)> paramOne, std::function<Dmath::Duo<double,double>(double,double)> paramTwo);
-    VectorAnalysis2D(double systemStart, double systemStopp, double resolution);
-    VectorAnalysis2D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc);
-    VectorAnalysis2D(std::function<double(double,double)> mainFunc, double systemStart, double systemStopp, double resolution);
-
-    VectorAnalysis2D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc, double systemStart, double systemStopp, double resolution);
-    VectorAnalysis2D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc, double systemStart, double systemStopp, double resolution, double rotation);
-
-  public:
-
-    inline double getNumberOfElements()                { return this->numberOfElements;}
-    inline double getResolution()                      { return this->resolution;      }
-    inline double getStart()                           { return this->systemStart;     }
-    inline double getEnd()                             { return this->systemStopp;     }
-    inline double getDataAtX(double data)              { return this->xFunc(data);     }
-    inline double getDataAtY(double data)              { return this->yFunc(data);     }
-    inline Dmath::singleVarFunction getXFunction(){ return this->xFunc;           }
-    inline Dmath::singleVarFunction getYFunction(){ return this->yFunc;           }
-
-    virtual ~VectorAnalysis2D() = default;
-
-    
-
-};
-
-#endif //CARTESIAN_IS_2D_STANDARD
-
-#ifdef CARTESIAN_IS_3D_STANDARD
-class VectorAnalysis3D: public VectorAnalysis2D{
-  protected:
-
-    std::function<Dmath::Trio<double, double, double>(double, double, double)> functionX;
-    std::function<Dmath::Trio<double, double, double>(double, double, double)> functionY;
-    std::function<Dmath::Trio<double, double, double>(double, double, double)> functionZ;
-    
-    Dmath::singleVarFunction zFunc;
-    
-    VectorAnalysis3D(double systemStart, double systemStopp, double resolution);
-    VectorAnalysis3D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc,Dmath::singleVarFunction zFunc);
-    VectorAnalysis3D(Dmath::singleVarFunction xFunc, Dmath::singleVarFunction yFunc,Dmath::singleVarFunction zFunc,
-                                    double systemStart, double systemStopp, double resolution);
-
-  public:
-
-    inline Dmath::singleVarFunction getZfunction(){ return this->zFunc;           }
-    inline double getDataAtZ(double data)              { return this->zFunc(data);     }
-
-   virtual ~VectorAnalysis3D(){}
-};
-#pragma endregion
-#endif 
 #endif // SYSTEM_IS_SET
 #endif // SYSTEMS_H includeguard
