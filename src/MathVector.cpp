@@ -86,6 +86,30 @@ Dmath::Scalar Vec2D::operator*(const Vec2D &Mathvector) {
   return this->dotProduct(Mathvector);
 }
 
+Dmath::Vec2D Vec2D::operator*(const Dmath::Matrix<Dmath::Scalar>& matrix) {
+
+    // Check if matrix is 2x2
+    if(matrix.isSquared() == false || matrix.getRows() != 2 || matrix.getColumns() != 2) {
+        std::cerr << "Error: Vec2D * Matrix requires a 2x2 matrix. Error code: " << Dmath::ERROR_CODE::UNDEFINED <<std::endl;
+        return *this; // return unchanged vector
+    }
+
+    Dmath::Scalar x = this->getX();
+    Dmath::Scalar y = this->getY();
+
+    // Matrix elements:
+    // [ a b ]
+    // [ c d ]
+    Dmath::Scalar a = matrix.getElement(1,1);
+    Dmath::Scalar b = matrix.getElement(1,2);
+    Dmath::Scalar c = matrix.getElement(2,1);
+    Dmath::Scalar d = matrix.getElement(2,2);
+
+    Dmath::Scalar newX = x * a + y * c;
+    Dmath::Scalar newY = x * b + y * d;
+
+    return Dmath::Vec2D(newX, newY);
+}
 
 //Adds one to every component
 void Vec2D::operator++(){
@@ -309,16 +333,19 @@ Dmath::Scalar Vec2D::polarSystemCircumfrance() {
 void Vec2D::setX(Dmath::Scalar value) {
   this->X = value;
   this->cartesianToPolar();
+  this->calcAbs();
 }
 
 void Vec2D::setY(Dmath::Scalar value) {
   this->Y = value;
   this->cartesianToPolar();
+  this->calcAbs();
 }
 
 void Vec2D::setPhi(Dmath::Scalar value) {
   this->phi = value;
   this->polarToCartesian();
+  this->calcAbs();
 }
 
 void Vec2D::setAll(Dmath::Scalar value){
@@ -331,6 +358,7 @@ void Vec2D::setAll(Dmath::Scalar value){
 void Vec2D::setRadius(Dmath::Scalar value) {
   this->radius = value;
   this->polarToCartesian();
+  this->calcAbs();
 }
 
 void Vec2D::addToThis(Dmath::Scalar add){
@@ -343,12 +371,14 @@ void Vec2D::substractThis(Dmath::Scalar subtract){
   this->X -= subtract;
   this->Y -= subtract; 
   this->ValidManipulation();
+  
 }
 
 void Dmath::Vec2D::multipyThisBy(Dmath::Scalar factor){
   this->X *= factor;
   this->Y *= factor;
   this->ValidManipulation();
+  this->cartesianToPolar();
 }
 
 void Dmath::Vec2D::divideThisBy(Dmath::Scalar quotient){
@@ -358,12 +388,14 @@ void Dmath::Vec2D::divideThisBy(Dmath::Scalar quotient){
   this->X /= quotient;
   this->Y /= quotient;
   this->ValidManipulation();
+  
 }
 
 
 void Vec2D::addToX(Dmath::Scalar add){
   this->X+=add;
   this->ValidManipulation();
+
 }
 
 void Vec2D::addToY(Dmath::Scalar add){
@@ -455,6 +487,26 @@ void Vec2D::moveVectorX(Dmath::Scalar move){
   this->calcDZ();
 }
 
+
+void Vec2D::linearTransformation(Dmath::Matrix<Dmath::Scalar> matrix){
+  // Check if matrix is 2x2
+  if(matrix.isSquared() == false || matrix.getRows() != 2 || matrix.getColumns() != 2) {
+    std::cerr << "Error: Vec2D * Matrix requires a 2x2 matrix. Error code: " << Dmath::ERROR_CODE::UNDEFINED <<std::endl;
+    return; // return 
+  }
+  // Matrix elements:
+  // [ a b ]
+  // [ c d ]
+  Dmath::Scalar a = matrix.getElement(1,1);
+  Dmath::Scalar b = matrix.getElement(1,2);
+  Dmath::Scalar c = matrix.getElement(2,1);
+  Dmath::Scalar d = matrix.getElement(2,2);
+
+  this->X = this->X * a + this->Y * c;
+  this->Y = this->X * b + this->Y * d;
+  this->ValidManipulation();
+}
+
 void Vec2D::moveVectorY(Dmath::Scalar move){
   this->originY += move;
   this->calcAbsXY();
@@ -475,12 +527,19 @@ void Vec2D::calcAbs() {
 
 
 void Vec2D::ValidManipulation( ){
-
+  
   if(this->originX != 0 || this->originY != 0){
     this->calcAbsXY();
     this->calcDZ();
   }
   this->calcAbs();
+#ifdef CARTESIAN_IS_2D_STANDARD
+  this->cartesianToPolar();
+#endif
+
+#ifdef POLAR_IS_STANDARD
+  this->polarToCartesian();
+#endif
 }
 
 void Vec2D::normalize(){
@@ -490,6 +549,7 @@ void Vec2D::normalize(){
   }
   this->X = this->X / this->abs;
   this->Y = this->Y / this->abs;
+  this->ValidManipulation();
 }
 
 
@@ -727,6 +787,7 @@ double Vec3D::operator*(Vec3D &Mathvector) {
 void Vec3D::addToX(double add){
   this->X += add;
   this->calcAbs();
+
 }
 
 void Vec3D::addToY(double add){

@@ -45,6 +45,7 @@ class Vec2D : public CoordinateSystem2D {                          //CoordinateS
     Vec2D  operator+(const Vec2D& Mathvector);                            //Basic Vector addition
     Vec2D  operator-(const Vec2D& Mathvector);                            //Basic Vector subtractions
     Dmath::Scalar operator*(const Vec2D& Mathvector);                     //Calculates the dotproduct of two vectors
+    Dmath::Vec2D  operator*(const Dmath::Matrix<Dmath::Scalar>& matrix);  //Linear transformation
 
 
     void operator+=(Dmath::Duo<Dmath::Scalar, Dmath::Scalar> data);       // this x-value + Duo.one ; this y-value + Duo.two
@@ -175,7 +176,7 @@ class Vec2D : public CoordinateSystem2D {                          //CoordinateS
 
 
 
-
+    void linearTransformation(Dmath::Matrix<Dmath::Scalar> matrix);
 
     void moveVectorX(Dmath::Scalar move);                               // Moves the vector in a specific x-direction
     void moveVectorY(Dmath::Scalar move);                               // Moves the vector in a specific y-direction
@@ -221,7 +222,7 @@ class Vec3D : public CoordinateSystem3D {
     void addToY(double add); // Y + add
     void addToZ(double add); // Z + add
 
-    void addXYEach (double xPlus, double yPlus,    double zPlus);        //* X + xPlus    || Y + yPlus
+    void addXYEach (double xPlus, double yPlus,   double zPlus);        //* X + xPlus     || Y + yPlus
     void divideXYBy(double xDivBy, double yDivBy, double zPlus);        //* X / xDivBy    || Y / yDivBy
     void multilpyXY(double xTimes, double yTimes, double zPlus);        //* X * xTimes    || Y * yTimes
     void subtractXY(double xMinus, double yMinus, double zPlus);        //* X - xMinus    || Y - yMinus
