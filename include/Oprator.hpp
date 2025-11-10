@@ -90,7 +90,6 @@
 
     template<typename Field>
     //Field Template to differentiate between vectorfield and scalarfields
-    //
     Dmath::Scalar LoopIntegral2D(Dmath::Parameters params, Field field, Dmath::SingleVectorFunction curve){
 
         //error checking

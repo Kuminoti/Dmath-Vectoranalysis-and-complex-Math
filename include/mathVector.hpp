@@ -221,7 +221,7 @@ class Vec3D : public CoordinateSystem3D {
     void addToY(double add); // Y + add
     void addToZ(double add); // Z + add
 
-    void addXYEach (double xPlus, double yPlus,    double zPlus);        //* X + xPlus     || Y + yPlus
+    void addXYEach (double xPlus, double yPlus,    double zPlus);        //* X + xPlus    || Y + yPlus
     void divideXYBy(double xDivBy, double yDivBy, double zPlus);        //* X / xDivBy    || Y / yDivBy
     void multilpyXY(double xTimes, double yTimes, double zPlus);        //* X * xTimes    || Y * yTimes
     void subtractXY(double xMinus, double yMinus, double zPlus);        //* X - xMinus    || Y - yMinus
