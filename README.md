@@ -1,5 +1,7 @@
 # Dmath — Scientific Mathematics Library
 
+## Science is like ѕех, sure it will give some practical results but that's not why we do it – Richard Feynman
+
 Dmath is a  C++ mathematics library for scientific use that provides different types und functions for calculations in the fields of:  
  - Linear and Multilinear algebra 
  - Numeric functional calculus
