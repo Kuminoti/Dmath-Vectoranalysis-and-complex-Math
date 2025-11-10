@@ -86,10 +86,10 @@ Dmath::Scalar Vec2D::operator*(const Vec2D &Mathvector) {
   return this->dotProduct(Mathvector);
 }
 
-Dmath::Vec2D Vec2D::operator*(const Dmath::Matrix<Dmath::Scalar>& matrix) {
+Dmath::Vec2D Vec2D::operator*( Dmath::Matrix<Dmath::Scalar> matrix) {
 
     // Check if matrix is 2x2
-    if(matrix.isSquared() == false || matrix.getRows() != 2 || matrix.getColumns() != 2) {
+    if(matrix.isSquared() == false || matrix.getElementsRow() != 2 || matrix.getElementsColumn() != 2) {
         std::cerr << "Error: Vec2D * Matrix requires a 2x2 matrix. Error code: " << Dmath::ERROR_CODE::UNDEFINED <<std::endl;
         return *this; // return unchanged vector
     }
@@ -490,7 +490,7 @@ void Vec2D::moveVectorX(Dmath::Scalar move){
 
 void Vec2D::linearTransformation(Dmath::Matrix<Dmath::Scalar> matrix){
   // Check if matrix is 2x2
-  if(matrix.isSquared() == false || matrix.getRows() != 2 || matrix.getColumns() != 2) {
+  if(matrix.isSquared() == false || matrix.getElementsRow() != 2 || matrix.getElementsColumn() != 2) {
     std::cerr << "Error: Vec2D * Matrix requires a 2x2 matrix. Error code: " << Dmath::ERROR_CODE::UNDEFINED <<std::endl;
     return; // return 
   }

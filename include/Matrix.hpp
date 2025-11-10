@@ -102,7 +102,8 @@ public: //Getters and setters
         return this->squaredMatrix;
     }
 
-
+    uint8_t getElementsRow(){ return this->elementsRow; }
+    uint8_t getElementsColumn(){ return this->elementsColumn;}
 
     void setAll(mat data){
         for(size_t i = 0; i < this->elementsRow; i++){
